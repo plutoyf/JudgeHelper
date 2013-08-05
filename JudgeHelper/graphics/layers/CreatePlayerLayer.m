@@ -106,6 +106,7 @@
 
 -(void) returnButtonTapped: (id) sender {
     [userNameTextField removeFromSuperview];
+    userNameTextField = nil;
     [self removeFromParent];
 }
 
@@ -223,24 +224,26 @@ UIImage* selectedImage;
     
     
     // Create textfield
-    userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x,size.height-y,w,35)];
-    userNameTextField.placeholder = @"Enter name here." ;
-    userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
-    userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
-    userNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    userNameTextField.font = [UIFont fontWithName:@"Verdana" size:16.0f];
-    userNameTextField.font = [UIFont systemFontOfSize:16.0];
-    userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing ;
-    userNameTextField.adjustsFontSizeToFitWidth = YES;
-    userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    userNameTextField.returnKeyType = UIReturnKeyDone ;
-    userNameTextField.textColor = [UIColor colorWithRed:76.0f/255.0f green:76.0f/255.0f blue:76.0f/255.0f alpha:1.0f];
-    
-    // Workaround to dismiss keyboard when Done/Return is tapped
-    [userNameTextField addTarget:self action:@selector(userNameTextFieldEditingDidEndOnExit:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    
-    // Add textfield into cocos2d view
-    [[[CCDirector sharedDirector] openGLView] addSubview:userNameTextField];
+    if(userNameTextField == nil) {
+        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x,size.height-y,w,35)];
+        userNameTextField.placeholder = @"Enter name here." ;
+        userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
+        userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
+        userNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        userNameTextField.font = [UIFont fontWithName:@"Verdana" size:16.0f];
+        userNameTextField.font = [UIFont systemFontOfSize:16.0];
+        userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing ;
+        userNameTextField.adjustsFontSizeToFitWidth = YES;
+        userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        userNameTextField.returnKeyType = UIReturnKeyDone ;
+        userNameTextField.textColor = [UIColor colorWithRed:76.0f/255.0f green:76.0f/255.0f blue:76.0f/255.0f alpha:1.0f];
+        
+        // Workaround to dismiss keyboard when Done/Return is tapped
+        [userNameTextField addTarget:self action:@selector(userNameTextFieldEditingDidEndOnExit:) forControlEvents:UIControlEventEditingDidEndOnExit];
+        
+        // Add textfield into cocos2d view
+        [[[CCDirector sharedDirector] openGLView] addSubview:userNameTextField];
+    }
 
 }
 
