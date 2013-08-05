@@ -49,7 +49,7 @@
 -(int) getRoleNumber : (Role) r;
 -(NSArray*) getPlayersByRole: (Role) role;
 -(NSArray*) getPlayersByRole: (Role) role withIn: (NSArray*) players;
--(Player*) getPlayerByName: (NSString*) name;
+-(Player*) getPlayerById: (NSString*) id;
 -(Player*) getReceiverForActor: (Player*) actor atNight: (long) i;
 -(BOOL) isEffectiveActionForActor: (Player*) actor atNight: (long) i;
 -(NSArray*) getApplicatedRulesForActor: (Player*) actor atNight: (long) i;

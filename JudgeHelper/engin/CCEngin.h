@@ -21,7 +21,7 @@
     int state;
     int oIndex;
     Role roleInAction;
-    NSString* selectedPlayerName;
+    NSString* selectedPlayerId;
     Player* selectedPlayer;
     NSMutableArray* initialPlayers;
     NSMutableArray* currentPlayers;
@@ -33,7 +33,8 @@
 +(CCEngin*) getEngin;
 +(NSString*) getRoleCode: (Role) r;
 
--(void) action: (NSString*) name;-(void) setPlayerNumberForRole: (int) i;
+-(void) action: (NSString*) id;
+-(void) setPlayerNumberForRole: (int) i;
 -(NSString*) getRoleLabel: (Role) r;
 -(NSString*) getRoleActionLabel: (Role) r;
 

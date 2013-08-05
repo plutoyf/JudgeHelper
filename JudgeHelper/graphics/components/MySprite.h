@@ -11,6 +11,7 @@
 @interface MySprite : CCSprite {
 }
 
+@property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* name;
 @property(atomic) BOOL selectable;
 @property(atomic) BOOL selected;

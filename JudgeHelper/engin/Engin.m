@@ -163,7 +163,7 @@
     _players = [NSMutableArray arrayWithArray:players];
     _playersMap = [NSMutableDictionary new];
     for(Player* p in players) {
-        [_playersMap setValue: p forKey: p.name];
+        [_playersMap setValue: p forKey: p.id];
     }
 }
 
@@ -223,7 +223,7 @@
     
     if(receiver != nil) {
         for(Player* p in actors) {
-            [p addActionAtNight: i to: receiver.name forResult: (result==nil?[NSNumber numberWithBool: isProcessed]:result) withMatchedRules: matchedRules];
+            [p addActionAtNight: i to: receiver.id forResult: (result==nil?[NSNumber numberWithBool: isProcessed]:result) withMatchedRules: matchedRules];
         }
     }
     
@@ -262,8 +262,8 @@
     return (num && num.intValue > 0) ? num.intValue : 0;                 
 }
 
--(Player*) getPlayerByName: (NSString*) name {
-    return [_playersMap objectForKey: name];
+-(Player*) getPlayerById: (NSString*) id {
+    return [_playersMap objectForKey: id];
 }
 
 -(NSArray*) getPlayersByRole: (Role) role {
@@ -286,7 +286,7 @@
 }
 
 -(Player*) getReceiverForActor: (Player*) actor atNight: (long) i {
-    return [self getPlayerByName: [actor getActionReceiverAtNight: i]];
+    return [self getPlayerById: [actor getActionReceiverAtNight: i]];
 }
 
 -(BOOL) isEffectiveActionForActor: (Player*) actor atNight: (long) i {
@@ -329,7 +329,7 @@
 
 
 -(int) calculateFinalResult {
-    Player* game = [[Player alloc] init: @"Game" withRole: Game];
+    Player* game = [[Player alloc] init: @"game" andName: @"Game" withRole: Game];
     
     for(Rule* r in self.resultRules) {
         BOOL isMatched = YES;

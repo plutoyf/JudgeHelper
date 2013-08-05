@@ -11,12 +11,13 @@
 
 @implementation Player
 
--(id) init: (NSString*) name {
-    return [self init: name withRole: Citizen];
+-(id) init: (NSString*) id andName: (NSString*) name {
+    return [self init:id andName:name withRole:Citizen];
 }
 
--(id) init: (NSString*) name withRole: (Role) role {
+-(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role {
     if(self = [super init]) {
+        _id = id;
         _name = name;
         _role = role;
         _life = 1;
@@ -31,17 +32,17 @@
     return self;
 }
 
--(double) getDistanceWith: (NSString*) playerName {
-    return [_distances valueForKey:playerName] == nil ? 1 : [(NSNumber*)[_distances valueForKey:playerName] doubleValue];
+-(double) getDistanceWith: (NSString*) playerId {
+    return [_distances valueForKey:playerId] == nil ? 1 : [(NSNumber*)[_distances valueForKey:playerId] doubleValue];
 }
 
--(void) setDistance: (double) distance withPlayer: (NSString*) playerName {
-    [_distances setValue: [NSNumber numberWithDouble:distance] forKey: playerName];
+-(void) setDistance: (double) distance withPlayer: (NSString*) playerId {
+    [_distances setValue: [NSNumber numberWithDouble:distance] forKey: playerId];
 }
 
--(void) addActionAtNight:(long) i to: (NSString*) receiverName forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules {
+-(void) addActionAtNight:(long) i to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules {
     NSNumber* key = [NSNumber numberWithLong: i];
-    [_actionReceivers setObject: receiverName forKey: key];
+    [_actionReceivers setObject: receiverId forKey: key];
     [_applicatedRules setObject: matchedRules forKey: key];
     [_actionResults setObject: result forKey: key];
 }
@@ -141,8 +142,8 @@
     return [NSString stringWithFormat:@"%@ %@ : %@ : dj=%.1f dg=%.1f  \n    life (%d) : %@  \n    dis (%d) : %@", _name, [Engin getStatusName:_status], receivers, [self getDistanceWith:@"法官"], [self getDistanceWith:@"花蝴蝶"], lifeStack.count, lifes, distanceStack.count, dis];
 }
 
--(double) getDistanceWith:(NSString *)playerName from:(NSMutableDictionary*) d {
-    return [d objectForKey:playerName]==nil ? 1 : ((NSNumber*)[d objectForKey:playerName]).doubleValue;
+-(double) getDistanceWith:(NSString *)playerId from:(NSMutableDictionary*) d {
+    return [d objectForKey:playerId]==nil ? 1 : ((NSNumber*)[d objectForKey:playerId]).doubleValue;
 }
 
 @end

@@ -144,7 +144,7 @@ static CCEngin *engin = nil;
             playersInAction = [self getPlayersByRole: roleInAction withIn: currentPlayers];
             if(playersInAction != nil && playersInAction.count > 0) {
                 //calculate players with the same current role
-                selectedPlayer = [self getPlayerByName: selectedPlayerName];
+                selectedPlayer = [self getPlayerById: selectedPlayerId];
                 if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                     [self recordPlayersStatus];
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
@@ -249,7 +249,7 @@ static CCEngin *engin = nil;
         case 10:
             NSLog(@"case 10");
             //calculate players with the same current role
-            selectedPlayer = [self getPlayerByName: selectedPlayerName];
+            selectedPlayer = [self getPlayerById: selectedPlayerId];
             if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                 //14. execution
                 [self recordPlayersStatus];
@@ -382,7 +382,7 @@ static CCEngin *engin = nil;
     if(playersInAction != nil && [playersInAction count] > 0) {
         Player* actor = (Player*)[playersInAction objectAtIndex:0];
         Player* receiver = [self getReceiverForActor:actor atNight:night];
-        [self action: (receiver==nil ? @"" : receiver.name) inSpeed:YES];
+        [self action: (receiver==nil ? @"" : receiver.id) inSpeed:YES];
     } else {
         [self action: @"" inSpeed:YES];
     }
@@ -400,24 +400,24 @@ static CCEngin *engin = nil;
 }
 
 
--(void) action: (NSString*) name {
-    [self action:name inSpeed: NO];
+-(void) action: (NSString*) id {
+    [self action:id inSpeed: NO];
 }
 
--(void) action: (NSString*) name inSpeed: (BOOL) speedMode {
+-(void) action: (NSString*) id inSpeed: (BOOL) speedMode {
     if(inGame) {
-        if([name isEqualToString: @"UNDO_ACTION"]) {
-            selectedPlayerName = @"";
+        if([id isEqualToString: @"UNDO_ACTION"]) {
+            selectedPlayerId = @"";
             selectedPlayer = nil;
             [self undoAction];
             
-        } else if([name isEqualToString: @"REDO_ACTION"]) {
-            selectedPlayerName = @"";
+        } else if([id isEqualToString: @"REDO_ACTION"]) {
+            selectedPlayerId = @"";
             selectedPlayer = nil;
             [self redoAction];
             
         } else {
-            selectedPlayerName = name;
+            selectedPlayerId = id;
             selectedPlayer = nil;
             [self doAction: speedMode];
         }

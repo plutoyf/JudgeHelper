@@ -12,23 +12,23 @@
 
 @implementation CCPlayer
 
--(id) init: (NSString*) name {
-    return [self init: name withRole: Citizen];
+-(id) init: (NSString*) id andName: (NSString*) name {
+    return [self init: id andName: name withRole: Citizen];
 }
 
--(id) init: (NSString*) name withRole: (Role) role {
-    return [self init: name withRole: role withAvatar:YES];
+-(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role {
+    return [self init: id andName: name withRole: role withAvatar:YES];
 }
 
--(id) init: (NSString*) name withRole: (Role) role withAvatar: (BOOL) hasAvatar {
-    if(self = [super init: name withRole: role]) {
+-(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role withAvatar: (BOOL) hasAvatar {
+    if(self = [super init: id andName: name withRole: role]) {
         _selectable = YES;
         _sprite = [CCSprite new];
         actionIcons = [NSMutableArray new];
         actionIconsBackup = [NSMutableArray new];
         
         if(hasAvatar) {
-            NSData* imgData = [[NSUserDefaults standardUserDefaults] dataForKey:name];
+            NSData* imgData = [[NSUserDefaults standardUserDefaults] dataForKey:[id stringByAppendingString:@"-img"]];
             UIImage* iconImg = [UIImage imageWithData:imgData];
             CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad];
             avatar = [[CCSprite alloc] initWithTexture:texture];

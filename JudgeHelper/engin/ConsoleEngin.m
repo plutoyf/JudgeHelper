@@ -69,7 +69,7 @@
                 NSLog(@"%@请%@", [self getRoleLabel: r], [self getRoleActionTerm: r]);
                 
                 NSString* n = [self readLine];
-                selectedPlayer = [self getPlayerByName: n];
+                selectedPlayer = [self getPlayerById: n];
             } while (playersInAction != nil && [playersInAction count] > 0 && selectedPlayer == nil);
             
             //6. take action effect, show response if have one
@@ -125,7 +125,7 @@
         NSString* n = [self readLine];
         
         //14. execution
-        [self doActionAtNight: i withActors: [self getPlayersByRole: Judge] andReceiver: [self getPlayerByName: n]];
+        [self doActionAtNight: i withActors: [self getPlayersByRole: Judge] andReceiver: [self getPlayerById: n]];
         [deads removeAllObjects];
         for(Player* p in currentPlayers) {
             if(p.life <= 0) {
@@ -188,7 +188,7 @@
             }
         }
         if(receiver != nil) {
-            NSLog(@"    %@%@%@ : \t%@", [self getRoleLabel: r], [self getRoleActionLabel: r], receiver.name, [self getActionDoneLabel: actionProcessed : applicatedRules]);
+            NSLog(@"    %@%@%@ : \t%@", [self getRoleLabel: r], [self getRoleActionLabel: r], receiver.id, [self getActionDoneLabel: actionProcessed : applicatedRules]);
         }
     }
     NSLog(@"  ===============");

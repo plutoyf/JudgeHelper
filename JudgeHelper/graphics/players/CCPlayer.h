@@ -21,7 +21,7 @@
 @property(atomic) BOOL selectable;
 @property (nonatomic, strong) CCSprite* sprite;
 
--(id) init: (NSString*) name withRole: (Role) role withAvatar: (BOOL) hasAvatar;
+-(id) init: (NSString*) id andName: (NSString *) name withRole: (Role) role withAvatar: (BOOL) hasAvatar;
 
 -(void) addChild: (CCNode*) child;
 -(void) removeChild: (CCNode*)child;

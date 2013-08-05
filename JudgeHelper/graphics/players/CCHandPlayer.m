@@ -12,12 +12,12 @@
 
 @implementation CCHandPlayer
 
--(id) init: (NSString*) name {
-    return [self init: name withRole: Citizen];
+-(id) init: (NSString*) id andName: (NSString*) name {
+    return [self init: id andName: name withRole: Citizen];
 }
 
--(id) init: (NSString*) name withRole: (Role) role {
-    if(self = [super init: name withRole: role withAvatar: NO]) {
+-(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role {
+    if(self = [super init: id andName: name withRole: role withAvatar: NO]) {
     }
     return self;
 }

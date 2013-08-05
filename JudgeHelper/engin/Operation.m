@@ -27,7 +27,7 @@
             v = p1.status;
             break;
         case distance:
-            v = p2 != nil ? [p1 getDistanceWith: p2.name] : 0;
+            v = p2 != nil ? [p1 getDistanceWith: p2.id] : 0;
             break;
         default:
             break;
@@ -59,12 +59,12 @@
             break;
         case distance:
             if (p2 != nil) {
-                [p1 setDistance: v withPlayer: p2.name];
-                [p2 setDistance: v withPlayer: p1.name];
+                [p1 setDistance: v withPlayer: p2.id];
+                [p2 setDistance: v withPlayer: p1.id];
             } else {
                 for (Player* p in players) {
-                    [p1 setDistance: v withPlayer: p.name];
-                    [p setDistance: v withPlayer: p1.name];
+                    [p1 setDistance: v withPlayer: p.id];
+                    [p setDistance: v withPlayer: p1.id];
                 }
             }
             break;

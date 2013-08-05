@@ -26,7 +26,7 @@
             v = p1.status;
             break;
         case distance:
-            v = [p1 getDistanceWith: p2.name];
+            v = [p1 getDistanceWith: p2.id];
             break;
         default:
             break;

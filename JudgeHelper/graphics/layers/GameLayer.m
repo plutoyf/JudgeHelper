@@ -77,18 +77,18 @@
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
-    NSString* name = nil;
+    NSString* id = nil;
     if (CGRectContainsPoint(undoIcon.boundingBox, touchLocation)) {
-        name = @"UNDO_ACTION";
+        id = @"UNDO_ACTION";
     } else if (CGRectContainsPoint(redoIcon.boundingBox, touchLocation)) {
-        name = @"REDO_ACTION";
+        id = @"REDO_ACTION";
     } else if (selPlayer) {
         if(selPlayer.role == Judge) {
-            name = nil;
+            id = nil;
         } else if(rolePlayerToDefine == Judge) {
-            name = selPlayer.name;
+            id = selPlayer.id;
         } else {
-            name = selPlayer.name;
+            id = selPlayer.id;
         }
         if(!selPlayerInMove) {
             [selPlayer hideRoleInfo];
@@ -104,20 +104,20 @@
             } else {
                 if(selPlayer && (selPlayer.role == 0 || selPlayer.role == Citizen)) {
                     // select this player as role
-                    [engin getPlayerByName:selPlayer.name].role = rolePlayerToDefine;
+                    [engin getPlayerById:selPlayer.id].role = rolePlayerToDefine;
                     if(rolePlayerToDefine == Judge) {
-                        [self initPlayersWithJudge: name];
+                        [self initPlayersWithJudge: id];
                     }
                 
                     if([engin getRoleNumber:rolePlayerToDefine] == [engin getPlayersByRole:rolePlayerToDefine].count) {
                         rolePlayerToDefine = 0;
                         defineRolePlayerBegin = NO;
-                        [engin action: name];
+                        [engin action: id];
                     }
                 }
             }
         } else {
-            [engin action: name];
+            [engin action: id];
         }
     }
     
@@ -194,7 +194,7 @@ CCEngin* engin;
             
             [self addChild: p.sprite];
             [players addObject:p];
-            [playersMap setObject:p forKey:p.name];
+            [playersMap setObject:p forKey:p.id];
         }
         
         [engin run];
@@ -203,21 +203,21 @@ CCEngin* engin;
 	return self;
 }
 
--(void) initPlayersWithJudge: (NSString*) judgeName {
+-(void) initPlayersWithJudge: (NSString*) judgeId {
     NSMutableArray* newPlayers = [NSMutableArray new];
     for(int i = 0; i < engin.players.count; i++) {
         CCPlayer* p = [engin.players objectAtIndex:i];
         
-        if([p class] == [CCPlayer class] || [p.name isEqualToString:judgeName]) {
-            p.role = [p.name isEqualToString:judgeName]?Judge:Citizen;
+        if([p class] == [CCPlayer class] || [p.id isEqualToString:judgeId]) {
+            p.role = [p.id isEqualToString:judgeId]?Judge:Citizen;
             [newPlayers addObject:p];
         } else if([p class] == [CCDoubleHandPlayer class]){
             CCDoubleHandPlayer* dhp = ((CCDoubleHandPlayer*)p);
-            dhp.leftHandPlayer = [[CCHandPlayer alloc] init: [p.name stringByAppendingString:@"左手"] withRole: Citizen];
-            dhp.rightHandPlayer = [[CCHandPlayer alloc] init: [p.name stringByAppendingString:@"右手"] withRole: Citizen];
+            dhp.leftHandPlayer = [[CCHandPlayer alloc] init: [p.id stringByAppendingString:@"l"] andName: [p.name stringByAppendingString:@"左手"] withRole: Citizen];
+            dhp.rightHandPlayer = [[CCHandPlayer alloc] init: [p.id stringByAppendingString:@"r"] andName: [p.name stringByAppendingString:@"右手"] withRole: Citizen];
             
-            [playersMap setObject:dhp.leftHandPlayer forKey: dhp.leftHandPlayer.name];
-            [playersMap setObject:dhp.rightHandPlayer forKey: dhp.rightHandPlayer.name];
+            [playersMap setObject:dhp.leftHandPlayer forKey: dhp.leftHandPlayer.id];
+            [playersMap setObject:dhp.rightHandPlayer forKey: dhp.rightHandPlayer.id];
             
             [players addObject:dhp.leftHandPlayer];
             [players addObject:dhp.rightHandPlayer];
@@ -243,12 +243,12 @@ CCEngin* engin;
 }
 
 -(void) addActionIcon: (Role) role to: (Player*) player {
-    CCPlayer* p = [playersMap objectForKey:player.name];
+    CCPlayer* p = [playersMap objectForKey:player.id];
     [p addActionIcon: role];
 }
 
 -(void) removeActionIconFrom: (Player*) player {
-    CCPlayer* p = [playersMap objectForKey:player.name];
+    CCPlayer* p = [playersMap objectForKey:player.id];
     [p removeLastActionIcon];
 }
 
@@ -257,14 +257,14 @@ CCEngin* engin;
 
 -(void) resetPlayerIcons: (NSArray*) players {
     for(CCPlayer* player in players) {
-        CCPlayer* p = [playersMap objectForKey:player.name];
+        CCPlayer* p = [playersMap objectForKey:player.id];
         [p updatePlayerIcon];
     }
 }
 
 -(void) updatePlayerIcons {
     for(CCPlayer* player in engin.players) {
-        CCPlayer* p = [playersMap objectForKey:player.name];
+        CCPlayer* p = [playersMap objectForKey:player.id];
         [p updatePlayerIcon];
     }
 }

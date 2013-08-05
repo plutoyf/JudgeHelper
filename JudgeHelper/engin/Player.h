@@ -12,6 +12,7 @@
 
 @interface Player : NSObject
 {
+    NSString* _id;
     NSString* _name;
     Role _role;
     double _life;
@@ -27,6 +28,7 @@
     NSMutableArray* statusStack;
 }
 
+@property (nonatomic, strong) NSString* id;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic) Role role;
 @property (atomic) double life;
@@ -37,18 +39,18 @@
 @property (nonatomic, strong) NSMutableDictionary* actionResults;
 @property (nonatomic, strong) NSMutableDictionary* applicatedRules;
 
--(id) init: (NSString*) name withRole: (Role) role;
--(id) init: (NSString*) name;
+-(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role;
+-(id) init: (NSString*) id andName: (NSString*) name;
 
 -(NSString*) toString;
 
 -(BOOL) isInGame;
 
--(double) getDistanceWith: (NSString*) playerName;
+-(double) getDistanceWith: (NSString*) playerId;
 
--(void) setDistance: (double) distance withPlayer: (NSString*) playerName;
+-(void) setDistance: (double) distance withPlayer: (NSString*) playerId;
 
--(void) addActionAtNight:(long) i to: (NSString*) receiverName forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules;
+-(void) addActionAtNight:(long) i to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules;
 
 -(NSString*) getActionReceiverAtNight: (long) i;
 

@@ -52,17 +52,17 @@ int main0(int argc, const char * argv[])
         }
         
         NSMutableArray* players = [NSMutableArray new];
-        Player* guard = [[Player alloc] init: @"花蝴蝶" withRole: Guard];
-        Player* killer1 = [[Player alloc] init: @"杀手1" withRole: Killer];
-        Player* killer2 = [[Player alloc] init: @"杀手2" withRole: Killer];
-        Player* police1 = [[Player alloc] init: @"警察1" withRole: Police];
-        Player* police2 = [[Player alloc] init: @"警察2" withRole: Police];
-        Player* doctor = [[Player alloc] init: @"医生" withRole: Doctor];
-        Player* spy = [[Player alloc] init: @"老婆" withRole: Spy];
-        Player* citizen1 = [[Player alloc] init: @"平民1" withRole: Citizen];
-        Player* citizen2 = [[Player alloc] init: @"平民2" withRole: Citizen];
-        Player* citizen3 = [[Player alloc] init: @"平民3" withRole: Citizen];
-        Player* judge = [[Player alloc] init: @"法官" withRole: Judge];
+        Player* guard = [[Player alloc] init: @"guard" andName: @"花蝴蝶" withRole: Guard];
+        Player* killer1 = [[Player alloc] init: @"killer1" andName: @"杀手1" withRole: Killer];
+        Player* killer2 = [[Player alloc] init: @"killer2" andName: @"杀手2" withRole: Killer];
+        Player* police1 = [[Player alloc] init: @"police1" andName: @"警察1" withRole: Police];
+        Player* police2 = [[Player alloc] init: @"police2" andName: @"警察2" withRole: Police];
+        Player* doctor = [[Player alloc] init: @"doctor" andName: @"医生" withRole: Doctor];
+        Player* spy = [[Player alloc] init: @"spy" andName: @"老婆" withRole: Spy];
+        Player* citizen1 = [[Player alloc] init: @"citizen1" andName: @"平民1" withRole: Citizen];
+        Player* citizen2 = [[Player alloc] init: @"citizen2" andName: @"平民2" withRole: Citizen];
+        Player* citizen3 = [[Player alloc] init: @"citizen3" andName: @"平民3" withRole: Citizen];
+        Player* judge = [[Player alloc] init: @"judge" andName: @"法官" withRole: Judge];
         [players addObject: guard];
         [players addObject: killer1];
         [players addObject: killer2];

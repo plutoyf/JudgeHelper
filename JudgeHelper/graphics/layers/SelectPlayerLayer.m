@@ -215,19 +215,20 @@ CreatePlayerLayer* createPlayerLayer;
 }
 
 
-NSString * const pCodesKey = @"pCodes";
-NSMutableArray* pCodes;
+NSString * const pidsKey = @"pids";
+NSMutableArray* pids;
 -(void) initPlayers {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    id obj = [userDefaults objectForKey:pCodesKey];
-    pCodes = obj==nil ? [NSMutableArray new] : (NSMutableArray*)obj;
+    id obj = [userDefaults objectForKey:pidsKey];
+    pids = obj==nil ? [NSMutableArray new] : (NSMutableArray*)obj;
     
     personIcons = [NSMutableArray new];
     personIconsMap = [NSMutableDictionary new];
-    for(NSString* code in pCodes) {
-        NSData* imgData = [userDefaults dataForKey:code];
+    for(NSString* id in pids) {
+        NSString* name = [userDefaults stringForKey:[id stringByAppendingString:@"-name"]];
+        NSData* imgData = [userDefaults dataForKey:[id stringByAppendingString:@"-img"]];
         UIImage* image = [UIImage imageWithData:imgData];
-        [self addPlayer:code withName:code andImage:image];
+        [self addPlayer:id withName:name andImage:image];
     }
     
 }
@@ -239,19 +240,21 @@ NSMutableArray* pCodes;
     
     //2. save player's info
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    [pCodes addObject:name];
-    [userDefaults setObject:pCodes forKey:pCodesKey];
-    [userDefaults setObject:UIImagePNGRepresentation(image) forKey:name];
+    NSString* id = [NSNumber numberWithLong: (long)(NSTimeInterval)([[NSDate date] timeIntervalSince1970])].stringValue;
+    [pids addObject:id];
+    [userDefaults setObject:pids forKey:pidsKey];
+    [userDefaults setObject:name forKey:[id stringByAppendingString:@"-name"]];
+    [userDefaults setObject:UIImagePNGRepresentation(image) forKey:[id stringByAppendingString:@"-img"]];
     [userDefaults synchronize];
     
     //3. show player in the list
-    [self addPlayer:name withName:name andImage:image];
+    [self addPlayer:id withName:name andImage:image];
     while([self rightButtonTapped:nil]) {
     };
 }
 
--(void) addPlayer: (NSString*) code withName: (NSString*) name andImage: (UIImage*) image {
-    if(code.length <= 0 || name.length <= 0) return;
+-(void) addPlayer: (NSString*) id withName: (NSString*) name andImage: (UIImage*) image {
+    if(id.length <= 0 || name.length <= 0) return;
     
     CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
     CGSize textureSize = [texture contentSize];
@@ -260,6 +263,7 @@ NSMutableArray* pCodes;
     [icon setScaleY: IMG_HEIGHT/textureSize.height];
     
     icon.position = ccp((IMG_WIDTH+10)*personIcons.count+IMG_WIDTH/2, IMG_HEIGHT/2);
+    icon.id = id;
     icon.name = name;
     icon.isTouchEnabled = YES;
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
@@ -268,7 +272,7 @@ NSMutableArray* pCodes;
     
     [playersPool addChild: icon];
     [personIcons addObject:icon];
-    [personIconsMap setObject:icon forKey:icon.name];
+    [personIconsMap setObject:icon forKey:icon.id];
 }
 
 -(NSMutableArray*) createPlayers {
@@ -277,9 +281,9 @@ NSMutableArray* pCodes;
         if (sprite.selected) {
             Player* p = nil;
             if ([[GlobalSettings globalSettings] getGameMode] == DOUBLE_HAND) {
-                p = [[CCDoubleHandPlayer alloc] init:sprite.name];
+                p = [[CCDoubleHandPlayer alloc] init:sprite.id andName: sprite.name];
             } else {
-                p = [[CCPlayer alloc] init: sprite.name];
+                p = [[CCPlayer alloc] init:sprite.id andName: sprite.name];
             }
             [players addObject: p];
         }
