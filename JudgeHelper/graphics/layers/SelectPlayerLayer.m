@@ -107,23 +107,6 @@ int IMG_HEIGHT = 72;
 		messageLabel.tag = 13;
         [self addChild: messageLabel];
         
-        playersPool = [[ClippingSprite alloc] init];
-        //[playersPool setTextureRect:CGRectMake(0, 0, size.width-200, 100)];
-        [playersPool setContentSize:CGSizeMake(size.width-200, 100)];
-        playersPool.openWindowRect = CGRectMake(50, 170, (IMG_WIDTH+10)*10, 270);
-        playersPool.anchorPoint = ccp(0, 0);
-        playersPool.position = ccp(50, 170);
-        //playersPool.isTouchEnabled = YES;
-        
-        CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,110,255)];
-        [layerColer setContentSize: CGSizeMake(size.width-200, 100)];
-        layerColer.position = ccp(0, 0);
-        [playersPool addChild:layerColer];
-        
-        [self addChild:playersPool];
-        
-        [self initPlayers];
-        
         
         CCMenuItem *leftMenuItem = [CCMenuItemImage
                                     itemFromNormalImage:@"left.png" selectedImage:@"left.png"
@@ -178,6 +161,14 @@ int IMG_HEIGHT = 72;
         [startIcon addGestureRecognizer:tapGestureRecognizer];
         [self addChild: startIcon];
         
+        
+        playersPool = [[ClippingSprite alloc] init];
+        [playersPool setContentSize:CGSizeMake(size.width-200, 100)];
+        playersPool.openWindowRect = CGRectMake(50, 0, (IMG_WIDTH+10)*10, 400);
+        playersPool.position = ccp(50+(size.width-200)/2, 170+100/2);
+        
+        [self addChild:playersPool];
+        [self initPlayers];
     }
     
 	return self;
@@ -269,13 +260,11 @@ NSMutableArray* pCodes;
     [icon setScaleY: IMG_HEIGHT/textureSize.height];
     
     icon.position = ccp((IMG_WIDTH+10)*personIcons.count+IMG_WIDTH/2, IMG_HEIGHT/2);
-    icon.touchRect = CGRectMake(icon.position.x, icon.position.y, IMG_WIDTH, IMG_HEIGHT);
     icon.name = name;
     icon.isTouchEnabled = YES;
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
     tapGestureRecognizer.delegate = self;
     [icon addGestureRecognizer:tapGestureRecognizer];
-
     
     [playersPool addChild: icon];
     [personIcons addObject:icon];
