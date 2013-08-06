@@ -40,7 +40,7 @@
 
 -(void) showName {
     if(_name) {
-        CCLabelTTF* labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:18];
+        CCLabelTTF* labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:14];
         labelTTF.position = ccp(self.boundingBox.size.width/2, -14);
         [self addChild: labelTTF];
     }
