@@ -34,7 +34,7 @@
 		E059F64A17B02D860071829E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F49E17B02BB40071829E /* Foundation.framework */; };
 		E059F64F17B02D860071829E /* cocos2d_library.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E059F64E17B02D860071829E /* cocos2d_library.h */; };
 		E059F65117B02D860071829E /* cocos2d_library.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F65017B02D860071829E /* cocos2d_library.m */; };
-		E059F65517B02DAC0071829E /* libcocos2d-library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F64917B02D860071829E /* libcocos2d-library.a */; };
+		E059F65517B02DAC0071829E /* libcocos2d-library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F64917B02D860071829E /* libcocos2d-library.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		E059F75D17B02DDB0071829E /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F65917B02DDA0071829E /* CCAction.m */; };
 		E059F75E17B02DDB0071829E /* CCActionCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F65B17B02DDA0071829E /* CCActionCamera.m */; };
 		E059F75F17B02DDB0071829E /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F65D17B02DDA0071829E /* CCActionCatmullRom.m */; };
@@ -1624,6 +1624,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1671,11 +1672,13 @@
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "./**";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -1696,9 +1699,11 @@
 				GCC_PREFIX_HEADER = "cocos2d-library/cocos2d-library-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "./**";
 				VALIDATE_PRODUCT = YES;
 			};
