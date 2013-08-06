@@ -223,6 +223,11 @@
 		E059F88717B02EC70071829E /* CCDoubleHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87A17B02EC70071829E /* CCDoubleHandPlayer.m */; };
 		E059F88817B02EC70071829E /* CCHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87C17B02EC70071829E /* CCHandPlayer.m */; };
 		E059F88917B02EC70071829E /* CCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87E17B02EC70071829E /* CCPlayer.m */; };
+		E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A317B0F63F00F3E4CB /* UIImage+Alpha.m */; };
+		E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A517B0F63F00F3E4CB /* UIImage+Resize.m */; };
+		E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */; };
+		E06068B717B1145600F3E4CB /* delete_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B517B1145600F3E4CB /* delete_mini.png */; };
+		E06068B817B1145600F3E4CB /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B617B1145600F3E4CB /* delete.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -628,6 +633,14 @@
 		E059F87C17B02EC70071829E /* CCHandPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCHandPlayer.m; sourceTree = "<group>"; };
 		E059F87D17B02EC70071829E /* CCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlayer.h; sourceTree = "<group>"; };
 		E059F87E17B02EC70071829E /* CCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlayer.m; sourceTree = "<group>"; };
+		E06068A217B0F63F00F3E4CB /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		E06068A317B0F63F00F3E4CB /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		E06068A417B0F63F00F3E4CB /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		E06068A517B0F63F00F3E4CB /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		E06068A617B0F63F00F3E4CB /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		E06068B517B1145600F3E4CB /* delete_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_mini.png; path = Resources/delete_mini.png; sourceTree = "<group>"; };
+		E06068B617B1145600F3E4CB /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = Resources/delete.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -705,6 +718,7 @@
 				E059F83F17B02EB20071829E /* Constants.m */,
 				E059F84017B02EB20071829E /* GlobalSettings.h */,
 				E059F84117B02EB20071829E /* GlobalSettings.m */,
+				E06068A117B0F63F00F3E4CB /* UIImage+ */,
 				E059F83A17B02EA00071829E /* CCNode+SFGestureRecognizers */,
 				E059F65617B02DDA0071829E /* libs */,
 				E059F63717B02BC20071829E /* AppDelegate.h */,
@@ -721,6 +735,8 @@
 			isa = PBXGroup;
 			children = (
 				E059F7CB17B02E830071829E /* avatars */,
+				E06068B517B1145600F3E4CB /* delete_mini.png */,
+				E06068B617B1145600F3E4CB /* delete.png */,
 				E059F7C917B02E830071829E /* add.png */,
 				E059F7CA17B02E830071829E /* album.png */,
 				E059F7D917B02E830071829E /* btn_off_gray.png */,
@@ -1272,6 +1288,19 @@
 			path = players;
 			sourceTree = "<group>";
 		};
+		E06068A117B0F63F00F3E4CB /* UIImage+ */ = {
+			isa = PBXGroup;
+			children = (
+				E06068A217B0F63F00F3E4CB /* UIImage+Alpha.h */,
+				E06068A317B0F63F00F3E4CB /* UIImage+Alpha.m */,
+				E06068A417B0F63F00F3E4CB /* UIImage+Resize.h */,
+				E06068A517B0F63F00F3E4CB /* UIImage+Resize.m */,
+				E06068A617B0F63F00F3E4CB /* UIImage+RoundedCorner.h */,
+				E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */,
+			);
+			path = "UIImage+";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1408,6 +1437,8 @@
 				E059F83717B02E870071829E /* save.png in Resources */,
 				E059F83817B02E870071829E /* start.png in Resources */,
 				E059F83917B02E870071829E /* undo.png in Resources */,
+				E06068B717B1145600F3E4CB /* delete_mini.png in Resources */,
+				E06068B817B1145600F3E4CB /* delete.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1445,6 +1476,9 @@
 				E059F88717B02EC70071829E /* CCDoubleHandPlayer.m in Sources */,
 				E059F88817B02EC70071829E /* CCHandPlayer.m in Sources */,
 				E059F88917B02EC70071829E /* CCPlayer.m in Sources */,
+				E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */,
+				E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */,
+				E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 #import "ClippingSprite.h"
 #import "BorderSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
+#import "UIImage+Resize.h"
 
 @implementation CreatePlayerLayer
 
@@ -60,26 +61,23 @@
         [self addChild:layerColer];
         
         
-        CCMenuItem *saveItem = [CCMenuItemImage
-                                  itemFromNormalImage:@"save.png" selectedImage:@"save.png"
-                                target:self selector:@selector(saveButtonTapped:)];
-        saveItem.position = ccp(50, 30);
         CCMenuItem *returnItem = [CCMenuItemImage
                                   itemFromNormalImage:@"return.png" selectedImage:@"return.png"
                                   target:self selector:@selector(returnButtonTapped:)];
-        returnItem.position = ccp(150, 30);
+        returnItem.position = ccp(50, 30);
         CCMenuItem *showAlbumMenuItem = [CCMenuItemImage
                                     itemFromNormalImage:@"album.png" selectedImage:@"album.png"
                                     target:self selector:@selector(showAlbumButtonTapped:)];
-        showAlbumMenuItem.position = ccp(250, 30);
+        showAlbumMenuItem.position = ccp(150, 30);
         CCMenuItem *showCameraItem = [CCMenuItemImage
                                      itemFromNormalImage:@"camera.png" selectedImage:@"camera.png"
                                      target:self selector:@selector(showCameraButtonTapped:)];
-        showCameraItem.position = ccp(350, 30);
+        showCameraItem.position = ccp(250, 30);
         
-        CCMenu *showPickerMenu = [CCMenu menuWithItems: saveItem, returnItem, showAlbumMenuItem, showCameraItem, nil];
-        showPickerMenu.position = ccp(size.width-400, size.height-80);
+        CCMenu *showPickerMenu = [CCMenu menuWithItems: returnItem, showAlbumMenuItem, showCameraItem, nil];
+        showPickerMenu.position = ccp(size.width-300, size.height-80);
         [self addChild:showPickerMenu];
+        
     }
     return self;
 }
@@ -88,12 +86,12 @@
     NSString* name = userNameTextField.text;
     if(name.length > 0) {
         CGSize size = [CCDirector sharedDirector].winSize;
-        int w = 768/3, h = 1024/3;//256 341.3   236   404
-        int x = size.width-450-w;
-        int y = size.height/2+20;
+        int w = 768/3, h = 1024/3;
+        int x = size.width-430-w*2;
+        int y = size.height-h-35;
         int bw = w - 20;
         int bh = bw;
-        CGRect cropRect = CGRectMake(x+w/2-bw/2+1, h/2-bh/2+24+1, bw-2, bh-2);
+        CGRect cropRect = CGRectMake(x+w/2-bw/2+1, h/2-bh/2+36+1, bw-2, bh-2);
         
         UIImage *screenshot = [self screenshotWithStartNode: cadre];
         CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], cropRect);
@@ -169,14 +167,13 @@
     //_picker = nil;
 }
 
-ClippingSprite* cadre;
-CCSprite* picture;
-UITextField* userNameTextField;
-UIImage* selectedImage;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
     [picker dismissModalViewControllerAnimated:YES];
     [_popover dismissPopoverAnimated:YES];
     
+    if(cadre) {
+        [self removeChild:cadre];
+    }
     CGSize size = [[CCDirector sharedDirector] winSize];
     CGSize cadreSize = CGSizeMake(size.width, size.height);
     cadre = [[ClippingSprite alloc] init];
@@ -187,8 +184,8 @@ UIImage* selectedImage;
     [cadre setTextureRect:CGRectMake(0, 0, cadreSize.width, cadreSize.height)];
     free(buffer);
     int w = 768/3, h = 1024/3;
-    int x = size.width-450-w;
-    int y = size.height/2+20;
+    int x = size.width-430-w*2;
+    int y = size.height-h-35;
     cadre.openWindowRect = CGRectMake(x,y,w,h);
     cadre.touchRect = CGRectMake(x,y,w,h);
     cadre.position = ccp(cadreSize.width/2, cadreSize.height/2);
@@ -202,6 +199,7 @@ UIImage* selectedImage;
     pinchGestureRecognizer.delegate = self;
     [cadre addGestureRecognizer:pinchGestureRecognizer];
     
+    image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:image.size interpolationQuality:kCGInterpolationHigh];
     selectedImage = image;
     CCTexture2D *pictureTexture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
     picture = [[CCSprite alloc] initWithTexture:pictureTexture];
@@ -225,7 +223,7 @@ UIImage* selectedImage;
     
     // Create textfield
     if(userNameTextField == nil) {
-        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x,size.height-y,w,35)];
+        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x+w+20,35,w,35)];
         userNameTextField.placeholder = @"Enter name here." ;
         userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
         userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
@@ -243,6 +241,17 @@ UIImage* selectedImage;
         
         // Add textfield into cocos2d view
         [[[CCDirector sharedDirector] openGLView] addSubview:userNameTextField];
+    }
+    
+    CCMenuItem *saveItem = [CCMenuItemImage
+                            itemFromNormalImage:@"save.png" selectedImage:@"save.png"
+                            target:self selector:@selector(saveButtonTapped:)];
+    saveItem.position = ccp(50, 30);
+    
+    if(!saveMenu) {
+        saveMenu = [CCMenu menuWithItems: saveItem, nil];
+        saveMenu.position = ccp(size.width-400, size.height-80);
+        [self addChild:saveMenu];
     }
 
 }

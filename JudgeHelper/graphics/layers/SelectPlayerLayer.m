@@ -18,6 +18,7 @@
 #import "GameLayer.h"
 #import "ClippingSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
+#import "UIImage+Resize.h"
 
 @implementation SelectPlayerLayer
 
@@ -38,22 +39,87 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
+    if(playerToRemove != nil) {
+        [playerToRemove stopAllActions];
+        [playerToRemove setRotation:0];
+        [playerToRemove removeDeleteButton];
+        playerToRemove = nil;
+        return;
+    }
+    
     selPersonIcon = (MySprite*)sender.node;
     
     if (selPersonIcon.selected) {
         selPersonIcon.selected = NO;
         [selPersonIcon stopAllActions];
+        [selPersonIcon setRotation:0];
     } else {
         selPersonIcon.selected = YES;
         CCRotateTo * rotLeft = [CCRotateBy actionWithDuration:0.1 angle:-4.0];
         CCRotateTo * rotCenter = [CCRotateBy actionWithDuration:0.1 angle:0.0];
         CCRotateTo * rotRight = [CCRotateBy actionWithDuration:0.1 angle:4.0];
         CCSequence * rotSeq = [CCSequence actions:rotLeft, rotCenter, rotRight, rotCenter, nil];
-        [selPersonIcon runAction:[CCRepeatForever actionWithAction:rotSeq]];
+        CCRepeatForever* action = [CCRepeatForever actionWithAction:rotSeq];
+        [selPersonIcon runAction:action];
     }
 }
 
--(void) startGame : (id) sender {
+MySprite* playerToRemove;
+- (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
+    if(playerToRemove) return;
+    
+    playerToRemove = (MySprite*)sender.node;
+    
+    [playerToRemove showDeleteButtonWithTarget:self action:@selector(removePlayer:)];
+    
+    CCRotateTo * rotLeft = [CCRotateBy actionWithDuration:0.05 angle:-4.0];
+    CCRotateTo * rotCenter = [CCRotateBy actionWithDuration:0.05 angle:4.0];
+    CCRotateTo * rotRight = [CCRotateBy actionWithDuration:0.05 angle:4.0];
+    CCRotateTo * rotCenter2 = [CCRotateBy actionWithDuration:0.05 angle:-4.0];
+    CCSequence * rotSeq = [CCSequence actions:rotLeft, rotCenter, rotRight, rotCenter2, nil];
+    [playerToRemove runAction:[CCRepeatForever actionWithAction:rotSeq]];
+}
+
+
+- (void) removePlayer: (UITapGestureRecognizer*) sender {
+    if(playerToRemove != nil) {
+        // stop animation
+        [playerToRemove stopAllActions];
+        [playerToRemove setRotation: 0.0f];
+        
+        // remove from system storage
+        NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+        [pids removeObject:playerToRemove.id];
+        [userDefaults setObject:pids forKey:pidsKey];
+        [userDefaults removeObjectForKey:[playerToRemove.id stringByAppendingString:@"-name"]];
+        [userDefaults removeObjectForKey:[playerToRemove.id stringByAppendingString:@"-img"]];
+        [userDefaults synchronize];
+        
+        //remove from local cache
+        [personIcons removeObject:playerToRemove];
+        [personIconsMap removeObjectForKey:playerToRemove.id];
+        
+        // remove frome playesPool
+        [playersPool removeChild:playerToRemove];
+        
+        // sort playersPool
+        CCSprite* node0;
+        int d = (personIcons.count && ((CCSprite*)[personIcons objectAtIndex:0]).position.x < IMG_WIDTH/2 && ((CCSprite*)[personIcons lastObject]).position.x <= IMG_WIDTH/2+(IMG_WIDTH+20)*9) ? 1 : -1;
+        for(CCSprite* node in personIcons) {
+            if((!node0 && node.position.x > IMG_WIDTH/2) ||
+               (node0 && node.position.x - node0.position.x > IMG_WIDTH+20)) {
+                node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20)*d, 0));
+            }
+            node0 = node;
+        }
+        
+        playerToRemove = nil;
+    }
+    
+}
+
+
+- (void) startGame : (id) sender {
     // init players
     NSMutableArray* players = [self createPlayers];
     GlobalSettings* global = [GlobalSettings globalSettings];
@@ -164,7 +230,7 @@ int IMG_HEIGHT = 72;
         
         playersPool = [[ClippingSprite alloc] init];
         [playersPool setContentSize:CGSizeMake(size.width-200, 100)];
-        playersPool.openWindowRect = CGRectMake(50, 0, (IMG_WIDTH+10)*10, 400);
+        playersPool.openWindowRect = CGRectMake(50-20, 0, (IMG_WIDTH+20)*9+20, 400);
         playersPool.position = ccp(50+(size.width-200)/2, 170+100/2);
         
         [self addChild:playersPool];
@@ -182,17 +248,17 @@ CreatePlayerLayer* createPlayerLayer;
 }
 
 -(BOOL) leftButtonTapped: (id) sender {
-    if(((CCSprite*)[personIcons objectAtIndex:0]).position.x >= IMG_WIDTH/2) return NO;
+    if(!personIcons.count || ((CCSprite*)[personIcons objectAtIndex:0]).position.x >= IMG_WIDTH/2) return NO;
     for(CCSprite* node in personIcons) {
-        node.position = ccpAdd(node.position, ccp((IMG_WIDTH+10), 0));
+        node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20), 0));
     }
     return YES;
 }
 
 -(BOOL) rightButtonTapped: (id) sender {
-    if(((CCSprite*)[personIcons lastObject]).position.x <= IMG_WIDTH/2+(IMG_WIDTH+10)*9) return NO;
+    if(!personIcons.count || ((CCSprite*)[personIcons lastObject]).position.x <= IMG_WIDTH/2+(IMG_WIDTH+20)*9) return NO;
     for(CCSprite* node in personIcons) {
-        node.position = ccpAdd(node.position, ccp(-(IMG_WIDTH+10), 0));
+        node.position = ccpAdd(node.position, ccp(-(IMG_WIDTH+20), 0));
     }
     return YES;
 }
@@ -256,19 +322,25 @@ NSMutableArray* pids;
 -(void) addPlayer: (NSString*) id withName: (NSString*) name andImage: (UIImage*) image {
     if(id.length <= 0 || name.length <= 0) return;
     
+    image = [image resizedImage:CGSizeMake(IMG_WIDTH, IMG_HEIGHT) interpolationQuality:kCGInterpolationDefault];
+    
     CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
     CGSize textureSize = [texture contentSize];
     MySprite *icon = [MySprite spriteWithTexture: texture];
-    [icon setScaleX: IMG_WIDTH/textureSize.width];
-    [icon setScaleY: IMG_HEIGHT/textureSize.height];
     
-    icon.position = ccp((IMG_WIDTH+10)*personIcons.count+IMG_WIDTH/2, IMG_HEIGHT/2);
+    icon.position = ccp((IMG_WIDTH+20)*personIcons.count+IMG_WIDTH/2, IMG_HEIGHT/2);
     icon.id = id;
     icon.name = name;
     icon.isTouchEnabled = YES;
+    [icon showName];
+    
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
     tapGestureRecognizer.delegate = self;
     [icon addGestureRecognizer:tapGestureRecognizer];
+    
+    UIGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressePlayer:)];
+    longPressGestureRecognizer.delegate = self;
+    [icon addGestureRecognizer:longPressGestureRecognizer];
     
     [playersPool addChild: icon];
     [personIcons addObject:icon];

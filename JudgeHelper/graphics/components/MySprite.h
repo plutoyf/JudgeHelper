@@ -15,5 +15,10 @@
 @property(nonatomic, retain) NSString* name;
 @property(atomic) BOOL selectable;
 @property(atomic) BOOL selected;
+@property(nonatomic, retain) CCSprite* deleteButton;
+
+-(void) showDeleteButtonWithTarget: (id)target action:(SEL)action;
+-(void) removeDeleteButton;
+-(void) showName;
 
 @end

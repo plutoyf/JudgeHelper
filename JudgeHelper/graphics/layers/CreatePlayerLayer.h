@@ -7,6 +7,7 @@
 //
 
 #import "CCSprite.h"
+#import "ClippingSprite.h"
 
 @protocol CreatePlayerDelegate;
 
@@ -16,6 +17,11 @@
     UIImage *newImage;
     UIImagePickerController* _picker;
     UIPopoverController* _popover;
+    ClippingSprite* cadre;
+    CCSprite* picture;
+    CCMenu* saveMenu;
+    UITextField* userNameTextField;
+    UIImage* selectedImage;
 }
 
 @property (nonatomic, assign) id<CreatePlayerDelegate> delegate;
