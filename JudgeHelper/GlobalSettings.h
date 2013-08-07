@@ -19,5 +19,7 @@ typedef enum {
 -(GameMode) getGameMode;
 -(void) setTotalRoleNumber: (int) i;
 -(int) getTotalRoleNumber;
+-(void) setPlayerIds: (NSArray*) ids;
+-(NSArray*) getPlayerIds;
 
 @end

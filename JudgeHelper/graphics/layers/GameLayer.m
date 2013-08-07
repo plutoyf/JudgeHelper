@@ -12,10 +12,12 @@
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
+#import "GlobalSettings.h"
 #import "RuleResolver.h"
 #import "CCHandPlayer.h"
 #import "CCDoubleHandPlayer.h"
 #import "SelectPlayerLayer.h"
+#import "CCNode+SFGestureRecognizers.h"
 
 #pragma mark - GameLayer
 
@@ -39,89 +41,41 @@
 }
 
 
--(void) registerWithTouchDispatcher
-{
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority swallowsTouches:NO];
+-(void) undoButtonPressed {
+    [engin action: @"UNDO_ACTION"];    
 }
 
-
--(BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
-    selPlayer = nil;
-    for (CCPlayer* p in players) {
-        if (p.selectable && [p isInside: touchLocation]) {
-            selPlayer = p;
-            break;
-        }
-    }
-    
-    return TRUE;
+-(void) redoButtonPressed {
+    [engin action: @"REDO_ACTION"];    
 }
 
-- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+- (void) selectPlayerById: (NSString*) id {
+    CCPlayer* selPlayer = (CCPlayer*)[playersMap objectForKey:id];
     
-    CGPoint oldTouchLocation = [touch previousLocationInView:touch.view];
-    oldTouchLocation = [[CCDirector sharedDirector] convertToGL:oldTouchLocation];
-    oldTouchLocation = [self convertToNodeSpace:oldTouchLocation];
+    id = (selPlayer.role == Judge) ? nil : selPlayer.id;
     
-    CGPoint translation = ccpSub(touchLocation, oldTouchLocation);
-    if (selPlayer) {
-        CGPoint newPos = ccpAdd(selPlayer.sprite.position, translation);
-        selPlayer.sprite.position = newPos;
-        selPlayerInMove = YES;
-    }
-}
-
--(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
-    NSString* id = nil;
-    if (CGRectContainsPoint(undoIcon.boundingBox, touchLocation)) {
-        id = @"UNDO_ACTION";
-    } else if (CGRectContainsPoint(redoIcon.boundingBox, touchLocation)) {
-        id = @"REDO_ACTION";
-    } else if (selPlayer) {
-        if(selPlayer.role == Judge) {
-            id = nil;
-        } else if(rolePlayerToDefine == Judge) {
-            id = selPlayer.id;
+    if(rolePlayerToDefine > 0) {
+        if(!defineRolePlayerBegin) {
+            [self showMessage: [NSString stringWithFormat:@"请设定“%@”角色玩家", [engin getRoleLabel: rolePlayerToDefine]]];
+            defineRolePlayerBegin = YES;
         } else {
-            id = selPlayer.id;
-        }
-        if(!selPlayerInMove) {
-            [selPlayer hideRoleInfo];
-            [selPlayer showRoleInfo];
-        }
-    }
-    
-    if(!selPlayerInMove) {
-        if(rolePlayerToDefine > 0) {
-            if(!defineRolePlayerBegin) {
-                [self showMessage: [NSString stringWithFormat:@"请设定“%@”角色玩家", [engin getRoleLabel: rolePlayerToDefine]]];
-                defineRolePlayerBegin = YES;
-            } else {
-                if(selPlayer && (selPlayer.role == 0 || selPlayer.role == Citizen)) {
-                    // select this player as role
-                    [engin getPlayerById:selPlayer.id].role = rolePlayerToDefine;
-                    if(rolePlayerToDefine == Judge) {
-                        [self initPlayersWithJudge: id];
-                    }
+            if(selPlayer && (selPlayer.role == 0 || selPlayer.role == Citizen)) {
+                // select this player as role
+                [engin getPlayerById:selPlayer.id].role = rolePlayerToDefine;
+                if(rolePlayerToDefine == Judge) {
+                    [self initPlayersWithJudge: id];
+                }
                 
-                    if([engin getRoleNumber:rolePlayerToDefine] == [engin getPlayersByRole:rolePlayerToDefine].count) {
-                        rolePlayerToDefine = 0;
-                        defineRolePlayerBegin = NO;
-                        [engin action: id];
-                    }
+                if([engin getRoleNumber:rolePlayerToDefine] == [engin getPlayersByRole:rolePlayerToDefine].count) {
+                    rolePlayerToDefine = 0;
+                    defineRolePlayerBegin = NO;
+                    [engin action: id];
                 }
             }
-        } else {
-            [engin action: id];
         }
+    } else {
+        [engin action: id];
     }
-    
-    selPlayerInMove = NO;
 }
 
 
@@ -148,7 +102,10 @@ CCEngin* engin;
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
+        
         self.isTouchEnabled = YES;
+        UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(emptyClick:)];
+        [self addGestureRecognizer:tapGestureRecognizer];
 		
         engin = [CCEngin getEngin];
         engin.displayDelegate = self;
@@ -185,22 +142,32 @@ CCEngin* engin;
         }
         
         // init players without role
+        GlobalSettings* global = [GlobalSettings globalSettings];
         playersMap = [[NSMutableDictionary alloc] init];
         players = [[NSMutableArray alloc] init];
-        for(int i = 0; i < engin.players.count; i++) {
-            CCPlayer* p = [engin.players objectAtIndex:i];
+        NSArray* ids = [global getPlayerIds];
+        int pNum = ids.count;
+        for(int i = 0; i < pNum; i++) {
+            CCPlayer* p = ([global getGameMode] == DOUBLE_HAND) ? [[CCDoubleHandPlayer alloc] init:(NSString*)[ids objectAtIndex:i]] : [[CCPlayer alloc] init:(NSString*)[ids objectAtIndex:i]];
+            
             int line = (int)((i+6)/6);
             p.sprite.position = ccp(80+(170*(i%6)), 120*line);
+            p.delegate = self;
             
             [self addChild: p.sprite];
             [players addObject:p];
             [playersMap setObject:p forKey:p.id];
         }
+        [engin setPlayers: players];
         
         [engin run];
 	}
     
 	return self;
+}
+
+-(void) emptyClick: (UITapGestureRecognizer*) sender {
+    [self selectPlayerById: nil];
 }
 
 -(void) initPlayersWithJudge: (NSString*) judgeId {
@@ -214,7 +181,10 @@ CCEngin* engin;
         } else if([p class] == [CCDoubleHandPlayer class]){
             CCDoubleHandPlayer* dhp = ((CCDoubleHandPlayer*)p);
             dhp.leftHandPlayer = [[CCHandPlayer alloc] init: [p.id stringByAppendingString:@"l"] andName: [p.name stringByAppendingString:@"左手"] withRole: Citizen];
+            dhp.leftHandPlayer.delegate = self;
+            
             dhp.rightHandPlayer = [[CCHandPlayer alloc] init: [p.id stringByAppendingString:@"r"] andName: [p.name stringByAppendingString:@"右手"] withRole: Citizen];
+            dhp.rightHandPlayer.delegate = self;
             
             [playersMap setObject:dhp.leftHandPlayer forKey: dhp.leftHandPlayer.id];
             [playersMap setObject:dhp.rightHandPlayer forKey: dhp.rightHandPlayer.id];

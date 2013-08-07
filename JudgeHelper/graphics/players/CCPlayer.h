@@ -8,27 +8,34 @@
 
 #import <GameKit/GameKit.h>
 #import "Player.h"
+#import "MySprite.h"
+
+@protocol CCPlayerControleDelegate;
 
 @interface CCPlayer : Player
 {
     CCLabelTTF* labelTTF;
-    CCSprite* avatar;
     BOOL expanded;
     NSMutableArray* actionIcons;
     NSMutableArray* actionIconsBackup;
+    CGPoint originalPoint;
 }
 
 @property(atomic) BOOL selectable;
 @property (nonatomic, strong) CCSprite* sprite;
+@property (nonatomic, assign) id<CCPlayerControleDelegate> delegate;
 
--(id) init: (NSString*) id andName: (NSString *) name withRole: (Role) role withAvatar: (BOOL) hasAvatar;
+-(id) init: (NSString*) id;
+-(id) init: (NSString*) id withRole: (Role) role;
+-(id) init: (NSString*) id withRole: (Role) role withAvatar: (BOOL) hasAvatar;
 
 -(void) addChild: (CCNode*) child;
 -(void) removeChild: (CCNode*)child;
 
+-(void) selectPlayer: (UITapGestureRecognizer*) sender;
+
 -(void) setRole: (Role) role;
 -(void) setLabel: (NSString*) label;
--(BOOL) isInside:(CGPoint) location;
 -(void) showRoleInfo;
 -(void) hideRoleInfo;
 -(void) updatePlayerIcon;
@@ -36,4 +43,9 @@
 -(void) removeLastActionIcon;
 -(void) backupActionIcons;
 -(void) restoreActionIcons;
+@end
+
+@protocol CCPlayerControleDelegate
+@required
+-(void) selectPlayerById: (NSString*) id;
 @end

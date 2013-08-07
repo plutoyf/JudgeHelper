@@ -8,8 +8,15 @@
 
 #import "CCDoubleHandPlayer.h"
 #import "Engin.h"
+#import "CCNode+SFGestureRecognizers.h"
 
 @implementation CCDoubleHandPlayer
+
+-(void) selectPlayer: (UITapGestureRecognizer*) sender {
+    [self hideRoleInfo];
+    [self showRoleInfo];
+    [super selectPlayer:sender];
+}
 
 -(void) setLeftHandPlayer:(CCHandPlayer *) player {
     player.hand = LEFTHAND;
@@ -49,9 +56,9 @@
 
 -(void) updatePlayerIcon {
     if(_leftHandPlayer.status == OUT_GAME && _rightHandPlayer.status == OUT_GAME) {
-        avatar.opacity = 80;
+        self.sprite.opacity = 80;
     } else if(_leftHandPlayer.status == IN_GAME || _rightHandPlayer.status == IN_GAME) {
-        avatar.opacity = 999;
+        self.sprite.opacity = 999;
     } else {
         [super updatePlayerIcon];
     }

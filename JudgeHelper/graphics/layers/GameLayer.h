@@ -13,7 +13,6 @@
 
 @interface GameLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, CCEnginDisplayDelegate>
 {
-    
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

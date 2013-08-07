@@ -9,15 +9,16 @@
 #import "CCHandPlayer.h"
 #import "CCEngin.h"
 #import "Constants.h"
+#import "CCNode+SFGestureRecognizers.h"
 
 @implementation CCHandPlayer
 
--(id) init: (NSString*) id andName: (NSString*) name {
-    return [self init: id andName: name withRole: Citizen];
+-(id) init: (NSString*) id {
+    return [self init: id withRole: Citizen];
 }
 
--(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role {
-    if(self = [super init: id andName: name withRole: role withAvatar: NO]) {
+-(id) init: (NSString*) id withRole: (Role) role {
+    if(self = [super init: id withRole: role withAvatar: NO]) {
     }
     return self;
 }
@@ -26,7 +27,7 @@
     if(!expanded) {
         if(_role > 0) {
             NSString* handIconFile = _hand==LEFTHAND ? @"lefthand.png" : @"righthand.png";
-            CGPoint handIconPosition = _hand==LEFTHAND ? ccp(-45, AVATAR_IMG_WIDTH-20) : ccp(AVATAR_IMG_WIDTH-25, AVATAR_IMG_HEIGHT-20);
+            CGPoint handIconPosition = _hand==LEFTHAND ? ccp(-10, AVATAR_IMG_HEIGHT+20) : ccp(AVATAR_IMG_WIDTH+10, AVATAR_IMG_HEIGHT+20);
             CGPoint roleIconPosition = _hand==LEFTHAND ? ccp(18, 14) : ccp(22, 14);
             
             handIcon = [CCSprite spriteWithFile: handIconFile];
@@ -36,6 +37,10 @@
                 roleIcon.opacity = _status == OUT_GAME ? 80 : 999;
                 [handIcon addChild:roleIcon];
             }
+            
+            handIcon.isTouchEnabled = YES;
+            UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
+            [handIcon addGestureRecognizer:tapGestureRecognizer];
             
             handIcon.position = handIconPosition;
             handIcon.opacity = _status == OUT_GAME ? 80 : 999;
@@ -58,10 +63,6 @@
     
 }
 
--(BOOL) isInside:(CGPoint) location {
-    return CGRectContainsPoint(handIcon.boundingBox, ccpSub(location, _player.sprite.boundingBox.origin));
-}
-
 -(void) updatePlayerIcon {
     handIcon.opacity = _status == OUT_GAME ? 80 : 999;
     [_player updatePlayerIcon];
@@ -74,11 +75,11 @@
     float x, y;
     int n = actionIcons.count;
     if(_hand == LEFTHAND) {
-        x = -width/2-10;
-        y = height/2-10-20*n;
+        x = -10;
+        y = height-10-20*n;
     } else {
-        x = width/2+10;
-        y = height/2-10-20*n;
+        x = width+10;
+        y = height-10-20*n;
     }
     
     icon.position = ccp(x, y);

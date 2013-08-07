@@ -9,43 +9,70 @@
 #import "CCPlayer.h"
 #import "CCEngin.h"
 #import "Constants.h"
+#import "CCNode+SFGestureRecognizers.h"
+#import "UIImage+Resize.h"
 
 @implementation CCPlayer
 
--(id) init: (NSString*) id andName: (NSString*) name {
-    return [self init: id andName: name withRole: Citizen];
+-(id) init: (NSString*) id {
+    return [self init: id withRole: Citizen];
 }
 
--(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role {
-    return [self init: id andName: name withRole: role withAvatar:YES];
+-(id) init: (NSString*) id withRole: (Role) role {
+    return [self init: id withRole: role withAvatar:YES];
 }
 
--(id) init: (NSString*) id andName: (NSString*) name withRole: (Role) role withAvatar: (BOOL) hasAvatar {
+-(id) init: (NSString*) id withRole: (Role) role withAvatar: (BOOL) hasAvatar {
+    NSString* name = [[NSUserDefaults standardUserDefaults] objectForKey:[id stringByAppendingString:@"-name"]];
+
     if(self = [super init: id andName: name withRole: role]) {
         _selectable = YES;
-        _sprite = [CCSprite new];
         actionIcons = [NSMutableArray new];
         actionIconsBackup = [NSMutableArray new];
         
         if(hasAvatar) {
             NSData* imgData = [[NSUserDefaults standardUserDefaults] dataForKey:[id stringByAppendingString:@"-img"]];
-            UIImage* iconImg = [UIImage imageWithData:imgData];
-            CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad];
-            avatar = [[CCSprite alloc] initWithTexture:texture];
+            UIImage* image = [UIImage imageWithData:imgData];
+            image = [image resizedImage:CGSizeMake(AVATAR_IMG_WIDTH, AVATAR_IMG_HEIGHT) interpolationQuality:kCGInterpolationDefault];
+            CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
+            _sprite = [[CCSprite alloc] initWithTexture:texture];
             CGSize textureSize = [texture contentSize];
-            [avatar setScaleX: AVATAR_IMG_WIDTH/textureSize.width];
-            [avatar setScaleY: AVATAR_IMG_HEIGHT/textureSize.height];
             
-            [_sprite addChild:avatar];
-            
-            labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:12];
-            labelTTF.position = ccp(0, -46);
+            labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:14];
+            labelTTF.position = ccp(textureSize.width/2, -14);
             [_sprite addChild: labelTTF];
+        } else {
+            _sprite = [CCSprite new];
         }
+                
+        _sprite.isTouchEnabled = YES;
         
+        UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
+        [_sprite addGestureRecognizer:tapGestureRecognizer];
+        
+        UIGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayer:)];
+        [_sprite addGestureRecognizer:longPressGestureRecognizer];
 
     }
     return self;
+}
+
+-(void) selectPlayer: (UITapGestureRecognizer*) sender {
+    if(self.delegate) {
+        [self.delegate selectPlayerById: self.id];
+    }
+}
+
+-(void) movePlayer: (UILongPressGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
+    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
+    
+    if(sender.state == UIGestureRecognizerStateBegan) {
+        originalPoint = locationInMySpriteSpace;
+    } else {
+        sender.node.position = ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint);
+    }
 }
 
 -(void) setRole: (Role) role {
@@ -54,20 +81,6 @@
         [self hideRoleInfo];
         [self showRoleInfo];
     }
-}
-
--(void) setAvatarWithTexture: (CCTexture2D*) texture {
-    if(avatar) {
-        [_sprite removeChild:avatar];
-    }
-    
-    avatar = [[CCSprite alloc] initWithTexture:texture];
-    CGSize textureSize = [texture contentSize];
-    [avatar setScaleX: AVATAR_IMG_WIDTH/textureSize.width];
-    [avatar setScaleY: AVATAR_IMG_HEIGHT/textureSize.height];
-    
-    [_sprite addChild:avatar];
-    
 }
 
 -(void) setLabel: (NSString*) label {
@@ -90,20 +103,16 @@
     }
 }
 
--(BOOL) isInside:(CGPoint) location {
-    return CGRectContainsPoint(avatar.boundingBox, ccpSub(location, self.sprite.boundingBox.origin));
-}
-
 -(void) updatePlayerIcon {
-    avatar.opacity = _status == OUT_GAME ? 80 : 999;
+    _sprite.opacity = _status == OUT_GAME ? 80 : 999;
 }
 
 -(void) addActionIcon: (Role) role {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
-    float x = -AVATAR_IMG_WIDTH/2+10, y = AVATAR_IMG_HEIGHT/2+10;
+    CGSize iconSize = icon.boundingBox.size;
     int n = actionIcons.count;
-    x = -AVATAR_IMG_WIDTH/2+10+20*n;
-    y = AVATAR_IMG_HEIGHT/2+10;
+    float x = iconSize.width/2+iconSize.width*n;
+    float y = AVATAR_IMG_HEIGHT+iconSize.height/2+2;
     
     icon.position = ccp(x, y);
     [actionIcons addObject:icon];

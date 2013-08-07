@@ -121,14 +121,14 @@ MySprite* playerToRemove;
 
 - (void) startGame : (id) sender {
     // init players
-    NSMutableArray* players = [self createPlayers];
+    NSArray* playerIds = [self getSelectedPlayerIds];
     GlobalSettings* global = [GlobalSettings globalSettings];
-    if([global getGameMode] == DOUBLE_HAND && players.count*2 != [global getTotalRoleNumber]+1) {
+    if([global getGameMode] == DOUBLE_HAND && playerIds.count*2 != [global getTotalRoleNumber]+1) {
         //too many or not enough players in DOUBLE HAND game mode
-    } else if([global getGameMode] == NORMAL && players.count != [global getTotalRoleNumber]) {
+    } else if([global getGameMode] == NORMAL && playerIds.count != [global getTotalRoleNumber]) {
         //too many or not enough players in NORMAL game mode
     } else {
-        [engin setPlayers: players];
+        [global setPlayerIds: playerIds];
         [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameLayer scene] ]];
     }
 }
@@ -347,21 +347,15 @@ NSMutableArray* pids;
     [personIconsMap setObject:icon forKey:icon.id];
 }
 
--(NSMutableArray*) createPlayers {
-    NSMutableArray* players = [NSMutableArray new];
-    for (MySprite *sprite in personIcons) {
-        if (sprite.selected) {
-            Player* p = nil;
-            if ([[GlobalSettings globalSettings] getGameMode] == DOUBLE_HAND) {
-                p = [[CCDoubleHandPlayer alloc] init:sprite.id andName: sprite.name];
-            } else {
-                p = [[CCPlayer alloc] init:sprite.id andName: sprite.name];
-            }
-            [players addObject: p];
+-(NSArray*) getSelectedPlayerIds {
+    NSMutableArray* ids = [NSMutableArray new];
+    for (MySprite *p in personIcons) {
+        if (p.selected) {
+            [ids addObject:p.id];
         }
     }
         
-    return players;
+    return ids;
 }
 
 

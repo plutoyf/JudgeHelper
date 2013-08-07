@@ -40,4 +40,13 @@ int totalRoleNumber;
     return totalRoleNumber;
 }
 
+NSArray* playerIds;
+-(void) setPlayerIds: (NSArray*) ids {
+    playerIds = ids;
+}
+
+-(NSArray*) getPlayerIds {
+    return playerIds;
+}
+
 @end
