@@ -5,5 +5,27 @@
       <ContextState
          contextName = "-[MySprite showName]:MySprite.m">
       </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+            </PersistentString>
+            <PersistentString
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((CCSprite*)[personIcons objectAtIndex:0]).position.x">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

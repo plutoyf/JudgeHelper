@@ -17,6 +17,7 @@
 #import "CCHandPlayer.h"
 #import "CCDoubleHandPlayer.h"
 #import "SelectPlayerLayer.h"
+#import "GameStateSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 
 #pragma mark - GameLayer
@@ -41,11 +42,11 @@
 }
 
 
--(void) undoButtonPressed {
+-(void) undoButtonPressed : (id) sender {
     [engin action: @"UNDO_ACTION"];    
 }
 
--(void) redoButtonPressed {
+-(void) redoButtonPressed : (id) sender {
     [engin action: @"REDO_ACTION"];    
 }
 
@@ -84,8 +85,6 @@ BOOL showDebugMessageEnable = NO;
 CCLabelTTF* debugLabel;
 CCLabelTTF* nightLabel;
 CCLabelTTF* messageLabel;
-CCSprite* undoIcon;
-CCSprite* redoIcon;
 CCMenu* restarMenu;
 CCPlayer* selPlayer;
 BOOL selPlayerInMove;
@@ -93,8 +92,8 @@ NSMutableDictionary* playersMap;
 NSMutableArray* players;
 Role rolePlayerToDefine;
 BOOL defineRolePlayerBegin;
+GameStateSprite* gameStateSprite;
 
-//NSMutableArray* playerBackupStateIcons;
 CCEngin* engin;
 // on "init" you need to initialize your instance
 -(id) init
@@ -105,6 +104,7 @@ CCEngin* engin;
         
         self.isTouchEnabled = YES;
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(emptyClick:)];
+        tapGestureRecognizer.cancelsTouchesInView = NO;
         [self addGestureRecognizer:tapGestureRecognizer];
 		
         engin = [CCEngin getEngin];
@@ -113,15 +113,19 @@ CCEngin* engin;
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
-        undoIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"undo.png"].CGImage resolutionType: kCCResolutioniPad]];
-        undoIcon.position = ccp(60, size.height-200);
-        [self addChild: undoIcon];
+        CCSprite* undoButton = [CCSprite spriteWithFile:@"undo.png"];
+        undoButton.position = ccp(60, size.height-200);
+        undoButton.isTouchEnabled = YES;
+        [undoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(undoButtonPressed:)] ];
+        [self addChild:undoButton];
         
-        redoIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"redo.png"].CGImage resolutionType: kCCResolutioniPad]];
-        redoIcon.position = ccp(160, size.height-200);
-        [self addChild: redoIcon];
-        
-        
+        CCSprite* redoButton = [CCSprite spriteWithFile:@"redo.png"];
+        redoButton.position = ccp(160, size.height-200);
+        redoButton.isTouchEnabled = YES;
+        [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
+        [self addChild:redoButton];
+
+
         nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
         nightLabel.position = ccp(60 , size.height-100 );
 		nightLabel.tag = 12;
@@ -160,10 +164,28 @@ CCEngin* engin;
         }
         [engin setPlayers: players];
         
+        
+        gameStateSprite = [[GameStateSprite alloc] init];
+        gameStateSprite.isTouchEnabled = YES;
+        UIGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+        panGestureRecognizer.delegate = self;
+        [gameStateSprite addGestureRecognizer:panGestureRecognizer];
+        
+        [self addChild: gameStateSprite];
+        
         [engin run];
 	}
     
 	return self;
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer*) sender {
+    CCNode *node = sender.node;
+    CGPoint translation = [sender translationInView:sender.view];
+    translation.y *= -1;
+    [sender setTranslation:CGPointZero inView:sender.view];
+    
+    node.position = ccpAdd(node.position, translation);
 }
 
 -(void) emptyClick: (UITapGestureRecognizer*) sender {
@@ -204,22 +226,26 @@ CCEngin* engin;
     for(CCPlayer* p in players) {
         [p backupActionIcons];
     }
+    [gameStateSprite updateState];
 }
 
 -(void) restoreBackupActionIcon {
     for(CCPlayer* p in players) {
         [p restoreActionIcons];
     }
+    [gameStateSprite updateState];
 }
 
 -(void) addActionIcon: (Role) role to: (Player*) player {
     CCPlayer* p = [playersMap objectForKey:player.id];
     [p addActionIcon: role];
+    [gameStateSprite updateState];
 }
 
 -(void) removeActionIconFrom: (Player*) player {
     CCPlayer* p = [playersMap objectForKey:player.id];
     [p removeLastActionIcon];
+    [gameStateSprite updateState];
 }
 
 -(void) updatePlayerLabels {

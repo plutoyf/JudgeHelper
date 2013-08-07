@@ -135,8 +135,10 @@ static CCEngin *engin = nil;
             }
         case 3:
             NSLog(@"case 3");
-            [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
-            state++;
+            if([self getPlayersByRole: roleInAction].count == [self getRoleNumber: roleInAction]) {
+                [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
+                state++;
+            }
             break;
         case 4:
             NSLog(@"case 4");
@@ -227,7 +229,7 @@ static CCEngin *engin = nil;
             [self debugPlayers];
             [self.displayDelegate showMessage: [NSString stringWithFormat:@"今夜%@%@", deadNames, @"死亡"]];
             state++;
-            if(!speedMode) break;
+            break;
         case 8:
             NSLog(@"case 8");
             [self debugCurrentNightInfo: night];
@@ -278,7 +280,7 @@ static CCEngin *engin = nil;
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"投票结果：%@死亡", deadNames]];
                 state++;
-                if(!speedMode) break;
+                break;
             } else {
                 break;
             }
@@ -303,12 +305,15 @@ static CCEngin *engin = nil;
 }
 
 -(void) undoAction {
-    if(!inGame) {
+    if(!inGame || night < 1) {
         return;
     }
     
     switch (state) {
         case 1:
+            if(night == 1) {
+                break;
+            }
         case 11:
             // go back to state 10
             NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);

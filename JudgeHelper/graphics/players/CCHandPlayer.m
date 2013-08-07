@@ -73,7 +73,7 @@
     int width = AVATAR_IMG_WIDTH;
     int height = AVATAR_IMG_HEIGHT;
     float x, y;
-    int n = actionIcons.count;
+    int n = _actionIcons.count;
     if(_hand == LEFTHAND) {
         x = -10;
         y = height-10-20*n;
@@ -83,7 +83,7 @@
     }
     
     icon.position = ccp(x, y);
-    [actionIcons addObject:icon];
+    [_actionIcons addObject:icon];
     [self addChild:icon];
 }
 

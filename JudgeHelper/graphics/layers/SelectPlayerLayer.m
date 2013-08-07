@@ -39,6 +39,13 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
+    /*
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
+    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
+    if(!CGRectContainsPoint(CGRectMake(50-20, 0, (IMG_WIDTH+20)*9+20, 400), locationInWorldSpace)) return;
+    */
+    
     if(playerToRemove != nil) {
         [playerToRemove stopAllActions];
         [playerToRemove setRotation:0];
@@ -251,14 +258,25 @@ CreatePlayerLayer* createPlayerLayer;
     if(!personIcons.count || ((CCSprite*)[personIcons objectAtIndex:0]).position.x >= IMG_WIDTH/2) return NO;
     for(CCSprite* node in personIcons) {
         node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20), 0));
+        if(node.position.x > -IMG_WIDTH/2 && node.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
+            node.touchRect = CGRectMake(node.position.x-IMG_WIDTH/2<0?IMG_WIDTH/2-node.position.x:0, 0, node.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-node.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
+        } else {
+            node.touchRect = CGRectMake(0, 0, 0, 0);
+        }
     }
     return YES;
 }
 
 -(BOOL) rightButtonTapped: (id) sender {
-    if(!personIcons.count || ((CCSprite*)[personIcons lastObject]).position.x <= IMG_WIDTH/2+(IMG_WIDTH+20)*9) return NO;
+    if(!personIcons.count || ((CCSprite*)[personIcons lastObject]).position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) return NO;
     for(CCSprite* node in personIcons) {
         node.position = ccpAdd(node.position, ccp(-(IMG_WIDTH+20), 0));
+        if(node.position.x > -IMG_WIDTH/2 && node.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
+            node.touchRect = CGRectMake(node.position.x-IMG_WIDTH/2<0?IMG_WIDTH/2-node.position.x:0, 0, node.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-node.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
+        } else {
+            node.touchRect = CGRectMake(0, 0, 0, 0);
+        }
+        
     }
     return YES;
 }
@@ -332,6 +350,11 @@ NSMutableArray* pids;
     icon.id = id;
     icon.name = name;
     icon.isTouchEnabled = YES;
+    if(icon.position.x > -IMG_WIDTH/2 && icon.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
+        icon.touchRect = CGRectMake(icon.position.x<IMG_WIDTH/2?IMG_WIDTH/2-icon.position.x:0, 0, icon.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-icon.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
+    } else {
+        icon.touchRect = CGRectMake(0, 0, 0, 0);
+    }
     [icon showName];
     
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];

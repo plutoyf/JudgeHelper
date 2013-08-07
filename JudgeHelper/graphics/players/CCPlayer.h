@@ -16,13 +16,15 @@
 {
     CCLabelTTF* labelTTF;
     BOOL expanded;
-    NSMutableArray* actionIcons;
-    NSMutableArray* actionIconsBackup;
+    NSMutableArray* _actionIcons;
+    NSMutableArray* _actionIconsBackup;
     CGPoint originalPoint;
 }
 
 @property(atomic) BOOL selectable;
 @property (nonatomic, strong) CCSprite* sprite;
+@property (nonatomic, strong, readonly) NSMutableArray* actionIcons;
+@property (nonatomic, strong, readonly) NSMutableArray* actionIconsBackup;
 @property (nonatomic, assign) id<CCPlayerControleDelegate> delegate;
 
 -(id) init: (NSString*) id;

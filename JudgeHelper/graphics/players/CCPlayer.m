@@ -27,8 +27,8 @@
 
     if(self = [super init: id andName: name withRole: role]) {
         _selectable = YES;
-        actionIcons = [NSMutableArray new];
-        actionIconsBackup = [NSMutableArray new];
+        _actionIcons = [NSMutableArray new];
+        _actionIconsBackup = [NSMutableArray new];
         
         if(hasAvatar) {
             NSData* imgData = [[NSUserDefaults standardUserDefaults] dataForKey:[id stringByAppendingString:@"-img"]];
@@ -110,39 +110,41 @@
 -(void) addActionIcon: (Role) role {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
     CGSize iconSize = icon.boundingBox.size;
-    int n = actionIcons.count;
+    int n = _actionIcons.count;
     float x = iconSize.width/2+iconSize.width*n;
     float y = AVATAR_IMG_HEIGHT+iconSize.height/2+2;
     
     icon.position = ccp(x, y);
-    [actionIcons addObject:icon];
+    [_actionIcons addObject:icon];
     [self addChild:icon];
 }
 
 -(void) removeLastActionIcon {
-    if(actionIcons && actionIcons.count > 0){
-        [self removeChild:[actionIcons lastObject]];
-        [actionIcons removeLastObject];
+    if(_actionIcons && _actionIcons.count > 0){
+        [self removeChild:[_actionIcons lastObject]];
+        [_actionIcons removeLastObject];
     }
 }
 
 -(void) removeAllActionIcon {
-    while(actionIcons.count > 0) {
-        [self removeChild:[actionIcons lastObject]];
-        [actionIcons removeLastObject];
+    while(_actionIcons.count > 0) {
+        [self removeChild:[_actionIcons lastObject]];
+        [_actionIcons removeLastObject];
     }
 }
 
 -(void) backupActionIcons {
-    [actionIcons addObject: actionIconsBackup];
+    NSMutableArray* iconsBackup = [NSMutableArray arrayWithArray:_actionIcons];
+    [_actionIconsBackup addObject:iconsBackup];
+    
     [self removeAllActionIcon];
 }
 
 -(void) restoreActionIcons {
-    NSMutableArray* iconsBackup = (NSMutableArray*)[actionIconsBackup lastObject];
-    [actionIconsBackup removeLastObject];
+    NSMutableArray* iconsBackup = (NSMutableArray*)[_actionIconsBackup lastObject];
+    [_actionIconsBackup removeLastObject];
     for(CCSprite* icon in iconsBackup) {
-        [actionIcons addObject:icon];
+        [_actionIcons addObject:icon];
         [self addChild:icon];
     }
 }

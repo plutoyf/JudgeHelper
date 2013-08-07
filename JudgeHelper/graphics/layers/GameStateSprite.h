@@ -8,4 +8,5 @@
 
 @interface GameStateSprite : CCSprite
 
+-(void) updateState;
 @end

@@ -13,7 +13,6 @@
 #import "MySprite.h"
 #import "SelectPlayerLayer.h"
 #import "GlobalSettings.h"
-#import "GameStateSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 
 static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKey";
@@ -128,7 +127,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 CCEngin* engin;
 MySprite* nextIcon;
 MySprite* selRoleIcon;
-CCSprite* gameStateSprite;
 NSMutableDictionary * roleIcons;
 NSMutableDictionary * roleNumbers;
 NSMutableArray * movableRoleIcons;
@@ -198,14 +196,6 @@ NSMutableDictionary* roleLabels;
         nextIcon.position = ccp(size.width-100, 100);
         [self addChild: nextIcon];
         
-        gameStateSprite = [[GameStateSprite alloc] init];
-        gameStateSprite.isTouchEnabled = YES;
-        UIGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-        panGestureRecognizer.delegate = self;
-        [gameStateSprite addGestureRecognizer:panGestureRecognizer];
-
-        [self addChild: gameStateSprite];
-        
     }
     
 	return self;
@@ -214,16 +204,6 @@ NSMutableDictionary* roleLabels;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
-}
-
-- (void)handlePanGesture:(UIPanGestureRecognizer*)aPanGestureRecognizer
-{
-    CCNode *node = aPanGestureRecognizer.node;
-    CGPoint translation = [aPanGestureRecognizer translationInView:aPanGestureRecognizer.view];
-    translation.y *= -1;
-    [aPanGestureRecognizer setTranslation:CGPointZero inView:aPanGestureRecognizer.view];
-    
-    node.position = ccpAdd(node.position, translation);
 }
 
 -(void) doubleHandModeButtonTapped: (id) sender
