@@ -12,6 +12,7 @@
 #import "CCEngin.h"
 #import "MySprite.h"
 #import "SelectPlayerLayer.h"
+#import "GameLayer.h"
 #import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
 
@@ -43,13 +44,44 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    if (CGRectContainsPoint(nextIcon.boundingBox, touchLocation)) {
-        [self toNextScreen];
+    if (CGRectContainsPoint(previousIcon.boundingBox, touchLocation)) {
+        [self toPreviousScreen];
+    } else if (CGRectContainsPoint(startIcon.boundingBox, touchLocation)) {
+        [self toGameScreen];
     } else {
         [self selectRoleForTouch:touchLocation];
     }
     
     return TRUE;
+}
+
+-(void) toPreviousScreen {
+    GlobalSettings* global = [GlobalSettings globalSettings];
+    [global setRoles: roles];
+    [global setRoleNumbers: roleNumbers];
+
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
+}
+
+-(void) toGameScreen {
+    NSArray* ids = [[GlobalSettings globalSettings] getPlayerIds];
+    
+    int rNum;
+    for(NSNumber* n in roleNumbers.allValues) {
+        rNum += n.intValue;
+    }
+    
+    GlobalSettings* global = [GlobalSettings globalSettings];
+    if(([global getGameMode] == NORMAL && ids.count == rNum)
+       || ([global getGameMode] == DOUBLE_HAND && ids.count*2-1 == rNum)) {
+        [global setRoles: roles];
+        [global setRoleNumbers: roleNumbers];
+
+        [engin initRoles: roleNumbers];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameLayer scene] ]];
+    } else {
+        // need one person more/less in double hand mode
+    }
 }
 
 - (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
@@ -66,7 +98,7 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
     if(selRoleIcon) {
         CGPoint p1 = selRoleIcon.position;
-        CGPoint p0 = ((MySprite*)[roleIcons objectForKey: selRoleIcon.name]).position;
+        CGPoint p0 = ((MySprite*)[roleIconsMap objectForKey: selRoleIcon.name]).position;
         float w = 72;
         float h = 72;
         if(p1.x == p0.x && p1.y == p0.y) {
@@ -81,7 +113,8 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
             }
         }
         
-        selRoleIcon.position = ((MySprite*)[roleIcons objectForKey: selRoleIcon.name]).position;
+        selRoleIcon.position = ((MySprite*)[roleIconsMap objectForKey: selRoleIcon.name]).position;
+        selRoleIcon = nil;
     }
 }
 
@@ -108,27 +141,14 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
     }
 }
 
--(void) toNextScreen {
-    int total = 0;
-    for(NSNumber* n in roleNumbers.allValues) {
-        total += n.intValue;
-    }
-    
-    if([[GlobalSettings globalSettings] getGameMode] == DOUBLE_HAND && total%2 == 0) {
-        // need one person more/less in double hand mode
-    } else {
-        [[GlobalSettings globalSettings] setTotalRoleNumber: total];
-        [engin initRoles: roleNumbers];
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
-    }
-}
-
 
 CCEngin* engin;
-MySprite* nextIcon;
+MySprite* previousIcon;
+MySprite* startIcon;
 MySprite* selRoleIcon;
-NSMutableDictionary * roleIcons;
+NSArray * roles;
 NSMutableDictionary * roleNumbers;
+NSMutableDictionary * roleIconsMap;
 NSMutableArray * movableRoleIcons;
 NSMutableDictionary* roleLabels;
 -(id) init
@@ -147,12 +167,15 @@ NSMutableDictionary* roleLabels;
         [self addChild: messageLabel];
 
 		engin = [CCEngin getEngin];
-        roleIcons = [[NSMutableDictionary alloc] init];
-        roleNumbers = [[NSMutableDictionary alloc] init];
+        GlobalSettings* global = [GlobalSettings globalSettings];
+        roles = [global getRoles] ? [global getRoles] : engin.roles;
+        roleNumbers = [NSMutableDictionary dictionaryWithDictionary: [global getRoleNumbers] ? [global getRoleNumbers] : engin.roleNumbers];
+        
+        roleIconsMap = [[NSMutableDictionary alloc] init];
         movableRoleIcons = [[NSMutableArray alloc] init];
         roleLabels = [[NSMutableDictionary alloc] init];
         int i = 0;
-        for(NSString* rs in engin.roles) {
+        for(NSString* rs in roles) {
             Role r = [Engin getRoleFromString:rs];
             
             UIImage *iconImg = [UIImage imageNamed: [[@"Icon-72-" stringByAppendingString: [CCEngin getRoleCode: r ]] stringByAppendingString: @".png"]];
@@ -161,10 +184,9 @@ NSMutableDictionary* roleLabels;
             icon.name = [Engin getRoleName:r];
             icon.selectable = YES;
             [self addChild: icon];
-            [roleIcons setObject: icon forKey: icon.name];
+            [roleIconsMap setObject: icon forKey: icon.name];
             
-            [roleNumbers setObject:[engin.roleNumbers objectForKey:icon.name] forKey:icon.name];
-            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[engin.roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:12];
+            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:12];
             iconLabel.position = ccp(60+(100*i), size.height-350);
             [self addChild: iconLabel];
             [roleLabels setObject:iconLabel forKey:icon.name];
@@ -184,7 +206,6 @@ NSMutableDictionary* roleLabels;
         gameModeLabel.position = ccp(60, 120);
         [self addChild: gameModeLabel];
         
-        GlobalSettings* global = [GlobalSettings globalSettings];
         doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40.png" target:nil selector:nil];
         doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40.png" target:nil selector:nil];
         CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(doubleHandModeButtonTapped:) items:([global getGameMode] == DOUBLE_HAND?doubleHandModeOnItem:doubleHandModeOffItem), ([global getGameMode] == DOUBLE_HAND?doubleHandModeOffItem:doubleHandModeOnItem), nil];
@@ -192,9 +213,13 @@ NSMutableDictionary* roleLabels;
         toggleMenu.position = ccp(150, 120);
         [self addChild:toggleMenu];
         
-        nextIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"next.png"].CGImage resolutionType: kCCResolutioniPad]];
-        nextIcon.position = ccp(size.width-100, 100);
-        [self addChild: nextIcon];
+        previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
+        previousIcon.position = ccp(size.width-200, 100);
+        [self addChild: previousIcon];
+        
+        startIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"start.png"].CGImage resolutionType: kCCResolutioniPad]];
+        startIcon.position = ccp(size.width-100, 100);
+        [self addChild: startIcon];
         
     }
     

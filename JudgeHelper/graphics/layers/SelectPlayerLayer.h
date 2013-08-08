@@ -14,8 +14,6 @@
 
 @interface SelectPlayerLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, CreatePlayerDelegate>
 {
-    CCMenuItem* doubleHandModeOffItem;
-    CCMenuItem* doubleHandModeOnItem;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

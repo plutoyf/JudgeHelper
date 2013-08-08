@@ -39,13 +39,10 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
-    /*
-    CGPoint location = [sender locationInView:sender.view];
-    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
-    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
-    if(!CGRectContainsPoint(CGRectMake(50-20, 0, (IMG_WIDTH+20)*9+20, 400), locationInWorldSpace)) return;
-    */
-    
+    [self selectPlayerByNode: (MySprite*)sender.node];
+}
+
+-(void) selectPlayerByNode:(MySprite*) node {
     if(playerToRemove != nil) {
         [playerToRemove stopAllActions];
         [playerToRemove setRotation:0];
@@ -54,7 +51,7 @@
         return;
     }
     
-    selPersonIcon = (MySprite*)sender.node;
+    selPersonIcon = node;
     
     if (selPersonIcon.selected) {
         selPersonIcon.selected = NO;
@@ -103,6 +100,7 @@ MySprite* playerToRemove;
         [userDefaults synchronize];
         
         //remove from local cache
+        int i = [personIcons indexOfObject:playerToRemove];
         [personIcons removeObject:playerToRemove];
         [personIconsMap removeObjectForKey:playerToRemove.id];
         
@@ -110,14 +108,13 @@ MySprite* playerToRemove;
         [playersPool removeChild:playerToRemove];
         
         // sort playersPool
-        CCSprite* node0;
-        int d = (personIcons.count && ((CCSprite*)[personIcons objectAtIndex:0]).position.x < IMG_WIDTH/2 && ((CCSprite*)[personIcons lastObject]).position.x <= IMG_WIDTH/2+(IMG_WIDTH+20)*9) ? 1 : -1;
-        for(CCSprite* node in personIcons) {
-            if((!node0 && node.position.x > IMG_WIDTH/2) ||
-               (node0 && node.position.x - node0.position.x > IMG_WIDTH+20)) {
-                node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20)*d, 0));
-            }
-            node0 = node;
+        int d = (personIcons.count && ((CCSprite*)[personIcons objectAtIndex:0]).position.x < IMG_WIDTH/2 && ((CCSprite*)[personIcons lastObject]).position.x <= (IMG_WIDTH+20)*9-IMG_WIDTH/2) ? 1 : -1;
+        int i0 = d > 0 ? 0 : i;
+        int i1 = d > 0 ? i : personIcons.count;
+        //NSLog(@"move to %d from  %d to %d", d, i0, i1);
+        for(i = i0; i < i1; i++) {
+            CCSprite* node = [personIcons objectAtIndex:i];
+            node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20)*d, 0));
         }
         
         playerToRemove = nil;
@@ -125,23 +122,14 @@ MySprite* playerToRemove;
     
 }
 
-
-- (void) startGame : (id) sender {
+- (void) toNextScreen : (id) sender {
     // init players
     NSArray* playerIds = [self getSelectedPlayerIds];
-    GlobalSettings* global = [GlobalSettings globalSettings];
-    if([global getGameMode] == DOUBLE_HAND && playerIds.count*2 != [global getTotalRoleNumber]+1) {
-        //too many or not enough players in DOUBLE HAND game mode
-    } else if([global getGameMode] == NORMAL && playerIds.count != [global getTotalRoleNumber]) {
-        //too many or not enough players in NORMAL game mode
-    } else {
+    if(playerIds.count >= 2) {
+        GlobalSettings* global = [GlobalSettings globalSettings];
         [global setPlayerIds: playerIds];
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameLayer scene] ]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectRoleLayer scene] ]];
     }
-}
-
--(void) toPreviousScreen : (id) sender {
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectRoleLayer scene] ]];
 }
 
 CreatePlayerLayer* createPlayerLayer;
@@ -152,8 +140,7 @@ CreatePlayerLayer* createPlayerLayer;
 }
 
 CCEngin* engin;
-CCSprite* previousIcon;
-CCSprite* startIcon;
+CCSprite* nextIcon;
 MySprite* selPersonIcon;
 ClippingSprite* playersPool;
 NSMutableArray* persons;
@@ -204,35 +191,14 @@ int IMG_HEIGHT = 72;
         playerMenu.position = ccp(size.width-100, 208);
         [self addChild:playerMenu];
         
-
         
-        CCLabelTTF* gameModeLabel = [CCLabelTTF labelWithString:@"双手模式" fontName:@"Marker Felt" fontSize:28];
-        gameModeLabel.position = ccp(60, 120);
-        [self addChild: gameModeLabel];
-
-        GlobalSettings* global = [GlobalSettings globalSettings];
-        doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40.png" target:nil selector:nil];
-        doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40.png" target:nil selector:nil];
-        CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(doubleHandModeButtonTapped:) items:([global getGameMode] == DOUBLE_HAND?doubleHandModeOnItem:doubleHandModeOffItem), ([global getGameMode] == DOUBLE_HAND?doubleHandModeOffItem:doubleHandModeOnItem), nil];
-        CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
-        toggleMenu.position = ccp(150, 120);
-        [self addChild:toggleMenu];
-        
-        previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
-        previousIcon.position = ccp(size.width-200, 100);
-        previousIcon.isTouchEnabled = YES;
-        UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toPreviousScreen:)];
+        nextIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"next.png"].CGImage resolutionType: kCCResolutioniPad]];
+        nextIcon.position = ccp(size.width-100, 100);
+        nextIcon.isTouchEnabled = YES;
+        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toNextScreen:)];
         tapGestureRecognizer.delegate = self;
-        [previousIcon addGestureRecognizer:tapGestureRecognizer];
-        [self addChild: previousIcon];
-        
-        startIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"start.png"].CGImage resolutionType: kCCResolutioniPad]];
-        startIcon.position = ccp(size.width-100, 100);
-        startIcon.isTouchEnabled = YES;
-        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startGame:)];
-        tapGestureRecognizer.delegate = self;
-        [startIcon addGestureRecognizer:tapGestureRecognizer];
-        [self addChild: startIcon];
+        [nextIcon addGestureRecognizer:tapGestureRecognizer];
+        [self addChild: nextIcon];
         
         
         playersPool = [[ClippingSprite alloc] init];
@@ -287,17 +253,6 @@ CreatePlayerLayer* createPlayerLayer;
     [aPanGestureRecognizer setTranslation:CGPointZero inView:aPanGestureRecognizer.view];
 }
 
--(void) doubleHandModeButtonTapped: (id) sender
-{
-    GlobalSettings *globals = [GlobalSettings globalSettings];
-    CCMenuItemToggle *toggleItem = (CCMenuItemToggle *)sender;
-    if (toggleItem.selectedItem == doubleHandModeOffItem) {
-        [globals setGameMode:NORMAL];
-    } else if (toggleItem.selectedItem == doubleHandModeOnItem && [globals getTotalRoleNumber]%2 == 1) {
-        [globals setGameMode:DOUBLE_HAND];
-    }
-}
-
 
 NSString * const pidsKey = @"pids";
 NSMutableArray* pids;
@@ -306,6 +261,9 @@ NSMutableArray* pids;
     id obj = [userDefaults objectForKey:pidsKey];
     pids = obj==nil ? [NSMutableArray new] : (NSMutableArray*)obj;
     
+    GlobalSettings* global = [GlobalSettings globalSettings];
+    NSArray* selPlayerIds = [global getPlayerIds];
+    
     personIcons = [NSMutableArray new];
     personIconsMap = [NSMutableDictionary new];
     for(NSString* id in pids) {
@@ -313,16 +271,16 @@ NSMutableArray* pids;
         NSData* imgData = [userDefaults dataForKey:[id stringByAppendingString:@"-img"]];
         UIImage* image = [UIImage imageWithData:imgData];
         [self addPlayer:id withName:name andImage:image];
+        if([selPlayerIds containsObject:id]) {
+            [self selectPlayerByNode: [personIconsMap objectForKey: id]];
+        }
     }
     
 }
 
 -(void) createPlayer: (NSString*) name withImage: (UIImage*) image {
-    if(name.length <= 0) return;
-    
-    //1. generate player's code
-    
-    //2. save player's info
+    if(name.length <= 0) return;    
+    //1. save player's info
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     NSString* id = [NSNumber numberWithLong: (long)(NSTimeInterval)([[NSDate date] timeIntervalSince1970])].stringValue;
     [pids addObject:id];
@@ -331,7 +289,7 @@ NSMutableArray* pids;
     [userDefaults setObject:UIImagePNGRepresentation(image) forKey:[id stringByAppendingString:@"-img"]];
     [userDefaults synchronize];
     
-    //3. show player in the list
+    //2. show player in the list
     [self addPlayer:id withName:name andImage:image];
     while([self rightButtonTapped:nil]) {
     };
@@ -346,7 +304,8 @@ NSMutableArray* pids;
     CGSize textureSize = [texture contentSize];
     MySprite *icon = [MySprite spriteWithTexture: texture];
     
-    icon.position = ccp((IMG_WIDTH+20)*personIcons.count+IMG_WIDTH/2, IMG_HEIGHT/2);
+    MySprite* lastIcon = personIcons.lastObject;
+    icon.position = ccp(lastIcon ? lastIcon.position.x+IMG_WIDTH+20 : IMG_WIDTH/2, IMG_HEIGHT/2);
     icon.id = id;
     icon.name = name;
     icon.isTouchEnabled = YES;

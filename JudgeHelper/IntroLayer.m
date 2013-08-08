@@ -9,9 +9,7 @@
 
 // Import the interfaces
 #import "IntroLayer.h"
-#import "SelectRoleLayer.h"
 #import "SelectPlayerLayer.h"
-#import "CreatePlayerLayer.h"
 
 
 #pragma mark - IntroLayer
@@ -63,9 +61,7 @@
 -(void) onEnter
 {
 	[super onEnter];
-	[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectRoleLayer scene] ]];
-	//[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[CreatePlayerLayer scene] ]];
-	//[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
+	[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
 
 }
 @end

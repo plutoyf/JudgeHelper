@@ -31,15 +31,6 @@ GameMode gameMode = NORMAL;
     return gameMode;
 }
 
-int totalRoleNumber;
--(void) setTotalRoleNumber: (int) i {
-    totalRoleNumber = i;
-}
-
--(int) getTotalRoleNumber {
-    return totalRoleNumber;
-}
-
 NSArray* playerIds;
 -(void) setPlayerIds: (NSArray*) ids {
     playerIds = ids;
@@ -47,6 +38,24 @@ NSArray* playerIds;
 
 -(NSArray*) getPlayerIds {
     return playerIds;
+}
+
+NSArray* roles;
+-(void) setRoles: (NSArray*) rs {
+    roles = rs;
+}
+
+-(NSArray*) getRoles {
+    return roles;
+}
+
+NSDictionary* roleNumbers;
+-(void) setRoleNumbers: (NSDictionary*) rNums {
+    roleNumbers = rNums;
+}
+
+-(NSDictionary*) getRoleNumbers {
+    return roleNumbers;
 }
 
 @end
