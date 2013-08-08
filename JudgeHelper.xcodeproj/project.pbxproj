@@ -1261,10 +1261,10 @@
 		E059F86D17B02EC70071829E /* layers */ = {
 			isa = PBXGroup;
 			children = (
-				E059F87617B02EC70071829E /* SelectRoleLayer.h */,
-				E059F87717B02EC70071829E /* SelectRoleLayer.m */,
 				E059F87417B02EC70071829E /* SelectPlayerLayer.h */,
 				E059F87517B02EC70071829E /* SelectPlayerLayer.m */,
+				E059F87617B02EC70071829E /* SelectRoleLayer.h */,
+				E059F87717B02EC70071829E /* SelectRoleLayer.m */,
 				E059F87017B02EC70071829E /* GameLayer.h */,
 				E059F87117B02EC70071829E /* GameLayer.m */,
 				E059F86E17B02EC70071829E /* CreatePlayerLayer.h */,
