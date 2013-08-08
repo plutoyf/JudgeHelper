@@ -30,6 +30,9 @@
 -(id) init: (NSString*) id;
 -(id) init: (NSString*) id withRole: (Role) role;
 -(id) init: (NSString*) id withRole: (Role) role withAvatar: (BOOL) hasAvatar;
+-(id) init: (NSString*) id andName:(NSString *)name;
+-(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role;
+-(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role withAvatar: (BOOL) hasAvatar;
 
 -(void) addChild: (CCNode*) child;
 -(void) removeChild: (CCNode*)child;

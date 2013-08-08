@@ -17,9 +17,11 @@
         CGSize size = [[CCDirector sharedDirector] winSize];
         self.contentSize = size;
         
+        /*
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
         layerColer.position = ccp(0, 0);
         [self addChild:layerColer];
+        */
         
         _position = ccp(size.width/2*3-50, size.height/2);
     }
@@ -40,10 +42,10 @@
         [self addChild:label];
         int j = 0;
         for(NSArray* icons in p.actionIconsBackup) {
-            [self updateIcons:icons atPosition:ccp(100+j*100, size.height-50*i)];
+            [self updateIcons:icons atPosition:ccp(50+j*100, size.height-50*i)];
             j++;
         }
-        [self updateIcons:p.actionIcons atPosition:ccp(100+j*100, size.height-50*i)];
+        [self updateIcons:p.actionIcons atPosition:ccp(50+j*100, size.height-50*i)];
         i++;
     }
 }

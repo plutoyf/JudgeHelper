@@ -18,13 +18,24 @@
     return [self init: id withRole: Citizen];
 }
 
+-(id) init: (NSString*) id andName:(NSString *)name {
+    return [self init: id andName:name withRole: Citizen];
+}
+
 -(id) init: (NSString*) id withRole: (Role) role {
     return [self init: id withRole: role withAvatar:YES];
 }
 
+-(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role {
+    return [self init: id andName:name withRole: role withAvatar:YES];
+}
+
 -(id) init: (NSString*) id withRole: (Role) role withAvatar: (BOOL) hasAvatar {
     NSString* name = [[NSUserDefaults standardUserDefaults] objectForKey:[id stringByAppendingString:@"-name"]];
+    return [self init: id andName:name withRole: role withAvatar:hasAvatar];
+}
 
+-(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role withAvatar: (BOOL) hasAvatar {
     if(self = [super init: id andName: name withRole: role]) {
         _selectable = YES;
         _actionIcons = [NSMutableArray new];
