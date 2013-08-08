@@ -7,6 +7,6 @@
 //
 
 @interface GameStateSprite : CCSprite
-
--(void) updateState;
+-(void) addNewStatus;
+-(void) revertStatus;
 @end

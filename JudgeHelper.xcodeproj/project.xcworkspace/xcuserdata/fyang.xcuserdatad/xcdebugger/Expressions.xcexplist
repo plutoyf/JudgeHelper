@@ -9,10 +9,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -26,6 +26,14 @@
       </ContextState>
       <ContextState
          contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[addedActionReceivers objectForKey:[NSNumber numberWithInt:i]]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

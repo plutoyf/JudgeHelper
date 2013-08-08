@@ -226,26 +226,22 @@ CCEngin* engin;
     for(CCPlayer* p in players) {
         [p backupActionIcons];
     }
-    [gameStateSprite updateState];
 }
 
 -(void) restoreBackupActionIcon {
     for(CCPlayer* p in players) {
         [p restoreActionIcons];
     }
-    [gameStateSprite updateState];
 }
 
 -(void) addActionIcon: (Role) role to: (Player*) player {
     CCPlayer* p = [playersMap objectForKey:player.id];
     [p addActionIcon: role];
-    [gameStateSprite updateState];
 }
 
 -(void) removeActionIconFrom: (Player*) player {
     CCPlayer* p = [playersMap objectForKey:player.id];
     [p removeLastActionIcon];
-    [gameStateSprite updateState];
 }
 
 -(void) updatePlayerLabels {
@@ -289,7 +285,6 @@ CCEngin* engin;
     nightLabel.string = [NSString stringWithFormat:@"第%li%@", i, @"夜"];
 }
 
-
 -(void) definePlayerForRole: (Role) r {
     rolePlayerToDefine = r;
 }
@@ -305,6 +300,13 @@ CCEngin* engin;
     [self addChild:restarMenu];
 }
 
+-(void) recordPlayersStatus {
+    [gameStateSprite addNewStatus];
+}
+
+-(void) rollbackPlayersStatus {
+    [gameStateSprite revertStatus];
+}
 
 #pragma mark GameKit delegate
 

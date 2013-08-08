@@ -37,12 +37,15 @@
 -(void) setPlayerNumberForRole: (int) i;
 -(NSString*) getRoleLabel: (Role) r;
 -(NSString*) getRoleActionLabel: (Role) r;
+-(int) getCurrentNight;
 
 @end
 
 
 @protocol CCEnginDisplayDelegate
 @required
+-(void) recordPlayersStatus;
+-(void) rollbackPlayersStatus;
 -(void) backupActionIcon;
 -(void) restoreBackupActionIcon;
 -(void) addActionIcon: (Role) role to: (Player*) player;

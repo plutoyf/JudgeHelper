@@ -23,9 +23,9 @@
     NSMutableDictionary* _actionResults;
     NSMutableDictionary* _applicatedRules;
     
-    NSMutableArray* lifeStack;
-    NSMutableArray* distanceStack;
-    NSMutableArray* statusStack;
+    NSMutableArray* _lifeStack;
+    NSMutableArray* _distanceStack;
+    NSMutableArray* _statusStack;
 }
 
 @property (nonatomic, strong) NSString* id;
@@ -34,6 +34,9 @@
 @property (atomic) double life;
 @property (atomic) double note;
 @property (nonatomic) Status status;
+@property (nonatomic, strong) NSMutableArray* lifeStack;
+@property (nonatomic, strong) NSMutableArray* distanceStack;
+@property (nonatomic, strong) NSMutableArray* statusStack;
 @property (nonatomic, strong) NSMutableDictionary* distances;
 @property (nonatomic, strong) NSMutableDictionary* actionReceivers;
 @property (nonatomic, strong) NSMutableDictionary* actionResults;

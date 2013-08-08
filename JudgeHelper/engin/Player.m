@@ -75,39 +75,39 @@
 
 
 -(void) recordStatus {
-    if(lifeStack == nil) {
-        lifeStack = [NSMutableArray new];
+    if(_lifeStack == nil) {
+        _lifeStack = [NSMutableArray new];
     }
-    [lifeStack addObject: [NSNumber numberWithDouble: _life]];
+    [_lifeStack addObject: [NSNumber numberWithDouble: _life]];
     
-    if(distanceStack == nil) {
-        distanceStack = [NSMutableArray new];
+    if(_distanceStack == nil) {
+        _distanceStack = [NSMutableArray new];
     }
-    [distanceStack addObject: [NSMutableDictionary dictionaryWithDictionary: _distances]];
+    [_distanceStack addObject: [NSMutableDictionary dictionaryWithDictionary: _distances]];
     
-    if(statusStack == nil) {
-        statusStack = [NSMutableArray new];
+    if(_statusStack == nil) {
+        _statusStack = [NSMutableArray new];
     }
-    [statusStack addObject: [NSNumber numberWithInt: _status]];
+    [_statusStack addObject: [NSNumber numberWithInt: _status]];
 }
 
 -(void) rollbackStatus {
-    if(lifeStack != nil && lifeStack.count > 0) {
-        _life = [[lifeStack lastObject] doubleValue];
-        [lifeStack removeLastObject];
+    if(_lifeStack != nil && _lifeStack.count > 0) {
+        _life = [[_lifeStack lastObject] doubleValue];
+        [_lifeStack removeLastObject];
     }
-    if(distanceStack != nil && distanceStack.count > 0) {
-        _distances = (NSMutableDictionary*)[distanceStack lastObject];
-        [distanceStack removeLastObject];
+    if(_distanceStack != nil && _distanceStack.count > 0) {
+        _distances = (NSMutableDictionary*)[_distanceStack lastObject];
+        [_distanceStack removeLastObject];
     }
-    if(statusStack != nil && statusStack.count > 0) {
-        _status = [((NSNumber *)[statusStack lastObject]) intValue];
-        [statusStack removeLastObject];
+    if(_statusStack != nil && _statusStack.count > 0) {
+        _status = [((NSNumber *)[_statusStack lastObject]) intValue];
+        [_statusStack removeLastObject];
     }
 }
 
 -(int) getStackDepth {
-    return lifeStack == nil ? 0 : lifeStack.count;
+    return _lifeStack == nil ? 0 : _lifeStack.count;
 }
 
 -(BOOL) isInGame {
@@ -123,13 +123,13 @@
     }
     
     NSString* lifes = @"";
-    for(NSNumber* l in lifeStack) {
+    for(NSNumber* l in _lifeStack) {
         lifes = [NSString stringWithFormat:@"%@, %.1f", lifes, [l doubleValue]];
     }
     NSString* dis = @"";
     double dj, dg;
     BOOL isFirst = YES;
-    for(NSMutableDictionary* d in distanceStack) {
+    for(NSMutableDictionary* d in _distanceStack) {
         double newDj = [self getDistanceWith:@"法官" from:d];
         double newDg = [self getDistanceWith:@"花蝴蝶" from:d];
         if(isFirst || dj != newDj || dg != newDg) {
@@ -139,7 +139,7 @@
             isFirst = NO;
         }
     }
-    return [NSString stringWithFormat:@"%@ %@ : %@ : dj=%.1f dg=%.1f  \n    life (%d) : %@  \n    dis (%d) : %@", _name, [Engin getStatusName:_status], receivers, [self getDistanceWith:@"法官"], [self getDistanceWith:@"花蝴蝶"], lifeStack.count, lifes, distanceStack.count, dis];
+    return [NSString stringWithFormat:@"%@ %@ : %@ : dj=%.1f dg=%.1f  \n    life (%d) : %@  \n    dis (%d) : %@", _name, [Engin getStatusName:_status], receivers, [self getDistanceWith:@"法官"], [self getDistanceWith:@"花蝴蝶"], _lifeStack.count, lifes, _distanceStack.count, dis];
 }
 
 -(double) getDistanceWith:(NSString *)playerId from:(NSMutableDictionary*) d {

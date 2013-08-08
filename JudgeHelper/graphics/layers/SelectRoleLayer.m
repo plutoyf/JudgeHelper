@@ -66,7 +66,7 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 -(void) toGameScreen {
     NSArray* ids = [[GlobalSettings globalSettings] getPlayerIds];
     
-    int rNum;
+    int rNum = 0;
     for(NSNumber* n in roleNumbers.allValues) {
         rNum += n.intValue;
     }

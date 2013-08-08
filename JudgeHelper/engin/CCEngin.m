@@ -153,6 +153,7 @@ static CCEngin *engin = nil;
                     
                     NSNumber* result = [self doActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer];
                     
+                    [self.displayDelegate recordPlayersStatus];
                     [self.displayDelegate addActionIcon: ((Player*)[playersInAction objectAtIndex: 0]).role to: selectedPlayer];
                     [self.displayDelegate updatePlayerLabels];
                     [self debugPlayers];
@@ -205,6 +206,7 @@ static CCEngin *engin = nil;
                 }
                 [currentPlayers removeObjectsInArray: deadPlayers];
                 
+                [self.displayDelegate recordPlayersStatus];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate updatePlayerLabels];
                 
@@ -277,6 +279,7 @@ static CCEngin *engin = nil;
                 [self debugPlayers];
                 [self debugPlayersInfo: currentPlayers];
                 
+                [self.displayDelegate recordPlayersStatus];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"投票结果：%@死亡", deadNames]];
                 state++;
@@ -395,6 +398,15 @@ static CCEngin *engin = nil;
     [self debugPlayers];
 }
 
+-(void) recordPlayersStatus {
+    [super recordPlayersStatus];
+}
+
+-(void) rollbackPlayersStatus {
+    [super rollbackPlayersStatus];
+    [self.displayDelegate rollbackPlayersStatus];
+}
+
 -(void) calculateCurrentPlayers {
     [currentPlayers removeAllObjects];
     for(Player* p in _players) {
@@ -402,6 +414,10 @@ static CCEngin *engin = nil;
             [currentPlayers addObject:p];
         }
     }
+}
+
+-(int) getCurrentNight {
+    return night > 0 ? night : 0;
 }
 
 
