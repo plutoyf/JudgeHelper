@@ -3,9 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[MySprite showName]:MySprite.m">
-      </ContextState>
-      <ContextState
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
@@ -17,10 +14,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
+         contextName = "-[GameStateSprite addNewStatus]:GameStateSprite.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons objectAtIndex:0]).position.x">
+               value = "((NSNumber*)[p.statusStack objectAtIndex:i]).intValue">
+            </PersistentString>
+            <PersistentString
+               value = "pIds">
+            </PersistentString>
+            <PersistentString
+               value = "[self hasAddedActionReceiverForRole:p.role atNight:night]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -28,10 +31,24 @@
          contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
       </ContextState>
       <ContextState
-         contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
+         contextName = "-[MySprite showName]:MySprite.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameStateSprite revertStatus]:GameStateSprite.m">
          <PersistentStrings>
             <PersistentString
-               value = "[addedActionReceivers objectForKey:[NSNumber numberWithInt:i]]">
+               value = "((NSMutableDictionary*)[actionReceiverMap objectForKey:[NSNumber numberWithInt:p.role]])">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Engin initRoles:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((CCSprite*)[personIcons objectAtIndex:0]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
