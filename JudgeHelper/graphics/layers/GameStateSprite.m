@@ -21,7 +21,7 @@
         layerColer.position = ccp(0, 0);
         [self addChild:layerColer z:-1];        
         
-        _position = ccp(size.width/2*3-10, size.height/2);
+        _position = ccp(size.width/2, size.height/2*3-10);
         
         //init
         CCEngin* engin = [CCEngin getEngin];
@@ -32,7 +32,7 @@
         for(CCPlayer* p in engin.players) {
             [pIds addObject:p.id];
             CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:14];
-            label.position = ccp(50, size.height-100-50*i++);
+            label.position = ccp(50, 80+40*i++);
             [self addChild:label];
         }
     }
@@ -54,7 +54,7 @@
     NSNumber* key = [NSNumber numberWithInt:i];
     if(![playersActionIcons objectForKey:key]) [playersActionIcons setObject:[NSMutableArray new] forKey:key];
     NSMutableArray* icons = [playersActionIcons objectForKey:key];
-    icon.position = ccp(100+20*icon.tag, self.contentSize.height-100-50*line);
+    icon.position = ccp(100+20*icon.tag, 80+40*line);
     [icons addObject:icon];
     [self addChild:icon];
 }
@@ -132,7 +132,7 @@ NSMutableArray* pIds;
                     // draw color box
                     CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
                     layerColer.contentSize = CGSizeMake((i-i0)*20, 2);
-                    layerColer.position = ccp(100+i0*20+10, self.contentSize.height-100-50*line-12);
+                    layerColer.position = ccp(100+i0*20+10, 80+50*line-12);
                     [self addChild:layerColer z:-1];
                     
                     // move forward
@@ -147,7 +147,7 @@ NSMutableArray* pIds;
         
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
         layerColer.contentSize = CGSizeMake((50-i0)*20, 2);
-        layerColer.position = ccp(100+i0*20+10, self.contentSize.height-100-50*line-12);
+        layerColer.position = ccp(100+i0*20+10, 80+40*line-12);
         [self addChild:layerColer z:-1];
     }
 }

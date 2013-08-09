@@ -181,9 +181,9 @@ CGPoint originalPoint;
         originalPoint = locationInMySpriteSpace;
     } else {
         CGPoint newPosition = ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint);
-        float width = gameStateSprite.contentSize.width;
-        newPosition.x = newPosition.x < width/2 ? width/2 : newPosition.x > width+width/2-10 ? width+width/2-10 : newPosition.x;
-        newPosition.y = sender.node.position.y;
+        float height = gameStateSprite.contentSize.height;
+        newPosition.x = sender.node.position.x;
+        newPosition.y = newPosition.y < height/2 ? height/2 : newPosition.y > height+height/2-10 ? height+height/2-10 : newPosition.y;
         sender.node.position = newPosition;
     }
 }
