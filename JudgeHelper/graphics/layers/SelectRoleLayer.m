@@ -44,13 +44,7 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    if (CGRectContainsPoint(previousIcon.boundingBox, touchLocation)) {
-        [self toPreviousScreen];
-    } else if (CGRectContainsPoint(startIcon.boundingBox, touchLocation)) {
-        [self toGameScreen];
-    } else {
-        [self selectRoleForTouch:touchLocation];
-    }
+    [self selectRoleForTouch:touchLocation];
     
     return TRUE;
 }
@@ -96,7 +90,12 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 }
 
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    if(selRoleIcon) {
+    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    if (CGRectContainsPoint(previousIcon.boundingBox, touchLocation)) {
+        [self toPreviousScreen];
+    } else if (CGRectContainsPoint(startIcon.boundingBox, touchLocation)) {
+        [self toGameScreen];
+    } else if(selRoleIcon) {
         CGPoint p1 = selRoleIcon.position;
         CGPoint p0 = ((MySprite*)[roleIconsMap objectForKey: selRoleIcon.name]).position;
         float w = 72;

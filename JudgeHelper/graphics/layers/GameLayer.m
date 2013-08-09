@@ -165,27 +165,27 @@ CCEngin* engin;
         [engin setPlayers: players];
         
         
-        gameStateSprite = [[GameStateSprite alloc] init];
-        gameStateSprite.isTouchEnabled = YES;
-        UIGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-        panGestureRecognizer.delegate = self;
-        [gameStateSprite addGestureRecognizer:panGestureRecognizer];
-        
-        [self addChild: gameStateSprite];
-        
         [engin run];
 	}
     
 	return self;
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer*) sender {
-    CCNode *node = sender.node;
-    CGPoint translation = [sender translationInView:sender.view];
-    translation.y *= -1;
-    [sender setTranslation:CGPointZero inView:sender.view];
+CGPoint originalPoint;
+- (void)moveGameState:(UIPanGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
+    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
     
-    node.position = ccpAdd(node.position, translation);
+    if(sender.state == UIGestureRecognizerStateBegan) {
+        originalPoint = locationInMySpriteSpace;
+    } else {
+        CGPoint newPosition = ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint);
+        float width = gameStateSprite.contentSize.width;
+        newPosition.x = newPosition.x < width/2 ? width/2 : newPosition.x > width+width/2-10 ? width+width/2-10 : newPosition.x;
+        newPosition.y = sender.node.position.y;
+        sender.node.position = newPosition;
+    }
 }
 
 -(void) emptyClick: (UITapGestureRecognizer*) sender {
@@ -219,6 +219,14 @@ CCEngin* engin;
     }
     
     [engin setPlayers: newPlayers];
+    
+    gameStateSprite = [[GameStateSprite alloc] init];
+    gameStateSprite.isTouchEnabled = YES;
+    UIGestureRecognizer *moveGameStatePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveGameState:)];
+    moveGameStatePanGestureRecognizer.delegate = self;
+    [gameStateSprite addGestureRecognizer:moveGameStatePanGestureRecognizer];
+    
+    [self addChild: gameStateSprite];
 }
 
 #pragma mark CCEnginDisplayDelegate

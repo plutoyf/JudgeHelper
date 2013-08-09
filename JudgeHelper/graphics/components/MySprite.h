@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Role.h"
 
 @interface MySprite : CCSprite {
 }
 
 @property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* name;
+@property(atomic) Role role;
 @property(atomic) BOOL selectable;
 @property(atomic) BOOL selected;
 @property(nonatomic, retain) CCSprite* deleteButton;

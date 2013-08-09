@@ -17,13 +17,24 @@
         CGSize size = [[CCDirector sharedDirector] winSize];
         self.contentSize = size;
         
-        
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
         layerColer.position = ccp(0, 0);
-        [self addChild:layerColer];
+        [self addChild:layerColer z:-1];        
         
+        _position = ccp(size.width/2*3-10, size.height/2);
         
-        _position = ccp(size.width/2*3-50, size.height/2);
+        //init
+        CCEngin* engin = [CCEngin getEngin];
+        pIds = [NSMutableArray new];
+        actionReceiverMap = [NSMutableDictionary new];
+        actionIconMap = [NSMutableDictionary new];
+        int i = 0;
+        for(CCPlayer* p in engin.players) {
+            [pIds addObject:p.id];
+            CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:14];
+            label.position = ccp(50, size.height-100-50*i++);
+            [self addChild:label];
+        }
     }
     
     return self;
@@ -43,7 +54,7 @@
     NSNumber* key = [NSNumber numberWithInt:i];
     if(![playersActionIcons objectForKey:key]) [playersActionIcons setObject:[NSMutableArray new] forKey:key];
     NSMutableArray* icons = [playersActionIcons objectForKey:key];
-    icon.position = ccp(100+100*(i-1)+20*icons.count, 200+50*line);
+    icon.position = ccp(100+20*icon.tag, self.contentSize.height-100-50*line);
     [icons addObject:icon];
     [self addChild:icon];
 }
@@ -59,64 +70,86 @@ NSMutableArray* pIds;
     CCEngin* engin = [CCEngin getEngin];
     int night = [engin getCurrentNight];
     
-    if(!pIds) {
-        //init
-        pIds = [NSMutableArray new];
-        actionReceiverMap = [NSMutableDictionary new];
-        actionIconMap = [NSMutableDictionary new];
-        int i = 0;
-        for(CCPlayer* p in engin.players) {
-            [pIds addObject:p.id];
-            CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:14];
-            label.position = ccp( 50 , 200+50*i++);
-            [self addChild:label];
-        }
-    }
+    // print live color grid
+    [self paintLifeLine: engin.players];
     
+    // print action icon
     for(CCPlayer* p in engin.players) {
-        NSString* receiverId = [p.actionReceivers objectForKey: [NSNumber numberWithInt:night]];
-        if(receiverId && ![self hasAddedActionReceiverForRole:p.role atNight:night]) {
-            CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:p.role]]];
-            [self addActionIcon:icon forPlayer:receiverId atNight:night];
-            NSNumber* key = [NSNumber numberWithInt:p.role];
-            [((NSMutableDictionary*)[actionReceiverMap objectForKey:key]) setObject:receiverId forKey:[NSNumber numberWithInt:night]];
+        NSArray* orders = engin.orders;
+        Role currentRole = [engin getCurrentRole];
+        if(!currentRole || [orders indexOfObject:[Engin getRoleName:p.role]] <= [orders indexOfObject: [Engin getRoleName:currentRole]]) {
+        
+            NSString* receiverId = [p.actionReceivers objectForKey: [NSNumber numberWithInt:night]];
+            NSNumber* result = [p.actionResults objectForKey: [NSNumber numberWithInt:night]];
+            
+            if(receiverId && ![self hasAddedActionReceiverForRole:p.role atNight:night]) {
+                MySprite* icon = [MySprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:p.role]]];
+                icon.role = p.role;
+                icon.tag = p.lifeStack.count;
+                if(!result.boolValue) icon.opacity = 80;
+                [self addActionIcon:icon forPlayer:receiverId atNight:night];
+                [((NSMutableDictionary*)[actionReceiverMap objectForKey:[NSNumber numberWithInt:p.role]]) setObject:receiverId forKey:[NSNumber numberWithInt:night]];
+            }
         }
     }
 }
 
 -(void) revertStatus {
     CCEngin* engin = [CCEngin getEngin];
-    for(CCPlayer* p in engin.players) {
-        
-    }
-}
-
--(void) updateState {
-    [self removeAllChildren];
+    [self paintLifeLine: engin.players];
     
-    CCEngin* engin = [CCEngin getEngin];
-    CGSize size = self.boundingBox.size;
-    int i = 1;
+    int i = ((CCPlayer*)[engin.players objectAtIndex:0]).lifeStack.count+1;
+    int night = [engin getCurrentNight];
     for(CCPlayer* p in engin.players) {
-        CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:14];
-        label.position = ccp( 50 , size.height-50*i);
-        [self addChild:label];
-        int j = 0;
-        for(NSArray* icons in p.actionIconsBackup) {
-            [self updateIcons:icons atPosition:ccp(50+j*100, size.height-50*i)];
-            j++;
+        NSMutableDictionary* playersActionIcons = [actionIconMap objectForKey:p.id];
+        NSMutableArray* icons = [playersActionIcons objectForKey:[NSNumber numberWithInt:night]];
+        for(MySprite* icon in icons) {
+            if(icon.tag == i) {
+                [((NSMutableDictionary*)[actionReceiverMap objectForKey:[NSNumber numberWithInt:icon.role]]) removeObjectForKey:[NSNumber numberWithInt:night]];
+                [icons removeObject:icon];
+                [self removeChild:icon];
+            }
         }
-        [self updateIcons:p.actionIcons atPosition:ccp(50+j*100, size.height-50*i)];
-        i++;
     }
 }
 
--(void) updateIcons: (NSArray*) icons atPosition: (CGPoint) pos {
-    for(CCSprite* icon in icons) {
-        CCSprite* copy = [CCSprite spriteWithTexture:icon.texture];
-        pos.x += copy.boundingBox.size.width;
-        copy.position = pos;
-        [self addChild:copy];
+-(void) paintLifeLine: (NSArray*) players {
+    for(CCPlayer* p in players) {
+        int i0 = 0;
+        double v0 = 0;
+        Status s0 = 0;
+        int i = 0;
+        ccColor4B color = ccc4(0, 255, 0, 255);
+        int line = [self getPlayerLineNumber:p.id];
+        
+        for(NSNumber* v in p.lifeStack) {
+            if(i==0) {
+                i0 = i;
+                v0 = v.floatValue;
+                s0 = ((NSNumber*)[p.statusStack objectAtIndex:0]).intValue;
+            } else {
+                if(v0 != v.floatValue || s0 != ((NSNumber*)[p.statusStack objectAtIndex:i]).intValue) {
+                    // draw color box
+                    CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
+                    layerColer.contentSize = CGSizeMake((i-i0)*20, 2);
+                    layerColer.position = ccp(100+i0*20+10, self.contentSize.height-100-50*line-12);
+                    [self addChild:layerColer z:-1];
+                    
+                    // move forward
+                    i0 = i;
+                    v0 = v.floatValue;
+                    s0 = ((NSNumber*)[p.statusStack objectAtIndex:i]).intValue;
+                    color = (s0 == OUT_GAME) ? ccc4(0, 0, 0, 255) :  (v0>=1) ? ccc4(0, 255, 0, 255) : (v0<=0) ? ccc4(255, 0, 0, 255) : ccc4(100, 100, 0, 255);
+                }
+            }
+            i++;
+        }
+        
+        CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
+        layerColer.contentSize = CGSizeMake((50-i0)*20, 2);
+        layerColer.position = ccp(100+i0*20+10, self.contentSize.height-100-50*line-12);
+        [self addChild:layerColer z:-1];
     }
 }
+
 @end

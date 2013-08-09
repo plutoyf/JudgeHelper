@@ -24,6 +24,7 @@
     NSMutableArray* _orders;
 }
 
+@property (nonatomic, strong, readonly) NSArray* orders;
 @property (nonatomic, strong, readonly) NSArray* players;
 @property (nonatomic, strong, readonly) NSArray* roles;
 @property (nonatomic, strong, readonly) NSDictionary* roleNumbers;

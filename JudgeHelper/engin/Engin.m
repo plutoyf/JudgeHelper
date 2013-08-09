@@ -147,16 +147,13 @@
 
 -(void) initRoles: (NSDictionary*) roleNumbers {
     _roleNumbers = [NSMutableDictionary dictionaryWithDictionary:roleNumbers];
-    [_orders removeAllObjects];
-    [_orders addObjectsFromArray:_originalOrders];
+    _orders = [NSMutableArray new];
     
-    NSMutableArray* toRemove = [NSMutableArray new];
-    for(NSString* r in _orders) {
-        if ([self getRoleNumber: [Engin getRoleFromString:r]] <= 0) {
-            [toRemove addObject:r];
+    for(NSString* r in _originalOrders) {
+        if ([self getRoleNumber: [Engin getRoleFromString:r]] > 0) {
+            [_orders addObject:r];
         }
     }
-    [_orders removeObjectsInArray:toRemove];
 }
 
 -(void) setPlayers: (NSArray*) players {

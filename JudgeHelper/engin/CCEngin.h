@@ -37,6 +37,7 @@
 -(void) setPlayerNumberForRole: (int) i;
 -(NSString*) getRoleLabel: (Role) r;
 -(NSString*) getRoleActionLabel: (Role) r;
+-(Role) getCurrentRole;
 -(int) getCurrentNight;
 
 @end

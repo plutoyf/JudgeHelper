@@ -93,16 +93,16 @@
 
 -(void) rollbackStatus {
     if(_lifeStack != nil && _lifeStack.count > 0) {
-        _life = [[_lifeStack lastObject] doubleValue];
         [_lifeStack removeLastObject];
+        _life = [[_lifeStack lastObject] doubleValue];
     }
     if(_distanceStack != nil && _distanceStack.count > 0) {
-        _distances = (NSMutableDictionary*)[_distanceStack lastObject];
         [_distanceStack removeLastObject];
+        _distances = (NSMutableDictionary*)[_distanceStack lastObject];
     }
     if(_statusStack != nil && _statusStack.count > 0) {
-        _status = [((NSNumber *)[_statusStack lastObject]) intValue];
         [_statusStack removeLastObject];
+        _status = [((NSNumber *)[_statusStack lastObject]) intValue];
     }
 }
 
