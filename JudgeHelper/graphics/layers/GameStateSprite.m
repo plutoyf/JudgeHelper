@@ -30,6 +30,7 @@
         actionIconMap = [NSMutableDictionary new];
         int i = 0;
         for(CCPlayer* p in engin.players) {
+            if(p.role == Judge) continue;
             [pIds addObject:p.id];
             CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:14];
             label.position = ccp(50, 80+40*i++);
@@ -114,7 +115,12 @@ NSMutableArray* pIds;
 }
 
 -(void) paintLifeLine: (NSArray*) players {
+    
+    [self removeChildByTag: 9];
+    
     for(CCPlayer* p in players) {
+        if(p.role == Judge) continue;
+        
         int i0 = 0;
         double v0 = 0;
         Status s0 = 0;
@@ -132,7 +138,7 @@ NSMutableArray* pIds;
                     // draw color box
                     CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
                     layerColer.contentSize = CGSizeMake((i-i0)*20, 2);
-                    layerColer.position = ccp(100+i0*20+10, 80+50*line-12);
+                    layerColer.position = ccp(100+i0*20+10, 80+40*line-12);
                     [self addChild:layerColer z:-1];
                     
                     // move forward
@@ -149,7 +155,16 @@ NSMutableArray* pIds;
         layerColer.contentSize = CGSizeMake((50-i0)*20, 2);
         layerColer.position = ccp(100+i0*20+10, 80+40*line-12);
         [self addChild:layerColer z:-1];
+        
+        if(p.status == OUT_GAME) {
+            CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255)];
+            layerColer.tag = 9;
+            layerColer.contentSize = CGSizeMake(40, 1);
+            layerColer.position = ccp(30, 80+40*line);
+            [self addChild:layerColer];
+        }
     }
+    
 }
 
 @end
