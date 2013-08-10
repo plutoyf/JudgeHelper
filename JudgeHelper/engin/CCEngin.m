@@ -113,7 +113,7 @@ static CCEngin *engin = nil;
             }
             
             [self recordPlayersStatus];
-            [self.displayDelegate recordPlayersStatus];
+            [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
             [self.displayDelegate backupActionIcon];
             [self.displayDelegate showMessage: [NSString stringWithFormat:@"第%li%@ 天黑请闭眼", night, @"夜"]];
             state++;
@@ -153,11 +153,13 @@ static CCEngin *engin = nil;
                 if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                     
-                    NSNumber* result = [self doActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer];
+                    NSArray* actors = [self getPlayersByRole:roleInAction];
+                    Player* actor = [actors objectAtIndex:0];
+                    NSNumber* result = [self doActionAtNight: night withActors: actors andReceiver: selectedPlayer];
                     
                     [self recordPlayersStatus];
-                    [self.displayDelegate recordPlayersStatus];
-                    [self.displayDelegate addActionIcon: ((Player*)[playersInAction objectAtIndex: 0]).role to: selectedPlayer];
+                    [self.displayDelegate recordPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
+                    [self.displayDelegate addActionIcon: ((Player*)[playersInAction objectAtIndex: 0]).role to: selectedPlayer withResult: [actor getActionResultAtNight:night].boolValue];
                     [self.displayDelegate updatePlayerLabels];
                     [self debugPlayers];
                     
@@ -172,7 +174,7 @@ static CCEngin *engin = nil;
                 
             } else {
                 [self recordPlayersStatus];
-                [self.displayDelegate recordPlayersStatus];
+                [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
                 state++;
@@ -210,7 +212,7 @@ static CCEngin *engin = nil;
                 [currentPlayers removeObjectsInArray: deadPlayers];
                 
                 [self recordPlayersStatus];
-                [self.displayDelegate recordPlayersStatus];
+                [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate updatePlayerLabels];
                 
@@ -262,7 +264,9 @@ static CCEngin *engin = nil;
                 //14. execution
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
-                [self doActionAtNight: night withActors: [self getPlayersByRole: Judge] andReceiver: selectedPlayer];
+                NSArray* actors = [self getPlayersByRole:roleInAction];
+                Player* actor = [actors objectAtIndex:0];
+                [self doActionAtNight: night withActors: actors andReceiver: selectedPlayer];
                 [self.displayDelegate updatePlayerLabels];
                 
                 NSMutableArray* deads = [NSMutableArray new];
@@ -283,7 +287,7 @@ static CCEngin *engin = nil;
                 [self debugPlayersInfo: currentPlayers];
                 
                 [self recordPlayersStatus];
-                [self.displayDelegate recordPlayersStatus];
+                [self.displayDelegate recordPlayersStatusWithActorRole:Judge andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"投票结果：%@死亡", deadNames]];
                 state++;
@@ -354,7 +358,7 @@ static CCEngin *engin = nil;
         case 8:
         case 9:
         case 10:
-            if(oIndex > 0 || (oIndex == 0 && night > 1) || state >= 5       ) {
+            if(oIndex > 0 || (oIndex == 0 && night > 1) || state >= 5) {
                 if(state != 5 && state != 6)oIndex--;
                 //people who has role show up one after another
                 roleInAction = [Engin getRoleFromString: [_orders objectAtIndex: oIndex]];

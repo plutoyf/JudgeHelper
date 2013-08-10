@@ -45,11 +45,11 @@
 
 @protocol CCEnginDisplayDelegate
 @required
--(void) recordPlayersStatus;
+-(void) recordPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
 -(void) rollbackPlayersStatus;
 -(void) backupActionIcon;
 -(void) restoreBackupActionIcon;
--(void) addActionIcon: (Role) role to: (Player*) player;
+-(void) addActionIcon: (Role) role to: (Player*) player withResult: (BOOL) result;
 -(void) removeActionIconFrom: (Player*) player;
 -(void) updatePlayerLabels;
 -(void) resetPlayerIcons: (NSArray*) players;

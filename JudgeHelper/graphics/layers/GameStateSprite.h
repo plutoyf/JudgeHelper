@@ -13,6 +13,6 @@
     CCEngin* engin;
 }
 
--(void) addNewStatus;
+-(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
 -(void) revertStatus;
 @end

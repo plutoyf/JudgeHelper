@@ -44,7 +44,7 @@
 -(void) showRoleInfo;
 -(void) hideRoleInfo;
 -(void) updatePlayerIcon;
--(void) addActionIcon: (Role) role;
+-(void) addActionIcon: (Role) roler withResult: (BOOL) result;
 -(void) removeLastActionIcon;
 -(void) backupActionIcons;
 -(void) restoreActionIcons;

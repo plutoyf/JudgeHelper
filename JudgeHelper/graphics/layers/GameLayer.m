@@ -84,8 +84,6 @@ NSMutableArray* players;
 Role rolePlayerToDefine;
 BOOL defineRolePlayerBegin;
 GameStateSprite* gameStateSprite;
-CCSprite* showGameState;
-CCSprite* hideGameState;
 
 CCEngin* engin;
 // on "init" you need to initialize your instance
@@ -144,47 +142,10 @@ CCEngin* engin;
         }
         [engin setPlayers: players];
         
-        
         [engin run];
 	}
     
 	return self;
-}
-
-CGPoint originalPoint;
-- (void)swipeGameState:(UIGestureRecognizer*) sender {
-    CGPoint newPoint;
-    CGSize size = [[CCDirector sharedDirector] winSize];
-
-    if(sender.node == showGameState) {
-        showGameState.position = ccp(size.width+showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
-        hideGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
-        newPoint = ccp(gameStateSprite.boundingBox.size.width/2, gameStateSprite.boundingBox.size.height/2);
-    } else if(sender.node == hideGameState) {
-        showGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
-        hideGameState.position = ccp(size.width+showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
-        newPoint = ccp(size.width+gameStateSprite.boundingBox.size.width/2, size.height+gameStateSprite.boundingBox.size.height/2);
-    }
-    
-    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:newPoint];
-    
-    [gameStateSprite runAction:[CCSequence actions:move, nil]];
-    
-    /*
-    CGPoint location = [sender locationInView:sender.view];
-    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
-    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
-    
-    if(sender.state == UIGestureRecognizerStateBegan) {
-        originalPoint = locationInMySpriteSpace;
-    } else {
-        CGPoint newPosition = ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint);
-        float height = gameStateSprite.contentSize.height;
-        newPosition.x = sender.node.position.x;
-        newPosition.y = newPosition.y < height/2 ? height/2 : newPosition.y > height+height/2-10 ? height+height/2-10 : newPosition.y;
-        sender.node.position = newPosition;
-    }
-     */
 }
 
 -(void) emptyClick: (UITapGestureRecognizer*) sender {
@@ -226,24 +187,6 @@ CGPoint originalPoint;
     [gameStateSprite addGestureRecognizer:moveGameStateSwipeGestureRecognizer];
     [self addChild: gameStateSprite];
     
-    CGSize size = [[CCDirector sharedDirector] winSize];
-    
-    showGameState = [CCSprite spriteWithFile:@"show.png"];
-    showGameState.isTouchEnabled = YES;
-    showGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
-    UIGestureRecognizer *showGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
-    showGameStateTapGestureRecognizer.delegate = self;
-    [showGameState addGestureRecognizer:showGameStateTapGestureRecognizer];
-    [self addChild: showGameState];
-    
-    hideGameState = [CCSprite spriteWithFile:@"hide.png"];
-    hideGameState.isTouchEnabled = YES;
-    hideGameState.position = ccp(size.width+showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
-    UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
-    hideGameStateTapGestureRecognizer.delegate = self;
-    [hideGameState addGestureRecognizer:hideGameStateTapGestureRecognizer];
-    [self addChild: hideGameState];
-    
 }
 
 #pragma mark CCEnginDisplayDelegate
@@ -259,9 +202,9 @@ CGPoint originalPoint;
     }
 }
 
--(void) addActionIcon: (Role) role to: (Player*) player {
+-(void) addActionIcon: (Role) role to: (Player*) player withResult:(BOOL)result{
     CCPlayer* p = [playersMap objectForKey:player.id];
-    [p addActionIcon: role];
+    [p addActionIcon: role withResult: result];
 }
 
 -(void) removeActionIconFrom: (Player*) player {
@@ -317,16 +260,17 @@ CGPoint originalPoint;
 -(void) gameFinished {
     CCMenuItem *restarMenuItem = [CCMenuItemImage itemFromNormalImage:@"restart.png" selectedImage:@"restart.png"
         block:^(id sender){
-            [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
+            [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
         }];
-    restarMenuItem.position = ccp(260, [[CCDirector sharedDirector] winSize].height-restarMenuItem.boundingBox.size.height/2);
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    restarMenuItem.position = ccp(size.width/2, size.height/2+100);
     CCMenu *restarMenu = [CCMenu menuWithItems:restarMenuItem, nil];
     restarMenu.position = CGPointZero;
     [self addChild:restarMenu];
 }
 
--(void) recordPlayersStatus {
-    [gameStateSprite addNewStatus];
+-(void) recordPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver  andResult: (BOOL) result{
+    [gameStateSprite addNewStatusWithActorRole:role andReceiver:receiver andResult:result];
 }
 
 -(void) rollbackPlayersStatus {

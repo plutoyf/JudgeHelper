@@ -118,8 +118,9 @@
     _sprite.opacity = _status == OUT_GAME ? 80 : 999;
 }
 
--(void) addActionIcon: (Role) role {
+-(void) addActionIcon: (Role) role withResult:(BOOL)result {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+    icon.opacity = result ? 255 : 80;
     CGSize iconSize = icon.boundingBox.size;
     int n = _actionIcons.count;
     float x = iconSize.width/2+iconSize.width*n;

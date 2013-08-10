@@ -13,6 +13,24 @@
 
 @implementation GameStateSprite
 
+- (void)swipeGameState:(UIGestureRecognizer*) sender {
+    CGPoint newPoint;
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    
+    if(sender.node == showGameState) {
+        newPoint = ccp(self.boundingBox.size.width/2, self.boundingBox.size.height/2);
+    } else if(sender.node == hideGameState) {
+        newPoint = ccp(size.width+self.boundingBox.size.width/2, self.boundingBox.size.height/2);
+    }
+    
+    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:newPoint];
+    
+    [self runAction:[CCSequence actions:move, nil]];
+}
+
+
+CCSprite* showGameState;
+CCSprite* hideGameState;
 -(id) init {
     if(self = [super init]) {
         CGSize size = [[CCDirector sharedDirector] winSize];
@@ -25,19 +43,31 @@
         layerColer.opacity = 230;
         [self addChild:layerColer z:-1];        
         
-        _position = ccp(size.width/2*3, size.height/2*3);
+        _position = ccp(size.width/2*3, size.height/2);
         
         //init
         pIds = [NSMutableArray new];
-        actionReceiverMap = [NSMutableDictionary new];
-        actionIconMap = [NSMutableDictionary new];
+        playerLines = [NSMutableDictionary new];
+        playerVisibleObjects = [NSMutableDictionary new];
+        playerLifeBoxes = [NSMutableDictionary new];
         int i = 0;
         for(CCPlayer* p in engin.players) {
             if(p.role == Judge) continue;
             [pIds addObject:p.id];
+            [playerVisibleObjects setObject:[NSMutableArray new] forKey:p.id];
+            [playerLifeBoxes setObject:[NSMutableArray new] forKey:p.id];
+            
+            CCSprite* playerLine = [CCSprite new];
+            playerLine.position = ccp(0, 80+40*i);
+            playerLine.cascadeOpacityEnabled=YES;
+            [playerLines setObject:playerLine forKey:p.id];
+            [self addChild:playerLine];
+            
             CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:14];
-            label.position = ccp(50, 80+40*i++);
-            [self addChild:label];
+            label.position = ccp(50, 0);
+            [playerLine addChild:label];
+            
+            i++;
         }
         
         CCSprite* undoButton = [CCSprite spriteWithFile:@"undo.png"];
@@ -51,7 +81,20 @@
         redoButton.isTouchEnabled = YES;
         [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
         [self addChild:redoButton];
-
+        
+        showGameState = [CCSprite spriteWithFile:@"left2.png"];
+        showGameState.isTouchEnabled = YES;
+        showGameState.position = ccp(-showGameState.boundingBox.size.width/2, size.height/2);
+        UIGestureRecognizer *showGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+        [showGameState addGestureRecognizer:showGameStateTapGestureRecognizer];
+        [self addChild: showGameState];
+        
+        hideGameState = [CCSprite spriteWithFile:@"right2.png"];
+        hideGameState.isTouchEnabled = YES;
+        hideGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height/2);
+        UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+        [hideGameState addGestureRecognizer:hideGameStateTapGestureRecognizer];
+        [self addChild: hideGameState];
     }
     
     return self;
@@ -66,128 +109,90 @@
     [engin action: @"REDO_ACTION"];
 }
 
--(BOOL) hasAddedActionReceiverForRole: (Role) r atNight: (int) i {
-    NSNumber* key = [NSNumber numberWithInt:r];
-    if(![actionReceiverMap objectForKey:key]) [actionReceiverMap setObject:[NSMutableDictionary new] forKey:key];
-    NSMutableDictionary* addedActionReceivers = [actionReceiverMap objectForKey:key];
-    return [addedActionReceivers objectForKey:[NSNumber numberWithInt:i]] != nil;
-}
-
--(void) addActionIcon:(CCSprite*) icon forPlayer: (NSString*) id atNight: (int) i {
-    int line = [self getPlayerLineNumber:id];
-    if(![actionIconMap objectForKey:id]) [actionIconMap setObject:[NSMutableDictionary new] forKey:id];
-    NSMutableDictionary* playersActionIcons = [actionIconMap objectForKey:id];
-    NSNumber* key = [NSNumber numberWithInt:i];
-    if(![playersActionIcons objectForKey:key]) [playersActionIcons setObject:[NSMutableArray new] forKey:key];
-    NSMutableArray* icons = [playersActionIcons objectForKey:key];
-    icon.position = ccp(100+20*icon.tag, 80+40*line);
-    [icons addObject:icon];
-    [self addChild:icon];
-}
-
--(int) getPlayerLineNumber: (NSString*) id {
-    return [pIds indexOfObject:id];
-}
-
-NSMutableDictionary* actionReceiverMap;
-NSMutableDictionary* actionIconMap;
+NSMutableDictionary* playerLines;
+NSMutableDictionary* playerVisibleObjects;
+NSMutableDictionary* playerLifeBoxes;
 NSMutableArray* pIds;
--(void) addNewStatus {
-    int night = [engin getCurrentNight];
+-(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result {
+    for(NSMutableArray* visibleObjects in [playerVisibleObjects allValues]) {
+        [visibleObjects addObject:[NSMutableArray new]];
+    }
     
-    // print live color grid
-    [self paintLifeLine: engin.players];
-    
-    // print action icon
-    for(CCPlayer* p in engin.players) {
-        NSArray* orders = engin.orders;
-        Role currentRole = [engin getCurrentRole];
-        if(!currentRole || [orders indexOfObject:[Engin getRoleName:p.role]] <= [orders indexOfObject: [Engin getRoleName:currentRole]]) {
+    if(receiver) {
+        CCSprite* playerLine = [playerLines objectForKey:receiver.id];
+        NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:receiver.id] lastObject];
+        NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:receiver.id];
         
-            NSString* receiverId = [p.actionReceivers objectForKey: [NSNumber numberWithInt:night]];
-            NSNumber* result = [p.actionResults objectForKey: [NSNumber numberWithInt:night]];
+        MySprite* icon = [MySprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+        if(!result) icon.opacity = 80;
+        icon.position = ccp(100+20*lifeBoxes.count, 0);
+        [visibleNodes addObject:icon];
+        [playerLine addChild:icon];
+        
+        ccColor4B color = (receiver.life >= 1) ? ccc4(0, 255, 0, 255) : (receiver.life <= 0) ? ccc4(255, 0, 0, 255) : ccc4(100, 100, 0, 255);
+        CCLayerColor *lifeBox = [CCLayerColor layerWithColor:color];
+        lifeBox.contentSize = CGSizeMake(20, 4);
+        lifeBox.position = ccp(100+20*lifeBoxes.count-10, -14);
+        [visibleNodes addObject:lifeBox];
+        [lifeBoxes addObject:lifeBox];
+        [playerLine addChild:lifeBox];
+    }
+    
+    if(!receiver || role == Judge) {
+        int maxLifeBoxesNumber = 0;
+        for(NSString* id in pIds) {
+            NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
+            maxLifeBoxesNumber = (lifeBoxes.count > maxLifeBoxesNumber) ? lifeBoxes.count : maxLifeBoxesNumber;
+        }
+        for(NSString* id in pIds) {
+            CCSprite* playerLine = [playerLines objectForKey:id];
+            NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:id] lastObject];
+            Player* player = [engin getPlayerById:id];
+            NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
+            ccColor3B color = lifeBoxes.count > 0 ? ((CCLayerColor*)[lifeBoxes lastObject]).color : ccc3(0, 255, 0);
             
-            if(receiverId && ![self hasAddedActionReceiverForRole:p.role atNight:night]) {
-                MySprite* icon = [MySprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:p.role]]];
-                icon.role = p.role;
-                icon.tag = p.lifeStack.count;
-                if(!result.boolValue) icon.opacity = 80;
-                [self addActionIcon:icon forPlayer:receiverId atNight:night];
-                [((NSMutableDictionary*)[actionReceiverMap objectForKey:[NSNumber numberWithInt:p.role]]) setObject:receiverId forKey:[NSNumber numberWithInt:night]];
+            if(player.status == IN_GAME) {
+                for(;lifeBoxes.count < maxLifeBoxesNumber;) {
+                    CCLayerColor *lifeBox = [CCLayerColor layerWithColor:ccc4(color.r, color.g, color.b, 255)];
+                    lifeBox.contentSize = CGSizeMake(20, 4);
+                    lifeBox.position = ccp(100+20*lifeBoxes.count-10, -14);
+                    [visibleNodes addObject:lifeBox];
+                    [lifeBoxes addObject:lifeBox];
+                    [playerLine addChild:lifeBox];
+                }
             }
+            
+            int opacity = (player.status == IN_GAME) ? 255 : 80;
+            playerLine.opacity = opacity;
+            for(CCLayerColor* lifeBox in lifeBoxes) lifeBox.opacity = opacity;
         }
     }
+    
 }
 
 -(void) revertStatus {
-    [self paintLifeLine: engin.players];
-    
-    int i = ((CCPlayer*)[engin.players objectAtIndex:0]).lifeStack.count+1;
-    int night = [engin getCurrentNight];
-    for(CCPlayer* p in engin.players) {
-        NSMutableDictionary* playersActionIcons = [actionIconMap objectForKey:p.id];
-        NSMutableArray* icons = [playersActionIcons objectForKey:[NSNumber numberWithInt:night]];
-        for(MySprite* icon in icons) {
-            if(icon.tag == i) {
-                [((NSMutableDictionary*)[actionReceiverMap objectForKey:[NSNumber numberWithInt:icon.role]]) removeObjectForKey:[NSNumber numberWithInt:night]];
-                [icons removeObject:icon];
-                [self removeChild:icon];
+    for(NSString* id in pIds) {
+        CCSprite* playerLine = [playerLines objectForKey:id];
+        NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:id] lastObject];
+        NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
+        Player* player = [engin getPlayerById:id];
+        
+        for(CCNode* node in visibleNodes) {
+            if([lifeBoxes containsObject:node]) {
+                [lifeBoxes removeObject:node];
             }
         }
-    }
-}
-
--(void) paintLifeLine: (NSArray*) players {
-    
-    [self removeChildByTag: 9];
-    
-    for(CCPlayer* p in players) {
-        if(p.role == Judge) continue;
+        [lifeBoxes removeObjectsInArray:visibleNodes];
         
-        int i0 = 0;
-        double v0 = 0;
-        Status s0 = 0;
-        int i = 0;
-        ccColor4B color = ccc4(0, 255, 0, 255);
-        int line = [self getPlayerLineNumber:p.id];
-        
-        for(NSNumber* v in p.lifeStack) {
-            if(i==0) {
-                i0 = i;
-                v0 = v.floatValue;
-                s0 = ((NSNumber*)[p.statusStack objectAtIndex:0]).intValue;
-            } else {
-                if(v0 != v.floatValue || s0 != ((NSNumber*)[p.statusStack objectAtIndex:i]).intValue) {
-                    // draw color box
-                    CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
-                    layerColer.contentSize = CGSizeMake((i-i0)*20, 2);
-                    layerColer.position = ccp(100+i0*20+10, 80+40*line-12);
-                    [self addChild:layerColer z:-1];
-                    
-                    // move forward
-                    i0 = i;
-                    v0 = v.floatValue;
-                    s0 = ((NSNumber*)[p.statusStack objectAtIndex:i]).intValue;
-                    color = (s0 == OUT_GAME) ? ccc4(0, 0, 0, 255) :  (v0>=1) ? ccc4(0, 255, 0, 255) : (v0<=0) ? ccc4(255, 0, 0, 255) : ccc4(100, 100, 0, 255);
-                }
-            }
-            i++;
+        for(CCNode* node in visibleNodes) {
+            [playerLine removeChild:node];
         }
         
-        CCLayerColor *layerColer = [CCLayerColor layerWithColor:color];
-        layerColer.contentSize = CGSizeMake((50-i0)*20, 2);
-        layerColer.position = ccp(100+i0*20+10, 80+40*line-12);
-        [self addChild:layerColer z:-1];
+        [[playerVisibleObjects objectForKey:id] removeLastObject];
         
-        if(p.status == OUT_GAME) {
-            CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255)];
-            layerColer.tag = 9;
-            layerColer.contentSize = CGSizeMake(40, 1);
-            layerColer.position = ccp(30, 80+40*line);
-            [self addChild:layerColer];
-        }
+        int opacity = (player.status == IN_GAME) ? 255 : 80;
+        playerLine.opacity = opacity;
+        for(CCLayerColor* lifeBox in lifeBoxes) lifeBox.opacity = opacity;
     }
-    
 }
-
 @end

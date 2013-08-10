@@ -125,7 +125,7 @@ MySprite* playerToRemove;
     if(playerIds.count >= 2) {
         GlobalSettings* global = [GlobalSettings globalSettings];
         [global setPlayerIds: playerIds];
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectRoleLayer scene] ]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectRoleLayer scene] ]];
     }
 }
 

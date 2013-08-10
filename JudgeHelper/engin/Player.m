@@ -57,14 +57,14 @@
     return [_actionResults objectForKey: key] != nil ? [[_actionResults objectForKey: key] boolValue] : NO;
 }
 
-
 -(NSArray *) getApplicatedRulesAtNight: (long) i {
     NSNumber* key = [NSNumber numberWithLong: i];
     return [_applicatedRules objectForKey: key] != nil ? [_applicatedRules objectForKey: key] : [NSArray array];
 }
 
--(NSArray *) getApplicatedRulesAtNight {
-    return [self getApplicatedRulesAtNight: [_applicatedRules count]];
+-(NSNumber *) getActionResultAtNight: (long) i {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    return [_actionResults objectForKey: key] != nil ? [_actionResults objectForKey: key] : [NSNumber numberWithBool:NO];
 }
 
 -(void) resetDistance {

@@ -49,15 +49,15 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
     return TRUE;
 }
 
--(void) toPreviousScreen {
+-(void) toPreviousScreen : (id) sender {
     GlobalSettings* global = [GlobalSettings globalSettings];
     [global setRoles: roles];
     [global setRoleNumbers: roleNumbers];
 
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
 }
 
--(void) toGameScreen {
+-(void) toGameScreen : (id) sender {
     NSArray* ids = [[GlobalSettings globalSettings] getPlayerIds];
     
     int rNum = 0;
@@ -72,7 +72,7 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
         [global setRoleNumbers: roleNumbers];
 
         [engin initRoles: roleNumbers];
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameLayer scene] ]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[GameLayer scene] ]];
     } else {
         // need one person more/less in double hand mode
     }
@@ -91,11 +91,7 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    if (CGRectContainsPoint(previousIcon.boundingBox, touchLocation)) {
-        [self toPreviousScreen];
-    } else if (CGRectContainsPoint(startIcon.boundingBox, touchLocation)) {
-        [self toGameScreen];
-    } else if(selRoleIcon) {
+    if(selRoleIcon) {
         CGPoint p1 = selRoleIcon.position;
         CGPoint p0 = ((MySprite*)[roleIconsMap objectForKey: selRoleIcon.name]).position;
         float w = 72;
@@ -214,10 +210,14 @@ NSMutableDictionary* roleLabels;
         
         previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
         previousIcon.position = ccp(size.width-200, 100);
+        previousIcon.isTouchEnabled = YES;
+        [previousIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toPreviousScreen:)]];
         [self addChild: previousIcon];
         
         startIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"start.png"].CGImage resolutionType: kCCResolutioniPad]];
         startIcon.position = ccp(size.width-100, 100);
+        startIcon.isTouchEnabled = YES;
+        [startIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toGameScreen:)]];
         [self addChild: startIcon];
         
     }

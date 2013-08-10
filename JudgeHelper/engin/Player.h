@@ -57,9 +57,11 @@
 
 -(NSString*) getActionReceiverAtNight: (long) i;
 
--(BOOL) isEffectiveActionAtNight: (long) i;
-
 -(NSArray *) getApplicatedRulesAtNight: (long) i;
+
+-(NSNumber *) getActionResultAtNight: (long) i;
+
+-(BOOL) isEffectiveActionAtNight: (long) i;
 
 -(void) resetDistance;
 
