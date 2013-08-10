@@ -75,6 +75,7 @@ static CCEngin *engin = nil;
     inGame = TRUE;
     night = 0;
     state = 1;
+    oIndex = 0;
     [self doAction];
 }
 

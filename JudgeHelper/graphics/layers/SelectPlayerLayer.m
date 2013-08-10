@@ -115,6 +115,11 @@ MySprite* playerToRemove;
         for(i = i0; i < i1; i++) {
             CCSprite* node = [personIcons objectAtIndex:i];
             node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20)*d, 0));
+            if(node.position.x > -IMG_WIDTH/2 && node.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
+                node.touchRect = CGRectMake(node.position.x-IMG_WIDTH/2<0?IMG_WIDTH/2-node.position.x:0, 0, node.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-node.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
+            } else {
+                node.touchRect = CGRectMake(0, 0, 0, 0);
+            }
         }
         
         playerToRemove = nil;
