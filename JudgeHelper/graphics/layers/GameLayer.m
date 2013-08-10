@@ -41,15 +41,6 @@
 	return scene;
 }
 
-
--(void) undoButtonPressed : (id) sender {
-    [engin action: @"UNDO_ACTION"];    
-}
-
--(void) redoButtonPressed : (id) sender {
-    [engin action: @"REDO_ACTION"];    
-}
-
 - (void) selectPlayerById: (NSString*) id {
     CCPlayer* selPlayer = (CCPlayer*)[playersMap objectForKey:id];
     
@@ -93,6 +84,8 @@ NSMutableArray* players;
 Role rolePlayerToDefine;
 BOOL defineRolePlayerBegin;
 GameStateSprite* gameStateSprite;
+CCSprite* showGameState;
+CCSprite* hideGameState;
 
 CCEngin* engin;
 // on "init" you need to initialize your instance
@@ -112,19 +105,6 @@ CCEngin* engin;
         
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
-        
-        CCSprite* undoButton = [CCSprite spriteWithFile:@"undo.png"];
-        undoButton.position = ccp(60, size.height-200);
-        undoButton.isTouchEnabled = YES;
-        [undoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(undoButtonPressed:)] ];
-        [self addChild:undoButton];
-        
-        CCSprite* redoButton = [CCSprite spriteWithFile:@"redo.png"];
-        redoButton.position = ccp(160, size.height-200);
-        redoButton.isTouchEnabled = YES;
-        [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
-        [self addChild:redoButton];
-
 
         nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
         nightLabel.position = ccp(60 , size.height-100 );
@@ -172,7 +152,25 @@ CCEngin* engin;
 }
 
 CGPoint originalPoint;
-- (void)moveGameState:(UIPanGestureRecognizer*) sender {
+- (void)swipeGameState:(UIGestureRecognizer*) sender {
+    CGPoint newPoint;
+    CGSize size = [[CCDirector sharedDirector] winSize];
+
+    if(sender.node == showGameState) {
+        showGameState.position = ccp(size.width+showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
+        hideGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
+        newPoint = ccp(gameStateSprite.boundingBox.size.width/2, gameStateSprite.boundingBox.size.height/2);
+    } else if(sender.node == hideGameState) {
+        showGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
+        hideGameState.position = ccp(size.width+showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
+        newPoint = ccp(size.width+gameStateSprite.boundingBox.size.width/2, size.height+gameStateSprite.boundingBox.size.height/2);
+    }
+    
+    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:newPoint];
+    
+    [gameStateSprite runAction:[CCSequence actions:move, nil]];
+    
+    /*
     CGPoint location = [sender locationInView:sender.view];
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
     CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
@@ -186,6 +184,7 @@ CGPoint originalPoint;
         newPosition.y = newPosition.y < height/2 ? height/2 : newPosition.y > height+height/2-10 ? height+height/2-10 : newPosition.y;
         sender.node.position = newPosition;
     }
+     */
 }
 
 -(void) emptyClick: (UITapGestureRecognizer*) sender {
@@ -222,11 +221,29 @@ CGPoint originalPoint;
     
     gameStateSprite = [[GameStateSprite alloc] init];
     gameStateSprite.isTouchEnabled = YES;
-    UIGestureRecognizer *moveGameStatePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveGameState:)];
-    moveGameStatePanGestureRecognizer.delegate = self;
-    [gameStateSprite addGestureRecognizer:moveGameStatePanGestureRecognizer];
-    
+    UIGestureRecognizer *moveGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+    moveGameStateSwipeGestureRecognizer.delegate = self;
+    [gameStateSprite addGestureRecognizer:moveGameStateSwipeGestureRecognizer];
     [self addChild: gameStateSprite];
+    
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    
+    showGameState = [CCSprite spriteWithFile:@"show.png"];
+    showGameState.isTouchEnabled = YES;
+    showGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
+    UIGestureRecognizer *showGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+    showGameStateTapGestureRecognizer.delegate = self;
+    [showGameState addGestureRecognizer:showGameStateTapGestureRecognizer];
+    [self addChild: showGameState];
+    
+    hideGameState = [CCSprite spriteWithFile:@"hide.png"];
+    hideGameState.isTouchEnabled = YES;
+    hideGameState.position = ccp(size.width+showGameState.boundingBox.size.width/2, size.height-showGameState.boundingBox.size.height/2);
+    UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+    hideGameStateTapGestureRecognizer.delegate = self;
+    [hideGameState addGestureRecognizer:hideGameStateTapGestureRecognizer];
+    [self addChild: hideGameState];
+    
 }
 
 #pragma mark CCEnginDisplayDelegate
@@ -302,7 +319,7 @@ CGPoint originalPoint;
         block:^(id sender){
             [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[SelectPlayerLayer scene] ]];
         }];
-    restarMenuItem.position = ccp(260, [[CCDirector sharedDirector] winSize].height-200);
+    restarMenuItem.position = ccp(260, [[CCDirector sharedDirector] winSize].height-restarMenuItem.boundingBox.size.height/2);
     CCMenu *restarMenu = [CCMenu menuWithItems:restarMenuItem, nil];
     restarMenu.position = CGPointZero;
     [self addChild:restarMenu];

@@ -104,23 +104,15 @@ MySprite* playerToRemove;
         [personIcons removeObject:playerToRemove];
         [personIconsMap removeObjectForKey:playerToRemove.id];
         
-        // remove frome playesPool
+        // remove from playesPool
         [playersPool removeChild:playerToRemove];
         
         // sort playersPool
-        int d = (personIcons.count && ((CCSprite*)[personIcons objectAtIndex:0]).position.x < IMG_WIDTH/2 && ((CCSprite*)[personIcons lastObject]).position.x <= (IMG_WIDTH+20)*9-IMG_WIDTH/2) ? 1 : -1;
-        int i0 = d > 0 ? 0 : i;
-        int i1 = d > 0 ? i : personIcons.count;
-        //NSLog(@"move to %d from  %d to %d", d, i0, i1);
-        for(i = i0; i < i1; i++) {
+        for(; i < personIcons.count; i++) {
             CCSprite* node = [personIcons objectAtIndex:i];
-            node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20)*d, 0));
-            if(node.position.x > -IMG_WIDTH/2 && node.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
-                node.touchRect = CGRectMake(node.position.x-IMG_WIDTH/2<0?IMG_WIDTH/2-node.position.x:0, 0, node.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-node.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
-            } else {
-                node.touchRect = CGRectMake(0, 0, 0, 0);
-            }
+            node.position = ccpSub(node.position, ccp(IMG_WIDTH+20, 0));
         }
+        [self setPlayersPoolPosition: playersPool.position];
         
         playerToRemove = nil;
     }
@@ -147,7 +139,7 @@ CreatePlayerLayer* createPlayerLayer;
 CCEngin* engin;
 CCSprite* nextIcon;
 MySprite* selPersonIcon;
-ClippingSprite* playersPool;
+CCSprite* playersPool;
 NSMutableArray* persons;
 NSMutableArray* personNames;
 NSMutableArray* personIcons;
@@ -173,19 +165,6 @@ int IMG_HEIGHT = 72;
         [self addChild: messageLabel];
         
         
-        CCMenuItem *leftMenuItem = [CCMenuItemImage
-                                    itemFromNormalImage:@"left.png" selectedImage:@"left.png"
-                                    target:self selector:@selector(leftButtonTapped:)];
-        leftMenuItem.position = ccp(-50, 30);
-        CCMenuItem *rightMenuItem = [CCMenuItemImage
-                                     itemFromNormalImage:@"right.png" selectedImage:@"right.png"
-                                     target:self selector:@selector(rightButtonTapped:)];
-        rightMenuItem.position = ccp(50, 30);
-        
-        CCMenu *playersPoolMenu = [CCMenu menuWithItems:leftMenuItem, rightMenuItem, nil];
-        playersPoolMenu.position = ccp(size.width/2, 260);
-        [self addChild:playersPoolMenu];
-        
         CCMenuItem *addPlayerMenuItem = [CCMenuItemImage
                                     itemFromNormalImage:@"add.png" selectedImage:@"add.png"
                                     target:self selector:@selector(addPlayerButtonTapped:)];
@@ -193,7 +172,7 @@ int IMG_HEIGHT = 72;
         [addPlayerMenuItem setScaleY: IMG_HEIGHT/addPlayerMenuItem.contentSize.height];
         
         CCMenu *playerMenu = [CCMenu menuWithItems:addPlayerMenuItem, nil];
-        playerMenu.position = ccp(size.width-100, 208);
+        playerMenu.position = ccp(size.width-200, 100);
         [self addChild:playerMenu];
         
         
@@ -206,12 +185,24 @@ int IMG_HEIGHT = 72;
         [self addChild: nextIcon];
         
         
-        playersPool = [[ClippingSprite alloc] init];
-        [playersPool setContentSize:CGSizeMake(size.width-200, 100)];
-        playersPool.openWindowRect = CGRectMake(50-20, 0, (IMG_WIDTH+20)*9+20, 400);
-        playersPool.position = ccp(50+(size.width-200)/2, 170+100/2);
+        CCSprite* playersPoolCadre = [[CCSprite alloc] init];
+        [playersPoolCadre setContentSize:CGSizeMake(size.width, 100)];
+        playersPoolCadre.position = ccp(size.width/2, 170+100/2);
+        playersPoolCadre.isTouchEnabled = YES;
+        UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
+        panGestureRecognizer.delegate = self;
+        [playersPoolCadre addGestureRecognizer:panGestureRecognizer];
         
-        [self addChild:playersPool];
+        
+        playersPool = [[CCSprite alloc] init];
+        //[playersPool setContentSize:CGSizeMake(size.width-200, 100)];
+        //playersPool.openWindowRect = CGRectMake(50-20, 0, (IMG_WIDTH+20)*9+20, 400);
+        playersPool.position = ccp(0, 0);
+        [playersPoolCadre addChild:playersPool];
+        
+
+        
+        [self addChild:playersPoolCadre];
         [self initPlayers];
     }
     
@@ -225,31 +216,31 @@ CreatePlayerLayer* createPlayerLayer;
     [self showCreatePlayerScreen];
 }
 
--(BOOL) leftButtonTapped: (id) sender {
-    if(!personIcons.count || ((CCSprite*)[personIcons objectAtIndex:0]).position.x >= IMG_WIDTH/2) return NO;
-    for(CCSprite* node in personIcons) {
-        node.position = ccpAdd(node.position, ccp((IMG_WIDTH+20), 0));
-        if(node.position.x > -IMG_WIDTH/2 && node.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
-            node.touchRect = CGRectMake(node.position.x-IMG_WIDTH/2<0?IMG_WIDTH/2-node.position.x:0, 0, node.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-node.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
-        } else {
-            node.touchRect = CGRectMake(0, 0, 0, 0);
-        }
+-(void) setPlayersPoolPosition : (CGPoint) newPosition {
+    newPosition.y = playersPool.position.y;
+    CCNode* lastPlayer = [personIcons lastObject];
+    if(lastPlayer.position.x+lastPlayer.boundingBox.size.width/2+20+newPosition.x < [[CCDirector sharedDirector] winSize].width) {
+        newPosition.x = [[CCDirector sharedDirector] winSize].width-lastPlayer.position.x-lastPlayer.boundingBox.size.width/2-20;
     }
-    return YES;
+    if(newPosition.x > 20) {
+        newPosition.x = 20;
+    }
+    
+    playersPool.position = newPosition;
 }
 
--(BOOL) rightButtonTapped: (id) sender {
-    if(!personIcons.count || ((CCSprite*)[personIcons lastObject]).position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) return NO;
-    for(CCSprite* node in personIcons) {
-        node.position = ccpAdd(node.position, ccp(-(IMG_WIDTH+20), 0));
-        if(node.position.x > -IMG_WIDTH/2 && node.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
-            node.touchRect = CGRectMake(node.position.x-IMG_WIDTH/2<0?IMG_WIDTH/2-node.position.x:0, 0, node.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-node.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
-        } else {
-            node.touchRect = CGRectMake(0, 0, 0, 0);
-        }
-        
+CGPoint originalPoint;
+-(BOOL) movePlayersByPanGesture: (UIPanGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
+    CGPoint locationInMySpriteSpace = [playersPool convertToNodeSpace:locationInWorldSpace];
+    
+    if(sender.state == UIGestureRecognizerStateBegan) {
+        originalPoint = locationInMySpriteSpace;
+    } else {
+        CGPoint newPosition = ccpSub(ccpAdd(playersPool.position, locationInMySpriteSpace), originalPoint);
+        [self setPlayersPoolPosition: newPosition];
     }
-    return YES;
 }
 
 - (void)handlePlayersPoolPanGesture:(UIPanGestureRecognizer*)aPanGestureRecognizer {
@@ -296,8 +287,11 @@ NSMutableArray* pids;
     
     //2. show player in the list
     [self addPlayer:id withName:name andImage:image];
-    while([self rightButtonTapped:nil]) {
-    };
+    CCSprite* lastPlayer = (CCSprite*)[personIcons lastObject];
+    CGPoint newPosition = playersPool.position;
+    newPosition.x = [[CCDirector sharedDirector] winSize].width-lastPlayer.position.x-lastPlayer.boundingBox.size.width/2-20;
+    [self setPlayersPoolPosition: newPosition];
+
 }
 
 -(void) addPlayer: (NSString*) id withName: (NSString*) name andImage: (UIImage*) image {
@@ -314,11 +308,6 @@ NSMutableArray* pids;
     icon.id = id;
     icon.name = name;
     icon.isTouchEnabled = YES;
-    if(icon.position.x > -IMG_WIDTH/2 && icon.position.x < IMG_WIDTH/2+(IMG_WIDTH+20)*9) {
-        icon.touchRect = CGRectMake(icon.position.x<IMG_WIDTH/2?IMG_WIDTH/2-icon.position.x:0, 0, icon.position.x+IMG_WIDTH/2>IMG_WIDTH/2+(IMG_WIDTH+20)*9?IMG_WIDTH/2+(IMG_WIDTH+20)*9-icon.position.x-IMG_WIDTH/2:IMG_WIDTH, IMG_HEIGHT);
-    } else {
-        icon.touchRect = CGRectMake(0, 0, 0, 0);
-    }
     [icon showName];
     
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
@@ -332,6 +321,7 @@ NSMutableArray* pids;
     [playersPool addChild: icon];
     [personIcons addObject:icon];
     [personIconsMap setObject:icon forKey:icon.id];
+    [self setPlayersPoolPosition: ccp(20, 0)];
 }
 
 -(NSArray*) getSelectedPlayerIds {

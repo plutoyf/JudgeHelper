@@ -9,6 +9,7 @@
 #import "GameStateSprite.h"
 #import "CCEngin.h"
 #import "CCPlayer.h"
+#import "CCNode+SFGestureRecognizers.h"
 
 @implementation GameStateSprite
 
@@ -17,14 +18,16 @@
         CGSize size = [[CCDirector sharedDirector] winSize];
         self.contentSize = size;
         
+        engin = [CCEngin getEngin];
+        
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
         layerColer.position = ccp(0, 0);
+        layerColer.opacity = 230;
         [self addChild:layerColer z:-1];        
         
-        _position = ccp(size.width/2, size.height/2*3-10);
+        _position = ccp(size.width/2*3, size.height/2*3);
         
         //init
-        CCEngin* engin = [CCEngin getEngin];
         pIds = [NSMutableArray new];
         actionReceiverMap = [NSMutableDictionary new];
         actionIconMap = [NSMutableDictionary new];
@@ -36,9 +39,31 @@
             label.position = ccp(50, 80+40*i++);
             [self addChild:label];
         }
+        
+        CCSprite* undoButton = [CCSprite spriteWithFile:@"undo.png"];
+        undoButton.position = ccp(60, size.height-undoButton.boundingBox.size.width/2);
+        undoButton.isTouchEnabled = YES;
+        [undoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(undoButtonPressed:)] ];
+        [self addChild:undoButton];
+        
+        CCSprite* redoButton = [CCSprite spriteWithFile:@"redo.png"];
+        redoButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+40, size.height-redoButton.boundingBox.size.width/2);
+        redoButton.isTouchEnabled = YES;
+        [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
+        [self addChild:redoButton];
+
     }
     
     return self;
+}
+
+
+-(void) undoButtonPressed : (id) sender {
+    [engin action: @"UNDO_ACTION"];
+}
+
+-(void) redoButtonPressed : (id) sender {
+    [engin action: @"REDO_ACTION"];
 }
 
 -(BOOL) hasAddedActionReceiverForRole: (Role) r atNight: (int) i {
@@ -68,7 +93,6 @@ NSMutableDictionary* actionReceiverMap;
 NSMutableDictionary* actionIconMap;
 NSMutableArray* pIds;
 -(void) addNewStatus {
-    CCEngin* engin = [CCEngin getEngin];
     int night = [engin getCurrentNight];
     
     // print live color grid
@@ -96,7 +120,6 @@ NSMutableArray* pIds;
 }
 
 -(void) revertStatus {
-    CCEngin* engin = [CCEngin getEngin];
     [self paintLifeLine: engin.players];
     
     int i = ((CCPlayer*)[engin.players objectAtIndex:0]).lifeStack.count+1;
