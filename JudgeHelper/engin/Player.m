@@ -83,7 +83,7 @@
     if(_distanceStack == nil) {
         _distanceStack = [NSMutableArray new];
     }
-    [_distanceStack addObject: [NSMutableDictionary dictionaryWithDictionary: _distances]];
+    [_distanceStack addObject: [self cloneDistances: [_distanceStack lastObject]]];
     
     if(_statusStack == nil) {
         _statusStack = [NSMutableArray new];
@@ -98,12 +98,20 @@
     }
     if(_distanceStack != nil && _distanceStack.count > 1) {
         [_distanceStack removeLastObject];
-        _distances = [NSMutableDictionary dictionaryWithDictionary: [_distanceStack lastObject]];
+        _distances = [self cloneDistances: [_distanceStack lastObject]];
     }
     if(_statusStack != nil && _statusStack.count > 1) {
         [_statusStack removeLastObject];
         _status = [((NSNumber *)[_statusStack lastObject]) intValue];
     }
+}
+
+-(NSMutableDictionary*) cloneDistances : (NSMutableDictionary*) distances {
+    NSMutableDictionary* clone = [NSMutableDictionary new];
+    for(id key in [distances allKeys]) {
+        [clone setObject: [NSNumber numberWithDouble:((NSNumber*)[distances objectForKey:key]).doubleValue] forKey:key];
+    }
+    return clone;
 }
 
 -(int) getStackDepth {
