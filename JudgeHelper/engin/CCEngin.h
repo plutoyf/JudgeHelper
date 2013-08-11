@@ -17,6 +17,7 @@
 @interface CCEngin : Engin
 {
     BOOL inGame;
+    BOOL isInitPlayerDone;
     long night;
     int state;
     int oIndex;

@@ -73,13 +73,10 @@ static CCEngin *engin = nil;
 
 -(void) run {
     inGame = TRUE;
+    isInitPlayerDone = NO;
     night = 0;
     state = 1;
     oIndex = 0;
-    
-    [self recordPlayersStatus];
-    [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
-    
     [self doAction];
 }
 
@@ -95,6 +92,10 @@ static CCEngin *engin = nil;
     if([self getPlayersByRole: Judge].count <= 0) {
         [self.displayDelegate definePlayerForRole: Judge];
         return;
+    } else if(!isInitPlayerDone) {
+        [self recordPlayersStatus];
+        [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
+        isInitPlayerDone = YES;
     }
     
     NSString* deadNames;
