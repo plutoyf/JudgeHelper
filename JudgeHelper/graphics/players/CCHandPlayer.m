@@ -70,8 +70,9 @@
     [_player updatePlayerIcon];
 }
 
--(void) addActionIcon: (Role) role {
+-(void) addActionIcon: (Role) role withResult:(BOOL)result {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+    icon.opacity = result ? 255 : 80;
     int width = AVATAR_IMG_WIDTH;
     int height = AVATAR_IMG_HEIGHT;
     float x, y;

@@ -340,6 +340,7 @@ static CCEngin *engin = nil;
             if((oIndex <= 0 || oIndex >= _orders.count) && night>1) {
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 [self rollbackPlayersStatus];
+                [self rollbackPlayersStatus];
                 [self calculateCurrentPlayers];
                 [self.displayDelegate updatePlayerLabels];
                 [self.displayDelegate updatePlayerIcons];
