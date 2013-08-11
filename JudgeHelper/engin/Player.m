@@ -83,7 +83,7 @@
     if(_distanceStack == nil) {
         _distanceStack = [NSMutableArray new];
     }
-    [_distanceStack addObject: [self cloneDistances: [_distanceStack lastObject]]];
+    [_distanceStack addObject: [self cloneDistances: _distances]];
     
     if(_statusStack == nil) {
         _statusStack = [NSMutableArray new];
