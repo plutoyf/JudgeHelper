@@ -6,26 +6,15 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[GameStateSprite addNewStatus]:GameStateSprite.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "((NSNumber*)[p.statusStack objectAtIndex:i]).intValue">
-            </PersistentString>
-            <PersistentString
-               value = "pIds">
-            </PersistentString>
-            <PersistentString
-               value = "[self hasAddedActionReceiverForRole:p.role atNight:night]">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
          contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
@@ -34,21 +23,40 @@
          contextName = "-[MySprite showName]:MySprite.m">
       </ContextState>
       <ContextState
-         contextName = "-[GameStateSprite revertStatus]:GameStateSprite.m">
+         contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
          <PersistentStrings>
             <PersistentString
-               value = "((NSMutableDictionary*)[actionReceiverMap objectForKey:[NSNumber numberWithInt:p.role]])">
+               value = "[addedActionReceivers objectForKey:[NSNumber numberWithInt:i]]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[Engin initRoles:]:Engin.m">
+         contextName = "-[CCEngin doAction:]:CCEngin.m">
       </ContextState>
       <ContextState
          contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
                value = "((CCSprite*)[personIcons objectAtIndex:0]).position.x">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Player recordStatus]:Player.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.role">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Player rollbackStatus]:Player.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.role">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

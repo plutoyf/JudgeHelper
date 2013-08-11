@@ -59,7 +59,6 @@ CCSprite* hideGameState;
             
             CCSprite* playerLine = [CCSprite new];
             playerLine.position = ccp(0, 80+40*i);
-            playerLine.cascadeOpacityEnabled=YES;
             [playerLines setObject:playerLine forKey:p.id];
             [self addChild:playerLine];
             
@@ -133,6 +132,8 @@ NSMutableArray* pIds;
         CCLayerColor *lifeBox = [CCLayerColor layerWithColor:color];
         lifeBox.contentSize = CGSizeMake(20, 4);
         lifeBox.position = ccp(100+20*lifeBoxes.count-10, -14);
+        int opacity = (receiver.status == IN_GAME) ? 255 : 80;
+        lifeBox.opacity = opacity;
         [visibleNodes addObject:lifeBox];
         [lifeBoxes addObject:lifeBox];
         [playerLine addChild:lifeBox];
@@ -163,7 +164,6 @@ NSMutableArray* pIds;
             }
             
             int opacity = (player.status == IN_GAME) ? 255 : 80;
-            playerLine.opacity = opacity;
             for(CCLayerColor* lifeBox in lifeBoxes) lifeBox.opacity = opacity;
         }
     }
@@ -191,7 +191,6 @@ NSMutableArray* pIds;
         [[playerVisibleObjects objectForKey:id] removeLastObject];
         
         int opacity = (player.status == IN_GAME) ? 255 : 80;
-        playerLine.opacity = opacity;
         for(CCLayerColor* lifeBox in lifeBoxes) lifeBox.opacity = opacity;
     }
 }

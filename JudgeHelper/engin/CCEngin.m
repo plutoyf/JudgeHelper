@@ -76,6 +76,10 @@ static CCEngin *engin = nil;
     night = 0;
     state = 1;
     oIndex = 0;
+    
+    [self recordPlayersStatus];
+    [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
+    
     [self doAction];
 }
 
@@ -112,8 +116,6 @@ static CCEngin *engin = nil;
                 }
             }
             
-            [self recordPlayersStatus];
-            [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
             [self.displayDelegate backupActionIcon];
             [self.displayDelegate showMessage: [NSString stringWithFormat:@"第%li%@ 天黑请闭眼", night, @"夜"]];
             state++;
@@ -153,9 +155,8 @@ static CCEngin *engin = nil;
                 if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                     
-                    NSArray* actors = [self getPlayersByRole:roleInAction];
-                    Player* actor = [actors objectAtIndex:0];
-                    NSNumber* result = [self doActionAtNight: night withActors: actors andReceiver: selectedPlayer];
+                    Player* actor = [playersInAction objectAtIndex:0];
+                    NSNumber* result = [self doActionAtNight: night withActors: playersInAction andReceiver: selectedPlayer];
                     
                     [self recordPlayersStatus];
                     [self.displayDelegate recordPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
@@ -197,7 +198,7 @@ static CCEngin *engin = nil;
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
                 //8. do clearence after one night
-                for(Player* p in _players) {
+                for(Player* p in currentPlayers) {
                     [self doActionAtNight: night withPlayer: p];
                 }
                 
@@ -339,8 +340,7 @@ static CCEngin *engin = nil;
         case 4:
             if((oIndex <= 0 || oIndex >= _orders.count) && night>1) {
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
-                [self rollbackPlayersStatus];
-                [self rollbackPlayersStatus];
+                [self rollbackPlayersStatus];   
                 [self calculateCurrentPlayers];
                 [self.displayDelegate updatePlayerLabels];
                 [self.displayDelegate updatePlayerIcons];
