@@ -17,7 +17,6 @@
 @interface CCEngin : Engin
 {
     BOOL inGame;
-    BOOL isInitPlayerDone;
     long night;
     int state;
     int oIndex;
@@ -46,7 +45,7 @@
 
 @protocol CCEnginDisplayDelegate
 @required
--(void) recordPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
+-(void) addPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
 -(void) rollbackPlayersStatus;
 -(void) backupActionIcon;
 -(void) restoreBackupActionIcon;

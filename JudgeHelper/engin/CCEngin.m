@@ -73,7 +73,6 @@ static CCEngin *engin = nil;
 
 -(void) run {
     inGame = TRUE;
-    isInitPlayerDone = NO;
     night = 0;
     state = 1;
     oIndex = 0;
@@ -92,10 +91,6 @@ static CCEngin *engin = nil;
     if([self getPlayersByRole: Judge].count <= 0) {
         [self.displayDelegate definePlayerForRole: Judge];
         return;
-    } else if(!isInitPlayerDone) {
-        [self recordPlayersStatus];
-        [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
-        isInitPlayerDone = YES;
     }
     
     NSString* deadNames;
@@ -156,11 +151,12 @@ static CCEngin *engin = nil;
                 if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                     
+                    [self recordPlayersStatus];
+                    
                     Player* actor = [playersInAction objectAtIndex:0];
                     NSNumber* result = [self doActionAtNight: night withActors: playersInAction andReceiver: selectedPlayer];
                     
-                    [self recordPlayersStatus];
-                    [self.displayDelegate recordPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
+                    [self.displayDelegate addPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
                     [self.displayDelegate addActionIcon: ((Player*)[playersInAction objectAtIndex: 0]).role to: selectedPlayer withResult: [actor getActionResultAtNight:night].boolValue];
                     [self.displayDelegate updatePlayerLabels];
                     [self debugPlayers];
@@ -176,7 +172,7 @@ static CCEngin *engin = nil;
                 
             } else {
                 [self recordPlayersStatus];
-                [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
+                [self.displayDelegate addPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
                 state++;
@@ -198,6 +194,8 @@ static CCEngin *engin = nil;
             } else {
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
+                [self recordPlayersStatus];
+                
                 //8. do clearence after one night
                 for(Player* p in currentPlayers) {
                     [self doActionAtNight: night withPlayer: p];
@@ -213,8 +211,7 @@ static CCEngin *engin = nil;
                 }
                 [currentPlayers removeObjectsInArray: deadPlayers];
                 
-                [self recordPlayersStatus];
-                [self.displayDelegate recordPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
+                [self.displayDelegate addPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate updatePlayerLabels];
                 
@@ -266,6 +263,8 @@ static CCEngin *engin = nil;
                 //14. execution
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
+                [self recordPlayersStatus];
+                
                 NSArray* actors = [self getPlayersByRole:roleInAction];
                 Player* actor = [actors objectAtIndex:0];
                 [self doActionAtNight: night withActors: actors andReceiver: selectedPlayer];
@@ -288,8 +287,7 @@ static CCEngin *engin = nil;
                 [self debugPlayers];
                 [self debugPlayersInfo: currentPlayers];
                 
-                [self recordPlayersStatus];
-                [self.displayDelegate recordPlayersStatusWithActorRole:Judge andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
+                [self.displayDelegate addPlayersStatusWithActorRole:Judge andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"投票结果：%@死亡", deadNames]];
                 state++;

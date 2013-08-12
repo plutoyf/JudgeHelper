@@ -92,17 +92,17 @@
 }
 
 -(void) rollbackStatus {
-    if(_lifeStack != nil && _lifeStack.count > 1) {
-        [_lifeStack removeLastObject];
+    if(_lifeStack != nil && _lifeStack.count > 0) {
         _life = [[_lifeStack lastObject] doubleValue];
+        [_lifeStack removeLastObject];
     }
-    if(_distanceStack != nil && _distanceStack.count > 1) {
+    if(_distanceStack != nil && _distanceStack.count > 0) {
+        _distances = [_distanceStack lastObject];
         [_distanceStack removeLastObject];
-        _distances = [self cloneDistances: [_distanceStack lastObject]];
     }
-    if(_statusStack != nil && _statusStack.count > 1) {
-        [_statusStack removeLastObject];
+    if(_statusStack != nil && _statusStack.count > 0) {
         _status = [((NSNumber *)[_statusStack lastObject]) intValue];
+        [_statusStack removeLastObject];
     }
 }
 

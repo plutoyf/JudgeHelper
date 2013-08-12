@@ -269,7 +269,7 @@ CCEngin* engin;
     [self addChild:restarMenu];
 }
 
--(void) recordPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver  andResult: (BOOL) result{
+-(void) addPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver  andResult: (BOOL) result{
     [gameStateSprite addNewStatusWithActorRole:role andReceiver:receiver andResult:result];
 }
 
