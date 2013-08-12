@@ -155,11 +155,13 @@ NSMutableArray* pIds;
             NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
             maxLifeBoxesNumber = (lifeBoxes.count > maxLifeBoxesNumber) ? lifeBoxes.count : maxLifeBoxesNumber;
         }
+        int maxCount = 0;
         for(NSString* id in pIds) {
             CCSprite* playerLine = [playerLines objectForKey:id];
             NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:id] lastObject];
             Player* player = [engin getPlayerById:id];
             NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
+            maxCount = maxCount < lifeBoxes.count ? lifeBoxes.count : maxCount;
             ccColor3B color = lifeBoxes.count > 0 ? ((CCLayerColor*)[lifeBoxes lastObject]).color : ccc3(0, 255, 0);
             
             if(player.status == IN_GAME) {
@@ -175,6 +177,16 @@ NSMutableArray* pIds;
             
             int opacity = (player.status == IN_GAME) ? 255 : 80;
             for(CCLayerColor* lifeBox in lifeBoxes) lifeBox.opacity = opacity;
+        }
+        
+        if(role == Judge) {
+            for(NSString* id in pIds) {
+                CCSprite* playerLine = [playerLines objectForKey:id];
+                CCLayerColor *separatorBox = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255)];
+                separatorBox.contentSize = CGSizeMake(1, 40);
+                separatorBox.position = ccp(100+20*maxCount-10, -20);
+                [playerLine addChild:separatorBox z:1];
+            }
         }
     }
     

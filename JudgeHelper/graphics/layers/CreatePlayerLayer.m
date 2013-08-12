@@ -98,13 +98,18 @@
         
         [_delegate createPlayer:name withImage:[UIImage imageWithCGImage:imageRef]];
         
-        [self returnButtonTapped:nil];
+        [self removeChild:cadre];
+        [self removeChild:saveMenu];
+        [userNameTextField removeFromSuperview];
+        cadre = nil;
+        saveMenu = nil;
+        userNameTextField = nil;
+        
+        //[self returnButtonTapped:nil];
     }
 }
 
 -(void) returnButtonTapped: (id) sender {
-    [userNameTextField removeFromSuperview];
-    userNameTextField = nil;
     [self removeFromParent];
 }
 
@@ -241,6 +246,7 @@
         
         // Add textfield into cocos2d view
         [[[CCDirector sharedDirector] openGLView] addSubview:userNameTextField];
+        [userNameTextField becomeFirstResponder];
     }
     
     CCMenuItem *saveItem = [CCMenuItemImage

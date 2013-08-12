@@ -106,15 +106,13 @@ CCEngin* engin;
 
         nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
         nightLabel.position = ccp(60 , size.height-100 );
-		nightLabel.tag = 12;
         [self addChild: nightLabel];
         
 		// create and initialize a Label
 		// position the label on the center of the screen
 		messageLabel = [CCLabelTTF labelWithString:@"Killer" fontName:@"Marker Felt" fontSize:64];
         messageLabel.position = ccp( size.width /2 , size.height/2-(showDebugMessageEnable?200:0) );
-		messageLabel.tag = 13;
-        [self addChild: messageLabel];
+        [self addChild: messageLabel z:1];
         
         if(showDebugMessageEnable) {
             debugLabel = [CCLabelTTF labelWithString:@"debug : " fontName:@"Marker Felt" fontSize:13];
@@ -181,7 +179,7 @@ CCEngin* engin;
     [engin setPlayers: newPlayers];
     
     gameStateSprite = [[GameStateSprite alloc] init];
-    [self addChild: gameStateSprite];
+    [self addChild: gameStateSprite z:2];
     
 }
 

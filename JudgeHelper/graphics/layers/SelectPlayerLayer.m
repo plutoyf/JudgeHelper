@@ -147,6 +147,10 @@ MySprite* playerToRemove2;
 
 CreatePlayerLayer* createPlayerLayer;
 -(void) showCreatePlayerScreen {
+    if(createPlayerLayer) {
+        [self removeChild:createPlayerLayer];
+    }
+    
     createPlayerLayer = [[CreatePlayerLayer alloc] init];
     createPlayerLayer.delegate = self;
     [self addChild:createPlayerLayer];
@@ -240,7 +244,7 @@ CreatePlayerLayer* createPlayerLayer;
             newPosition.x = 20;
         }
         playersPool.position = newPosition;
-        playersPool2.position = ccp(width, newPosition.y);
+        playersPool2.position = ccp(width+100, newPosition.y);
     } else {
         playersPool.position = newPosition.x > 20 ? ccp(newPosition.x-lastPlayer.position.x-lastPlayer.boundingBox.size.width/2-20, playersPool.position.y) : newPosition;
         CGPoint position2 = ccp(playersPool.position.x+lastPlayer.position.x+lastPlayer.boundingBox.size.width/2+20, playersPool.position.y);
@@ -277,7 +281,7 @@ NSMutableArray* pids;
 -(void) initPlayers {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     id obj = [userDefaults objectForKey:pidsKey];
-    pids = obj==nil ? [NSMutableArray new] : (NSMutableArray*)obj;
+    pids = obj==nil ? [NSMutableArray new] : [NSMutableArray arrayWithArray:obj];
     
     GlobalSettings* global = [GlobalSettings globalSettings];
     NSArray* selPlayerIds = [global getPlayerIds];
