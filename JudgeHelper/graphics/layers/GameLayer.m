@@ -181,10 +181,6 @@ CCEngin* engin;
     [engin setPlayers: newPlayers];
     
     gameStateSprite = [[GameStateSprite alloc] init];
-    gameStateSprite.isTouchEnabled = YES;
-    UIGestureRecognizer *moveGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
-    moveGameStateSwipeGestureRecognizer.delegate = self;
-    [gameStateSprite addGestureRecognizer:moveGameStateSwipeGestureRecognizer];
     [self addChild: gameStateSprite];
     
 }

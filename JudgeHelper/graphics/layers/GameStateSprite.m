@@ -21,6 +21,8 @@
         newPoint = ccp(self.boundingBox.size.width/2, self.boundingBox.size.height/2);
     } else if(sender.node == hideGameState) {
         newPoint = ccp(size.width+self.boundingBox.size.width/2, self.boundingBox.size.height/2);
+    } else {
+        newPoint = ccp(size.width+self.boundingBox.size.width/2, self.boundingBox.size.height/2);
     }
     
     CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:newPoint];
@@ -86,6 +88,9 @@ CCSprite* hideGameState;
         showGameState.position = ccp(-showGameState.boundingBox.size.width/2, size.height/2);
         UIGestureRecognizer *showGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
         [showGameState addGestureRecognizer:showGameStateTapGestureRecognizer];
+        UISwipeGestureRecognizer* showGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+        showGameStateSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+        [showGameState addGestureRecognizer: showGameStateSwipeGestureRecognizer];
         [self addChild: showGameState];
         
         hideGameState = [CCSprite spriteWithFile:@"right2.png"];
@@ -94,6 +99,11 @@ CCSprite* hideGameState;
         UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
         [hideGameState addGestureRecognizer:hideGameStateTapGestureRecognizer];
         [self addChild: hideGameState];
+        
+        self.isTouchEnabled = YES;
+        UISwipeGestureRecognizer* hideGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+        hideGameStateSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer: hideGameStateSwipeGestureRecognizer];
     }
     
     return self;
