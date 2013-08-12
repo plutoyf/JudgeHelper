@@ -172,10 +172,9 @@ int IMG_HEIGHT = 72;
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* messageLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:32];
-        messageLabel.position = ccp( 100 , size.height-100 );
-		messageLabel.tag = 13;
-        [self addChild: messageLabel];
+        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:32];
+        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+20 , size.height-100 );
+        [self addChild: titleLabel];
         
         
         CCMenuItem *addPlayerMenuItem = [CCMenuItemImage
@@ -215,8 +214,6 @@ int IMG_HEIGHT = 72;
         
         [self addChild:playersPoolCadre];
         [self initPlayers];
-        
-        [self addChild: [[GameStateSprite alloc] init]];
     }
     
 	return self;

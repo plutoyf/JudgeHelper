@@ -61,7 +61,8 @@
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
         [_sprite addGestureRecognizer:tapGestureRecognizer];
         
-        UIGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayer:)];
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayer:)];
+        longPressGestureRecognizer.minimumPressDuration = 0.2;
         [_sprite addGestureRecognizer:longPressGestureRecognizer];
 
     }
@@ -81,7 +82,14 @@
     
     if(sender.state == UIGestureRecognizerStateBegan) {
         originalPoint = locationInMySpriteSpace;
-    } else {
+        CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
+        layerColer.contentSize = CGSizeMake(_sprite.texture.contentSize.width+4, _sprite.texture.contentSize.height+4);
+        layerColer.position = ccp(-2, -2);
+        layerColer.tag = 9;
+        [_sprite addChild:layerColer z:-1];
+    } else if(sender.state == UIGestureRecognizerStateEnded) {
+        [_sprite removeChildByTag:9];
+    }else {
         sender.node.position = ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint);
     }
 }

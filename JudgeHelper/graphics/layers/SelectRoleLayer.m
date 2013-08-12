@@ -57,7 +57,7 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
 }
 
--(void) toGameScreen : (id) sender {
+-(void) matchPlayerNumber {
     NSArray* ids = [[GlobalSettings globalSettings] getPlayerIds];
     
     int rNum = 0;
@@ -66,15 +66,28 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
     }
     
     GlobalSettings* global = [GlobalSettings globalSettings];
-    if(([global getGameMode] == NORMAL && ids.count == rNum)
-       || ([global getGameMode] == DOUBLE_HAND && ids.count*2-1 == rNum)) {
-        [global setRoles: roles];
-        [global setRoleNumbers: roleNumbers];
+    int pNum = [global getGameMode] == NORMAL ? ids.count : ids.count*2-1;
+    
+    
+    if(rNum - pNum < 0) {
+        startIcon.opacity = 80;
+        startIcon.isTouchEnabled = NO;
+        messageLabel.string = [NSString stringWithFormat:@"角色数目过少, 请再添加%d个角色", pNum-rNum];
+    } else if (rNum - pNum > 0) {
+        startIcon.opacity = 80;
+        startIcon.isTouchEnabled = NO;
+        messageLabel.string = [NSString stringWithFormat:@"角色数目过多, 请再减少%d个角色", rNum-pNum];
+    } else {
+        startIcon.opacity = 255;
+        startIcon.isTouchEnabled = YES;
+        messageLabel.string = @"可以开始游戏";
+    }
+}
 
+-(void) toGameScreen : (id) sender {
+    if(startIcon.opacity == 255) {
         [engin initRoles: roleNumbers];
         [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[GameLayer scene] ]];
-    } else {
-        // need one person more/less in double hand mode
     }
 }
 
@@ -100,11 +113,13 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
             //role number ++
             [roleNumbers setObject: [self plusplus: [roleNumbers objectForKey:selRoleIcon.name]] forKey: selRoleIcon.name];
             [self updateRoleLable: selRoleIcon];
+            [self matchPlayerNumber];
         } else if(p1.x<(p0.x-w) || p1.x>(p0.x+w) || p1.y<(p0.y-h) || p1.y>(p0.y+h)) {
             //role number --
             if(((NSNumber*)[roleNumbers objectForKey:selRoleIcon.name]).intValue > 0) {
                 [roleNumbers setObject: [self minusminus: [roleNumbers objectForKey:selRoleIcon.name]] forKey: selRoleIcon.name];
                 [self updateRoleLable: selRoleIcon];
+                [self matchPlayerNumber];
             }
         }
         
@@ -138,6 +153,8 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 
 
 CCEngin* engin;
+CCLabelTTF* messageLabel;
+CCLabelTTF* doubleHandModeLabel;
 MySprite* previousIcon;
 MySprite* startIcon;
 MySprite* selRoleIcon;
@@ -155,14 +172,18 @@ NSMutableDictionary* roleLabels;
 
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
-        
-        CCLabelTTF* messageLabel = [CCLabelTTF labelWithString:@"角色设定" fontName:@"Marker Felt" fontSize:32];
-        messageLabel.position = ccp( 100 , size.height-100 );
-		messageLabel.tag = 13;
-        [self addChild: messageLabel];
-
-		engin = [CCEngin getEngin];
         GlobalSettings* global = [GlobalSettings globalSettings];
+        
+        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"角色设定 (%d名玩家)", ((NSArray*)[global getPlayerIds]).count] fontName:@"Marker Felt" fontSize:32];
+        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+20 , size.height-100 );
+        [self addChild: titleLabel];
+        
+        messageLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
+        messageLabel.anchorPoint = ccp(0,0);
+        messageLabel.position = ccp( 20 , size.height-160 );
+        [self addChild: messageLabel];
+        
+        engin = [CCEngin getEngin];
         roles = [global getRoles] ? [global getRoles] : engin.roles;
         roleNumbers = [NSMutableDictionary dictionaryWithDictionary: [global getRoleNumbers] ? [global getRoleNumbers] : engin.roleNumbers];
         
@@ -198,15 +219,19 @@ NSMutableDictionary* roleLabels;
         }
         
         CCLabelTTF* gameModeLabel = [CCLabelTTF labelWithString:@"双手模式" fontName:@"Marker Felt" fontSize:28];
-        gameModeLabel.position = ccp(60, 120);
+        gameModeLabel.position = ccp(80, 120);
         [self addChild: gameModeLabel];
         
         doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40.png" target:nil selector:nil];
         doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40.png" target:nil selector:nil];
         CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(doubleHandModeButtonTapped:) items:([global getGameMode] == DOUBLE_HAND?doubleHandModeOnItem:doubleHandModeOffItem), ([global getGameMode] == DOUBLE_HAND?doubleHandModeOffItem:doubleHandModeOnItem), nil];
         CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
-        toggleMenu.position = ccp(150, 120);
+        toggleMenu.position = ccp(170, 120);
         [self addChild:toggleMenu];
+        
+        doubleHandModeLabel = [CCLabelTTF labelWithString:[global getGameMode] == DOUBLE_HAND?@"(开启)":@"(关闭)" fontName:@"Marker Felt" fontSize:28];
+        doubleHandModeLabel.position = ccp(240, 120);
+        [self addChild: doubleHandModeLabel];
         
         previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
         previousIcon.position = ccp(size.width-200, 100);
@@ -216,10 +241,9 @@ NSMutableDictionary* roleLabels;
         
         startIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"start.png"].CGImage resolutionType: kCCResolutioniPad]];
         startIcon.position = ccp(size.width-100, 100);
-        startIcon.isTouchEnabled = YES;
         [startIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toGameScreen:)]];
+        [self matchPlayerNumber];
         [self addChild: startIcon];
-        
     }
     
 	return self;
@@ -236,9 +260,12 @@ NSMutableDictionary* roleLabels;
     CCMenuItemToggle *toggleItem = (CCMenuItemToggle *)sender;
     if (toggleItem.selectedItem == doubleHandModeOffItem) {
         [globals setGameMode:NORMAL];
+        doubleHandModeLabel.string = @"(关闭)";
     } else if (toggleItem.selectedItem == doubleHandModeOnItem) {
         [globals setGameMode:DOUBLE_HAND];
+        doubleHandModeLabel.string = @"(开启)";
     }
+    [self matchPlayerNumber];
 }
 
 
