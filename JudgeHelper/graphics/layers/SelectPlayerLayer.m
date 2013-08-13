@@ -9,17 +9,9 @@
 #import "SelectPlayerLayer.h"
 
 #import "AppDelegate.h"
-#import "CCEngin.h"
-#import "MySprite.h"
-#import "GlobalSettings.h"
-#import "SelectRoleLayer.h"
-#import "CreatePlayerLayer.h"
-#import "CCDoubleHandPlayer.h"
-#import "GameLayer.h"
 #import "ClippingSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "UIImage+Resize.h"
-#import "GameStateSprite.h"
 
 @implementation SelectPlayerLayer
 
@@ -76,8 +68,6 @@
     }
 }
 
-MySprite* playerToRemove;
-MySprite* playerToRemove2;
 - (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
     if(playerToRemove) return;
     
@@ -156,14 +146,7 @@ CreatePlayerLayer* createPlayerLayer;
     [self addChild:createPlayerLayer];
 }
 
-CCEngin* engin;
-CCSprite* nextIcon;
-CCSprite* playersPool;
-CCSprite* playersPool2;
-NSMutableArray* personIcons;
-NSMutableArray* personIcons2;
-NSMutableDictionary* personIconsMap;
-NSMutableDictionary* personIconsMap2;
+
 int IMG_WIDTH = 72;
 int IMG_HEIGHT = 72;
 -(id) init

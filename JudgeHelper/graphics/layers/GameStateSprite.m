@@ -7,8 +7,6 @@
 //
 
 #import "GameStateSprite.h"
-#import "CCEngin.h"
-#import "CCPlayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 
 @implementation GameStateSprite
@@ -31,8 +29,6 @@
 }
 
 
-CCSprite* showGameState;
-CCSprite* hideGameState;
 -(id) init {
     if(self = [super init]) {
         CGSize size = [[CCDirector sharedDirector] winSize];
@@ -118,10 +114,6 @@ CCSprite* hideGameState;
     [engin action: @"REDO_ACTION"];
 }
 
-NSMutableDictionary* playerLines;
-NSMutableDictionary* playerVisibleObjects;
-NSMutableDictionary* playerLifeBoxes;
-NSMutableArray* pIds;
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result {
     for(NSMutableArray* visibleObjects in [playerVisibleObjects allValues]) {
         [visibleObjects addObject:[NSMutableArray new]];

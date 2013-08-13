@@ -9,10 +9,6 @@
 #import "SelectRoleLayer.h"
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
-#import "CCEngin.h"
-#import "MySprite.h"
-#import "SelectPlayerLayer.h"
-#import "GameLayer.h"
 #import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
 
@@ -152,17 +148,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 }
 
 
-CCEngin* engin;
-CCLabelTTF* messageLabel;
-CCLabelTTF* doubleHandModeLabel;
-MySprite* previousIcon;
-MySprite* startIcon;
-MySprite* selRoleIcon;
-NSArray * roles;
-NSMutableDictionary * roleNumbers;
-NSMutableDictionary * roleIconsMap;
-NSMutableArray * movableRoleIcons;
-NSMutableDictionary* roleLabels;
 -(id) init
 {
 	// always call "super" init

@@ -9,11 +9,26 @@
 #import <GameKit/GameKit.h>
 
 #import "cocos2d.h"
+#import "CCEngin.h"
+#import "MySprite.h"
+#import "SelectPlayerLayer.h"
+#import "GameLayer.h"
 
 @interface SelectRoleLayer : CCLayer <UIGestureRecognizerDelegate>
 {
+    CCEngin* engin;
     CCMenuItem* doubleHandModeOffItem;
     CCMenuItem* doubleHandModeOnItem;
+    CCLabelTTF* messageLabel;
+    CCLabelTTF* doubleHandModeLabel;
+    MySprite* previousIcon;
+    MySprite* startIcon;
+    MySprite* selRoleIcon;
+    NSArray * roles;
+    NSMutableDictionary * roleNumbers;
+    NSMutableDictionary * roleIconsMap;
+    NSMutableArray * movableRoleIcons;
+    NSMutableDictionary* roleLabels;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

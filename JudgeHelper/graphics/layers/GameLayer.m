@@ -14,10 +14,6 @@
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
 #import "RuleResolver.h"
-#import "CCHandPlayer.h"
-#import "CCDoubleHandPlayer.h"
-#import "SelectPlayerLayer.h"
-#import "GameStateSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 
 #pragma mark - GameLayer
@@ -72,20 +68,6 @@
 
 
 BOOL showDebugMessageEnable = NO;
-
-CCLabelTTF* debugLabel;
-CCLabelTTF* nightLabel;
-CCLabelTTF* messageLabel;
-CCMenu* restarMenu;
-CCPlayer* selPlayer;
-BOOL selPlayerInMove;
-NSMutableDictionary* playersMap;
-NSMutableArray* players;
-Role rolePlayerToDefine;
-BOOL defineRolePlayerBegin;
-GameStateSprite* gameStateSprite;
-
-CCEngin* engin;
 // on "init" you need to initialize your instance
 -(id) init
 {

@@ -7,10 +7,17 @@
 //
 
 #import "CCEngin.h"
+#import "CCPlayer.h"
 
 @interface GameStateSprite : CCSprite
 {
     CCEngin* engin;
+    CCSprite* showGameState;
+    CCSprite* hideGameState;
+    NSMutableDictionary* playerLines;
+    NSMutableDictionary* playerVisibleObjects;
+    NSMutableDictionary* playerLifeBoxes;
+    NSMutableArray* pIds;
 }
 
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
