@@ -228,6 +228,7 @@
 		E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */; };
 		E06068B717B1145600F3E4CB /* delete_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B517B1145600F3E4CB /* delete_mini.png */; };
 		E06068B817B1145600F3E4CB /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B617B1145600F3E4CB /* delete.png */; };
+		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
 /* End PBXBuildFile section */
@@ -643,6 +644,8 @@
 		E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		E06068B517B1145600F3E4CB /* delete_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_mini.png; path = Resources/delete_mini.png; sourceTree = "<group>"; };
 		E06068B617B1145600F3E4CB /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = Resources/delete.png; sourceTree = "<group>"; };
+		E0D3755A17BA390D00E14D7D /* TableZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableZone.h; sourceTree = "<group>"; };
+		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
 		E0D5CF8617B682FA00EF0AAB /* right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = right2.png; path = Resources/right2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1260,6 +1263,8 @@
 				E059F86A17B02EC70071829E /* ClippingSprite.m */,
 				E059F86B17B02EC70071829E /* MySprite.h */,
 				E059F86C17B02EC70071829E /* MySprite.m */,
+				E0D3755A17BA390D00E14D7D /* TableZone.h */,
+				E0D3755B17BA390D00E14D7D /* TableZone.m */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1487,6 +1492,7 @@
 				E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */,
 				E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */,
 				E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */,
+				E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
