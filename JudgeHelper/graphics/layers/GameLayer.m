@@ -66,6 +66,26 @@
     }
 }
 
+-(void) movePlayer: (CCPlayer*) player toPosition: (CGPoint) point {
+    if(player.settled) {
+        player.sprite.position = [tableZone getPositionFrom:player.sprite.position to:point];
+    } else {
+        player.sprite.position = point;
+    }
+    
+}
+
+- (void) playerPositionChanged : (CCPlayer*) player {
+    if([tableZone isInside:player.sprite.position]) {
+        CGPoint point = [tableZone getBestPosition:player.sprite.position];
+        CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:point];
+        [player.sprite runAction:[CCSequence actions:move, nil]];
+        player.settled = YES;
+    } else {
+        player.settled = NO;
+    }
+}
+
 
 BOOL showDebugMessageEnable = NO;
 // on "init" you need to initialize your instance
@@ -86,6 +106,22 @@ BOOL showDebugMessageEnable = NO;
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
+        float tWidth = 700, tHeight = 500, x = size.width/2-tWidth/2, y = size.height/2-tHeight/2;
+        tableZone = [[TableZone alloc] init:tWidth : tHeight];
+        
+        CGRect siteZone1 = CGRectMake(x-2, y-2, tWidth+4, tHeight+4);
+        CGRect siteZone2 = CGRectMake(x, y, tWidth, tHeight);
+        CCLayerColor *layerColer1 = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
+        layerColer1.contentSize = siteZone1.size;
+        layerColer1.position = siteZone1.origin;
+        layerColer1.opacity = 60;
+        [self addChild:layerColer1 z:-2];
+        CCLayerColor *layerColer2 = [CCLayerColor layerWithColor:ccc4(0,0,0,255)];
+        layerColer2.contentSize = siteZone2.size;
+        layerColer2.position = siteZone2.origin;
+        [self addChild:layerColer2 z:-2];
+
+        
         nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
         nightLabel.position = ccp(60 , size.height-100 );
         [self addChild: nightLabel];
