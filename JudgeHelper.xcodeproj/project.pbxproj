@@ -228,7 +228,6 @@
 		E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */; };
 		E06068B717B1145600F3E4CB /* delete_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B517B1145600F3E4CB /* delete_mini.png */; };
 		E06068B817B1145600F3E4CB /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B617B1145600F3E4CB /* delete.png */; };
-		E07B239417BD7A23005EC787 /* AScrollLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E07B239317BD7A23005EC787 /* AScrollLayer.m */; };
 		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
@@ -645,8 +644,6 @@
 		E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		E06068B517B1145600F3E4CB /* delete_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_mini.png; path = Resources/delete_mini.png; sourceTree = "<group>"; };
 		E06068B617B1145600F3E4CB /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = Resources/delete.png; sourceTree = "<group>"; };
-		E07B239217BD7A23005EC787 /* AScrollLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AScrollLayer.h; sourceTree = "<group>"; };
-		E07B239317BD7A23005EC787 /* AScrollLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AScrollLayer.m; sourceTree = "<group>"; };
 		E0D3755A17BA390D00E14D7D /* TableZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableZone.h; sourceTree = "<group>"; };
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
@@ -722,7 +719,6 @@
 		E059F4A617B02BB40071829E /* JudgeHelper */ = {
 			isa = PBXGroup;
 			children = (
-				E07B239117BD7A23005EC787 /* AScrollLayer */,
 				E059F86517B02EC70071829E /* graphics */,
 				E059F84417B02EBD0071829E /* engin */,
 				E059F83E17B02EB20071829E /* Constants.h */,
@@ -1316,15 +1312,6 @@
 			path = "UIImage+";
 			sourceTree = "<group>";
 		};
-		E07B239117BD7A23005EC787 /* AScrollLayer */ = {
-			isa = PBXGroup;
-			children = (
-				E07B239217BD7A23005EC787 /* AScrollLayer.h */,
-				E07B239317BD7A23005EC787 /* AScrollLayer.m */,
-			);
-			path = AScrollLayer;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1506,7 +1493,6 @@
 				E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */,
 				E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */,
 				E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */,
-				E07B239417BD7A23005EC787 /* AScrollLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
