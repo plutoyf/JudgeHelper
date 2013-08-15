@@ -3,26 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
-            </PersistentString>
-            <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MySprite showName]:MySprite.m">
-      </ContextState>
-      <ContextState
          contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
          <PersistentStrings>
             <PersistentString
@@ -31,29 +11,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SelectPlayerLayer movePlayersBySwipeGesture:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(sender.direction | UISwipeGestureRecognizerDirectionRight) ? 100 : -100">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[CCEngin doAction:]:CCEngin.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "((CCSprite*)[personIcons objectAtIndex:0]).position.x">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[Player recordStatus]:Player.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.role">
-            </PersistentString>
-         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[Player rollbackStatus]:Player.m">
+         contextName = "-[Player recordStatus]:Player.m">
          <PersistentStrings>
             <PersistentString
                value = "self.role">
@@ -67,6 +39,42 @@
                value = "player.sprite.position">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Player rollbackStatus]:Player.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.role">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((CCSprite*)[personIcons objectAtIndex:0]).position.x">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
+            </PersistentString>
+            <PersistentString
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MySprite showName]:MySprite.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

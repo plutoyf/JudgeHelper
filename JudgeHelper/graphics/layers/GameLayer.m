@@ -68,7 +68,9 @@
 
 -(void) selectAllPlayersToMove {
     for (CCPlayer* player in players) {
-        player.readyToMove = YES;
+        if(player.settled) {
+            player.readyToMove = YES;
+        }
     }
 }
 
@@ -94,6 +96,7 @@
 
 -(void) movePlayer: (CCPlayer*) player toPosition: (CGPoint) point {
     if(player.settled && ![self isSinglePlayerToBeMoved]) {
+        CGPoint to = [tableZone getPositionFrom:player.sprite.position to:point];
         [self moveAllPlayersForDistance: [tableZone getDistanceFrom:player.sprite.position to:[tableZone getPositionFrom:player.sprite.position to:point]]];
     } else {
         player.sprite.position = point;
@@ -116,7 +119,9 @@
         player.readyToMove = NO;
     } else {
         for (CCPlayer* p in players) {
-            [self playerPositionChanged:p];
+            if(p.settled){
+                [self playerPositionChanged:p];
+            }
         }
     }
 }

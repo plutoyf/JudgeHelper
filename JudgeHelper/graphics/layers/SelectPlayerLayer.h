@@ -18,8 +18,9 @@
 #import "CCDoubleHandPlayer.h"
 #import "GameLayer.h"
 #import "GameStateSprite.h"
+#import "AScrollLayer.h"
 
-@interface SelectPlayerLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, CreatePlayerDelegate>
+@interface SelectPlayerLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, UIGestureRecognizerDelegate, CreatePlayerDelegate>
 {
     CCEngin* engin;
     CCSprite* nextIcon;

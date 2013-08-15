@@ -67,9 +67,13 @@
         [_sprite addGestureRecognizer:shortPressGestureRecognizer];
         
         longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressMovePlayer:)];
-        longPressGestureRecognizer.minimumPressDuration = 1.5;
+        longPressGestureRecognizer.minimumPressDuration = 1.2;
+        longPressGestureRecognizer.allowableMovement = 5;
         longPressGestureRecognizer.delegate = self;
         [_sprite addGestureRecognizer:longPressGestureRecognizer];
+        
+        [tapGestureRecognizer requireGestureRecognizerToFail:shortPressGestureRecognizer];
+        [tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
 
     }
     return self;
@@ -95,35 +99,41 @@
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
     CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
     
-    if(!shortPressMoveInProgress) {
+    if(wasSetteledBeforeShortPressMove) {
         if(sender.state == UIGestureRecognizerStateBegan) {
+            sender.node.position = positionBeforeShortPressMove;
+            _settled = wasSetteledBeforeShortPressMove;
             longPressMoveBegan = YES;
             originalPoint = locationInMySpriteSpace;
             [_delegate selectAllPlayersToMove];
-        } else if(sender.state == UIGestureRecognizerStateEnded) {
-            [_delegate playerPositionChanged: nil];
-            longPressMoveBegan = NO;
-        } else {
-            [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+        } else if(longPressMoveBegan) {
+            if(sender.state == UIGestureRecognizerStateEnded) {
+                [_delegate playerPositionChanged: nil];
+                longPressMoveBegan = NO;
+            } else {
+                [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+            }
         }
-   
     }
 }
+
 
 -(void) shortPressMovePlayer: (UILongPressGestureRecognizer*) sender {
     CGPoint location = [sender locationInView:sender.view];
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
     CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
     
-    if(sender.state == UIGestureRecognizerStateBegan) {
-        originalPoint = locationInMySpriteSpace;
-        [self setReadyToMove: YES];
-    } else if(sender.state == UIGestureRecognizerStateEnded) {
-        [_delegate playerPositionChanged: self];
-        shortPressMoveInProgress = NO;
-    } else if(!longPressMoveBegan) {
-        shortPressMoveInProgress = YES;
-        [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+    if(!longPressMoveBegan) {
+        if(sender.state == UIGestureRecognizerStateBegan) {
+            positionBeforeShortPressMove = sender.node.position;
+            wasSetteledBeforeShortPressMove = _settled;
+            originalPoint = locationInMySpriteSpace;
+            [self setReadyToMove: YES];
+        } else if(sender.state == UIGestureRecognizerStateEnded) {
+            [_delegate playerPositionChanged: self];
+        } else if(!longPressMoveBegan) {
+            [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+        }
     }
 }
 

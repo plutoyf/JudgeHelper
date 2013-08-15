@@ -16,11 +16,12 @@
 {
     CCLabelTTF* labelTTF;
     BOOL expanded;
-    BOOL shortPressMoveInProgress;
     BOOL longPressMoveBegan;
+    BOOL wasSetteledBeforeShortPressMove;
+    CGPoint positionBeforeShortPressMove;
+    CGPoint originalPoint;
     NSMutableArray* _actionIcons;
     NSMutableArray* _actionIconsBackup;
-    CGPoint originalPoint;
     UILongPressGestureRecognizer *shortPressGestureRecognizer;
     UILongPressGestureRecognizer *longPressGestureRecognizer;
 }

@@ -110,6 +110,7 @@
 }
 
 -(void) returnButtonTapped: (id) sender {
+    [userNameTextField removeFromSuperview];
     [self removeFromParent];
 }
 

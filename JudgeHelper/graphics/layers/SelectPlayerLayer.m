@@ -32,6 +32,7 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
+    if(isIgnoreLongPresse) return;
     [self selectPlayerById: ((MySprite*)sender.node).id];
 }
 
@@ -68,8 +69,15 @@
     }
 }
 
+BOOL isIgnoreLongPresse = NO;
+- (void) shortPressePlayer: (UILongPressGestureRecognizer*) sender {
+    if(sender.state == UIGestureRecognizerStateBegan) {
+        isIgnoreLongPresse = speed != 0;
+    }
+}
+
 - (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
-    if(playerToRemove) return;
+    if(playerToRemove || isIgnoreLongPresse) return;
     
     NSString* id = ((MySprite*)sender.node).id;
     playerToRemove = [personIconsMap objectForKey:id];
@@ -188,8 +196,9 @@ int IMG_HEIGHT = 72;
         playersPoolCadre.position = ccp(size.width/2, 170+100/2);
         playersPoolCadre.isTouchEnabled = YES;
         UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
+        panGestureRecognizer.delegate = self;
         [playersPoolCadre addGestureRecognizer:panGestureRecognizer];
-        
+
         
         playersPool = [[CCSprite alloc] init];
         playersPool.position = ccp(0, 0);
@@ -200,20 +209,27 @@ int IMG_HEIGHT = 72;
         
         [self addChild:playersPoolCadre];
         [self initPlayers];
-        
-        
     }
-    
+    [self scheduleUpdate];
 	return self;
 }
 
-- (void) itemPressed: (CCNode *) item
-{
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
+float speed = 0;
 -(void) update:(ccTime)delta {
-    
+    if(fabs(speed) > 1) {
+        CGPoint newPosition = ccpAdd(playersPool.position, ccp(speed, 0));
+        speed *= fabs(speed)<10 ? 0.9 : 0.92;
+        [self setPlayersPoolPosition: newPosition];
+    } else {
+        speed = 0;
+    }
 }
+
 
 CreatePlayerLayer* createPlayerLayer;
 -(void) addPlayerButtonTapped: (id) sender {
@@ -255,6 +271,10 @@ CGPoint originalPoint;
     
     if(sender.state == UIGestureRecognizerStateBegan) {
         originalPoint = locationInMySpriteSpace;
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [sender velocityInView:sender.view.superview];
+        //NSLog(@"Velocity %f, %f", velocity.x, velocity.y);
+        speed = fabs(velocity.x)>1000 ? velocity.x/50 : 0;
     } else {
         CGPoint newPosition = ccpSub(ccpAdd(playersPool.position, locationInMySpriteSpace), originalPoint);
         [self setPlayersPoolPosition: newPosition];
@@ -334,10 +354,15 @@ NSMutableArray* pids;
     [icon showName];
     
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
+    tapGestureRecognizer.delegate = self;
     [icon addGestureRecognizer:tapGestureRecognizer];
-    
-    UIGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressePlayer:)];
+    UILongPressGestureRecognizer *shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressePlayer:)];
+    shortPressGestureRecognizer.minimumPressDuration = 0;
+    shortPressGestureRecognizer.delegate = self;
+    [icon addGestureRecognizer:shortPressGestureRecognizer];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressePlayer:)];
     [icon addGestureRecognizer:longPressGestureRecognizer];
+    longPressGestureRecognizer.delegate = self;
     
     if(isDouble) {
         [playersPool2 addChild: icon];
