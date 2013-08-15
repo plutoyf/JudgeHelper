@@ -66,9 +66,35 @@
     }
 }
 
+-(void) selectAllPlayersToMove {
+    for (CCPlayer* player in players) {
+        player.readyToMove = YES;
+    }
+}
+
+-(BOOL) isSinglePlayerToBeMoved {
+    BOOL hasPlayerToBeMoved = NO;
+    for (CCPlayer* player in players) {
+        if(!hasPlayerToBeMoved && player.readyToMove) {
+            hasPlayerToBeMoved = YES;
+        } else if (player.readyToMove) {
+            return NO;
+        }
+    }
+    return hasPlayerToBeMoved;
+}
+
+-(void) moveAllPlayersForDistance: (float) distance {
+    for (CCPlayer* player in players) {
+        if(player.settled && player.readyToMove) {
+            player.sprite.position = [tableZone getPositionFrom:player.sprite.position withDistance: distance];
+        }
+    }
+}
+
 -(void) movePlayer: (CCPlayer*) player toPosition: (CGPoint) point {
-    if(player.settled) {
-        player.sprite.position = [tableZone getPositionFrom:player.sprite.position to:point];
+    if(player.settled && ![self isSinglePlayerToBeMoved]) {
+        [self moveAllPlayersForDistance: [tableZone getDistanceFrom:player.sprite.position to:[tableZone getPositionFrom:player.sprite.position to:point]]];
     } else {
         player.sprite.position = point;
     }
@@ -76,13 +102,22 @@
 }
 
 - (void) playerPositionChanged : (CCPlayer*) player {
-    if([tableZone isInside:player.sprite.position]) {
-        CGPoint point = [tableZone getBestPosition:player.sprite.position];
-        CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:point];
-        [player.sprite runAction:[CCSequence actions:move, nil]];
-        player.settled = YES;
+    if(player) {
+        if([tableZone isInside:player.sprite.position]) {
+            CGPoint point = [tableZone getBestPosition:player.sprite.position];
+            if(point.x != player.sprite.position.x || point.y != player.sprite.position.y) {
+                CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:point];
+                [player.sprite runAction:[CCSequence actions:move, nil]];
+            }
+            player.settled = YES;
+        } else {
+            player.settled = NO;
+        }
+        player.readyToMove = NO;
     } else {
-        player.settled = NO;
+        for (CCPlayer* p in players) {
+            [self playerPositionChanged:p];
+        }
     }
 }
 

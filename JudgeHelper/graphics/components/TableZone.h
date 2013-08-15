@@ -19,6 +19,8 @@
 -(id) init: (float) width : (float) height;
 -(BOOL) isInside: (CGPoint) p;
 -(CGPoint) getBestPosition: (CGPoint) p;
+-(float) getDistanceFrom: (CGPoint) p0 to: (CGPoint) p1;
 -(CGPoint) getPositionFrom: (CGPoint) p0 to: (CGPoint) p1;
+-(CGPoint) getPositionFrom: (CGPoint) p withDistance: (float) d;
 
 @end

@@ -198,12 +198,21 @@ int IMG_HEIGHT = 72;
         playersPool2.position = ccp(0, 0);
         [playersPoolCadre addChild:playersPool2];
         
-        
         [self addChild:playersPoolCadre];
         [self initPlayers];
+        
+        
     }
     
 	return self;
+}
+
+- (void) itemPressed: (CCNode *) item
+{
+}
+
+-(void) update:(ccTime)delta {
+    
 }
 
 CreatePlayerLayer* createPlayerLayer;

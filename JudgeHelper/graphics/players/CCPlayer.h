@@ -12,20 +12,23 @@
 
 @protocol CCPlayerControleDelegate;
 
-@interface CCPlayer : Player
+@interface CCPlayer : Player <UIGestureRecognizerDelegate>
 {
     CCLabelTTF* labelTTF;
     BOOL expanded;
-    BOOL _settled;
+    BOOL shortPressMoveInProgress;
+    BOOL longPressMoveBegan;
     NSMutableArray* _actionIcons;
     NSMutableArray* _actionIconsBackup;
     CGPoint originalPoint;
+    UILongPressGestureRecognizer *shortPressGestureRecognizer;
     UILongPressGestureRecognizer *longPressGestureRecognizer;
 }
 
 @property(atomic) BOOL selectable;
 @property (nonatomic, strong) CCSprite* sprite;
 @property (atomic) BOOL settled;
+@property (atomic) BOOL readyToMove;
 @property (nonatomic, strong, readonly) NSMutableArray* actionIcons;
 @property (nonatomic, strong, readonly) NSMutableArray* actionIconsBackup;
 @property (nonatomic, assign) id<CCPlayerControleDelegate> delegate;
@@ -56,6 +59,7 @@
 @protocol CCPlayerControleDelegate
 @required
 -(void) selectPlayerById: (NSString*) id;
+-(void) selectAllPlayersToMove;
 -(void) playerPositionChanged : (CCPlayer*) player;
 -(void) movePlayer: (CCPlayer*) player toPosition: (CGPoint) point;
 @end

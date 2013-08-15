@@ -6,10 +6,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -57,6 +57,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self.role">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLayer moveAllPlayersForDistance:]:GameLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "player.sprite.position">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

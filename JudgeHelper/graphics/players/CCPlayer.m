@@ -61,12 +61,22 @@
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
         [_sprite addGestureRecognizer:tapGestureRecognizer];
         
-        longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayer:)];
-        longPressGestureRecognizer.minimumPressDuration = 0;
+        shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressMovePlayer:)];
+        shortPressGestureRecognizer.minimumPressDuration = 0;
+        shortPressGestureRecognizer.delegate = self;
+        [_sprite addGestureRecognizer:shortPressGestureRecognizer];
+        
+        longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressMovePlayer:)];
+        longPressGestureRecognizer.minimumPressDuration = 1.5;
+        longPressGestureRecognizer.delegate = self;
         [_sprite addGestureRecognizer:longPressGestureRecognizer];
 
     }
     return self;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 -(void) selectPlayer: (UITapGestureRecognizer*) sender {
@@ -77,26 +87,55 @@
 
 -(void) setSettled: (BOOL) settled {
     _settled = settled;
-    longPressGestureRecognizer.minimumPressDuration = settled?0.2:0;
+    shortPressGestureRecognizer.minimumPressDuration = settled?0.15:0;
 }
 
--(void) movePlayer: (UILongPressGestureRecognizer*) sender {
+-(void) longPressMovePlayer: (UILongPressGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
+    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
+    
+    if(!shortPressMoveInProgress) {
+        if(sender.state == UIGestureRecognizerStateBegan) {
+            longPressMoveBegan = YES;
+            originalPoint = locationInMySpriteSpace;
+            [_delegate selectAllPlayersToMove];
+        } else if(sender.state == UIGestureRecognizerStateEnded) {
+            [_delegate playerPositionChanged: nil];
+            longPressMoveBegan = NO;
+        } else {
+            [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+        }
+   
+    }
+}
+
+-(void) shortPressMovePlayer: (UILongPressGestureRecognizer*) sender {
     CGPoint location = [sender locationInView:sender.view];
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
     CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
     
     if(sender.state == UIGestureRecognizerStateBegan) {
         originalPoint = locationInMySpriteSpace;
+        [self setReadyToMove: YES];
+    } else if(sender.state == UIGestureRecognizerStateEnded) {
+        [_delegate playerPositionChanged: self];
+        shortPressMoveInProgress = NO;
+    } else if(!longPressMoveBegan) {
+        shortPressMoveInProgress = YES;
+        [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+    }
+}
+
+-(void) setReadyToMove:(BOOL)readyToMove {
+    _readyToMove = readyToMove;
+    [_sprite removeChildByTag:9];  
+    if(readyToMove) {
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
         layerColer.contentSize = CGSizeMake(_sprite.texture.contentSize.width+4, _sprite.texture.contentSize.height+4);
         layerColer.position = ccp(-2, -2);
         layerColer.tag = 9;
         [_sprite addChild:layerColer z:-1];
-    } else if(sender.state == UIGestureRecognizerStateEnded) {
-        [_sprite removeChildByTag:9];
-        [_delegate playerPositionChanged: self];
-    } else {
-        [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
     }
 }
 

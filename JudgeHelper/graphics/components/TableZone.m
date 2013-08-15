@@ -73,6 +73,49 @@
     return p1;
 }
 
+-(float) getDistanceFrom: (CGPoint) p0 to: (CGPoint) p1 {
+    float d = 0;
+    while(p0.x != p1.x || p0.y != p1.y) {
+        if(p0.x==x0) {
+            if(p0.x==p1.x) {
+                d += p1.y-p0.y;
+                p0.y = p1.y;
+            } else {
+                d += y1-p0.y;
+                p0.y = y1;
+            }
+        }
+        if(p0.y==y1) {
+            if(p0.y==p1.y) {
+                d += p1.x-p0.x;
+                p0.x = p1.x;
+            } else {
+                d += x1-p0.x;
+                p0.x = x1;
+            }
+        }
+        if(p0.x==x1) {
+            if(p0.x==p1.x) {
+                d += p0.y-p1.y;
+                p0.y = p1.y;
+            } else {
+                d += p0.y-y0;
+                p0.y = y0;
+            }
+        }
+        if(p0.y==y0) {
+            if(p0.y==p1.y) {
+                d += p0.x-p1.x;
+                p0.x = p1.x;
+            } else {
+                d += p0.x-x0;
+                p0.x = x0;
+            }
+        }
+    }
+    return d;
+}
+
 -(CGPoint) getPositionFrom: (CGPoint) p0 to: (CGPoint) p1 {
     if((p0.x==x0 || p0.x==x1) && (p0.y==y0 || p0.y==y1)) {
         if(fabsf(p1.x-p0.x)<=fabsf(p1.y-p0.y)) {
@@ -101,6 +144,55 @@
     }
     
     return p1;
+}
+
+-(CGPoint) getPositionFrom: (CGPoint) p withDistance: (float) d {
+    while (d>0) {
+        if (p.x==x0) {
+            float delta = y1-p.y<d?y1-p.y:d;
+            p.y += delta;
+            d -= delta;
+        }
+        if (p.y==y1) {
+            float delta = x1-p.x<d?x1-p.x:d;
+            p.x += delta;
+            d -= delta;
+        }
+        if (p.x==x1) {
+            float delta = p.y-y0<d?p.y-y0:d;
+            p.y -= delta;
+            d -= delta;
+        }
+        if (p.y==y0) {
+            float delta = p.x-x0<d?p.x-x0:d;
+            p.x -= delta;
+            d -= delta;
+        }
+    }
+    
+    while (d<0) {
+        if (p.x==x0) {
+            float delta = y0-p.y>d?y0-p.y:d;
+            p.y += delta;
+            d -= delta;
+        }
+        if (p.y==y1) {
+            float delta = x0-p.x>d?x0-p.x:d;
+            p.x += delta;
+            d -= delta;
+        }
+        if (p.x==x1) {
+            float delta = p.y-y1>d?p.y-y1:d;
+            p.y -= delta;
+            d -= delta;
+        }
+        if (p.y==y0) {
+            float delta = p.x-x1>d?p.x-x1:d;
+            p.x -= delta;
+            d -= delta;
+        }
+    }
+    return p;
 }
 
 @end
