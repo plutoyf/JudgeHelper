@@ -53,7 +53,7 @@ static CCEngin *engin = nil;
     [rulesArray addObject: @"Rule ( Guard-  ) :  Guard            -[ distance(Guard, Receiver) < 1 ; life(Guard) <= 0 ]>  life(Receiver) = 0 "];
     [rulesArray addObject: @"Rule ( Killer  ) :  Killer, Anybody  -[ status(Anybody) == IN_GAME ; distance(Killer, Anybody) <= 1 ]>  life(Anybody) -= 1 "];
     [rulesArray addObject: @"Rule ( Doctor+ ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]> life(Anybody) += 1 "];
-    [rulesArray addObject: @"Rule ( Doctor- ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) >  0 ]> life(Anybody) -= 0.5 "];
+    [rulesArray addObject: @"Rule ( Doctor- ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) > 0 ]> life(Anybody) -= 0.5 "];
     [rulesArray addObject: @"Rule ( Judge   ) :  Judge,  Anybody  -[ status(Anybody) == IN_GAME ; distance(Judge,  Anybody) <= 1 ]>  life(Anybody) = 0 "];
     [rulesArray addObject: @"Rule ( Police  ) :  Police, Anybody  -[ ]>  role(Anybody) == Killer "];
     [rulesArray addObject: @"Rule ( Spy     ) :  Spy,    Anybody  -[ ]>  role(Anybody) == Killer "];
