@@ -21,12 +21,16 @@
 -(void) setLeftHandPlayer:(CCHandPlayer *) player {
     player.hand = LEFTHAND;
     player.player = self;
+    player.position = _position;
+    player.realPositionModeEnable = _realPositionModeEnable;
     _leftHandPlayer = player;
 }
 
 -(void) setRightHandPlayer:(CCHandPlayer *) player {
     player.hand = RIGHTHAND;
     player.player = self;
+    player.position = _position;
+    player.realPositionModeEnable = _realPositionModeEnable;
     _rightHandPlayer = player;
 }
 
@@ -68,6 +72,12 @@
     _position = position;
     _leftHandPlayer.position = position;
     _rightHandPlayer.position = position;
+}
+
+-(void) setRealPositionModeEnable:(BOOL)realPositionModeEnable {
+    _realPositionModeEnable = realPositionModeEnable;
+    _leftHandPlayer.realPositionModeEnable = realPositionModeEnable;
+    _rightHandPlayer.realPositionModeEnable = realPositionModeEnable;
 }
 
 @end

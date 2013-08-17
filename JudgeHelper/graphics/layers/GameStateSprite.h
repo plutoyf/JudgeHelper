@@ -18,6 +18,9 @@
     NSMutableDictionary* playerVisibleObjects;
     NSMutableDictionary* playerLifeBoxes;
     NSMutableArray* pIds;
+    CCMenuItemImage *realPositionHandModeOffItem;
+    CCMenuItemImage *realPositionHandModeOnItem;
+    CCLabelTTF *realPositionHandModeLabel;
 }
 
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;

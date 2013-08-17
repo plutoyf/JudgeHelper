@@ -58,4 +58,13 @@ NSDictionary* roleNumbers;
     return roleNumbers;
 }
 
+BOOL realPositionHandModeEnable;
+-(BOOL) isRealPositionHandModeEnable {
+    return realPositionHandModeEnable;
+}
+
+-(void) setRealPositionHandMode:(BOOL)enable {
+    realPositionHandModeEnable = enable;
+}
+
 @end

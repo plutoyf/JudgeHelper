@@ -23,5 +23,6 @@ typedef enum {
 -(NSArray*) getRoles;
 -(void) setRoleNumbers: (NSDictionary*) rNums;
 -(NSDictionary*) getRoleNumbers;
-
+-(BOOL) isRealPositionHandModeEnable;
+-(void) setRealPositionHandMode : (BOOL) enable;
 @end

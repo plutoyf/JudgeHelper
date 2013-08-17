@@ -142,4 +142,10 @@
     [self updateActionIcons];
 }
 
+-(void) setRealPositionModeEnable:(BOOL)realPositionModeEnable {
+    _realPositionModeEnable = realPositionModeEnable;
+    [self updateHandIcon];
+    [self updateActionIcons];
+}
+
 @end

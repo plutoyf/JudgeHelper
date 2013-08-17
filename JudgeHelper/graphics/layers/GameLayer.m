@@ -195,6 +195,7 @@ BOOL showDebugMessageEnable = NO;
         int pNum = ids.count;
         for(int i = 0; i < pNum; i++) {
             CCPlayer* p = ([global getGameMode] == DOUBLE_HAND) ? [[CCDoubleHandPlayer alloc] init:(NSString*)[ids objectAtIndex:i]] : [[CCPlayer alloc] init:(NSString*)[ids objectAtIndex:i]];
+            p.realPositionModeEnable = [global isRealPositionHandModeEnable];
             
             int line = (int)((i+6)/6);
             p.sprite.position = ccp(80+(170*(i%6)), 120*line);

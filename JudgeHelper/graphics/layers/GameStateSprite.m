@@ -7,6 +7,7 @@
 //
 
 #import "GameStateSprite.h"
+#import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
 
 @implementation GameStateSprite
@@ -32,6 +33,8 @@
 -(id) init {
     if(self = [super init]) {
         CGSize size = [[CCDirector sharedDirector] winSize];
+        GlobalSettings* global = [GlobalSettings globalSettings];
+        
         self.contentSize = size;
         
         engin = [CCEngin getEngin];
@@ -79,6 +82,22 @@
         [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
         [self addChild:redoButton];
         
+        CCLabelTTF* realPositionHandModeTitle = [CCLabelTTF labelWithString:@"相对位置显示" fontName:@"Marker Felt" fontSize:28];
+        realPositionHandModeTitle.position = ccp(redoButton.position.x+redoButton.boundingBox.size.width+80, size.height-redoButton.boundingBox.size.width/2);
+        [self addChild: realPositionHandModeTitle];
+        
+        realPositionHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40.png" target:nil selector:nil];
+        realPositionHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40.png" target:nil selector:nil];
+        CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(realPositionHandModeButtonTapped:) items:([global isRealPositionHandModeEnable]?realPositionHandModeOnItem:realPositionHandModeOffItem), ([global isRealPositionHandModeEnable]?realPositionHandModeOffItem:realPositionHandModeOnItem), nil];
+        CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
+        toggleMenu.position = ccp(realPositionHandModeTitle.position.x+realPositionHandModeTitle.boundingBox.size.width/2+40, size.height-redoButton.boundingBox.size.width/2);
+
+        [self addChild:toggleMenu];
+        
+        realPositionHandModeLabel = [CCLabelTTF labelWithString:[global isRealPositionHandModeEnable]?@"(开启)":@"(关闭)" fontName:@"Marker Felt" fontSize:28];
+        realPositionHandModeLabel.position = ccp(toggleMenu.position.x+80, size.height-redoButton.boundingBox.size.width/2);
+        [self addChild: realPositionHandModeLabel];
+        
         showGameState = [CCSprite spriteWithFile:@"left2.png"];
         showGameState.isTouchEnabled = YES;
         showGameState.position = ccp(-showGameState.boundingBox.size.width/2, size.height/2);
@@ -105,6 +124,22 @@
     return self;
 }
 
+
+-(void) realPositionHandModeButtonTapped : (id) sender {
+    GlobalSettings *globals = [GlobalSettings globalSettings];
+    CCMenuItemToggle *toggleItem = (CCMenuItemToggle *)sender;
+    if (toggleItem.selectedItem == realPositionHandModeOffItem) {
+        [globals setRealPositionHandMode:NO];
+        realPositionHandModeLabel.string = @"(关闭)";
+    } else if (toggleItem.selectedItem == realPositionHandModeOnItem) {
+        [globals setRealPositionHandMode:YES];
+        realPositionHandModeLabel.string = @"(开启)";
+    }
+    
+    for(CCPlayer* p in engin.players) {
+        p.realPositionModeEnable = [globals isRealPositionHandModeEnable];
+    }
+}
 
 -(void) undoButtonPressed : (id) sender {
     [engin action: @"UNDO_ACTION"];

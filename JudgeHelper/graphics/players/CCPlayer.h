@@ -55,6 +55,7 @@ typedef enum {
 -(void) removeChild: (CCNode*)child;
 
 -(void) setPosition: (POSITION) position;
+-(void) setRealPositionModeEnable: (BOOL) realPositionModeEnable;
 -(void) selectPlayer: (UITapGestureRecognizer*) sender;
 -(void) setSettled: (BOOL) settled;
 -(void) setRole: (Role) role;
