@@ -14,6 +14,7 @@
 #import "CCDoubleHandPlayer.h"
 #import "SelectPlayerLayer.h"
 #import "GameStateSprite.h"
+#import "GameRuleLayer.h"
 #import "TableZone.h"
 
 @interface GameLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, CCEnginDisplayDelegate>
@@ -29,6 +30,7 @@
     Role rolePlayerToDefine;
     BOOL defineRolePlayerBegin;
     GameStateSprite* gameStateSprite;
+    GameRuleLayer* gameRuleLayer;
     TableZone* tableZone;
     
     CCEngin* engin;

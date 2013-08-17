@@ -32,7 +32,7 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
-    if(isIgnoreLongPresse) return;
+    if(isIgnorePresse) return;
     [self selectPlayerById: ((MySprite*)sender.node).id];
 }
 
@@ -63,21 +63,22 @@
     } else {
         selPersonIcon.selected = YES;
         selPersonIcon2.selected = YES;
+        
         [selPersonIcon runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
         [selPersonIcon2 runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
 
     }
 }
 
-BOOL isIgnoreLongPresse = NO;
+BOOL isIgnorePresse = NO;
 - (void) shortPressePlayer: (UILongPressGestureRecognizer*) sender {
     if(sender.state == UIGestureRecognizerStateBegan) {
-        isIgnoreLongPresse = speed != 0;
+        isIgnorePresse = speed != 0;
     }
 }
 
 - (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
-    if(playerToRemove || isIgnoreLongPresse) return;
+    if(playerToRemove || isIgnorePresse) return;
     
     NSString* id = ((MySprite*)sender.node).id;
     playerToRemove = [personIconsMap objectForKey:id];

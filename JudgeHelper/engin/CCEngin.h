@@ -29,9 +29,13 @@
 }
 
 @property (nonatomic, assign) id<CCEnginDisplayDelegate> displayDelegate;
+@property (nonatomic, retain) NSString* rulesString;
+@property (nonatomic, retain) NSString* resultRulesString;
 
 +(CCEngin*) getEngin;
 +(NSString*) getRoleCode: (Role) r;
++(NSArray*) getRulesArray;
++(NSArray*) getResultRulesArray;
 
 -(void) action: (NSString*) id;
 -(void) setPlayerNumberForRole: (int) i;

@@ -147,6 +147,8 @@
 }
 
 -(CGPoint) getPositionFrom: (CGPoint) p withDistance: (float) d {
+    if(p.x != x0 && p.x != x1 && p.y != y0 && p.y !=y1) return p;
+    
     while (d>0) {
         if (p.x==x0) {
             float delta = y1-p.y<d?y1-p.y:d;
@@ -193,6 +195,14 @@
         }
     }
     return p;
+}
+
+-(POSITION) getPlayerPosition: (CGPoint) p {
+    if(p.y == y0) return BOTTEM;
+    if(p.y == y1) return TOP;
+    if(p.x == x0) return LEFT;
+    if(p.x == x1) return RIGHT;
+    return BOTTEM;
 }
 
 @end

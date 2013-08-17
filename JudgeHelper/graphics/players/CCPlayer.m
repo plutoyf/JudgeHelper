@@ -37,6 +37,8 @@
 
 -(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role withAvatar: (BOOL) hasAvatar {
     if(self = [super init: id andName: name withRole: role]) {
+        _realPositionModeEnable = YES;
+        _position = BOTTEM;
         _selectable = YES;
         _actionIcons = [NSMutableArray new];
         _actionIconsBackup = [NSMutableArray new];
@@ -72,8 +74,16 @@
         longPressGestureRecognizer.delegate = self;
         [_sprite addGestureRecognizer:longPressGestureRecognizer];
         
+        superLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(superLongPressMovePlayer:)];
+        superLongPressGestureRecognizer.minimumPressDuration = 5;
+        superLongPressGestureRecognizer.allowableMovement = 20;
+        superLongPressGestureRecognizer.delegate = self;
+        [_sprite addGestureRecognizer:superLongPressGestureRecognizer];
+
+        
         [tapGestureRecognizer requireGestureRecognizerToFail:shortPressGestureRecognizer];
         [tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
+        [tapGestureRecognizer requireGestureRecognizerToFail:superLongPressGestureRecognizer];
 
     }
     return self;
@@ -117,6 +127,12 @@
     }
 }
 
+-(void) superLongPressMovePlayer: (UILongPressGestureRecognizer*) sender {
+    if(sender.state == UIGestureRecognizerStateBegan) {
+        [_delegate superLongPressPlayer:self];
+    }
+}
+
 
 -(void) shortPressMovePlayer: (UILongPressGestureRecognizer*) sender {
     CGPoint location = [sender locationInView:sender.view];
@@ -139,12 +155,13 @@
 
 -(void) setReadyToMove:(BOOL)readyToMove {
     _readyToMove = readyToMove;
-    [_sprite removeChildByTag:9];  
+    if(layerColer) {
+        [_sprite removeChild:layerColer];
+    }
     if(readyToMove) {
-        CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
+        layerColer = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
         layerColer.contentSize = CGSizeMake(_sprite.texture.contentSize.width+4, _sprite.texture.contentSize.height+4);
         layerColer.position = ccp(-2, -2);
-        layerColer.tag = 9;
         [_sprite addChild:layerColer z:-1];
     }
 }

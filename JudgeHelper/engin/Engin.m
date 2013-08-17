@@ -156,6 +156,15 @@
     }
 }
 
+-(void) setRules: (NSArray*) rules {
+    _rules = [NSMutableArray arrayWithArray:rules];
+}
+
+-(void) setResultRules: (NSArray*) resultRules {
+    _resultRules = [NSMutableArray arrayWithArray:resultRules];
+    
+}
+
 -(void) setPlayers: (NSArray*) players {
     _players = [NSMutableArray arrayWithArray:players];
     _playersMap = [NSMutableDictionary new];

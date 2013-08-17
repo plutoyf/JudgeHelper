@@ -10,11 +10,18 @@
 #import "Player.h"
 #import "MySprite.h"
 
+typedef enum {
+    BOTTEM = 0, LEFT = 2, TOP = 3, RIGHT = 4
+} POSITION;
+
 @protocol CCPlayerControleDelegate;
 
 @interface CCPlayer : Player <UIGestureRecognizerDelegate>
 {
     CCLabelTTF* labelTTF;
+    CCLayerColor *layerColer;
+    BOOL _realPositionModeEnable;
+    POSITION _position;
     BOOL expanded;
     BOOL longPressMoveBegan;
     BOOL wasSetteledBeforeShortPressMove;
@@ -24,9 +31,12 @@
     NSMutableArray* _actionIconsBackup;
     UILongPressGestureRecognizer *shortPressGestureRecognizer;
     UILongPressGestureRecognizer *longPressGestureRecognizer;
+    UILongPressGestureRecognizer *superLongPressGestureRecognizer;
 }
 
-@property(atomic) BOOL selectable;
+@property (atomic) BOOL realPositionModeEnable;
+@property (atomic) POSITION position;
+@property (atomic) BOOL selectable;
 @property (nonatomic, strong) CCSprite* sprite;
 @property (atomic) BOOL settled;
 @property (atomic) BOOL readyToMove;
@@ -44,6 +54,7 @@
 -(void) addChild: (CCNode*) child;
 -(void) removeChild: (CCNode*)child;
 
+-(void) setPosition: (POSITION) position;
 -(void) selectPlayer: (UITapGestureRecognizer*) sender;
 -(void) setSettled: (BOOL) settled;
 -(void) setRole: (Role) role;
@@ -62,5 +73,6 @@
 -(void) selectPlayerById: (NSString*) id;
 -(void) selectAllPlayersToMove;
 -(void) playerPositionChanged : (CCPlayer*) player;
+-(void) superLongPressPlayer : (CCPlayer*) player;
 -(void) movePlayer: (CCPlayer*) player toPosition: (CGPoint) point;
 @end

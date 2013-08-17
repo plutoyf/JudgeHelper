@@ -64,4 +64,10 @@
     }
 }
 
+-(void) setPosition:(POSITION)position {
+    _position = position;
+    _leftHandPlayer.position = position;
+    _rightHandPlayer.position = position;
+}
+
 @end

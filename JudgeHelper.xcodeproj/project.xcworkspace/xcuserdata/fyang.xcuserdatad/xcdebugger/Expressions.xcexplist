@@ -25,6 +25,14 @@
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
+         contextName = "-[GameLayer playerPositionChanged:]:GameLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[tableZone getPlayerPosition:player.sprite.position]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Player recordStatus]:Player.m">
          <PersistentStrings>
             <PersistentString
@@ -37,6 +45,17 @@
          <PersistentStrings>
             <PersistentString
                value = "player.sprite.position">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CCHandPlayer updateActionIcons]:CCHandPlayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[self getActionIconPosition: n]">
+            </PersistentString>
+            <PersistentString
+               value = "icon.position">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -60,10 +79,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

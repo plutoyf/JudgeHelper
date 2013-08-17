@@ -41,6 +41,8 @@
 -(id) initWithRules: (NSArray*) rules andResultRules: (NSArray*) resultRules andRoles: (NSArray*) roles andOrders: (NSArray*) orders;
 -(void) initRoles: (NSDictionary*) roleNumbers;
 -(void) setPlayers: (NSArray*) players;
+-(void) setRules: (NSArray*) rules;
+-(void) setResultRules: (NSArray*) resultRules;
 
 -(BOOL) isEligibleActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver;
 -(NSNumber*) doActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver;

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CCPlayer.h"
 
 @interface TableZone : NSObject
 {
@@ -22,5 +22,6 @@
 -(float) getDistanceFrom: (CGPoint) p0 to: (CGPoint) p1;
 -(CGPoint) getPositionFrom: (CGPoint) p0 to: (CGPoint) p1;
 -(CGPoint) getPositionFrom: (CGPoint) p withDistance: (float) d;
+-(POSITION) getPlayerPosition: (CGPoint) p;
 
 @end

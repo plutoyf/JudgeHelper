@@ -228,6 +228,8 @@
 		E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */; };
 		E06068B717B1145600F3E4CB /* delete_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B517B1145600F3E4CB /* delete_mini.png */; };
 		E06068B817B1145600F3E4CB /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E06068B617B1145600F3E4CB /* delete.png */; };
+		E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A5B4E617BED294007F97BD /* GameRuleLayer.m */; };
+		E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A5B4E817BED77E007F97BD /* rightUp.png */; };
 		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
@@ -644,6 +646,9 @@
 		E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		E06068B517B1145600F3E4CB /* delete_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_mini.png; path = Resources/delete_mini.png; sourceTree = "<group>"; };
 		E06068B617B1145600F3E4CB /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = Resources/delete.png; sourceTree = "<group>"; };
+		E0A5B4E517BED294007F97BD /* GameRuleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRuleLayer.h; sourceTree = "<group>"; };
+		E0A5B4E617BED294007F97BD /* GameRuleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRuleLayer.m; sourceTree = "<group>"; };
+		E0A5B4E817BED77E007F97BD /* rightUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightUp.png; path = Resources/rightUp.png; sourceTree = "<group>"; };
 		E0D3755A17BA390D00E14D7D /* TableZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableZone.h; sourceTree = "<group>"; };
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
@@ -741,6 +746,7 @@
 		E059F4A717B02BB40071829E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0A5B4E817BED77E007F97BD /* rightUp.png */,
 				E0D5CF8517B682FA00EF0AAB /* left2.png */,
 				E0D5CF8617B682FA00EF0AAB /* right2.png */,
 				E059F7CB17B02E830071829E /* avatars */,
@@ -1282,6 +1288,8 @@
 				E059F86F17B02EC70071829E /* CreatePlayerLayer.m */,
 				E059F87217B02EC70071829E /* GameStateSprite.h */,
 				E059F87317B02EC70071829E /* GameStateSprite.m */,
+				E0A5B4E517BED294007F97BD /* GameRuleLayer.h */,
+				E0A5B4E617BED294007F97BD /* GameRuleLayer.m */,
 			);
 			path = layers;
 			sourceTree = "<group>";
@@ -1452,6 +1460,7 @@
 				E06068B817B1145600F3E4CB /* delete.png in Resources */,
 				E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */,
 				E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */,
+				E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1493,6 +1502,7 @@
 				E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */,
 				E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */,
 				E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */,
+				E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

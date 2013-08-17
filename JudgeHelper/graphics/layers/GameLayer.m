@@ -106,8 +106,9 @@
 
 - (void) playerPositionChanged : (CCPlayer*) player {
     if(player) {
+        CGPoint point = player.sprite.position;
         if([tableZone isInside:player.sprite.position]) {
-            CGPoint point = [tableZone getBestPosition:player.sprite.position];
+            point = [tableZone getBestPosition:player.sprite.position];
             if(point.x != player.sprite.position.x || point.y != player.sprite.position.y) {
                 CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:point];
                 [player.sprite runAction:[CCSequence actions:move, nil]];
@@ -117,12 +118,19 @@
             player.settled = NO;
         }
         player.readyToMove = NO;
+        player.position = [tableZone getPlayerPosition:point];
     } else {
         for (CCPlayer* p in players) {
             if(p.settled){
                 [self playerPositionChanged:p];
             }
         }
+    }
+}
+
+-(void) superLongPressPlayer : (CCPlayer*) player {
+    if(player.role == Judge) {
+        [self initGameRuleLayer];
     }
 }
 
@@ -239,6 +247,11 @@ BOOL showDebugMessageEnable = NO;
     gameStateSprite = [[GameStateSprite alloc] init];
     [self addChild: gameStateSprite z:2];
     
+}
+
+-(void) initGameRuleLayer {
+    gameRuleLayer = [[GameRuleLayer alloc] init];
+    [self addChild: gameRuleLayer z:2];
 }
 
 #pragma mark CCEnginDisplayDelegate
