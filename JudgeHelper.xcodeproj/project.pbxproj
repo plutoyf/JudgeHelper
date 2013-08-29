@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E024D6B117CFA2BB0032EE61 /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = E024D6B017CFA2BB0032EE61 /* quit.png */; };
 		E059F49317B02BB40071829E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F49217B02BB40071829E /* QuartzCore.framework */; };
 		E059F49517B02BB40071829E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F49417B02BB40071829E /* OpenGLES.framework */; };
 		E059F49717B02BB40071829E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F49617B02BB40071829E /* OpenAL.framework */; };
@@ -249,6 +250,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E024D6B017CFA2BB0032EE61 /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quit.png; path = Resources/quit.png; sourceTree = "<group>"; };
 		E059F48F17B02BB40071829E /* JudgeHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JudgeHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E059F49217B02BB40071829E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E059F49417B02BB40071829E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -746,6 +748,7 @@
 		E059F4A717B02BB40071829E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E024D6B017CFA2BB0032EE61 /* quit.png */,
 				E0A5B4E817BED77E007F97BD /* rightUp.png */,
 				E0D5CF8517B682FA00EF0AAB /* left2.png */,
 				E0D5CF8617B682FA00EF0AAB /* right2.png */,
@@ -1461,6 +1464,7 @@
 				E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */,
 				E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */,
 				E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */,
+				E024D6B117CFA2BB0032EE61 /* quit.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
