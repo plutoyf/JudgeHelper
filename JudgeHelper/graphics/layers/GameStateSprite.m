@@ -9,6 +9,7 @@
 #import "GameStateSprite.h"
 #import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
+#import "SelectPlayerLayer.h"
 
 @implementation GameStateSprite
 
@@ -77,11 +78,18 @@
         [self addChild:undoButton];
         
         CCSprite* redoButton = [CCSprite spriteWithFile:@"redo.png"];
-        redoButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+40, size.height-redoButton.boundingBox.size.width/2);
+        redoButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+40, size.height-undoButton.boundingBox.size.width/2);
         redoButton.isTouchEnabled = YES;
         [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
         [self addChild:redoButton];
         
+        CCSprite* quitButton = [CCSprite spriteWithFile:@"quit.png"];
+        quitButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+quitButton.boundingBox.size.width/2+120, size.height-undoButton.boundingBox.size.width/2);
+        quitButton.isTouchEnabled = YES;
+        [quitButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quitButtonPressed:)] ];
+        [self addChild:quitButton];
+        
+        /*
         CCLabelTTF* realPositionHandModeTitle = [CCLabelTTF labelWithString:@"相对位置显示" fontName:@"Marker Felt" fontSize:28];
         realPositionHandModeTitle.position = ccp(redoButton.position.x+redoButton.boundingBox.size.width+80, size.height-redoButton.boundingBox.size.width/2);
         [self addChild: realPositionHandModeTitle];
@@ -97,6 +105,7 @@
         realPositionHandModeLabel = [CCLabelTTF labelWithString:[global isRealPositionHandModeEnable]?@"(开启)":@"(关闭)" fontName:@"Marker Felt" fontSize:28];
         realPositionHandModeLabel.position = ccp(toggleMenu.position.x+80, size.height-redoButton.boundingBox.size.width/2);
         [self addChild: realPositionHandModeLabel];
+         */
         
         showGameState = [CCSprite spriteWithFile:@"left2.png"];
         showGameState.isTouchEnabled = YES;
@@ -147,6 +156,10 @@
 
 -(void) redoButtonPressed : (id) sender {
     [engin action: @"REDO_ACTION"];
+}
+
+-(void) quitButtonPressed : (id) sender {
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
 }
 
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result {

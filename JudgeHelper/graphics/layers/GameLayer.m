@@ -119,6 +119,7 @@
         }
         player.readyToMove = NO;
         player.position = [tableZone getPlayerPosition:point];
+        [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%f,%f", point.x, point.y] forKey:[player.id stringByAppendingString:@"-pos"]];
     } else {
         for (CCPlayer* p in players) {
             if(p.settled){
@@ -192,13 +193,16 @@ BOOL showDebugMessageEnable = NO;
         playersMap = [[NSMutableDictionary alloc] init];
         players = [[NSMutableArray alloc] init];
         NSArray* ids = [global getPlayerIds];
-        int pNum = ids.count;
-        for(int i = 0; i < pNum; i++) {
-            CCPlayer* p = ([global getGameMode] == DOUBLE_HAND) ? [[CCDoubleHandPlayer alloc] init:(NSString*)[ids objectAtIndex:i]] : [[CCPlayer alloc] init:(NSString*)[ids objectAtIndex:i]];
+        int n = 0;
+        for(NSString* id in ids) {
+            CCPlayer* p = ([global getGameMode] == DOUBLE_HAND) ? [[CCDoubleHandPlayer alloc] init:id] : [[CCPlayer alloc] init:id];
             p.realPositionModeEnable = [global isRealPositionHandModeEnable];
             
-            int line = (int)((i+6)/6);
-            p.sprite.position = ccp(80+(170*(i%6)), 120*line);
+            int line = (int)((n+6)/6);
+            if(p.sprite.position.x == 0 && p.sprite.position.y == 0) {
+                p.sprite.position = ccp(80+(170*(n%6)), 120*line);
+                n++;
+            }
             p.delegate = self;
             
             [self addChild: p.sprite];

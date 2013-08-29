@@ -49,6 +49,8 @@
             image = [image resizedImage:CGSizeMake(AVATAR_IMG_WIDTH, AVATAR_IMG_HEIGHT) interpolationQuality:kCGInterpolationDefault];
             CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
             _sprite = [[CCSprite alloc] initWithTexture:texture];
+            NSString* positionStr = [[NSUserDefaults standardUserDefaults] stringForKey:[id stringByAppendingString:@"-pos"]];
+            _sprite.position = [self getPositionFromString : positionStr];
             CGSize textureSize = [texture contentSize];
             
             labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:14];
@@ -89,7 +91,19 @@
     return self;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+-(CGPoint) getPositionFromString: (NSString*) positionStr {
+    CGPoint pos = CGPointMake(0, 0);
+    
+    long i = [positionStr rangeOfString: @","].location;
+    if(i > 0) {
+        pos.x =  [[positionStr substringToIndex: i] floatValue];
+        pos.y = [[positionStr substringFromIndex: i+1] floatValue];
+    }
+    
+    return pos;
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
 
