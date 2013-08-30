@@ -27,10 +27,14 @@
     CCSprite* playersPool2;
     MySprite* playerToRemove;
     MySprite* playerToRemove2;
+    CCSprite* playersPoolCadre;
     NSMutableArray* personIcons;
     NSMutableArray* personIcons2;
     NSMutableDictionary* personIconsMap;
     NSMutableDictionary* personIconsMap2;
+    int selPersonNumber;
+    NSMutableDictionary* selPersonIconsMap;
+    BOOL isIgnorePresse;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

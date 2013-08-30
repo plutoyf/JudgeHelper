@@ -31,12 +31,21 @@
 	return scene;
 }
 
+-(void) cleanUpSprite: (id) sender {
+    [self removeChild:(CCNode*)sender];
+}
+
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
     if(isIgnorePresse) return;
-    [self selectPlayerById: ((MySprite*)sender.node).id];
+    MySprite* icon = (MySprite*)sender.node;
+    [self selectPlayerById: icon.id fromPosition:[icon convertToWorldSpace:ccp(IMG_WIDTH/2, IMG_HEIGHT/2)]];
 }
 
 -(void) selectPlayerById:(NSString*) id {
+    [self selectPlayerById:id fromPosition:ccp(0,0)];
+}
+
+-(void) selectPlayerById:(NSString*) id fromPosition: (CGPoint) p0 {
     if(playerToRemove != nil) {
         [playerToRemove stopAllActions];
         [playerToRemove setRotation:0];
@@ -53,24 +62,77 @@
     MySprite* selPersonIcon = [personIconsMap objectForKey:id];
     MySprite* selPersonIcon2 = [personIconsMap2 objectForKey:id];
     
+    if(!selPersonIconsMap) {
+        selPersonIconsMap = [NSMutableDictionary new];
+    }
+    
+    int numPerLine = 10;
+    
     if (selPersonIcon.selected) {
-        selPersonIcon.selected = NO;
-        [selPersonIcon stopAllActions];
-        [selPersonIcon setRotation:0];
-        selPersonIcon2.selected = NO;
-        [selPersonIcon2 stopAllActions];
-        [selPersonIcon2 setRotation:0];
-    } else {
-        selPersonIcon.selected = YES;
-        selPersonIcon2.selected = YES;
+        [self deselectPersonIcon:selPersonIcon];
+        [self deselectPersonIcon:selPersonIcon2];
         
-        [selPersonIcon runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
-        [selPersonIcon2 runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
-
+        selPersonNumber--;
+        MySprite *copyPersonIcon = [selPersonIconsMap objectForKey:selPersonIcon.id];
+        [selPersonIconsMap removeObjectForKey:selPersonIcon.id];
+        
+        CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:p0];
+        CCCallFuncN *clean = [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)];
+        [copyPersonIcon runAction:[CCSequence actions:move, clean, nil]];
+        
+        for(MySprite* personIcon in selPersonIconsMap.allValues) {
+            if(personIcon.position.y<copyPersonIcon.position.y || (personIcon.position.y==copyPersonIcon.position.y && personIcon.position.x>copyPersonIcon.position.x)) {
+                if(personIcon.position.x == 60) {
+                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(60+100*numPerLine, personIcon.position.y+100)];
+                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(60+100*(numPerLine-1), personIcon.position.y+100)];
+                    [personIcon runAction:[CCSequence actions:move1, move2, nil]];
+                } else {
+                    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-100, personIcon.position.y)];
+                    [personIcon runAction:[CCSequence actions:move, nil]];
+                }
+            }
+        }
+        
+    } else {
+        [self selectPersonIcon:selPersonIcon];
+        [self selectPersonIcon:selPersonIcon2];
+                
+        MySprite *copyPersonIcon = [MySprite spriteWithTexture: selPersonIcon.texture];
+        copyPersonIcon.id = selPersonIcon.id;
+        copyPersonIcon.name = selPersonIcon.name;
+        copyPersonIcon.isTouchEnabled = YES;
+        [copyPersonIcon showName];
+        
+        BOOL hasP0 = p0.x!=0 || p0.y!=0;
+        CGPoint p1 = ccp(60+100*(selPersonNumber%numPerLine), 600-100*(int)(selPersonNumber/numPerLine));
+        copyPersonIcon.position = hasP0?p0:p1;
+        
+        [selPersonIconsMap setObject:copyPersonIcon forKey:copyPersonIcon.id];
+        [self addChild:copyPersonIcon];
+        
+        if(hasP0) {
+            CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:p1];
+            [copyPersonIcon runAction:[CCSequence actions:move, nil]];
+        }
+        
+        selPersonNumber++;
     }
 }
 
-BOOL isIgnorePresse = NO;
+
+-(void) selectPersonIcon: (MySprite*) personIcon {
+    personIcon.selected = YES;
+    personIcon.opacity = 100;
+    //[personIcon runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
+}
+
+-(void) deselectPersonIcon: (MySprite*) personIcon {
+    personIcon.selected = NO;
+    personIcon.opacity = 255;
+    //[personIcon stopAllActions];
+    //[personIcon setRotation:0];
+}
+
 - (void) shortPressePlayer: (UILongPressGestureRecognizer*) sender {
     if(sender.state == UIGestureRecognizerStateBegan) {
         isIgnorePresse = speed != 0;
@@ -163,6 +225,8 @@ int IMG_HEIGHT = 72;
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
+        isIgnorePresse = NO;
+        selPersonNumber = 0;
         engin = [CCEngin getEngin];
         
         // ask director for the window size
@@ -192,7 +256,7 @@ int IMG_HEIGHT = 72;
         [self addChild: nextIcon];
         
         
-        CCSprite* playersPoolCadre = [[CCSprite alloc] init];
+        playersPoolCadre = [[CCSprite alloc] init];
         [playersPoolCadre setContentSize:CGSizeMake(size.width, 100)];
         playersPoolCadre.position = ccp(size.width/2, 170+100/2);
         playersPoolCadre.isTouchEnabled = YES;
