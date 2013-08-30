@@ -23,11 +23,9 @@
     CCLabelTTF* doubleHandModeLabel;
     MySprite* previousIcon;
     MySprite* startIcon;
-    MySprite* selRoleIcon;
     NSArray * roles;
     NSMutableDictionary * roleNumbers;
     NSMutableDictionary * roleIconsMap;
-    NSMutableArray * movableRoleIcons;
     NSMutableDictionary* roleLabels;
 }
 

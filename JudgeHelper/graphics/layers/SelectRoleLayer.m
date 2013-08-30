@@ -7,12 +7,9 @@
 //
 
 #import "SelectRoleLayer.h"
-// Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
-
-static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKey";
 
 @implementation SelectRoleLayer
 
@@ -30,19 +27,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 	
 	// return the scene
 	return scene;
-}
-
--(void) registerWithTouchDispatcher
-{
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority swallowsTouches:NO];
-}
-
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    [self selectRoleForTouch:touchLocation];
-    
-    return TRUE;
 }
 
 -(void) toPreviousScreen : (id) sender {
@@ -87,64 +71,24 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
     }
 }
 
-- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
-    CGPoint oldTouchLocation = [touch previousLocationInView:touch.view];
-    oldTouchLocation = [[CCDirector sharedDirector] convertToGL:oldTouchLocation];
-    oldTouchLocation = [self convertToNodeSpace:oldTouchLocation];
-    
-    CGPoint translation = ccpSub(touchLocation, oldTouchLocation);
-    [self panForTranslation:translation];
+-(void) addRole: (UITapGestureRecognizer*) sender {
+    NSString* name = [Engin getRoleName:sender.node.tag];
+    [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue+1] forKey: name];
+    [self updateRoleLable: name];
+    [self matchPlayerNumber];
 }
 
--(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    if(selRoleIcon) {
-        CGPoint p1 = selRoleIcon.position;
-        CGPoint p0 = ((MySprite*)[roleIconsMap objectForKey: selRoleIcon.name]).position;
-        float w = 72;
-        float h = 72;
-        if(p1.x == p0.x && p1.y == p0.y) {
-            //role number ++
-            [roleNumbers setObject: [self plusplus: [roleNumbers objectForKey:selRoleIcon.name]] forKey: selRoleIcon.name];
-            [self updateRoleLable: selRoleIcon];
-            [self matchPlayerNumber];
-        } else if(p1.x<(p0.x-w) || p1.x>(p0.x+w) || p1.y<(p0.y-h) || p1.y>(p0.y+h)) {
-            //role number --
-            if(((NSNumber*)[roleNumbers objectForKey:selRoleIcon.name]).intValue > 0) {
-                [roleNumbers setObject: [self minusminus: [roleNumbers objectForKey:selRoleIcon.name]] forKey: selRoleIcon.name];
-                [self updateRoleLable: selRoleIcon];
-                [self matchPlayerNumber];
-            }
-        }
-        
-        selRoleIcon.position = ((MySprite*)[roleIconsMap objectForKey: selRoleIcon.name]).position;
-        selRoleIcon = nil;
+-(void) removeRole: (UITapGestureRecognizer*) sender {
+    NSString* name = [Engin getRoleName:sender.node.tag];
+    if(((NSNumber*)[roleNumbers objectForKey: name]).intValue > 0) {
+        [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue-1] forKey: name];
+        [self updateRoleLable: name];
+        [self matchPlayerNumber];
     }
 }
 
--(void) updateRoleLable: (MySprite*) icon {
-    ((CCLabelTTF*)[roleLabels objectForKey:selRoleIcon.name]).string = [NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue];
-}
-
--(NSNumber*) plusplus : (NSNumber*) n {
-    return [NSNumber numberWithInt: n.intValue+1 ];
-}
-
--(NSNumber*) minusminus : (NSNumber*) n {
-    return [NSNumber numberWithInt: n.intValue-1 ];
-}
-
--(void)panForTranslation:(CGPoint)translation {
-    if (selRoleIcon) {
-        if(((NSNumber*)[roleNumbers objectForKey:selRoleIcon.name]).intValue > 0) {
-            CGPoint newPos = ccpAdd(selRoleIcon.position, translation);
-            selRoleIcon.position = newPos;
-        } else {
-            selRoleIcon = nil;
-        }
-    }
+-(void) updateRoleLable: (NSString*) name {
+    ((CCLabelTTF*)[roleLabels objectForKey:name]).string = [NSString stringWithFormat:@"%@ (%d)", name, ((NSNumber*)[roleNumbers objectForKey:name]).intValue];
 }
 
 
@@ -153,8 +97,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
-        self.isTouchEnabled = YES;
-
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         GlobalSettings* global = [GlobalSettings globalSettings];
@@ -168,40 +110,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
         messageLabel.position = ccp( 20 , size.height-160 );
         [self addChild: messageLabel];
         
-        engin = [CCEngin getEngin];
-        roles = [global getRoles] ? [global getRoles] : engin.roles;
-        roleNumbers = [NSMutableDictionary dictionaryWithDictionary: [global getRoleNumbers] ? [global getRoleNumbers] : engin.roleNumbers];
-        
-        roleIconsMap = [[NSMutableDictionary alloc] init];
-        movableRoleIcons = [[NSMutableArray alloc] init];
-        roleLabels = [[NSMutableDictionary alloc] init];
-        int i = 0;
-        for(NSString* rs in roles) {
-            Role r = [Engin getRoleFromString:rs];
-            
-            UIImage *iconImg = [UIImage imageNamed: [[@"Icon-72-" stringByAppendingString: [CCEngin getRoleCode: r ]] stringByAppendingString: @".png"]];
-            MySprite *icon = [MySprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad]];
-            icon.position = ccp(60+(100*i), size.height-300);
-            icon.name = [Engin getRoleName:r];
-            icon.selectable = YES;
-            [self addChild: icon];
-            [roleIconsMap setObject: icon forKey: icon.name];
-            
-            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:12];
-            iconLabel.position = ccp(60+(100*i), size.height-350);
-            [self addChild: iconLabel];
-            [roleLabels setObject:iconLabel forKey:icon.name];
-            
-            if(r != Judge) {
-                MySprite *movableIcon = [MySprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad]];
-                movableIcon.position = ccp(60+(100*i), size.height-300);
-                movableIcon.name = [Engin getRoleName:r];
-                [self addChild: movableIcon];
-                [movableRoleIcons addObject:movableIcon];
-            }
-            
-            i++;
-        }
         
         CCLabelTTF* gameModeLabel = [CCLabelTTF labelWithString:@"双手模式" fontName:@"Marker Felt" fontSize:28];
         gameModeLabel.position = ccp(80, 120);
@@ -217,6 +125,48 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
         doubleHandModeLabel = [CCLabelTTF labelWithString:[global getGameMode] == DOUBLE_HAND?@"(开启)":@"(关闭)" fontName:@"Marker Felt" fontSize:28];
         doubleHandModeLabel.position = ccp(240, 120);
         [self addChild: doubleHandModeLabel];
+
+        
+        engin = [CCEngin getEngin];
+        roles = [global getRoles] ? [global getRoles] : engin.roles;
+        roleNumbers = [NSMutableDictionary dictionaryWithDictionary: [global getRoleNumbers] ? [global getRoleNumbers] : engin.roleNumbers];
+        
+        roleIconsMap = [[NSMutableDictionary alloc] init];
+        roleLabels = [[NSMutableDictionary alloc] init];
+        int i = 0;
+        for(NSString* rs in roles) {
+            Role r = [Engin getRoleFromString:rs];
+            
+            UIImage *iconImg = [UIImage imageNamed: [[@"Icon-72-" stringByAppendingString: [CCEngin getRoleCode: r ]] stringByAppendingString: @".png"]];
+            MySprite *icon = [MySprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad]];
+            icon.position = ccp(60+(100*i), size.height-300);
+            icon.name = [Engin getRoleName:r];
+            [self addChild: icon];
+            [roleIconsMap setObject: icon forKey: icon.name];
+            
+            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:12];
+            iconLabel.position = ccp(60+(100*i), size.height-350);
+            [self addChild: iconLabel];
+            [roleLabels setObject:iconLabel forKey:icon.name];
+            
+            if(r != Judge) {
+                CCSprite *upIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"up.png"].CGImage resolutionType: kCCResolutioniPad]];
+                upIcon.position = ccp(60+(100*i), size.height-300+65);
+                upIcon.tag = r;
+                upIcon.isTouchEnabled = YES;
+                [upIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addRole:)]];
+                [self addChild: upIcon];
+                                
+                CCSprite *downIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"down.png"].CGImage resolutionType: kCCResolutioniPad]];
+                downIcon.position = ccp(60+(100*i), size.height-300-80);
+                downIcon.tag = r;
+                downIcon.isTouchEnabled = YES;
+                [downIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeRole:)]];
+                [self addChild: downIcon];
+            }
+            
+            i++;
+        }
         
         previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
         previousIcon.position = ccp(size.width-200, 100);
@@ -234,11 +184,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
 	return self;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-
 -(void) doubleHandModeButtonTapped: (id) sender
 {
     GlobalSettings *globals = [GlobalSettings globalSettings];
@@ -251,33 +196,6 @@ static NSString * const UIGestureRecognizerNodeKey = @"UIGestureRecognizerNodeKe
         doubleHandModeLabel.string = @"(开启)";
     }
     [self matchPlayerNumber];
-}
-
-
-#pragma mark - GestureRecognizer delegate
-- (void)selectRoleForTouch:(CGPoint)touchLocation {
-    CCSprite * newSprite = nil;
-    for (CCSprite *sprite in movableRoleIcons) {
-        if (CGRectContainsPoint(sprite.boundingBox, touchLocation)) {
-            newSprite = sprite;
-            break;
-        }
-    }
-    selRoleIcon = newSprite;
-}
-
-#pragma mark GameKit delegate
-
--(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
-{
-	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app navController] dismissModalViewControllerAnimated:YES];
-}
-
--(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
-{
-	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app navController] dismissModalViewControllerAnimated:YES];
 }
 
 @end
