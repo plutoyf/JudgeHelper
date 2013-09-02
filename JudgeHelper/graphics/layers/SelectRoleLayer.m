@@ -71,15 +71,15 @@
     }
 }
 
--(void) addRole: (UITapGestureRecognizer*) sender {
-    NSString* name = [Engin getRoleName:sender.node.tag];
+-(void) addRole: (id) sender {
+    NSString* name = [Engin getRoleName:((CCMenuItemImage*)sender).tag];
     [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue+1] forKey: name];
     [self updateRoleLable: name];
     [self matchPlayerNumber];
 }
 
--(void) removeRole: (UITapGestureRecognizer*) sender {
-    NSString* name = [Engin getRoleName:sender.node.tag];
+-(void) removeRole: (id) sender {
+    NSString* name = [Engin getRoleName:((CCMenuItemImage*)sender).tag];
     if(((NSNumber*)[roleNumbers objectForKey: name]).intValue > 0) {
         [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue-1] forKey: name];
         [self updateRoleLable: name];
@@ -115,8 +115,8 @@
         gameModeLabel.position = ccp(80, 120);
         [self addChild: gameModeLabel];
         
-        doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40.png" target:nil selector:nil];
-        doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40.png" target:nil selector:nil];
+        doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40-sel.png" target:nil selector:nil];
+        doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40-sel.png" target:nil selector:nil];
         [doubleHandModeOffItem setScaleX: 40/doubleHandModeOffItem.contentSize.width];
         [doubleHandModeOffItem setScaleY: 40/doubleHandModeOffItem.contentSize.height];
         [doubleHandModeOnItem setScaleX: 40/doubleHandModeOnItem.contentSize.width];
@@ -157,6 +157,23 @@
             [roleLabels setObject:iconLabel forKey:icon.name];
             
             if(r != Judge) {
+                CCMenuItemImage* increaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"up.png" selectedImage:@"up-sel.png" target:self selector:@selector(addRole:)];
+                [increaseRoleNumberMenuItem setScaleX: 30/increaseRoleNumberMenuItem.contentSize.width];
+                [increaseRoleNumberMenuItem setScaleY: 20/increaseRoleNumberMenuItem.contentSize.height];
+                increaseRoleNumberMenuItem.tag = r;
+                CCMenu *increaseRoleNumberMenu = [CCMenu menuWithItems:increaseRoleNumberMenuItem, nil];
+                increaseRoleNumberMenu.position = ccp(60+(100*i), size.height-300+65);
+                [self addChild: increaseRoleNumberMenu];
+                
+                CCMenuItemImage* decreaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"down.png" selectedImage:@"down-sel.png" target:self selector:@selector(removeRole:)];
+                [decreaseRoleNumberMenuItem setScaleX: 30/decreaseRoleNumberMenuItem.contentSize.width];
+                [decreaseRoleNumberMenuItem setScaleY: 20/decreaseRoleNumberMenuItem.contentSize.height];
+                decreaseRoleNumberMenuItem.tag = r;
+                CCMenu *decreaseRoleNumberMenu = [CCMenu menuWithItems:decreaseRoleNumberMenuItem, nil];
+                decreaseRoleNumberMenu.position = ccp(60+(100*i), size.height-300-80);
+                [self addChild: decreaseRoleNumberMenu];
+                
+                /*
                 CCSprite *upIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"up.png"].CGImage resolutionType: kCCResolutioniPad]];
                 [upIcon setScaleX: 30/upIcon.contentSize.width];
                 [upIcon setScaleY: 20/upIcon.contentSize.height];
@@ -174,6 +191,7 @@
                 downIcon.isTouchEnabled = YES;
                 [downIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeRole:)]];
                 [self addChild: downIcon];
+                 */
             }
             
             i++;
