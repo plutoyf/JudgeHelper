@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "50"
-         endingLineNumber = "50"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
          landmarkName = "@implementation SelectPlayerLayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "52"
-         endingLineNumber = "52"
+         startingLineNumber = "53"
+         endingLineNumber = "53"
          landmarkName = "@implementation SelectPlayerLayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "196"
-         endingLineNumber = "196"
+         startingLineNumber = "197"
+         endingLineNumber = "197"
          landmarkName = "-removePlayer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/components/MySprite.m"
-         timestampString = "397490431.391982"
+         timestampString = "399806502.651096"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "22"
-         endingLineNumber = "22"
+         startingLineNumber = "23"
+         endingLineNumber = "23"
          landmarkName = "-showDeleteButtonWithTarget:action:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "395"
-         endingLineNumber = "395"
+         startingLineNumber = "398"
+         endingLineNumber = "398"
          landmarkName = "-createPlayer:withImage:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -164,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/components/MySprite.m"
-         timestampString = "397495879.440193"
+         timestampString = "399825731.657755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "42"
-         endingLineNumber = "42"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "-showName"
          landmarkType = "5">
       </FileBreakpoint>
@@ -203,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCPlayer.m"
-         timestampString = "399483592.427671"
+         timestampString = "399816623.615632"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "90"
-         endingLineNumber = "90"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
          landmarkName = "@implementation CCPlayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -216,7 +216,59 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/GameLayer.m"
-         timestampString = "399483592.427671"
+         timestampString = "399816971.844726"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "220"
+         endingLineNumber = "220"
+         landmarkName = "-init"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
+         timestampString = "399816971.844726"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "221"
+         endingLineNumber = "221"
+         landmarkName = "@implementation GameLayer"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
+         timestampString = "399816971.844726"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
+         landmarkName = "-init"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
+         timestampString = "399816971.844726"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
+         landmarkName = "-init"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
+         timestampString = "399816971.844726"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "218"
@@ -228,64 +280,12 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
-         timestampString = "399483592.427671"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "219"
-         endingLineNumber = "219"
-         landmarkName = "@implementation GameLayer"
-         landmarkType = "3">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
-         timestampString = "399483592.427671"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "217"
-         endingLineNumber = "217"
-         landmarkName = "-init"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
-         timestampString = "399483592.427671"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "217"
-         endingLineNumber = "217"
-         landmarkName = "-init"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "JudgeHelper/graphics/layers/GameLayer.m"
-         timestampString = "399483592.427671"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "216"
-         endingLineNumber = "216"
-         landmarkName = "-init"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCPlayer.m"
-         timestampString = "399483592.427671"
+         timestampString = "399816623.615632"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
          landmarkName = "@implementation CCPlayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "417"
-         endingLineNumber = "417"
+         startingLineNumber = "416"
+         endingLineNumber = "416"
          landmarkName = "@implementation SelectPlayerLayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -307,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/GameStateSprite.m"
-         timestampString = "399483592.427671"
+         timestampString = "399813750.148506"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "133"
-         endingLineNumber = "133"
+         startingLineNumber = "143"
+         endingLineNumber = "143"
          landmarkName = "-init"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/GameStateSprite.m"
-         timestampString = "399483592.427671"
+         timestampString = "399827087.589626"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "192"
-         endingLineNumber = "192"
+         startingLineNumber = "205"
+         endingLineNumber = "205"
          landmarkName = "-addNewStatusWithActorRole:andReceiver:andResult:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/GameStateSprite.m"
-         timestampString = "399483592.427671"
+         timestampString = "399827087.589626"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "193"
-         endingLineNumber = "193"
+         startingLineNumber = "206"
+         endingLineNumber = "206"
          landmarkName = "-addNewStatusWithActorRole:andReceiver:andResult:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -593,11 +593,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/GameLayer.m"
-         timestampString = "399483592.427671"
+         timestampString = "399816971.844726"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "235"
-         endingLineNumber = "235"
+         startingLineNumber = "237"
+         endingLineNumber = "237"
          landmarkName = "-initPlayersWithJudge:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -697,11 +697,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398353629.05161"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
+         startingLineNumber = "149"
+         endingLineNumber = "149"
          landmarkName = "-setPosition:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -710,11 +710,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398353629.05161"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "142"
-         endingLineNumber = "142"
+         startingLineNumber = "151"
+         endingLineNumber = "151"
          landmarkName = "-setPosition:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -723,11 +723,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398353629.05161"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "125"
-         endingLineNumber = "125"
+         startingLineNumber = "134"
+         endingLineNumber = "134"
          landmarkName = "-updateActionIcons"
          landmarkType = "5">
       </FileBreakpoint>
@@ -736,11 +736,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398353629.05161"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "110"
-         endingLineNumber = "110"
+         startingLineNumber = "119"
+         endingLineNumber = "119"
          landmarkName = "-getActionIconPosition:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -996,11 +996,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCPlayer.m"
-         timestampString = "399483592.427671"
+         timestampString = "399816623.615632"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
          landmarkName = "-longPressMovePlayer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1009,11 +1009,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCPlayer.m"
-         timestampString = "399483592.427671"
+         timestampString = "399816623.615632"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "145"
-         endingLineNumber = "145"
+         startingLineNumber = "156"
+         endingLineNumber = "156"
          landmarkName = "-superLongPressMovePlayer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1022,11 +1022,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398424856.937461"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "146"
-         endingLineNumber = "146"
+         startingLineNumber = "155"
+         endingLineNumber = "155"
          landmarkName = "-setRealPositionModeEnable:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1035,11 +1035,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398424863.279896"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
          landmarkName = "-updateActionIcons"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1074,11 +1074,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398425102.211095"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "93"
-         endingLineNumber = "93"
+         startingLineNumber = "102"
+         endingLineNumber = "102"
          landmarkName = "-getHandIconPosition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1087,11 +1087,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCHandPlayer.m"
-         timestampString = "398425134.135599"
+         timestampString = "399829395.553857"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "73"
-         endingLineNumber = "73"
+         startingLineNumber = "79"
+         endingLineNumber = "79"
          landmarkName = "-updateHandIcon"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1139,11 +1139,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/players/CCPlayer.m"
-         timestampString = "399484300.74015"
+         timestampString = "399816623.615632"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "95"
-         endingLineNumber = "95"
+         startingLineNumber = "106"
+         endingLineNumber = "106"
          landmarkName = "-getPositionFromString:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1178,11 +1178,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "108"
-         endingLineNumber = "108"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
          landmarkName = "@implementation SelectPlayerLayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -1191,11 +1191,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399802324.936107"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
+         startingLineNumber = "42"
+         endingLineNumber = "42"
          landmarkName = "-selectPlayer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1204,11 +1204,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399830694.471546"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "71"
-         endingLineNumber = "71"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
          landmarkName = "@implementation SelectPlayerLayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -1217,12 +1217,64 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399573344.345107"
+         timestampString = "399802324.936107"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
+         startingLineNumber = "36"
+         endingLineNumber = "36"
          landmarkName = "-cleanUpSprite:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
+         timestampString = "399804640.727963"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "40"
+         endingLineNumber = "40"
+         landmarkName = "-selectPlayer:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/CreatePlayerLayer.m"
+         timestampString = "399825446.460191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "201"
+         endingLineNumber = "201"
+         landmarkName = "-imagePickerController:didFinishPickingImage:editingInfo:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/CreatePlayerLayer.m"
+         timestampString = "399825446.460191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "203"
+         endingLineNumber = "203"
+         landmarkName = "-imagePickerController:didFinishPickingImage:editingInfo:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
+         timestampString = "399830694.471546"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
+         landmarkName = "-longPressePlayer:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

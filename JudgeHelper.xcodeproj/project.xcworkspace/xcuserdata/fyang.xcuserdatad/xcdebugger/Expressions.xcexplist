@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[CreatePlayerLayer handlePicturePanGesture:]:CreatePlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "picture.boundingBox">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[SelectPlayerLayer selectPlayer:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
@@ -24,6 +32,14 @@
          <PersistentStrings>
             <PersistentString
                value = "[addedActionReceivers objectForKey:[NSNumber numberWithInt:i]]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer longPressePlayer:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((MySprite*)sender.node)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -69,10 +85,18 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CreatePlayerLayer imagePickerController:didFinishPickingImage:editingInfo:]:CreatePlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[UIScreen mainScreen] bounds]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
