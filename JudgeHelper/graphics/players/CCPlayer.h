@@ -19,6 +19,7 @@ typedef enum {
 @interface CCPlayer : Player <UIGestureRecognizerDelegate>
 {
     CCLabelTTF* labelTTF;
+    CCSprite* avatar;
     CCLayerColor *layerColer;
     BOOL _realPositionModeEnable;
     POSITION _position;

@@ -57,26 +57,32 @@
         _position = ccp(size.width/2, size.height/2);
                 
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,0,0,255)];
-        layerColer.position = ccp(0, size.height/2-120);
+        layerColer.position = ccp(0, size.height/2-80);
         [self addChild:layerColer];
         
         
         CCMenuItem *returnItem = [CCMenuItemImage
                                   itemFromNormalImage:@"return.png" selectedImage:@"return.png"
                                   target:self selector:@selector(returnButtonTapped:)];
+        [returnItem setScaleX: 72/returnItem.contentSize.width];
+        [returnItem setScaleY: 72/returnItem.contentSize.height];
         returnItem.position = ccp(50, 30);
         CCMenuItem *showAlbumMenuItem = [CCMenuItemImage
                                     itemFromNormalImage:@"album.png" selectedImage:@"album.png"
                                     target:self selector:@selector(showAlbumButtonTapped:)];
+        [showAlbumMenuItem setScaleX: 72/showAlbumMenuItem.contentSize.width];
+        [showAlbumMenuItem setScaleY: 72/showAlbumMenuItem.contentSize.height];
         showAlbumMenuItem.position = ccp(150, 30);
         CCMenuItem *showCameraItem = [CCMenuItemImage
                                      itemFromNormalImage:@"camera.png" selectedImage:@"camera.png"
                                      target:self selector:@selector(showCameraButtonTapped:)];
+        [showCameraItem setScaleX: 72/showCameraItem.contentSize.width];
+        [showCameraItem setScaleY: 72/showCameraItem.contentSize.height];
         showCameraItem.position = ccp(250, 30);
         
         CCMenu *showPickerMenu = [CCMenu menuWithItems: returnItem, showAlbumMenuItem, showCameraItem, nil];
         showPickerMenu.position = ccp(size.width-300, size.height-80);
-        [self addChild:showPickerMenu];
+        [self addChild:showPickerMenu z:2];
         
     }
     return self;
@@ -86,7 +92,7 @@
     NSString* name = userNameTextField.text;
     if(name.length > 0) {
         CGSize size = [CCDirector sharedDirector].winSize;
-        int w = 768/3, h = 1024/3;
+        int w = size.height/3, h = size.width/3;
         int x = size.width-430-w*2;
         int y = size.height-h-35;
         int bw = w - 20;
@@ -94,6 +100,7 @@
         CGRect cropRect = CGRectMake(x+w/2-bw/2+1, h/2-bh/2+36+1, bw-2, bh-2);
         
         UIImage *screenshot = [self screenshotWithStartNode: cadre];
+        screenshot = [screenshot resizedImage:CGSizeMake(size.width, size.height) interpolationQuality:kCGInterpolationDefault];
         CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], cropRect);
         
         [_delegate createPlayer:name withImage:[UIImage imageWithCGImage:imageRef]];
@@ -183,13 +190,14 @@
     CGSize size = [[CCDirector sharedDirector] winSize];
     CGSize cadreSize = CGSizeMake(size.width, size.height);
     cadre = [[ClippingSprite alloc] init];
-    GLubyte *buffer = malloc(sizeof(GLubyte)*4);
-    for (int i=0;i<4;i++) {buffer[i]=255;}
-    CCTexture2D *cadreBkgTex = [[CCTexture2D alloc] initWithData:buffer pixelFormat:kCCTexture2DPixelFormat_RGB5A1 pixelsWide:1 pixelsHigh:1 contentSize:cadreSize];
-    [cadre setTexture:cadreBkgTex];
-    [cadre setTextureRect:CGRectMake(0, 0, cadreSize.width, cadreSize.height)];
-    free(buffer);
-    int w = 768/3, h = 1024/3;
+    cadre.contentSize = cadreSize;
+    //GLubyte *buffer = malloc(sizeof(GLubyte)*4);
+    //for (int i=0;i<4;i++) {buffer[i]=255;}
+    //CCTexture2D *cadreBkgTex = [[CCTexture2D alloc] initWithData:buffer pixelFormat:kCCTexture2DPixelFormat_RGB5A1 pixelsWide:1 pixelsHigh:1 contentSize:cadreSize];
+    //[cadre setTexture:cadreBkgTex];
+    //[cadre setTextureRect:CGRectMake(0, 0, cadreSize.width, cadreSize.height)];
+    //free(buffer);
+    int w = size.height/3, h = size.width/3;
     int x = size.width-430-w*2;
     int y = size.height-h-35;
     cadre.openWindowRect = CGRectMake(x,y,w,h);
@@ -216,7 +224,7 @@
     
     int bw = w - 20;
     int bh = bw;
-    BorderSprite* border = [[BorderSprite alloc] init];
+    border = [[BorderSprite alloc] init];
     [border setTextureRect: CGRectMake(0,0,bw,bh)];
     border.borderRect = CGRectMake(0,0,bw,bh);
     border.position = ccp(x+w/2, y+h/2);
@@ -224,6 +232,7 @@
     
     [cadre addChild:picture];
     [cadre addChild:border];
+    [cadre clip];
     [self addChild:cadre];
     
     
@@ -253,12 +262,14 @@
     CCMenuItem *saveItem = [CCMenuItemImage
                             itemFromNormalImage:@"save.png" selectedImage:@"save.png"
                             target:self selector:@selector(saveButtonTapped:)];
+    [saveItem setScaleX: 72/saveItem.contentSize.width];
+    [saveItem setScaleY: 72/saveItem.contentSize.height];
     saveItem.position = ccp(50, 30);
     
     if(!saveMenu) {
         saveMenu = [CCMenu menuWithItems: saveItem, nil];
         saveMenu.position = ccp(size.width-400, size.height-80);
-        [self addChild:saveMenu];
+        [self addChild:saveMenu z:2];
     }
 
 }
@@ -300,8 +311,12 @@
     CGPoint translation = [aPanGestureRecognizer translationInView:aPanGestureRecognizer.view];
     translation.y *= -1;
     [aPanGestureRecognizer setTranslation:CGPointZero inView:aPanGestureRecognizer.view];
-    
-    picture.position = ccpAdd(picture.position, translation);
+    float x = border.position.x, y = border.position.y, w = border.borderRect.size.width, h = border.borderRect.size.height;
+    float pw = picture.boundingBox.size.width, ph = picture.boundingBox.size.height;
+    CGPoint p1 = ccpAdd(picture.position, translation);
+    p1.x = p1.x+pw/2<x-w/2 ? x-w/2-pw/2 : p1.x-pw/2>x+w/2 ? x+w/2+pw/2 : p1.x;
+    p1.y = p1.y+ph/2<y-h/2 ? y-h/2-ph/2 : p1.y-ph/2>y+h/2 ? y+h/2+ph/2 : p1.y;
+    picture.position = p1;
 }
 
 - (void)handlePicturePinchGesture:(UIPinchGestureRecognizer*)aPinchGestureRecognizer {

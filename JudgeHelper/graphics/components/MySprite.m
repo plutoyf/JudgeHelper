@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
+#import "Constants.h"
 #import "MySprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 
@@ -21,7 +22,9 @@
 -(void) showDeleteButtonWithTarget: (id)target action:(SEL)action {
     if(_deleteButton == nil) {
         _deleteButton = [CCSprite spriteWithFile:@"delete_mini.png"];
-        _deleteButton.position = ccp(0, self.boundingBox.size.height);
+        [_deleteButton setScaleX: 30/_deleteButton.contentSize.width];
+        [_deleteButton setScaleY: 30/_deleteButton.contentSize.height];
+        _deleteButton.position = ccp(-AVATAR_IMG_WIDTH/2, AVATAR_IMG_HEIGHT);
         _deleteButton.isTouchEnabled = YES;
         
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
@@ -44,6 +47,15 @@
         labelTTF.position = ccp(self.boundingBox.size.width/2, -14);
         [self addChild: labelTTF];
     }
+}
+
+
+-(void) setAvatar:(CCSprite *)avatar {
+    _avatar = avatar;
+    [_avatar setScaleX: AVATAR_IMG_WIDTH/avatar.contentSize.width];
+    [_avatar setScaleY: AVATAR_IMG_HEIGHT/avatar.contentSize.height];
+    _avatar.position = ccp(0, AVATAR_IMG_HEIGHT/2);
+    [self addChild:_avatar];
 }
 
 @end

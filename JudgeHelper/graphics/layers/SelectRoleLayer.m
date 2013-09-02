@@ -117,6 +117,11 @@
         
         doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40.png" target:nil selector:nil];
         doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40.png" target:nil selector:nil];
+        [doubleHandModeOffItem setScaleX: 40/doubleHandModeOffItem.contentSize.width];
+        [doubleHandModeOffItem setScaleY: 40/doubleHandModeOffItem.contentSize.height];
+        [doubleHandModeOnItem setScaleX: 40/doubleHandModeOnItem.contentSize.width];
+        [doubleHandModeOnItem setScaleY: 40/doubleHandModeOnItem.contentSize.height];
+        
         CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(doubleHandModeButtonTapped:) items:([global getGameMode] == DOUBLE_HAND?doubleHandModeOnItem:doubleHandModeOffItem), ([global getGameMode] == DOUBLE_HAND?doubleHandModeOffItem:doubleHandModeOnItem), nil];
         CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
         toggleMenu.position = ccp(170, 120);
@@ -139,6 +144,8 @@
             
             UIImage *iconImg = [UIImage imageNamed: [[@"Icon-72-" stringByAppendingString: [CCEngin getRoleCode: r ]] stringByAppendingString: @".png"]];
             MySprite *icon = [MySprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad]];
+            [icon setScaleX: 72/icon.contentSize.width];
+            [icon setScaleY: 72/icon.contentSize.height];
             icon.position = ccp(60+(100*i), size.height-300);
             icon.name = [Engin getRoleName:r];
             [self addChild: icon];
@@ -151,6 +158,8 @@
             
             if(r != Judge) {
                 CCSprite *upIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"up.png"].CGImage resolutionType: kCCResolutioniPad]];
+                [upIcon setScaleX: 30/upIcon.contentSize.width];
+                [upIcon setScaleY: 20/upIcon.contentSize.height];
                 upIcon.position = ccp(60+(100*i), size.height-300+65);
                 upIcon.tag = r;
                 upIcon.isTouchEnabled = YES;
@@ -158,6 +167,8 @@
                 [self addChild: upIcon];
                                 
                 CCSprite *downIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"down.png"].CGImage resolutionType: kCCResolutioniPad]];
+                [downIcon setScaleX: 30/downIcon.contentSize.width];
+                [downIcon setScaleY: 20/downIcon.contentSize.height];
                 downIcon.position = ccp(60+(100*i), size.height-300-80);
                 downIcon.tag = r;
                 downIcon.isTouchEnabled = YES;
@@ -169,12 +180,16 @@
         }
         
         previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
+        [previousIcon setScaleX: 72/previousIcon.contentSize.width];
+        [previousIcon setScaleY: 72/previousIcon.contentSize.height];
         previousIcon.position = ccp(size.width-200, 100);
         previousIcon.isTouchEnabled = YES;
         [previousIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toPreviousScreen:)]];
         [self addChild: previousIcon];
         
         startIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"start.png"].CGImage resolutionType: kCCResolutioniPad]];
+        [startIcon setScaleX: 72/startIcon.contentSize.width];
+        [startIcon setScaleY: 72/startIcon.contentSize.height];
         startIcon.position = ccp(size.width-100, 100);
         [startIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toGameScreen:)]];
         [self matchPlayerNumber];

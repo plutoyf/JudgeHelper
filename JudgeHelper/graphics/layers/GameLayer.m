@@ -177,7 +177,7 @@ BOOL showDebugMessageEnable = NO;
         
 		// create and initialize a Label
 		// position the label on the center of the screen
-		messageLabel = [CCLabelTTF labelWithString:@"Killer" fontName:@"Marker Felt" fontSize:64];
+		messageLabel = [CCLabelTTF labelWithString:@"Killer" fontName:@"Marker Felt" fontSize:48];
         messageLabel.position = ccp( size.width /2 , size.height/2-(showDebugMessageEnable?200:0) );
         [self addChild: messageLabel z:1];
         
@@ -206,6 +206,8 @@ BOOL showDebugMessageEnable = NO;
             p.delegate = self;
             
             [self addChild: p.sprite];
+            [self playerPositionChanged:p];
+            
             [players addObject:p];
             [playersMap setObject:p forKey:p.id];
         }
@@ -332,6 +334,8 @@ BOOL showDebugMessageEnable = NO;
         block:^(id sender){
             [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
         }];
+    [restarMenuItem setScaleX: 72/restarMenuItem.contentSize.width];
+    [restarMenuItem setScaleY: 72/restarMenuItem.contentSize.height];
     CGSize size = [[CCDirector sharedDirector] winSize];
     restarMenuItem.position = ccp(size.width/2, size.height/2+100);
     CCMenu *restarMenu = [CCMenu menuWithItems:restarMenuItem, nil];

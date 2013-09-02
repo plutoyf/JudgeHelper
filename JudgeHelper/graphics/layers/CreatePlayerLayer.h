@@ -8,6 +8,7 @@
 
 #import "CCSprite.h"
 #import "ClippingSprite.h"
+#import "BorderSprite.h"
 
 @protocol CreatePlayerDelegate;
 
@@ -18,6 +19,7 @@
     UIImagePickerController* _picker;
     UIPopoverController* _popover;
     ClippingSprite* cadre;
+    BorderSprite* border;
     CCSprite* picture;
     CCMenu* saveMenu;
     UITextField* userNameTextField;

@@ -37,7 +37,7 @@
 
 -(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role withAvatar: (BOOL) hasAvatar {
     if(self = [super init: id andName: name withRole: role]) {
-        _realPositionModeEnable = YES;
+        _realPositionModeEnable = NO;
         _position = BOTTEM;
         _selectable = YES;
         _actionIcons = [NSMutableArray new];
@@ -48,39 +48,50 @@
             UIImage* image = [UIImage imageWithData:imgData];
             image = [image resizedImage:CGSizeMake(AVATAR_IMG_WIDTH, AVATAR_IMG_HEIGHT) interpolationQuality:kCGInterpolationDefault];
             CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
-            _sprite = [[CCSprite alloc] initWithTexture:texture];
+            _sprite = [[CCSprite alloc] init];
+            avatar = [[CCSprite alloc] initWithTexture:texture];
+            [avatar setScaleX: AVATAR_IMG_WIDTH/avatar.contentSize.width];
+            [avatar setScaleY: AVATAR_IMG_HEIGHT/avatar.contentSize.height];
+            avatar.position = ccp(0, 0);
+            [_sprite addChild: avatar];
+            
+            CGSize size = [[CCDirector sharedDirector] winSize];
             NSString* positionStr = [[NSUserDefaults standardUserDefaults] stringForKey:[id stringByAppendingString:@"-pos"]];
             _sprite.position = [self getPositionFromString : positionStr];
-            CGSize textureSize = [texture contentSize];
+            if(_sprite.position.x<0 || _sprite.position.x>size.width || _sprite.position.y<0 || _sprite.position.y>size.height) {
+                _sprite.position = ccp(0,0);
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:[id stringByAppendingString:@"-pos"]];
+            }
+            CGSize textureSize = _sprite.boundingBox.size;
             
             labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:14];
-            labelTTF.position = ccp(textureSize.width/2, -14);
+            labelTTF.position = ccp(0, -AVATAR_IMG_HEIGHT/2-14);
             [_sprite addChild: labelTTF];
         } else {
             _sprite = [CCSprite new];
         }
                 
-        _sprite.isTouchEnabled = YES;
+        avatar.isTouchEnabled = YES;
         
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
-        [_sprite addGestureRecognizer:tapGestureRecognizer];
+        [avatar addGestureRecognizer:tapGestureRecognizer];
         
         shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressMovePlayer:)];
         shortPressGestureRecognizer.minimumPressDuration = 0;
         shortPressGestureRecognizer.delegate = self;
-        [_sprite addGestureRecognizer:shortPressGestureRecognizer];
+        [avatar addGestureRecognizer:shortPressGestureRecognizer];
         
         longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressMovePlayer:)];
         longPressGestureRecognizer.minimumPressDuration = 1.2;
         longPressGestureRecognizer.allowableMovement = 5;
         longPressGestureRecognizer.delegate = self;
-        [_sprite addGestureRecognizer:longPressGestureRecognizer];
+        [avatar addGestureRecognizer:longPressGestureRecognizer];
         
         superLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(superLongPressMovePlayer:)];
         superLongPressGestureRecognizer.minimumPressDuration = 5;
         superLongPressGestureRecognizer.allowableMovement = 20;
         superLongPressGestureRecognizer.delegate = self;
-        [_sprite addGestureRecognizer:superLongPressGestureRecognizer];
+        [avatar addGestureRecognizer:superLongPressGestureRecognizer];
 
         
         [tapGestureRecognizer requireGestureRecognizerToFail:shortPressGestureRecognizer];
@@ -121,7 +132,7 @@
 -(void) longPressMovePlayer: (UILongPressGestureRecognizer*) sender {
     CGPoint location = [sender locationInView:sender.view];
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
-    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
+    CGPoint locationInMySpriteSpace = [sender.node.parent convertToNodeSpace:locationInWorldSpace];
     
     if(wasSetteledBeforeShortPressMove) {
         if(sender.state == UIGestureRecognizerStateBegan) {
@@ -135,7 +146,7 @@
                 [_delegate playerPositionChanged: nil];
                 longPressMoveBegan = NO;
             } else {
-                [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+                [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInWorldSpace), originalPoint)];
             }
         }
     }
@@ -151,7 +162,7 @@
 -(void) shortPressMovePlayer: (UILongPressGestureRecognizer*) sender {
     CGPoint location = [sender locationInView:sender.view];
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
-    CGPoint locationInMySpriteSpace = [sender.node convertToNodeSpace:locationInWorldSpace];
+    CGPoint locationInMySpriteSpace = [sender.node.parent convertToNodeSpace:locationInWorldSpace];
     
     if(!longPressMoveBegan) {
         if(sender.state == UIGestureRecognizerStateBegan) {
@@ -162,7 +173,7 @@
         } else if(sender.state == UIGestureRecognizerStateEnded) {
             [_delegate playerPositionChanged: self];
         } else if(!longPressMoveBegan) {
-            [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInMySpriteSpace), originalPoint)];
+            [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInWorldSpace), originalPoint)];
         }
     }
 }
@@ -174,8 +185,8 @@
     }
     if(readyToMove) {
         layerColer = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
-        layerColer.contentSize = CGSizeMake(_sprite.texture.contentSize.width+4, _sprite.texture.contentSize.height+4);
-        layerColer.position = ccp(-2, -2);
+        layerColer.contentSize = CGSizeMake(AVATAR_IMG_WIDTH+4, AVATAR_IMG_HEIGHT+4);
+        layerColer.position = ccp(-AVATAR_IMG_WIDTH/2-2, -AVATAR_IMG_HEIGHT/2-2);
         [_sprite addChild:layerColer z:-1];
     }
 }
@@ -214,11 +225,13 @@
 
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+    [icon setScaleX: 20/icon.contentSize.width];
+    [icon setScaleY: 20/icon.contentSize.height];
     icon.opacity = result ? 255 : 80;
     CGSize iconSize = icon.boundingBox.size;
     int n = _actionIcons.count;
-    float x = iconSize.width/2+iconSize.width*n;
-    float y = AVATAR_IMG_HEIGHT+iconSize.height/2+2;
+    float x = -AVATAR_IMG_WIDTH/2+iconSize.width/2+iconSize.width*n;
+    float y = AVATAR_IMG_HEIGHT/2+iconSize.height/2+2;
     
     icon.position = ccp(x, y);
     [_actionIcons addObject:icon];

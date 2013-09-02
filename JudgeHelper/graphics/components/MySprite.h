@@ -18,9 +18,11 @@
 @property(atomic) BOOL selectable;
 @property(atomic) BOOL selected;
 @property(nonatomic, retain) CCSprite* deleteButton;
+@property(nonatomic, retain) CCSprite* avatar;
 
 -(void) showDeleteButtonWithTarget: (id)target action:(SEL)action;
 -(void) removeDeleteButton;
 -(void) showName;
+-(void) setAvatar:(CCSprite *)avatar;
 
 @end

@@ -72,18 +72,24 @@
         }
         
         CCSprite* undoButton = [CCSprite spriteWithFile:@"undo.png"];
+        [undoButton setScaleX: 72/undoButton.contentSize.width];
+        [undoButton setScaleY: 72/undoButton.contentSize.height];
         undoButton.position = ccp(60, size.height-undoButton.boundingBox.size.width/2);
         undoButton.isTouchEnabled = YES;
         [undoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(undoButtonPressed:)] ];
         [self addChild:undoButton];
         
         CCSprite* redoButton = [CCSprite spriteWithFile:@"redo.png"];
+        [redoButton setScaleX: 72/redoButton.contentSize.width];
+        [redoButton setScaleY: 72/redoButton.contentSize.height];
         redoButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+40, size.height-undoButton.boundingBox.size.width/2);
         redoButton.isTouchEnabled = YES;
         [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
         [self addChild:redoButton];
         
         CCSprite* quitButton = [CCSprite spriteWithFile:@"quit.png"];
+        [quitButton setScaleX: 72/quitButton.contentSize.width];
+        [quitButton setScaleY: 72/quitButton.contentSize.height];
         quitButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+quitButton.boundingBox.size.width/2+120, size.height-undoButton.boundingBox.size.width/2);
         quitButton.isTouchEnabled = YES;
         [quitButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quitButtonPressed:)] ];
@@ -108,6 +114,8 @@
          */
         
         showGameState = [CCSprite spriteWithFile:@"left2.png"];
+        [showGameState setScaleX: 30/showGameState.contentSize.width];
+        [showGameState setScaleY: 40/showGameState.contentSize.height];
         showGameState.isTouchEnabled = YES;
         showGameState.position = ccp(-showGameState.boundingBox.size.width/2, size.height/2);
         UIGestureRecognizer *showGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
@@ -118,6 +126,8 @@
         [self addChild: showGameState];
         
         hideGameState = [CCSprite spriteWithFile:@"right2.png"];
+        [hideGameState setScaleX: 30/hideGameState.contentSize.width];
+        [hideGameState setScaleY: 40/hideGameState.contentSize.height];
         hideGameState.isTouchEnabled = YES;
         hideGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height/2);
         UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
@@ -133,7 +143,7 @@
     return self;
 }
 
-
+/*
 -(void) realPositionHandModeButtonTapped : (id) sender {
     GlobalSettings *globals = [GlobalSettings globalSettings];
     CCMenuItemToggle *toggleItem = (CCMenuItemToggle *)sender;
@@ -149,7 +159,8 @@
         p.realPositionModeEnable = [globals isRealPositionHandModeEnable];
     }
 }
-
+*/
+ 
 -(void) undoButtonPressed : (id) sender {
     [engin action: @"UNDO_ACTION"];
 }
@@ -173,6 +184,8 @@
         NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:receiver.id];
         
         MySprite* icon = [MySprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+        [icon setScaleX: 20/icon.contentSize.width];
+        [icon setScaleY: 20/icon.contentSize.height];
         if(!result) icon.opacity = 80;
         icon.position = ccp(100+20*lifeBoxes.count, 0);
         [visibleNodes addObject:icon];

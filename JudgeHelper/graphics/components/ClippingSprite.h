@@ -12,4 +12,6 @@
 
 @property (atomic) CGRect openWindowRect;
 
+-(void) clip;
+
 @end

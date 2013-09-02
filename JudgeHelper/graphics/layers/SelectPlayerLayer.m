@@ -9,6 +9,7 @@
 #import "SelectPlayerLayer.h"
 
 #import "AppDelegate.h"
+#import "Constants.h"
 #import "ClippingSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "UIImage+Resize.h"
@@ -38,7 +39,7 @@
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
     if(isIgnorePresse) return;
     MySprite* icon = (MySprite*)sender.node;
-    [self selectPlayerById: icon.id fromPosition:[icon convertToWorldSpace:ccp(IMG_WIDTH/2, IMG_HEIGHT/2)]];
+    [self selectPlayerById: icon.id fromPosition:[icon convertToWorldSpace:ccp(IMG_WIDTH/4, 0)]];
 }
 
 -(void) selectPlayerById:(NSString*) id {
@@ -97,14 +98,14 @@
         [self selectPersonIcon:selPersonIcon];
         [self selectPersonIcon:selPersonIcon2];
                 
-        MySprite *copyPersonIcon = [MySprite spriteWithTexture: selPersonIcon.texture];
+        MySprite *copyPersonIcon = [MySprite new];
         copyPersonIcon.id = selPersonIcon.id;
         copyPersonIcon.name = selPersonIcon.name;
-        copyPersonIcon.isTouchEnabled = YES;
         [copyPersonIcon showName];
+        copyPersonIcon.avatar = [MySprite spriteWithTexture:selPersonIcon.avatar.texture];
         
         BOOL hasP0 = p0.x!=0 || p0.y!=0;
-        CGPoint p1 = ccp(60+100*(selPersonNumber%numPerLine), 600-100*(int)(selPersonNumber/numPerLine));
+        CGPoint p1 = ccp(60+100*(selPersonNumber%numPerLine), 570-100*(int)(selPersonNumber/numPerLine));
         copyPersonIcon.position = hasP0?p0:p1;
         
         [selPersonIconsMap setObject:copyPersonIcon forKey:copyPersonIcon.id];
@@ -122,13 +123,13 @@
 
 -(void) selectPersonIcon: (MySprite*) personIcon {
     personIcon.selected = YES;
-    personIcon.opacity = 100;
+    personIcon.avatar.opacity = 100;
     //[personIcon runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
 }
 
 -(void) deselectPersonIcon: (MySprite*) personIcon {
     personIcon.selected = NO;
-    personIcon.opacity = 255;
+    personIcon.avatar.opacity = 255;
     //[personIcon stopAllActions];
     //[personIcon setRotation:0];
 }
@@ -140,7 +141,7 @@
 }
 
 - (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
-    if(playerToRemove || isIgnorePresse) return;
+    if(playerToRemove || isIgnorePresse || ((MySprite*)sender.node.parent).selected) return;
     
     NSString* id = ((MySprite*)sender.node).id;
     playerToRemove = [personIconsMap objectForKey:id];
@@ -249,6 +250,8 @@ int IMG_HEIGHT = 72;
         
         
         nextIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"next.png"].CGImage resolutionType: kCCResolutioniPad]];
+        [nextIcon setScaleX: IMG_WIDTH/nextIcon.contentSize.width];
+        [nextIcon setScaleY: IMG_HEIGHT/nextIcon.contentSize.height];
         nextIcon.position = ccp(size.width-100, 100);
         nextIcon.isTouchEnabled = YES;
         UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toNextScreen:)];
@@ -307,11 +310,11 @@ CreatePlayerLayer* createPlayerLayer;
     newPosition.y = playersPool.position.y;
     CCNode* lastPlayer = [personIcons lastObject];
     float width = [[CCDirector sharedDirector] winSize].width;
-    BOOL cycleMode = lastPlayer.position.x+lastPlayer.boundingBox.size.width/2+20 > width;
+    BOOL cycleMode = lastPlayer.position.x+AVATAR_IMG_WIDTH/2+20 > width;
     
     if(!cycleMode) {
-        if(lastPlayer.position.x+lastPlayer.boundingBox.size.width/2+20+newPosition.x < width) {
-            newPosition.x = width-lastPlayer.position.x-lastPlayer.boundingBox.size.width/2-20;
+        if(lastPlayer.position.x+AVATAR_IMG_WIDTH/2+20+newPosition.x < width) {
+            newPosition.x = width-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-20;
         }
         if(newPosition.x > 20) {
             newPosition.x = 20;
@@ -319,12 +322,12 @@ CreatePlayerLayer* createPlayerLayer;
         playersPool.position = newPosition;
         playersPool2.position = ccp(width+100, newPosition.y);
     } else {
-        playersPool.position = newPosition.x > 20 ? ccp(newPosition.x-lastPlayer.position.x-lastPlayer.boundingBox.size.width/2-20, playersPool.position.y) : newPosition;
-        CGPoint position2 = ccp(playersPool.position.x+lastPlayer.position.x+lastPlayer.boundingBox.size.width/2+20, playersPool.position.y);
+        playersPool.position = newPosition.x > 20 ? ccp(newPosition.x-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-20, playersPool.position.y) : newPosition;
+        CGPoint position2 = ccp(playersPool.position.x+lastPlayer.position.x+AVATAR_IMG_WIDTH/2+20, playersPool.position.y);
         if(position2.x < 20) {
             playersPool.position = position2;
         }
-        playersPool2.position = ccp(lastPlayer.position.x+lastPlayer.boundingBox.size.width/2+playersPool.position.x+20, playersPool.position.y);
+        playersPool2.position = ccp(lastPlayer.position.x+AVATAR_IMG_WIDTH/2+playersPool.position.x+20, playersPool.position.y);
     }
 }
 
@@ -398,7 +401,7 @@ NSMutableArray* pids;
     [self setPlayersPoolPosition: ccp(20, 0)];
     CCSprite* lastPlayer = (CCSprite*)[personIcons lastObject];
     CGPoint newPosition = playersPool.position;
-    newPosition.x = [[CCDirector sharedDirector] winSize].width-lastPlayer.position.x-lastPlayer.boundingBox.size.width/2-20;
+    newPosition.x = [[CCDirector sharedDirector] winSize].width-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-20;
     [self setPlayersPoolPosition: newPosition];
 
 }
@@ -406,28 +409,34 @@ NSMutableArray* pids;
 -(void) addPlayer: (NSString*) id withName: (NSString*) name andImage: (UIImage*) image forDouble: (BOOL) isDouble {
     if(id.length <= 0 || name.length <= 0) return;
     
-    image = [image resizedImage:CGSizeMake(IMG_WIDTH, IMG_HEIGHT) interpolationQuality:kCGInterpolationDefault];
-    
-    CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
-    MySprite *icon = [MySprite spriteWithTexture: texture];
-    
+    MySprite *icon = [MySprite new];
     MySprite* lastIcon = isDouble ? personIcons2.lastObject : personIcons.lastObject;
     icon.position = ccp(lastIcon ? lastIcon.position.x+IMG_WIDTH+20 : IMG_WIDTH/2, IMG_HEIGHT/2);
     icon.id = id;
     icon.name = name;
-    icon.isTouchEnabled = YES;
     [icon showName];
     
+    image = [image resizedImage:CGSizeMake(IMG_WIDTH, IMG_HEIGHT) interpolationQuality:kCGInterpolationDefault];
+    CCTexture2D *texture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
+    MySprite *avatar = [MySprite spriteWithTexture: texture];
+    avatar.id = id;
+    avatar.name = name;
+    icon.avatar = avatar;
+    
+    avatar.isTouchEnabled = YES;
     UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
     tapGestureRecognizer.delegate = self;
-    [icon addGestureRecognizer:tapGestureRecognizer];
+    [avatar addGestureRecognizer:tapGestureRecognizer];
     UILongPressGestureRecognizer *shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressePlayer:)];
     shortPressGestureRecognizer.minimumPressDuration = 0;
     shortPressGestureRecognizer.delegate = self;
-    [icon addGestureRecognizer:shortPressGestureRecognizer];
+    [avatar addGestureRecognizer:shortPressGestureRecognizer];
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressePlayer:)];
-    [icon addGestureRecognizer:longPressGestureRecognizer];
+    longPressGestureRecognizer.minimumPressDuration = 0.6;
+    [avatar addGestureRecognizer:longPressGestureRecognizer];
     longPressGestureRecognizer.delegate = self;
+    
+    [tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
     
     if(isDouble) {
         [playersPool2 addChild: icon];
