@@ -62,19 +62,19 @@
         
         
         CCMenuItem *returnItem = [CCMenuItemImage
-                                  itemFromNormalImage:@"return.png" selectedImage:@"return.png"
+                                  itemFromNormalImage:@"return.png" selectedImage:@"return-sel.png"
                                   target:self selector:@selector(returnButtonTapped:)];
         [returnItem setScaleX: 72/returnItem.contentSize.width];
         [returnItem setScaleY: 72/returnItem.contentSize.height];
         returnItem.position = ccp(50, 30);
         CCMenuItem *showAlbumMenuItem = [CCMenuItemImage
-                                    itemFromNormalImage:@"album.png" selectedImage:@"album.png"
+                                    itemFromNormalImage:@"album.png" selectedImage:@"album-sel.png"
                                     target:self selector:@selector(showAlbumButtonTapped:)];
         [showAlbumMenuItem setScaleX: 72/showAlbumMenuItem.contentSize.width];
         [showAlbumMenuItem setScaleY: 72/showAlbumMenuItem.contentSize.height];
         showAlbumMenuItem.position = ccp(150, 30);
         CCMenuItem *showCameraItem = [CCMenuItemImage
-                                     itemFromNormalImage:@"camera.png" selectedImage:@"camera.png"
+                                     itemFromNormalImage:@"camera.png" selectedImage:@"camera-sel.png"
                                      target:self selector:@selector(showCameraButtonTapped:)];
         [showCameraItem setScaleX: 72/showCameraItem.contentSize.width];
         [showCameraItem setScaleY: 72/showCameraItem.contentSize.height];

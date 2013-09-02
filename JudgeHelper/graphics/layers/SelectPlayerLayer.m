@@ -238,26 +238,19 @@ int IMG_HEIGHT = 72;
         [self addChild: titleLabel];
         
         
-        CCMenuItem *addPlayerMenuItem = [CCMenuItemImage
-                                    itemFromNormalImage:@"add.png" selectedImage:@"add.png"
-                                    target:self selector:@selector(addPlayerButtonTapped:)];
+        CCMenuItem *addPlayerMenuItem = [CCMenuItemImage itemFromNormalImage:@"add.png" selectedImage:@"add-sel.png" target:self selector:@selector(addPlayerButtonTapped:)];
         [addPlayerMenuItem setScaleX: IMG_WIDTH/addPlayerMenuItem.contentSize.width];
         [addPlayerMenuItem setScaleY: IMG_HEIGHT/addPlayerMenuItem.contentSize.height];
-        
         CCMenu *playerMenu = [CCMenu menuWithItems:addPlayerMenuItem, nil];
         playerMenu.position = ccp(size.width-200, 100);
         [self addChild:playerMenu];
         
-        
-        nextIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"next.png"].CGImage resolutionType: kCCResolutioniPad]];
-        [nextIcon setScaleX: IMG_WIDTH/nextIcon.contentSize.width];
-        [nextIcon setScaleY: IMG_HEIGHT/nextIcon.contentSize.height];
-        nextIcon.position = ccp(size.width-100, 100);
-        nextIcon.isTouchEnabled = YES;
-        UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toNextScreen:)];
-        [nextIcon addGestureRecognizer:tapGestureRecognizer];
-        [self addChild: nextIcon];
-        
+        CCMenuItem *nextMenuItem = [CCMenuItemImage itemFromNormalImage:@"next.png" selectedImage:@"next-sel.png" target:self selector:@selector(toNextScreen:)];
+        [nextMenuItem setScaleX: IMG_WIDTH/nextMenuItem.contentSize.width];
+        [nextMenuItem setScaleY: IMG_HEIGHT/nextMenuItem.contentSize.height];
+        nextMenu = [CCMenu menuWithItems:nextMenuItem, nil];
+        nextMenu.position = ccp(size.width-100, 100);
+        [self addChild:nextMenu];
         
         playersPoolCadre = [[CCSprite alloc] init];
         [playersPoolCadre setContentSize:CGSizeMake(size.width, 100)];

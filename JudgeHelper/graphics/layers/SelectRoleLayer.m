@@ -72,14 +72,14 @@
 }
 
 -(void) addRole: (id) sender {
-    NSString* name = [Engin getRoleName:((CCMenuItemImage*)sender).tag];
+    NSString* name = [Engin getRoleName:((CCMenuItem*)sender).tag];
     [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue+1] forKey: name];
     [self updateRoleLable: name];
     [self matchPlayerNumber];
 }
 
 -(void) removeRole: (id) sender {
-    NSString* name = [Engin getRoleName:((CCMenuItemImage*)sender).tag];
+    NSString* name = [Engin getRoleName:((CCMenuItem*)sender).tag];
     if(((NSNumber*)[roleNumbers objectForKey: name]).intValue > 0) {
         [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue-1] forKey: name];
         [self updateRoleLable: name];
@@ -157,7 +157,7 @@
             [roleLabels setObject:iconLabel forKey:icon.name];
             
             if(r != Judge) {
-                CCMenuItemImage* increaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"up.png" selectedImage:@"up-sel.png" target:self selector:@selector(addRole:)];
+                CCMenuItem* increaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"up.png" selectedImage:@"up-sel.png" target:self selector:@selector(addRole:)];
                 [increaseRoleNumberMenuItem setScaleX: 30/increaseRoleNumberMenuItem.contentSize.width];
                 [increaseRoleNumberMenuItem setScaleY: 20/increaseRoleNumberMenuItem.contentSize.height];
                 increaseRoleNumberMenuItem.tag = r;
@@ -165,33 +165,13 @@
                 increaseRoleNumberMenu.position = ccp(60+(100*i), size.height-300+65);
                 [self addChild: increaseRoleNumberMenu];
                 
-                CCMenuItemImage* decreaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"down.png" selectedImage:@"down-sel.png" target:self selector:@selector(removeRole:)];
+                CCMenuItem* decreaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"down.png" selectedImage:@"down-sel.png" target:self selector:@selector(removeRole:)];
                 [decreaseRoleNumberMenuItem setScaleX: 30/decreaseRoleNumberMenuItem.contentSize.width];
                 [decreaseRoleNumberMenuItem setScaleY: 20/decreaseRoleNumberMenuItem.contentSize.height];
                 decreaseRoleNumberMenuItem.tag = r;
                 CCMenu *decreaseRoleNumberMenu = [CCMenu menuWithItems:decreaseRoleNumberMenuItem, nil];
                 decreaseRoleNumberMenu.position = ccp(60+(100*i), size.height-300-80);
                 [self addChild: decreaseRoleNumberMenu];
-                
-                /*
-                CCSprite *upIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"up.png"].CGImage resolutionType: kCCResolutioniPad]];
-                [upIcon setScaleX: 30/upIcon.contentSize.width];
-                [upIcon setScaleY: 20/upIcon.contentSize.height];
-                upIcon.position = ccp(60+(100*i), size.height-300+65);
-                upIcon.tag = r;
-                upIcon.isTouchEnabled = YES;
-                [upIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addRole:)]];
-                [self addChild: upIcon];
-                                
-                CCSprite *downIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"down.png"].CGImage resolutionType: kCCResolutioniPad]];
-                [downIcon setScaleX: 30/downIcon.contentSize.width];
-                [downIcon setScaleY: 20/downIcon.contentSize.height];
-                downIcon.position = ccp(60+(100*i), size.height-300-80);
-                downIcon.tag = r;
-                downIcon.isTouchEnabled = YES;
-                [downIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeRole:)]];
-                [self addChild: downIcon];
-                 */
             }
             
             i++;
