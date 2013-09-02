@@ -12,8 +12,8 @@
 @interface GameStateSprite : CCSprite
 {
     CCEngin* engin;
-    CCSprite* showGameState;
-    CCSprite* hideGameState;
+    CCMenuItem* showGameStateMenuItem;
+    CCMenuItem* hideGameStateMenuItem;
     NSMutableDictionary* playerLines;
     NSMutableDictionary* playerVisibleObjects;
     NSMutableDictionary* playerLifeBoxes;

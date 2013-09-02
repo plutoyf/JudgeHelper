@@ -50,22 +50,22 @@
     
     
     if(rNum - pNum < 0) {
-        startIcon.opacity = 80;
-        startIcon.isTouchEnabled = NO;
+        startMenu.opacity = 80;
+        startMenu.isTouchEnabled = NO;
         messageLabel.string = [NSString stringWithFormat:@"角色数目过少, 请再添加%d个角色", pNum-rNum];
     } else if (rNum - pNum > 0) {
-        startIcon.opacity = 80;
-        startIcon.isTouchEnabled = NO;
+        startMenu.opacity = 80;
+        startMenu.isTouchEnabled = NO;
         messageLabel.string = [NSString stringWithFormat:@"角色数目过多, 请再减少%d个角色", rNum-pNum];
     } else {
-        startIcon.opacity = 255;
-        startIcon.isTouchEnabled = YES;
+        startMenu.opacity = 255;
+        startMenu.isTouchEnabled = YES;
         messageLabel.string = @"可以开始游戏";
     }
 }
 
 -(void) toGameScreen : (id) sender {
-    if(startIcon.opacity == 255) {
+    if(startMenu.opacity == 255) {
         [engin initRoles: roleNumbers];
         [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[GameLayer scene] ]];
     }
@@ -177,21 +177,21 @@
             i++;
         }
         
-        previousIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"previous.png"].CGImage resolutionType: kCCResolutioniPad]];
-        [previousIcon setScaleX: 72/previousIcon.contentSize.width];
-        [previousIcon setScaleY: 72/previousIcon.contentSize.height];
-        previousIcon.position = ccp(size.width-200, 100);
-        previousIcon.isTouchEnabled = YES;
-        [previousIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toPreviousScreen:)]];
-        [self addChild: previousIcon];
+        CCMenuItem *previousMenuItem = [CCMenuItemImage itemFromNormalImage:@"previous.png" selectedImage:@"previous-sel.png" target:self selector:@selector(toPreviousScreen:)];
+        [previousMenuItem setScaleX: 72/previousMenuItem.contentSize.width];
+        [previousMenuItem setScaleY: 72/previousMenuItem.contentSize.height];
+        previousMenu = [CCMenu menuWithItems:previousMenuItem, nil];
+        previousMenu.position = ccp(size.width-200, 100);
+        [self addChild:previousMenu];
         
-        startIcon = [CCSprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: [UIImage imageNamed: @"start.png"].CGImage resolutionType: kCCResolutioniPad]];
-        [startIcon setScaleX: 72/startIcon.contentSize.width];
-        [startIcon setScaleY: 72/startIcon.contentSize.height];
-        startIcon.position = ccp(size.width-100, 100);
-        [startIcon addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toGameScreen:)]];
+        CCMenuItem *startMenuItem = [CCMenuItemImage itemFromNormalImage:@"start.png" selectedImage:@"start-sel.png" target:self selector:@selector(toGameScreen:)];
+        [startMenuItem setScaleX: 72/startMenuItem.contentSize.width];
+        [startMenuItem setScaleY: 72/startMenuItem.contentSize.height];
+        startMenu = [CCMenu menuWithItems:startMenuItem, nil];
+        startMenu.position = ccp(size.width-100, 100);
+        [self addChild:startMenu];
+        
         [self matchPlayerNumber];
-        [self addChild: startIcon];
     }
     
 	return self;

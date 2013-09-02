@@ -260,7 +260,7 @@
     }
     
     CCMenuItem *saveItem = [CCMenuItemImage
-                            itemFromNormalImage:@"save.png" selectedImage:@"save.png"
+                            itemFromNormalImage:@"save.png" selectedImage:@"save-sel.png"
                             target:self selector:@selector(saveButtonTapped:)];
     [saveItem setScaleX: 72/saveItem.contentSize.width];
     [saveItem setScaleY: 72/saveItem.contentSize.height];

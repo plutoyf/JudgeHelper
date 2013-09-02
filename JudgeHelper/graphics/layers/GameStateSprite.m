@@ -13,14 +13,20 @@
 
 @implementation GameStateSprite
 
-- (void)swipeGameState:(UIGestureRecognizer*) sender {
+-(void) swipeGameStateByUIGestureRecognizer:(UIGestureRecognizer*) sender {
+    [self swipeGameState: sender.node == showGameStateMenuItem];
+}
+
+-(void) swipeGameStateByMenu:(id) sender {
+    [self swipeGameState: sender == showGameStateMenuItem];
+}
+
+-(void) swipeGameState:(BOOL) open {
     CGPoint newPoint;
     CGSize size = [[CCDirector sharedDirector] winSize];
     
-    if(sender.node == showGameState) {
+    if(open) {
         newPoint = ccp(self.boundingBox.size.width/2, self.boundingBox.size.height/2);
-    } else if(sender.node == hideGameState) {
-        newPoint = ccp(size.width+self.boundingBox.size.width/2, self.boundingBox.size.height/2);
     } else {
         newPoint = ccp(size.width+self.boundingBox.size.width/2, self.boundingBox.size.height/2);
     }
@@ -71,29 +77,26 @@
             i++;
         }
         
-        CCSprite* undoButton = [CCSprite spriteWithFile:@"undo.png"];
-        [undoButton setScaleX: 72/undoButton.contentSize.width];
-        [undoButton setScaleY: 72/undoButton.contentSize.height];
-        undoButton.position = ccp(60, size.height-undoButton.boundingBox.size.width/2);
-        undoButton.isTouchEnabled = YES;
-        [undoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(undoButtonPressed:)] ];
-        [self addChild:undoButton];
+        CCMenuItem* undoMenuItem = [CCMenuItemImage itemFromNormalImage:@"undo.png" selectedImage:@"undo-sel.png" target:self selector:@selector(undoButtonPressed:)];
+        [undoMenuItem setScaleX: 72/undoMenuItem.contentSize.width];
+        [undoMenuItem setScaleY: 72/undoMenuItem.contentSize.height];
+        CCMenu *undoMenu = [CCMenu menuWithItems:undoMenuItem, nil];
+        undoMenu.position = ccp(60, size.height-40);
+        [self addChild: undoMenu];
         
-        CCSprite* redoButton = [CCSprite spriteWithFile:@"redo.png"];
-        [redoButton setScaleX: 72/redoButton.contentSize.width];
-        [redoButton setScaleY: 72/redoButton.contentSize.height];
-        redoButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+40, size.height-undoButton.boundingBox.size.width/2);
-        redoButton.isTouchEnabled = YES;
-        [redoButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redoButtonPressed:)] ];
-        [self addChild:redoButton];
+        CCMenuItem* redoMenuItem = [CCMenuItemImage itemFromNormalImage:@"redo.png" selectedImage:@"redo-sel.png" target:self selector:@selector(redoButtonPressed:)];
+        [redoMenuItem setScaleX: 72/redoMenuItem.contentSize.width];
+        [redoMenuItem setScaleY: 72/redoMenuItem.contentSize.height];
+        CCMenu *redoMenu = [CCMenu menuWithItems:redoMenuItem, nil];
+        redoMenu.position = ccp(160, size.height-40);
+        [self addChild: redoMenu];
         
-        CCSprite* quitButton = [CCSprite spriteWithFile:@"quit.png"];
-        [quitButton setScaleX: 72/quitButton.contentSize.width];
-        [quitButton setScaleY: 72/quitButton.contentSize.height];
-        quitButton.position = ccp(60+undoButton.boundingBox.size.width/2+redoButton.boundingBox.size.width/2+quitButton.boundingBox.size.width/2+120, size.height-undoButton.boundingBox.size.width/2);
-        quitButton.isTouchEnabled = YES;
-        [quitButton addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quitButtonPressed:)] ];
-        [self addChild:quitButton];
+        CCMenuItem* quitMenuItem = [CCMenuItemImage itemFromNormalImage:@"quit.png" selectedImage:@"quit-sel.png" target:self selector:@selector(quitButtonPressed:)];
+        [quitMenuItem setScaleX: 72/quitMenuItem.contentSize.width];
+        [quitMenuItem setScaleY: 72/quitMenuItem.contentSize.height];
+        CCMenu *quitMenu = [CCMenu menuWithItems:quitMenuItem, nil];
+        quitMenu.position = ccp(260, size.height-40);
+        [self addChild: quitMenu];
         
         /*
         CCLabelTTF* realPositionHandModeTitle = [CCLabelTTF labelWithString:@"相对位置显示" fontName:@"Marker Felt" fontSize:28];
@@ -113,6 +116,21 @@
         [self addChild: realPositionHandModeLabel];
          */
         
+        showGameStateMenuItem = [CCMenuItemImage itemFromNormalImage:@"left2.png" selectedImage:@"left2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
+        [showGameStateMenuItem setScaleX: 30/showGameStateMenuItem.contentSize.width];
+        [showGameStateMenuItem setScaleY: 40/showGameStateMenuItem.contentSize.height];
+        CCMenu* showGameStateMenu = [CCMenu menuWithItems:showGameStateMenuItem, nil];
+        showGameStateMenu.position = ccp(-showGameStateMenuItem.boundingBox.size.width/2, size.height/2);
+        [self addChild: showGameStateMenu];
+        
+        hideGameStateMenuItem = [CCMenuItemImage itemFromNormalImage:@"right2.png" selectedImage:@"right2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
+        [hideGameStateMenuItem setScaleX: 30/hideGameStateMenuItem.contentSize.width];
+        [hideGameStateMenuItem setScaleY: 40/hideGameStateMenuItem.contentSize.height];
+        CCMenu* hideGameStateMenu = [CCMenu menuWithItems:hideGameStateMenuItem, nil];
+        hideGameStateMenu.position = ccp(size.width-hideGameStateMenuItem.boundingBox.size.width/2, size.height/2);
+        [self addChild: hideGameStateMenu];
+        
+        /*
         showGameState = [CCSprite spriteWithFile:@"left2.png"];
         [showGameState setScaleX: 30/showGameState.contentSize.width];
         [showGameState setScaleY: 40/showGameState.contentSize.height];
@@ -133,9 +151,10 @@
         UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
         [hideGameState addGestureRecognizer:hideGameStateTapGestureRecognizer];
         [self addChild: hideGameState];
+         */
         
         self.isTouchEnabled = YES;
-        UISwipeGestureRecognizer* hideGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
+        UISwipeGestureRecognizer* hideGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameStateByUIGestureRecognizer:)];
         hideGameStateSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
         [self addGestureRecognizer: hideGameStateSwipeGestureRecognizer];
     }

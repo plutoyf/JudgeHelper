@@ -17,12 +17,12 @@
 @interface SelectRoleLayer : CCLayer <UIGestureRecognizerDelegate>
 {
     CCEngin* engin;
+    CCMenu* previousMenu;
+    CCMenu* startMenu;
     CCMenuItem* doubleHandModeOffItem;
     CCMenuItem* doubleHandModeOnItem;
     CCLabelTTF* messageLabel;
     CCLabelTTF* doubleHandModeLabel;
-    MySprite* previousIcon;
-    MySprite* startIcon;
     NSArray * roles;
     NSMutableDictionary * roleNumbers;
     NSMutableDictionary * roleIconsMap;
