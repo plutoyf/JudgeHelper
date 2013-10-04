@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399835634.25873"
+         timestampString = "402583264.171733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "391"
-         endingLineNumber = "391"
+         startingLineNumber = "389"
+         endingLineNumber = "389"
          landmarkName = "-createPlayer:withImage:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JudgeHelper/graphics/layers/SelectPlayerLayer.m"
-         timestampString = "399835634.25873"
+         timestampString = "402583264.171733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "409"
-         endingLineNumber = "409"
+         startingLineNumber = "407"
+         endingLineNumber = "407"
          landmarkName = "@implementation SelectPlayerLayer"
          landmarkType = "3">
       </FileBreakpoint>
@@ -1001,8 +1001,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "137"
          endingLineNumber = "137"
-         landmarkName = "-longPressMovePlayer:"
-         landmarkType = "5">
+         landmarkName = "@implementation CCPlayer"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1014,8 +1014,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "156"
          endingLineNumber = "156"
-         landmarkName = "-superLongPressMovePlayer:"
-         landmarkType = "5">
+         landmarkName = "@implementation CCPlayer"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1144,8 +1144,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "106"
          endingLineNumber = "106"
-         landmarkName = "-getPositionFromString:"
-         landmarkType = "5">
+         landmarkName = "@implementation CCPlayer"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
