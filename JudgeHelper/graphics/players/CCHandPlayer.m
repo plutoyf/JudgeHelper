@@ -31,8 +31,8 @@
             NSString* handIconFile = _hand==LEFTHAND ? @"lefthand.png" : @"righthand.png";
             
             handIcon = [CCSprite spriteWithFile: handIconFile];
-            [handIcon setScaleX: 40/handIcon.contentSize.width];
-            [handIcon setScaleY: 40/handIcon.contentSize.height];
+            [handIcon setScaleX: REVERSE_X(40)/handIcon.contentSize.width];
+            [handIcon setScaleY: REVERSE_X(40)/handIcon.contentSize.height];
             
             handIcon.isTouchEnabled = YES;
             UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
@@ -44,9 +44,9 @@
                         
             if(_role != Citizen) {
                 CCSprite* roleIcon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:_role]]];
-                [roleIcon setScaleX: 20/roleIcon.contentSize.width];
-                [roleIcon setScaleY: 20/roleIcon.contentSize.height];
-                roleIcon.position = ccp(handIcon.position.x+(_hand==LEFTHAND?-2:+2), handIcon.position.y-5);
+                [roleIcon setScaleX: REVERSE_X(20)/roleIcon.contentSize.width];
+                [roleIcon setScaleY: REVERSE_X(20)/roleIcon.contentSize.height];
+                roleIcon.position = ccp(handIcon.position.x+(_hand==LEFTHAND?-2:+2), handIcon.position.y-REVERSE_Y(5));
                 roleIcon.opacity = _status == OUT_GAME ? 80 : 999;
                 [self addChild:roleIcon];
             }
@@ -89,8 +89,8 @@
 
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
-    [icon setScaleX: 20/icon.contentSize.width];
-    [icon setScaleY: 20/icon.contentSize.height];
+    [icon setScaleX: REVERSE_X(20)/icon.contentSize.width];
+    [icon setScaleY: REVERSE_X(20)/icon.contentSize.height];
     icon.opacity = result ? 255 : 80;
     icon.position = [self getActionIconPosition: _actionIcons.count];
     [_actionIcons addObject:icon];
@@ -100,14 +100,14 @@
 -(CGPoint) getHandIconPosition {
     float x, y;
     if(!_realPositionModeEnable) {
-        x = _hand==LEFTHAND ? -AVATAR_IMG_WIDTH/2-10 : AVATAR_IMG_WIDTH/2+10;
-        y = AVATAR_IMG_HEIGHT/2+20;
+        x = _hand==LEFTHAND ? -AVATAR_IMG_WIDTH/2-REVERSE_X(10) : AVATAR_IMG_WIDTH/2+REVERSE_X(10);
+        y = AVATAR_IMG_HEIGHT/2+REVERSE_X(20);
     } else if(_position==BOTTEM || _position==TOP) {
-        x = (_hand==LEFTHAND && _position==BOTTEM) || (_hand==RIGHTHAND && _position==TOP) ? -AVATAR_IMG_WIDTH/2-10 : AVATAR_IMG_WIDTH/2+10;
-        y = AVATAR_IMG_HEIGHT/2+20;
+        x = (_hand==LEFTHAND && _position==BOTTEM) || (_hand==RIGHTHAND && _position==TOP) ? -AVATAR_IMG_WIDTH/2-REVERSE_X(10) : AVATAR_IMG_WIDTH/2+REVERSE_X(10);
+        y = AVATAR_IMG_HEIGHT/2+REVERSE_X(20);
     } else {
-        x = _position==LEFT ? -AVATAR_IMG_HEIGHT/2-15 : AVATAR_IMG_HEIGHT/2+15;
-        y = (_hand==LEFTHAND && _position==LEFT) || (_hand==RIGHTHAND && _position==RIGHT) ? AVATAR_IMG_HEIGHT/2+20 : -70;
+        x = _position==LEFT ? -AVATAR_IMG_HEIGHT/2-REVERSE_X(15) : AVATAR_IMG_HEIGHT/2+REVERSE_X(15);
+        y = (_hand==LEFTHAND && _position==LEFT) || (_hand==RIGHTHAND && _position==RIGHT) ? AVATAR_IMG_HEIGHT/2+REVERSE_X(20) : REVERSE_X(-70);
     }
     return ccp(x, y);
 }
@@ -117,14 +117,14 @@
     int width = AVATAR_IMG_WIDTH/2;
     int height = AVATAR_IMG_HEIGHT/2;
     if(!_realPositionModeEnable) {
-        x = _hand==LEFTHAND ? -width-10 : width+10;
-        y = height-10-20*n;
+        x = _hand==LEFTHAND ? -width-REVERSE_X(10) : width+REVERSE_X(10);
+        y = height-REVERSE_X(10)-REVERSE_X(20)*n;
     } else if(_position==BOTTEM || _position==TOP) {
-        x = (_hand==LEFTHAND && _position==BOTTEM) || (_hand==RIGHTHAND && _position==TOP) ? -width-10 : width+10;
-        y = height-10-20*n;
+        x = (_hand==LEFTHAND && _position==BOTTEM) || (_hand==RIGHTHAND && _position==TOP) ? -width-REVERSE_X(10) : width+REVERSE_X(10);
+        y = height-REVERSE_X(10)-REVERSE_X(20)*n;
     } else {
-        x = _position==LEFT ? -width+10+20*n : width-10-20*n;
-        y = (_hand==LEFTHAND && _position==LEFT) || (_hand==RIGHTHAND && _position==RIGHT) ? height+15 : -70;
+        x = _position==LEFT ? -width+REVERSE_X(10)+REVERSE_X(20)*n : width-REVERSE_X(10)-REVERSE_X(20)*n;
+        y = (_hand==LEFTHAND && _position==LEFT) || (_hand==RIGHTHAND && _position==RIGHT) ? height+REVERSE_X(15) : REVERSE_X(-70);
     }
     return ccp(x,y);
 }

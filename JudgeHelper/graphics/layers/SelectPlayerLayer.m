@@ -83,12 +83,12 @@
         
         for(MySprite* personIcon in selPersonIconsMap.allValues) {
             if(personIcon.position.y<copyPersonIcon.position.y || (personIcon.position.y==copyPersonIcon.position.y && personIcon.position.x>copyPersonIcon.position.x)) {
-                if(personIcon.position.x == 60) {
-                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(60+100*numPerLine, personIcon.position.y+100)];
-                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(60+100*(numPerLine-1), personIcon.position.y+100)];
+                if(personIcon.position.x == REVERSE_X(60)) {
+                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(REVERSE_X(60+100*numPerLine), personIcon.position.y+REVERSE_Y(100))];
+                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(REVERSE_X(60+100*(numPerLine-1)), personIcon.position.y+REVERSE_Y(100))];
                     [personIcon runAction:[CCSequence actions:move1, move2, nil]];
                 } else {
-                    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-100, personIcon.position.y)];
+                    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-REVERSE_X(100), personIcon.position.y)];
                     [personIcon runAction:[CCSequence actions:move, nil]];
                 }
             }
@@ -105,7 +105,7 @@
         copyPersonIcon.avatar = [MySprite spriteWithTexture:selPersonIcon.avatar.texture];
         
         BOOL hasP0 = p0.x!=0 || p0.y!=0;
-        CGPoint p1 = ccp(60+100*(selPersonNumber%numPerLine), 570-100*(int)(selPersonNumber/numPerLine));
+        CGPoint p1 = ccp(REVERSE_X(60)+REVERSE_X(100)*(selPersonNumber%numPerLine), REVERSE_Y(570)-REVERSE_Y(100)*(int)(selPersonNumber/numPerLine));
         copyPersonIcon.position = hasP0?p0:p1;
         
         [selPersonIconsMap setObject:copyPersonIcon forKey:copyPersonIcon.id];
@@ -185,7 +185,7 @@
         // sort playersPool
         for(; i < personIcons.count; i++) {
             CCSprite* node = [personIcons objectAtIndex:i];
-            node.position = ccpSub(node.position, ccp(IMG_WIDTH+20, 0));
+            node.position = ccpSub(node.position, REVERSE_XY(IMG_WIDTH+20, 0));
             ((CCSprite*)[personIcons2 objectAtIndex:i]).position = node.position;
 
         }
@@ -219,8 +219,6 @@ CreatePlayerLayer* createPlayerLayer;
 }
 
 
-int IMG_WIDTH = 72;
-int IMG_HEIGHT = 72;
 -(id) init
 {
 	// always call "super" init
@@ -233,8 +231,8 @@ int IMG_HEIGHT = 72;
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:32];
-        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+20 , size.height-100 );
+        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:REVERSE_Y(32)];
+        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20) , size.height-REVERSE_Y(100) );
         [self addChild: titleLabel];
         
         
@@ -242,19 +240,19 @@ int IMG_HEIGHT = 72;
         [addPlayerMenuItem setScaleX: IMG_WIDTH/addPlayerMenuItem.contentSize.width];
         [addPlayerMenuItem setScaleY: IMG_HEIGHT/addPlayerMenuItem.contentSize.height];
         CCMenu *playerMenu = [CCMenu menuWithItems:addPlayerMenuItem, nil];
-        playerMenu.position = ccp(size.width-200, 100);
+        playerMenu.position = ccp(size.width-REVERSE_X(200), REVERSE_Y(100));
         [self addChild:playerMenu];
         
         CCMenuItem *nextMenuItem = [CCMenuItemImage itemFromNormalImage:@"next.png" selectedImage:@"next-sel.png" target:self selector:@selector(toNextScreen:)];
         [nextMenuItem setScaleX: IMG_WIDTH/nextMenuItem.contentSize.width];
         [nextMenuItem setScaleY: IMG_HEIGHT/nextMenuItem.contentSize.height];
         nextMenu = [CCMenu menuWithItems:nextMenuItem, nil];
-        nextMenu.position = ccp(size.width-100, 100);
+        nextMenu.position = ccp(size.width-REVERSE_X(100), REVERSE_Y(100));
         [self addChild:nextMenu];
         
         playersPoolCadre = [[CCSprite alloc] init];
-        [playersPoolCadre setContentSize:CGSizeMake(size.width, 100)];
-        playersPoolCadre.position = ccp(size.width/2, 170+100/2);
+        [playersPoolCadre setContentSize:CGSizeMake(size.width, REVERSE_Y(100))];
+        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(170+100/2));
         playersPoolCadre.isTouchEnabled = YES;
         UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
         panGestureRecognizer.delegate = self;
@@ -303,24 +301,24 @@ CreatePlayerLayer* createPlayerLayer;
     newPosition.y = playersPool.position.y;
     CCNode* lastPlayer = [personIcons lastObject];
     float width = [[CCDirector sharedDirector] winSize].width;
-    BOOL cycleMode = lastPlayer.position.x+AVATAR_IMG_WIDTH/2+20 > width;
+    BOOL cycleMode = lastPlayer.position.x+AVATAR_IMG_WIDTH/2+REVERSE_X(20) > width;
     
     if(!cycleMode) {
-        if(lastPlayer.position.x+AVATAR_IMG_WIDTH/2+20+newPosition.x < width) {
-            newPosition.x = width-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-20;
+        if(lastPlayer.position.x+AVATAR_IMG_WIDTH/2+REVERSE_X(20)+newPosition.x < width) {
+            newPosition.x = width-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-REVERSE_X(20);
         }
-        if(newPosition.x > 20) {
-            newPosition.x = 20;
+        if(newPosition.x > REVERSE_X(20)) {
+            newPosition.x = REVERSE_X(20);
         }
         playersPool.position = newPosition;
-        playersPool2.position = ccp(width+100, newPosition.y);
+        playersPool2.position = ccp(width+REVERSE_X(100), newPosition.y);
     } else {
-        playersPool.position = newPosition.x > 20 ? ccp(newPosition.x-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-20, playersPool.position.y) : newPosition;
-        CGPoint position2 = ccp(playersPool.position.x+lastPlayer.position.x+AVATAR_IMG_WIDTH/2+20, playersPool.position.y);
-        if(position2.x < 20) {
+        playersPool.position = newPosition.x > REVERSE_X(20) ? ccp(newPosition.x-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-REVERSE_X(20), playersPool.position.y) : newPosition;
+        CGPoint position2 = ccp(playersPool.position.x+lastPlayer.position.x+AVATAR_IMG_WIDTH/2+REVERSE_X(20), playersPool.position.y);
+        if(position2.x < REVERSE_X(20)) {
             playersPool.position = position2;
         }
-        playersPool2.position = ccp(lastPlayer.position.x+AVATAR_IMG_WIDTH/2+playersPool.position.x+20, playersPool.position.y);
+        playersPool2.position = ccp(lastPlayer.position.x+AVATAR_IMG_WIDTH/2+playersPool.position.x+REVERSE_X(20), playersPool.position.y);
     }
 }
 
@@ -373,7 +371,7 @@ NSMutableArray* pids;
             [self selectPlayerById: id];
         }
     }
-    [self setPlayersPoolPosition: ccp(20, 0)];
+    [self setPlayersPoolPosition: ccp(REVERSE_X(20), 0)];
     
 }
 
@@ -391,10 +389,10 @@ NSMutableArray* pids;
     //2. show player in the list
     [self addPlayer:id withName:name andImage:image forDouble:NO];
     [self addPlayer:id withName:name andImage:image forDouble:YES];
-    [self setPlayersPoolPosition: ccp(20, 0)];
+    [self setPlayersPoolPosition: ccp(REVERSE_X(20), 0)];
     CCSprite* lastPlayer = (CCSprite*)[personIcons lastObject];
     CGPoint newPosition = playersPool.position;
-    newPosition.x = [[CCDirector sharedDirector] winSize].width-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-20;
+    newPosition.x = [[CCDirector sharedDirector] winSize].width-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-REVERSE_X(20);
     [self setPlayersPoolPosition: newPosition];
 
 }
@@ -404,7 +402,7 @@ NSMutableArray* pids;
     
     MySprite *icon = [MySprite new];
     MySprite* lastIcon = isDouble ? personIcons2.lastObject : personIcons.lastObject;
-    icon.position = ccp(lastIcon ? lastIcon.position.x+IMG_WIDTH+20 : IMG_WIDTH/2, IMG_HEIGHT/2);
+    icon.position = ccp(lastIcon ? lastIcon.position.x+IMG_WIDTH+REVERSE_X(20) : IMG_WIDTH/2, IMG_HEIGHT/2);
     icon.id = id;
     icon.name = name;
     [icon showName];

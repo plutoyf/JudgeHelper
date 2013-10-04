@@ -64,8 +64,8 @@
             }
             CGSize textureSize = _sprite.boundingBox.size;
             
-            labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:14];
-            labelTTF.position = ccp(0, -AVATAR_IMG_HEIGHT/2-14);
+            labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:REVERSE_Y(14)];
+            labelTTF.position = ccp(0, -AVATAR_IMG_HEIGHT/2-REVERSE_Y(14));
             [_sprite addChild: labelTTF];
         } else {
             _sprite = [CCSprite new];
@@ -225,8 +225,8 @@
 
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
     CCSprite* icon = [CCSprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
-    [icon setScaleX: 20/icon.contentSize.width];
-    [icon setScaleY: 20/icon.contentSize.height];
+    [icon setScaleX: ACTION_ICON_WIDTH/icon.contentSize.width];
+    [icon setScaleY: ACTION_ICON_HEIGHT/icon.contentSize.height];
     icon.opacity = result ? 255 : 80;
     CGSize iconSize = icon.boundingBox.size;
     int n = _actionIcons.count;

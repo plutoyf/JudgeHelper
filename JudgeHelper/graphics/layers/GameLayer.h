@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
-#import <GameKit/GameKit.h>
+#import "DeviceSettings.h"
 
 #import "cocos2d.h"
 #import "CCEngin.h"

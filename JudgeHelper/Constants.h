@@ -6,10 +6,14 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
-#ifndef JudgeHelper_Constants_h
-#define JudgeHelper_Constants_h
 
-extern int const AVATAR_IMG_WIDTH;
-extern int const AVATAR_IMG_HEIGHT;
+#import "DeviceSettings.h"
 
-#endif
+#define IMG_WIDTH   REVERSE_X(72)
+#define IMG_HEIGHT  REVERSE_X(72)
+
+#define  AVATAR_IMG_WIDTH    REVERSE_X(72)
+#define  AVATAR_IMG_HEIGHT   REVERSE_X(72)
+
+#define  ACTION_ICON_WIDTH   REVERSE_X(20)
+#define  ACTION_ICON_HEIGHT  REVERSE_X(20)

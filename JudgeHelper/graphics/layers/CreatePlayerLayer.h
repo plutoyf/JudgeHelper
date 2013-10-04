@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
+#import "DeviceSettings.h"
+#import "Constants.h"
 #import "CCSprite.h"
 #import "ClippingSprite.h"
 #import "BorderSprite.h"

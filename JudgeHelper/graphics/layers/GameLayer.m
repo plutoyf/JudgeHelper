@@ -155,7 +155,7 @@ BOOL showDebugMessageEnable = NO;
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
-        float tWidth = 700, tHeight = 500, x = size.width/2-tWidth/2, y = size.height/2-tHeight/2;
+        float tWidth = REVERSE_X(700), tHeight = REVERSE_Y(500), x = size.width/2-tWidth/2, y = size.height/2-tHeight/2;
         tableZone = [[TableZone alloc] init:tWidth : tHeight];
         
         CGRect siteZone1 = CGRectMake(x-2, y-2, tWidth+4, tHeight+4);
@@ -171,19 +171,19 @@ BOOL showDebugMessageEnable = NO;
         [self addChild:layerColer2 z:-2];
 
         
-        nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
-        nightLabel.position = ccp(60 , size.height-100 );
+        nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
+        nightLabel.position = ccp(REVERSE_X(60) , size.height-REVERSE_Y(100) );
         [self addChild: nightLabel];
         
 		// create and initialize a Label
 		// position the label on the center of the screen
-		messageLabel = [CCLabelTTF labelWithString:@"Killer" fontName:@"Marker Felt" fontSize:48];
-        messageLabel.position = ccp( size.width /2 , size.height/2-(showDebugMessageEnable?200:0) );
+		messageLabel = [CCLabelTTF labelWithString:@"Killer" fontName:@"Marker Felt" fontSize:REVERSE_X(48)];
+        messageLabel.position = ccp( size.width /2 , size.height/2-(showDebugMessageEnable?REVERSE_Y(200):0) );
         [self addChild: messageLabel z:1];
         
         if(showDebugMessageEnable) {
             debugLabel = [CCLabelTTF labelWithString:@"debug : " fontName:@"Marker Felt" fontSize:13];
-            debugLabel.position = ccp(600 , size.height-280 );
+            debugLabel.position = ccp(REVERSE_X(600) , size.height-REVERSE_Y(280) );
             debugLabel.tag = 11;
             [self addChild: debugLabel];
         }
@@ -200,7 +200,7 @@ BOOL showDebugMessageEnable = NO;
             
             int line = (int)((n+6)/6);
             if(p.sprite.position.x == 0 && p.sprite.position.y == 0) {
-                p.sprite.position = ccp(80+(170*(n%6)), 120*line);
+                p.sprite.position = REVERSE_XY(80+(170*(n%6)), 120*line);
                 n++;
             }
             p.delegate = self;
@@ -334,10 +334,10 @@ BOOL showDebugMessageEnable = NO;
         block:^(id sender){
             [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
         }];
-    [restarMenuItem setScaleX: 72/restarMenuItem.contentSize.width];
-    [restarMenuItem setScaleY: 72/restarMenuItem.contentSize.height];
+    [restarMenuItem setScaleX: IMG_WIDTH/restarMenuItem.contentSize.width];
+    [restarMenuItem setScaleY: IMG_HEIGHT/restarMenuItem.contentSize.height];
     CGSize size = [[CCDirector sharedDirector] winSize];
-    restarMenuItem.position = ccp(size.width/2, size.height/2+100);
+    restarMenuItem.position = ccp(size.width/2, size.height/2+REVERSE_Y(100));
     CCMenu *restarMenu = [CCMenu menuWithItems:restarMenuItem, nil];
     restarMenu.position = CGPointZero;
     [self addChild:restarMenu];

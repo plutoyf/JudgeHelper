@@ -101,34 +101,34 @@
 		CGSize size = [[CCDirector sharedDirector] winSize];
         GlobalSettings* global = [GlobalSettings globalSettings];
         
-        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"角色设定 (%d名玩家)", ((NSArray*)[global getPlayerIds]).count] fontName:@"Marker Felt" fontSize:32];
-        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+20 , size.height-100 );
+        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"角色设定 (%d名玩家)", ((NSArray*)[global getPlayerIds]).count] fontName:@"Marker Felt" fontSize:REVERSE_X(32)];
+        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20), size.height-REVERSE_Y(100) );
         [self addChild: titleLabel];
         
-        messageLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:28];
+        messageLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
         messageLabel.anchorPoint = ccp(0,0);
-        messageLabel.position = ccp( 20 , size.height-160 );
+        messageLabel.position = ccp( REVERSE_X(20) , size.height-REVERSE_Y(16) );
         [self addChild: messageLabel];
         
         
-        CCLabelTTF* gameModeLabel = [CCLabelTTF labelWithString:@"双手模式" fontName:@"Marker Felt" fontSize:28];
-        gameModeLabel.position = ccp(80, 120);
+        CCLabelTTF* gameModeLabel = [CCLabelTTF labelWithString:@"双手模式" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
+        gameModeLabel.position = REVERSE_XY(80, 120);
         [self addChild: gameModeLabel];
         
         doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40-sel.png" target:nil selector:nil];
         doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40-sel.png" target:nil selector:nil];
-        [doubleHandModeOffItem setScaleX: 40/doubleHandModeOffItem.contentSize.width];
-        [doubleHandModeOffItem setScaleY: 40/doubleHandModeOffItem.contentSize.height];
-        [doubleHandModeOnItem setScaleX: 40/doubleHandModeOnItem.contentSize.width];
-        [doubleHandModeOnItem setScaleY: 40/doubleHandModeOnItem.contentSize.height];
+        [doubleHandModeOffItem setScaleX: REVERSE_X(40)/doubleHandModeOffItem.contentSize.width];
+        [doubleHandModeOffItem setScaleY: REVERSE_X(40)/doubleHandModeOffItem.contentSize.height];
+        [doubleHandModeOnItem setScaleX: REVERSE_X(40)/doubleHandModeOnItem.contentSize.width];
+        [doubleHandModeOnItem setScaleY: REVERSE_X(40)/doubleHandModeOnItem.contentSize.height];
         
         CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(doubleHandModeButtonTapped:) items:([global getGameMode] == DOUBLE_HAND?doubleHandModeOnItem:doubleHandModeOffItem), ([global getGameMode] == DOUBLE_HAND?doubleHandModeOffItem:doubleHandModeOnItem), nil];
         CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
-        toggleMenu.position = ccp(170, 120);
+        toggleMenu.position = REVERSE_XY(170, 120);
         [self addChild:toggleMenu];
         
-        doubleHandModeLabel = [CCLabelTTF labelWithString:[global getGameMode] == DOUBLE_HAND?@"(开启)":@"(关闭)" fontName:@"Marker Felt" fontSize:28];
-        doubleHandModeLabel.position = ccp(240, 120);
+        doubleHandModeLabel = [CCLabelTTF labelWithString:[global getGameMode] == DOUBLE_HAND?@"(开启)":@"(关闭)" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
+        doubleHandModeLabel.position = REVERSE_XY(240, 120);
         [self addChild: doubleHandModeLabel];
 
         
@@ -144,33 +144,33 @@
             
             UIImage *iconImg = [UIImage imageNamed: [[@"Icon-72-" stringByAppendingString: [CCEngin getRoleCode: r ]] stringByAppendingString: @".png"]];
             MySprite *icon = [MySprite spriteWithTexture: [[CCTexture2D alloc] initWithCGImage: iconImg.CGImage resolutionType: kCCResolutioniPad]];
-            [icon setScaleX: 72/icon.contentSize.width];
-            [icon setScaleY: 72/icon.contentSize.height];
-            icon.position = ccp(60+(100*i), size.height-300);
+            [icon setScaleX: IMG_WIDTH/icon.contentSize.width];
+            [icon setScaleY: IMG_HEIGHT/icon.contentSize.height];
+            icon.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300));
             icon.name = [Engin getRoleName:r];
             [self addChild: icon];
             [roleIconsMap setObject: icon forKey: icon.name];
             
-            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:12];
-            iconLabel.position = ccp(60+(100*i), size.height-350);
+            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:REVERSE_X(12)];
+            iconLabel.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(350));
             [self addChild: iconLabel];
             [roleLabels setObject:iconLabel forKey:icon.name];
             
             if(r != Judge) {
                 CCMenuItem* increaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"up.png" selectedImage:@"up-sel.png" target:self selector:@selector(addRole:)];
-                [increaseRoleNumberMenuItem setScaleX: 30/increaseRoleNumberMenuItem.contentSize.width];
-                [increaseRoleNumberMenuItem setScaleY: 20/increaseRoleNumberMenuItem.contentSize.height];
+                [increaseRoleNumberMenuItem setScaleX: REVERSE_X(30)/increaseRoleNumberMenuItem.contentSize.width];
+                [increaseRoleNumberMenuItem setScaleY: REVERSE_X(20)/increaseRoleNumberMenuItem.contentSize.height];
                 increaseRoleNumberMenuItem.tag = r;
                 CCMenu *increaseRoleNumberMenu = [CCMenu menuWithItems:increaseRoleNumberMenuItem, nil];
-                increaseRoleNumberMenu.position = ccp(60+(100*i), size.height-300+65);
+                increaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300)+REVERSE_Y(65));
                 [self addChild: increaseRoleNumberMenu];
                 
                 CCMenuItem* decreaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"down.png" selectedImage:@"down-sel.png" target:self selector:@selector(removeRole:)];
-                [decreaseRoleNumberMenuItem setScaleX: 30/decreaseRoleNumberMenuItem.contentSize.width];
-                [decreaseRoleNumberMenuItem setScaleY: 20/decreaseRoleNumberMenuItem.contentSize.height];
+                [decreaseRoleNumberMenuItem setScaleX: REVERSE_X(30)/decreaseRoleNumberMenuItem.contentSize.width];
+                [decreaseRoleNumberMenuItem setScaleY: REVERSE_X(20)/decreaseRoleNumberMenuItem.contentSize.height];
                 decreaseRoleNumberMenuItem.tag = r;
                 CCMenu *decreaseRoleNumberMenu = [CCMenu menuWithItems:decreaseRoleNumberMenuItem, nil];
-                decreaseRoleNumberMenu.position = ccp(60+(100*i), size.height-300-80);
+                decreaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300)-REVERSE_Y(80));
                 [self addChild: decreaseRoleNumberMenu];
             }
             
@@ -178,17 +178,17 @@
         }
         
         CCMenuItem *previousMenuItem = [CCMenuItemImage itemFromNormalImage:@"previous.png" selectedImage:@"previous-sel.png" target:self selector:@selector(toPreviousScreen:)];
-        [previousMenuItem setScaleX: 72/previousMenuItem.contentSize.width];
-        [previousMenuItem setScaleY: 72/previousMenuItem.contentSize.height];
+        [previousMenuItem setScaleX: IMG_WIDTH/previousMenuItem.contentSize.width];
+        [previousMenuItem setScaleY: IMG_HEIGHT/previousMenuItem.contentSize.height];
         previousMenu = [CCMenu menuWithItems:previousMenuItem, nil];
-        previousMenu.position = ccp(size.width-200, 100);
+        previousMenu.position = ccp(size.width-REVERSE_X(200), REVERSE_Y(100));
         [self addChild:previousMenu];
         
         CCMenuItem *startMenuItem = [CCMenuItemImage itemFromNormalImage:@"start.png" selectedImage:@"start-sel.png" target:self selector:@selector(toGameScreen:)];
-        [startMenuItem setScaleX: 72/startMenuItem.contentSize.width];
-        [startMenuItem setScaleY: 72/startMenuItem.contentSize.height];
+        [startMenuItem setScaleX: IMG_WIDTH/startMenuItem.contentSize.width];
+        [startMenuItem setScaleY: IMG_HEIGHT/startMenuItem.contentSize.height];
         startMenu = [CCMenu menuWithItems:startMenuItem, nil];
-        startMenu.position = ccp(size.width-100, 100);
+        startMenu.position = ccp(size.width-REVERSE_X(100), REVERSE_Y(100));
         [self addChild:startMenu];
         
         [self matchPlayerNumber];

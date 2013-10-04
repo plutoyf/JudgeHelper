@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "DeviceSettings.h"
 #import "Role.h"
 
 @interface MySprite : CCSprite {

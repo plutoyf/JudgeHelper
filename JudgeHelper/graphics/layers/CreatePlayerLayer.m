@@ -57,31 +57,31 @@
         _position = ccp(size.width/2, size.height/2);
                 
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,0,0,255)];
-        layerColer.position = ccp(0, size.height/2-80);
+        layerColer.position = ccp(0, size.height/2-REVERSE_Y(80));
         [self addChild:layerColer];
         
         
         CCMenuItem *returnItem = [CCMenuItemImage
                                   itemFromNormalImage:@"return.png" selectedImage:@"return-sel.png"
                                   target:self selector:@selector(returnButtonTapped:)];
-        [returnItem setScaleX: 72/returnItem.contentSize.width];
-        [returnItem setScaleY: 72/returnItem.contentSize.height];
-        returnItem.position = ccp(50, 30);
+        [returnItem setScaleX: IMG_WIDTH/returnItem.contentSize.width];
+        [returnItem setScaleY: IMG_HEIGHT/returnItem.contentSize.height];
+        returnItem.position = REVERSE_XY(50, 30);
         CCMenuItem *showAlbumMenuItem = [CCMenuItemImage
                                     itemFromNormalImage:@"album.png" selectedImage:@"album-sel.png"
                                     target:self selector:@selector(showAlbumButtonTapped:)];
-        [showAlbumMenuItem setScaleX: 72/showAlbumMenuItem.contentSize.width];
-        [showAlbumMenuItem setScaleY: 72/showAlbumMenuItem.contentSize.height];
-        showAlbumMenuItem.position = ccp(150, 30);
+        [showAlbumMenuItem setScaleX: IMG_WIDTH/showAlbumMenuItem.contentSize.width];
+        [showAlbumMenuItem setScaleY: IMG_HEIGHT/showAlbumMenuItem.contentSize.height];
+        showAlbumMenuItem.position = REVERSE_XY(150, 30);
         CCMenuItem *showCameraItem = [CCMenuItemImage
                                      itemFromNormalImage:@"camera.png" selectedImage:@"camera-sel.png"
                                      target:self selector:@selector(showCameraButtonTapped:)];
-        [showCameraItem setScaleX: 72/showCameraItem.contentSize.width];
-        [showCameraItem setScaleY: 72/showCameraItem.contentSize.height];
-        showCameraItem.position = ccp(250, 30);
+        [showCameraItem setScaleX: IMG_WIDTH/showCameraItem.contentSize.width];
+        [showCameraItem setScaleY: IMG_HEIGHT/showCameraItem.contentSize.height];
+        showCameraItem.position = REVERSE_XY(250, 30);
         
         CCMenu *showPickerMenu = [CCMenu menuWithItems: returnItem, showAlbumMenuItem, showCameraItem, nil];
-        showPickerMenu.position = ccp(size.width-300, size.height-80);
+        showPickerMenu.position = ccp(size.width-REVERSE_X(300), size.height-REVERSE_Y(80));
         [self addChild:showPickerMenu z:2];
         
     }
@@ -93,11 +93,11 @@
     if(name.length > 0) {
         CGSize size = [CCDirector sharedDirector].winSize;
         int w = size.height/3, h = size.width/3;
-        int x = size.width-430-w*2;
-        int y = size.height-h-35;
-        int bw = w - 20;
+        int x = size.width-REVERSE_X(430)-w*2;
+        int y = size.height-h-REVERSE_Y(35);
+        int bw = w - REVERSE_X(20);
         int bh = bw;
-        CGRect cropRect = CGRectMake(x+w/2-bw/2+1, h/2-bh/2+36+1, bw-2, bh-2);
+        CGRect cropRect = CGRectMake(x+w/2-bw/2+1, h/2-bh/2+REVERSE_Y(36)+1, bw-2, bh-2);
         
         UIImage *screenshot = [self screenshotWithStartNode: cadre];
         screenshot = [screenshot resizedImage:CGSizeMake(size.width, size.height) interpolationQuality:kCGInterpolationDefault];
@@ -144,7 +144,7 @@
     _picker.delegate = self;
     //_picker.sourceType = UIImagePickerControllerSourceTypeCamera;//UIImagePickerControllerSourceTypePhotoLibrary;
     _picker.wantsFullScreenLayout = YES;
-    [_picker setContentSizeForViewInPopover:CGSizeMake(340, winsize.height)];
+    [_picker setContentSizeForViewInPopover:CGSizeMake(REVERSE_X(340), winsize.height)];
     
     if([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         _picker.sourceType = sourceType;
@@ -155,8 +155,8 @@
     
     _popover = [[UIPopoverController alloc] initWithContentViewController:_picker];
     [_popover setDelegate:self];
-    [_popover setPopoverContentSize:CGSizeMake(340, winsize.height) animated:NO];
-    CGRect r = CGRectMake( _picker.sourceType == UIImagePickerControllerSourceTypeCamera ? winsize.width-50 : winsize.width-150, winsize.height,0,90);
+    [_popover setPopoverContentSize:CGSizeMake(REVERSE_X(340), winsize.height) animated:NO];
+    CGRect r = CGRectMake( _picker.sourceType == UIImagePickerControllerSourceTypeCamera ? winsize.width-REVERSE_X(50) : winsize.width-REVERSE_X(150), winsize.height,0,REVERSE_X(90));
     r.origin = [[CCDirector sharedDirector] convertToGL:r.origin];
     [_popover presentPopoverFromRect:r inView:[[CCDirector sharedDirector] openGLView] permittedArrowDirections:UIPopoverArrowDirectionDown animated:NO];
 
@@ -198,8 +198,8 @@
     //[cadre setTextureRect:CGRectMake(0, 0, cadreSize.width, cadreSize.height)];
     //free(buffer);
     int w = size.height/3, h = size.width/3;
-    int x = size.width-430-w*2;
-    int y = size.height-h-35;
+    int x = size.width-REVERSE_X(430)-w*2;
+    int y = size.height-h-REVERSE_Y(35);
     cadre.openWindowRect = CGRectMake(x,y,w,h);
     cadre.touchRect = CGRectMake(x,y,w,h);
     cadre.position = ccp(cadreSize.width/2, cadreSize.height/2);
@@ -222,7 +222,7 @@
     [picture setScaleY: w*textureSize.height/textureSize.width/textureSize.height];
     picture.position = ccp(x+w/2, y+h/2);
     
-    int bw = w - 20;
+    int bw = w - REVERSE_X(20);
     int bh = bw;
     border = [[BorderSprite alloc] init];
     [border setTextureRect: CGRectMake(0,0,bw,bh)];
@@ -238,13 +238,13 @@
     
     // Create textfield
     if(userNameTextField == nil) {
-        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x+w+20,35,w,35)];
+        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x+w+REVERSE_X(20),REVERSE_Y(35),w,REVERSE_X(35))];
         userNameTextField.placeholder = @"Enter name here." ;
         userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
         userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
         userNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        userNameTextField.font = [UIFont fontWithName:@"Verdana" size:16.0f];
-        userNameTextField.font = [UIFont systemFontOfSize:16.0];
+        userNameTextField.font = [UIFont fontWithName:@"Verdana" size:REVERSE_X(16.0)];
+        userNameTextField.font = [UIFont systemFontOfSize:REVERSE_X(16.0)];
         userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing ;
         userNameTextField.adjustsFontSizeToFitWidth = YES;
         userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -262,13 +262,13 @@
     CCMenuItem *saveItem = [CCMenuItemImage
                             itemFromNormalImage:@"save.png" selectedImage:@"save-sel.png"
                             target:self selector:@selector(saveButtonTapped:)];
-    [saveItem setScaleX: 72/saveItem.contentSize.width];
-    [saveItem setScaleY: 72/saveItem.contentSize.height];
-    saveItem.position = ccp(50, 30);
+    [saveItem setScaleX: IMG_WIDTH/saveItem.contentSize.width];
+    [saveItem setScaleY: IMG_HEIGHT/saveItem.contentSize.height];
+    saveItem.position = REVERSE_XY(50, 30);
     
     if(!saveMenu) {
         saveMenu = [CCMenu menuWithItems: saveItem, nil];
-        saveMenu.position = ccp(size.width-400, size.height-80);
+        saveMenu.position = ccp(size.width-REVERSE_X(400), size.height-REVERSE_Y(80));
         [self addChild:saveMenu z:2];
     }
 

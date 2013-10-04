@@ -22,7 +22,7 @@
         _position = ccp(size.width/2, size.height/2);
         
         //init
-        rulesTextView = [[UITextView alloc] initWithFrame: CGRectMake(0,0, size.width, 200)];
+        rulesTextView = [[UITextView alloc] initWithFrame: CGRectMake(0,0, size.width, REVERSE_Y(200))];
         rulesTextView.textAlignment = NSTextAlignmentLeft;
         NSString* rulesString = engin.rulesString;
         if(!rulesString) {
@@ -35,7 +35,7 @@
         [rulesTextView setDelegate:self];
         [[[CCDirector sharedDirector] openGLView] addSubview:rulesTextView];
         
-        resultRulesTextView = [[UITextView alloc] initWithFrame: CGRectMake(0,200, size.width, 100)];
+        resultRulesTextView = [[UITextView alloc] initWithFrame: CGRectMake(0,REVERSE_Y(200), size.width, REVERSE_Y(100))];
         resultRulesTextView.textAlignment = NSTextAlignmentLeft;
         NSString* resultRulesString = engin.resultRulesString;
         if(!resultRulesString) {
@@ -49,19 +49,19 @@
         [[[CCDirector sharedDirector] openGLView] addSubview:resultRulesTextView];
         
         saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [saveButton setFrame: CGRectMake(0,310, 100, 30)];
+        [saveButton setFrame: CGRectMake(0, REVERSE_Y(310), REVERSE_X(100), REVERSE_Y(30))];
         [saveButton setTitle: @"Save" forState: UIControlStateNormal];
         [saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:saveButton];
         
         cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [cancelButton setFrame: CGRectMake(110,310, 100, 30)];
+        [cancelButton setFrame: CGRectMake(REVERSE_X(110), REVERSE_Y(310), REVERSE_X(100), REVERSE_Y(30))];
         [cancelButton setTitle: @"Cancel" forState: UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:cancelButton];
         
         restoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [restoreButton setFrame: CGRectMake(220,310, 100, 30)];
+        [restoreButton setFrame: CGRectMake(REVERSE_X(220), REVERSE_Y(310), REVERSE_X(100), REVERSE_Y(30))];
         [restoreButton setTitle: @"Restore" forState: UIControlStateNormal];
         [restoreButton addTarget:self action:@selector(restore:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:restoreButton];

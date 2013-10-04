@@ -9,6 +9,7 @@
 
 #import <GameKit/GameKit.h>
 
+#import "DeviceSettings.h"
 #import "cocos2d.h"
 #import "CCEngin.h"
 #import "MySprite.h"
