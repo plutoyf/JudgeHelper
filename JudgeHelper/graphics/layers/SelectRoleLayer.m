@@ -53,14 +53,17 @@
         startMenu.opacity = 80;
         startMenu.isTouchEnabled = NO;
         messageLabel.string = [NSString stringWithFormat:@"角色数目过少, 请再添加%d个角色", pNum-rNum];
+        messageLabel.position = ccp( messageLabel.boundingBox.size.width/2+REVERSE_X(20) , messageLabel.position.y);
     } else if (rNum - pNum > 0) {
         startMenu.opacity = 80;
         startMenu.isTouchEnabled = NO;
         messageLabel.string = [NSString stringWithFormat:@"角色数目过多, 请再减少%d个角色", rNum-pNum];
+        messageLabel.position = ccp( messageLabel.boundingBox.size.width/2+REVERSE_X(20) , messageLabel.position.y);
     } else {
         startMenu.opacity = 255;
         startMenu.isTouchEnabled = YES;
         messageLabel.string = @"可以开始游戏";
+        messageLabel.position = ccp( messageLabel.boundingBox.size.width/2+REVERSE_X(20) , messageLabel.position.y);
     }
 }
 
@@ -102,12 +105,11 @@
         GlobalSettings* global = [GlobalSettings globalSettings];
         
         CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"角色设定 (%d名玩家)", ((NSArray*)[global getPlayerIds]).count] fontName:@"Marker Felt" fontSize:REVERSE_X(32)];
-        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20), size.height-REVERSE_Y(100) );
+        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20), size.height-REVERSE_Y(40) );
         [self addChild: titleLabel];
         
-        messageLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
-        messageLabel.anchorPoint = ccp(0,0);
-        messageLabel.position = ccp( REVERSE_X(20) , size.height-REVERSE_Y(16) );
+        messageLabel = [CCLabelTTF labelWithString:@" " fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
+        messageLabel.position = ccp( REVERSE_X(20) , size.height-REVERSE_Y(100));
         [self addChild: messageLabel];
         
         
@@ -117,10 +119,10 @@
         
         doubleHandModeOffItem = [CCMenuItemImage itemFromNormalImage:@"btn_off2_red-40.png" selectedImage:@"btn_off2_red-40-sel.png" target:nil selector:nil];
         doubleHandModeOnItem = [CCMenuItemImage itemFromNormalImage:@"btn_on2_green-40.png" selectedImage:@"btn_on2_green-40-sel.png" target:nil selector:nil];
-        [doubleHandModeOffItem setScaleX: REVERSE_X(40)/doubleHandModeOffItem.contentSize.width];
-        [doubleHandModeOffItem setScaleY: REVERSE_X(40)/doubleHandModeOffItem.contentSize.height];
-        [doubleHandModeOnItem setScaleX: REVERSE_X(40)/doubleHandModeOnItem.contentSize.width];
-        [doubleHandModeOnItem setScaleY: REVERSE_X(40)/doubleHandModeOnItem.contentSize.height];
+        [doubleHandModeOffItem setScaleX: REVERSE(40)/doubleHandModeOffItem.contentSize.width];
+        [doubleHandModeOffItem setScaleY: REVERSE(40)/doubleHandModeOffItem.contentSize.height];
+        [doubleHandModeOnItem setScaleX: REVERSE(40)/doubleHandModeOnItem.contentSize.width];
+        [doubleHandModeOnItem setScaleY: REVERSE(40)/doubleHandModeOnItem.contentSize.height];
         
         CCMenuItemToggle *toggleItem = [CCMenuItemToggle itemWithTarget:self selector:@selector(doubleHandModeButtonTapped:) items:([global getGameMode] == DOUBLE_HAND?doubleHandModeOnItem:doubleHandModeOffItem), ([global getGameMode] == DOUBLE_HAND?doubleHandModeOffItem:doubleHandModeOnItem), nil];
         CCMenu *toggleMenu = [CCMenu menuWithItems:toggleItem, nil];
@@ -151,26 +153,26 @@
             [self addChild: icon];
             [roleIconsMap setObject: icon forKey: icon.name];
             
-            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:REVERSE_X(12)];
-            iconLabel.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(350));
+            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:VALUE(12, 10)];
+            iconLabel.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(360));
             [self addChild: iconLabel];
             [roleLabels setObject:iconLabel forKey:icon.name];
             
             if(r != Judge) {
                 CCMenuItem* increaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"up.png" selectedImage:@"up-sel.png" target:self selector:@selector(addRole:)];
-                [increaseRoleNumberMenuItem setScaleX: REVERSE_X(30)/increaseRoleNumberMenuItem.contentSize.width];
-                [increaseRoleNumberMenuItem setScaleY: REVERSE_X(20)/increaseRoleNumberMenuItem.contentSize.height];
+                [increaseRoleNumberMenuItem setScaleX: VALUE(30, 22)/increaseRoleNumberMenuItem.contentSize.width];
+                [increaseRoleNumberMenuItem setScaleY: VALUE(20, 16)/increaseRoleNumberMenuItem.contentSize.height];
                 increaseRoleNumberMenuItem.tag = r;
                 CCMenu *increaseRoleNumberMenu = [CCMenu menuWithItems:increaseRoleNumberMenuItem, nil];
                 increaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300)+REVERSE_Y(65));
                 [self addChild: increaseRoleNumberMenu];
                 
                 CCMenuItem* decreaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"down.png" selectedImage:@"down-sel.png" target:self selector:@selector(removeRole:)];
-                [decreaseRoleNumberMenuItem setScaleX: REVERSE_X(30)/decreaseRoleNumberMenuItem.contentSize.width];
-                [decreaseRoleNumberMenuItem setScaleY: REVERSE_X(20)/decreaseRoleNumberMenuItem.contentSize.height];
+                [decreaseRoleNumberMenuItem setScaleX: VALUE(30, 22)/decreaseRoleNumberMenuItem.contentSize.width];
+                [decreaseRoleNumberMenuItem setScaleY: VALUE(20, 16)/decreaseRoleNumberMenuItem.contentSize.height];
                 decreaseRoleNumberMenuItem.tag = r;
                 CCMenu *decreaseRoleNumberMenu = [CCMenu menuWithItems:decreaseRoleNumberMenuItem, nil];
-                decreaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300)-REVERSE_Y(80));
+                decreaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(400));
                 [self addChild: decreaseRoleNumberMenu];
             }
             

@@ -70,7 +70,7 @@
             [playerLines setObject:playerLine forKey:p.id];
             [self addChild:playerLine];
             
-            CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:REVERSE_X(14)];
+            CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:VALUE(14, 9)];
             label.position = REVERSE_XY(50, 0);
             [playerLine addChild:label];
             
@@ -117,23 +117,23 @@
          */
         
         showGameStateMenuItem = [CCMenuItemImage itemFromNormalImage:@"left2.png" selectedImage:@"left2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
-        [showGameStateMenuItem setScaleX: REVERSE_X(30)/showGameStateMenuItem.contentSize.width];
-        [showGameStateMenuItem setScaleY: REVERSE_X(40)/showGameStateMenuItem.contentSize.height];
+        [showGameStateMenuItem setScaleX: REVERSE(30)/showGameStateMenuItem.contentSize.width];
+        [showGameStateMenuItem setScaleY: REVERSE(40)/showGameStateMenuItem.contentSize.height];
         CCMenu* showGameStateMenu = [CCMenu menuWithItems:showGameStateMenuItem, nil];
         showGameStateMenu.position = ccp(-showGameStateMenuItem.boundingBox.size.width/2, size.height/2);
         [self addChild: showGameStateMenu];
         
         hideGameStateMenuItem = [CCMenuItemImage itemFromNormalImage:@"right2.png" selectedImage:@"right2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
-        [hideGameStateMenuItem setScaleX: REVERSE_X(30)/hideGameStateMenuItem.contentSize.width];
-        [hideGameStateMenuItem setScaleY: REVERSE_X(40)/hideGameStateMenuItem.contentSize.height];
+        [hideGameStateMenuItem setScaleX: REVERSE(30)/hideGameStateMenuItem.contentSize.width];
+        [hideGameStateMenuItem setScaleY: REVERSE(40)/hideGameStateMenuItem.contentSize.height];
         CCMenu* hideGameStateMenu = [CCMenu menuWithItems:hideGameStateMenuItem, nil];
         hideGameStateMenu.position = ccp(size.width-hideGameStateMenuItem.boundingBox.size.width/2, size.height/2);
         [self addChild: hideGameStateMenu];
         
         /*
         showGameState = [CCSprite spriteWithFile:@"left2.png"];
-        [showGameState setScaleX: REVERSE_X(30)/showGameState.contentSize.width];
-        [showGameState setScaleY: REVERSE_X(40)/showGameState.contentSize.height];
+        [showGameState setScaleX: REVERSE(30)/showGameState.contentSize.width];
+        [showGameState setScaleY: REVERSE(40)/showGameState.contentSize.height];
         showGameState.isTouchEnabled = YES;
         showGameState.position = ccp(-showGameState.boundingBox.size.width/2, size.height/2);
         UIGestureRecognizer *showGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];
@@ -144,8 +144,8 @@
         [self addChild: showGameState];
         
         hideGameState = [CCSprite spriteWithFile:@"right2.png"];
-        [hideGameState setScaleX: REVERSE_X(30)/hideGameState.contentSize.width];
-        [hideGameState setScaleY: REVERSE_X(40)/hideGameState.contentSize.height];
+        [hideGameState setScaleX: REVERSE(30)/hideGameState.contentSize.width];
+        [hideGameState setScaleY: REVERSE(40)/hideGameState.contentSize.height];
         hideGameState.isTouchEnabled = YES;
         hideGameState.position = ccp(size.width-showGameState.boundingBox.size.width/2, size.height/2);
         UIGestureRecognizer *hideGameStateTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameState:)];

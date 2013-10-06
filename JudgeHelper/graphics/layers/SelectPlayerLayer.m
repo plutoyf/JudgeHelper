@@ -83,12 +83,12 @@
         
         for(MySprite* personIcon in selPersonIconsMap.allValues) {
             if(personIcon.position.y<copyPersonIcon.position.y || (personIcon.position.y==copyPersonIcon.position.y && personIcon.position.x>copyPersonIcon.position.x)) {
-                if(personIcon.position.x == REVERSE_X(60)) {
-                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(REVERSE_X(60+100*numPerLine), personIcon.position.y+REVERSE_Y(100))];
-                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(REVERSE_X(60+100*(numPerLine-1)), personIcon.position.y+REVERSE_Y(100))];
+                if(personIcon.position.x == VALUE(60, 30)) {
+                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(100, 60))];
+                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(100, 60))];
                     [personIcon runAction:[CCSequence actions:move1, move2, nil]];
                 } else {
-                    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-REVERSE_X(100), personIcon.position.y)];
+                    CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-VALUE(100, 46), personIcon.position.y)];
                     [personIcon runAction:[CCSequence actions:move, nil]];
                 }
             }
@@ -105,7 +105,7 @@
         copyPersonIcon.avatar = [MySprite spriteWithTexture:selPersonIcon.avatar.texture];
         
         BOOL hasP0 = p0.x!=0 || p0.y!=0;
-        CGPoint p1 = ccp(REVERSE_X(60)+REVERSE_X(100)*(selPersonNumber%numPerLine), REVERSE_Y(570)-REVERSE_Y(100)*(int)(selPersonNumber/numPerLine));
+        CGPoint p1 = ccp(VALUE(60, 30)+VALUE(100, 46)*(selPersonNumber%numPerLine), REVERSE_Y(570)-VALUE(100, 60)*(int)(selPersonNumber/numPerLine));
         copyPersonIcon.position = hasP0?p0:p1;
         
         [selPersonIconsMap setObject:copyPersonIcon forKey:copyPersonIcon.id];
@@ -185,7 +185,7 @@
         // sort playersPool
         for(; i < personIcons.count; i++) {
             CCSprite* node = [personIcons objectAtIndex:i];
-            node.position = ccpSub(node.position, REVERSE_XY(IMG_WIDTH+20, 0));
+            node.position = ccpSub(node.position, ccp(IMG_WIDTH+REVERSE_X(20), 0));
             ((CCSprite*)[personIcons2 objectAtIndex:i]).position = node.position;
 
         }
@@ -232,7 +232,7 @@ CreatePlayerLayer* createPlayerLayer;
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
         CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:REVERSE_Y(32)];
-        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20) , size.height-REVERSE_Y(100) );
+        titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20) , size.height-REVERSE_Y(40) );
         [self addChild: titleLabel];
         
         
@@ -251,8 +251,8 @@ CreatePlayerLayer* createPlayerLayer;
         [self addChild:nextMenu];
         
         playersPoolCadre = [[CCSprite alloc] init];
-        [playersPoolCadre setContentSize:CGSizeMake(size.width, REVERSE_Y(100))];
-        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(170+100/2));
+        [playersPoolCadre setContentSize:CGSizeMake(size.width, VALUE(100, 60))];
+        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(150)+VALUE(100, 60)/2);
         playersPoolCadre.isTouchEnabled = YES;
         UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
         panGestureRecognizer.delegate = self;
@@ -311,7 +311,7 @@ CreatePlayerLayer* createPlayerLayer;
             newPosition.x = REVERSE_X(20);
         }
         playersPool.position = newPosition;
-        playersPool2.position = ccp(width+REVERSE_X(100), newPosition.y);
+        playersPool2.position = ccp(width+REVERSE(100), newPosition.y);
     } else {
         playersPool.position = newPosition.x > REVERSE_X(20) ? ccp(newPosition.x-lastPlayer.position.x-AVATAR_IMG_WIDTH/2-REVERSE_X(20), playersPool.position.y) : newPosition;
         CGPoint position2 = ccp(playersPool.position.x+lastPlayer.position.x+AVATAR_IMG_WIDTH/2+REVERSE_X(20), playersPool.position.y);
@@ -402,7 +402,7 @@ NSMutableArray* pids;
     
     MySprite *icon = [MySprite new];
     MySprite* lastIcon = isDouble ? personIcons2.lastObject : personIcons.lastObject;
-    icon.position = ccp(lastIcon ? lastIcon.position.x+IMG_WIDTH+REVERSE_X(20) : IMG_WIDTH/2, IMG_HEIGHT/2);
+    icon.position = ccp(lastIcon ? lastIcon.position.x+IMG_WIDTH+VALUE(20, 8) : IMG_WIDTH/2, IMG_HEIGHT/2);
     icon.id = id;
     icon.name = name;
     [icon showName];

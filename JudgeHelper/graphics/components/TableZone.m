@@ -75,8 +75,11 @@
 
 -(float) getDistanceFrom: (CGPoint) p0 to: (CGPoint) p1 {
     float d = 0;
-    while(p0.x != p1.x || p0.y != p1.y) {
+    int i = 1;
+    while(i > 0) {
+        i = 0;
         if(p0.x==x0) {
+            i++;
             if(p0.x==p1.x) {
                 d += p1.y-p0.y;
                 p0.y = p1.y;
@@ -86,6 +89,7 @@
             }
         }
         if(p0.y==y1) {
+            i++;
             if(p0.y==p1.y) {
                 d += p1.x-p0.x;
                 p0.x = p1.x;
@@ -95,6 +99,7 @@
             }
         }
         if(p0.x==x1) {
+            i++;
             if(p0.x==p1.x) {
                 d += p0.y-p1.y;
                 p0.y = p1.y;
@@ -104,6 +109,7 @@
             }
         }
         if(p0.y==y0) {
+            i++;
             if(p0.y==p1.y) {
                 d += p0.x-p1.x;
                 p0.x = p1.x;
@@ -112,8 +118,12 @@
                 p0.x = x0;
             }
         }
+        if(p0.x == p1.x && p0.y == p1.y) {
+            i = 0;
+        }
     }
-    return d;
+    
+    return (p0.x != p1.x || p0.y != p1.y) ? 0 : d;
 }
 
 -(CGPoint) getPositionFrom: (CGPoint) p0 to: (CGPoint) p1 {

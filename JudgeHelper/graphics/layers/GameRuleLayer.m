@@ -49,19 +49,19 @@
         [[[CCDirector sharedDirector] openGLView] addSubview:resultRulesTextView];
         
         saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [saveButton setFrame: CGRectMake(0, REVERSE_Y(310), REVERSE_X(100), REVERSE_Y(30))];
+        [saveButton setFrame: CGRectMake(0, REVERSE_Y(310), VALUE(100, 50), REVERSE_Y(30))];
         [saveButton setTitle: @"Save" forState: UIControlStateNormal];
         [saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:saveButton];
         
         cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [cancelButton setFrame: CGRectMake(REVERSE_X(110), REVERSE_Y(310), REVERSE_X(100), REVERSE_Y(30))];
+        [cancelButton setFrame: CGRectMake(VALUE(110, 55), REVERSE_Y(310), VALUE(100, 50), REVERSE_Y(30))];
         [cancelButton setTitle: @"Cancel" forState: UIControlStateNormal];
         [cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:cancelButton];
         
         restoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [restoreButton setFrame: CGRectMake(REVERSE_X(220), REVERSE_Y(310), REVERSE_X(100), REVERSE_Y(30))];
+        [restoreButton setFrame: CGRectMake(VALUE(220, 110), REVERSE_Y(310), VALUE(100, 50), REVERSE_Y(30))];
         [restoreButton setTitle: @"Restore" forState: UIControlStateNormal];
         [restoreButton addTarget:self action:@selector(restore:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:restoreButton];

@@ -64,8 +64,8 @@
             }
             CGSize textureSize = _sprite.boundingBox.size;
             
-            labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:REVERSE_Y(14)];
-            labelTTF.position = ccp(0, -AVATAR_IMG_HEIGHT/2-REVERSE_Y(14));
+            labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:VALUE(14, 12)];
+            labelTTF.position = ccp(0, -AVATAR_IMG_HEIGHT/2-VALUE(14, 10));
             [_sprite addChild: labelTTF];
         } else {
             _sprite = [CCSprite new];

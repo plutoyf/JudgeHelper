@@ -14,7 +14,7 @@
 
 @protocol CreatePlayerDelegate;
 
-@interface CreatePlayerLayer : CCSprite<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
+@interface CreatePlayerLayer : CCSprite<UIImagePickerControllerDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 {
     UIWindow *window;
     UIImage *newImage;
@@ -25,7 +25,6 @@
     CCSprite* picture;
     CCMenu* saveMenu;
     UITextField* userNameTextField;
-    UIImage* selectedImage;
 }
 
 @property (nonatomic, assign) id<CreatePlayerDelegate> delegate;

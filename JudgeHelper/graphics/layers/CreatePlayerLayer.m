@@ -11,6 +11,7 @@
 #import "BorderSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "UIImage+Resize.h"
+#import "AppDelegate.h"
 
 @implementation CreatePlayerLayer
 
@@ -142,9 +143,12 @@
     
     _picker = [[UIImagePickerController alloc] init];
     _picker.delegate = self;
-    //_picker.sourceType = UIImagePickerControllerSourceTypeCamera;//UIImagePickerControllerSourceTypePhotoLibrary;
     _picker.wantsFullScreenLayout = YES;
-    [_picker setContentSizeForViewInPopover:CGSizeMake(REVERSE_X(340), winsize.height)];
+    //_picker.sourceType = UIImagePickerControllerSourceTypeCamera;//UIImagePickerControllerSourceTypePhotoLibrary;
+    if(IS_IPAD()) {
+        [_picker setContentSizeForViewInPopover:CGSizeMake(REVERSE_X(340), winsize.height)];
+    } else {
+    }
     
     if([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         _picker.sourceType = sourceType;
@@ -153,20 +157,30 @@
     }
     
     
-    _popover = [[UIPopoverController alloc] initWithContentViewController:_picker];
-    [_popover setDelegate:self];
-    [_popover setPopoverContentSize:CGSizeMake(REVERSE_X(340), winsize.height) animated:NO];
-    CGRect r = CGRectMake( _picker.sourceType == UIImagePickerControllerSourceTypeCamera ? winsize.width-REVERSE_X(50) : winsize.width-REVERSE_X(150), winsize.height,0,REVERSE_X(90));
-    r.origin = [[CCDirector sharedDirector] convertToGL:r.origin];
-    [_popover presentPopoverFromRect:r inView:[[CCDirector sharedDirector] openGLView] permittedArrowDirections:UIPopoverArrowDirectionDown animated:NO];
-
+    if(IS_IPAD()) {
+        _popover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+        [_popover setDelegate:self];
+        [_popover setPopoverContentSize:CGSizeMake(REVERSE_X(340), winsize.height) animated:NO];
+        CGRect r = CGRectMake( _picker.sourceType == UIImagePickerControllerSourceTypeCamera ? winsize.width-REVERSE_X(50) : winsize.width-REVERSE_X(150), winsize.height,10,REVERSE_X(90));
+        r.origin = [[CCDirector sharedDirector] convertToGL:r.origin];
+        [_popover presentPopoverFromRect:r inView:[[CCDirector sharedDirector] openGLView] permittedArrowDirections:UIPopoverArrowDirectionUp animated:NO];
+    } else {
+        UIViewController *rootViewController = (UIViewController*)[(AppController*)[[UIApplication sharedApplication] delegate] navController];
+        [rootViewController presentModalViewController:_picker animated:NO];
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    //[_picker dismissModalViewControllerAnimated:YES];
-    //[_picker.view removeFromSuperview];
-    //_picker = nil;
-    //[_popover dismissPopoverAnimated:YES];
+    if(IS_IPAD()) {
+        [_popover dismissPopoverAnimated:YES];
+    } else {
+        [_picker dismissModalViewControllerAnimated:YES];
+        [_picker.view removeFromSuperview];
+        _picker = nil;
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+    }
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
@@ -180,9 +194,8 @@
     //_picker = nil;
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
-    [picker dismissModalViewControllerAnimated:YES];
-    [_popover dismissPopoverAnimated:YES];
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [self imagePickerControllerDidCancel: picker];
     
     if(cadre) {
         [self removeChild:cadre];
@@ -191,12 +204,6 @@
     CGSize cadreSize = CGSizeMake(size.width, size.height);
     cadre = [[ClippingSprite alloc] init];
     cadre.contentSize = cadreSize;
-    //GLubyte *buffer = malloc(sizeof(GLubyte)*4);
-    //for (int i=0;i<4;i++) {buffer[i]=255;}
-    //CCTexture2D *cadreBkgTex = [[CCTexture2D alloc] initWithData:buffer pixelFormat:kCCTexture2DPixelFormat_RGB5A1 pixelsWide:1 pixelsHigh:1 contentSize:cadreSize];
-    //[cadre setTexture:cadreBkgTex];
-    //[cadre setTextureRect:CGRectMake(0, 0, cadreSize.width, cadreSize.height)];
-    //free(buffer);
     int w = size.height/3, h = size.width/3;
     int x = size.width-REVERSE_X(430)-w*2;
     int y = size.height-h-REVERSE_Y(35);
@@ -212,12 +219,10 @@
     UIGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePicturePinchGesture:)];
     pinchGestureRecognizer.delegate = self;
     [cadre addGestureRecognizer:pinchGestureRecognizer];
-    
-    image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:image.size interpolationQuality:kCGInterpolationHigh];
-    selectedImage = image;
-    CCTexture2D *pictureTexture = [[CCTexture2D alloc] initWithCGImage: image.CGImage resolutionType: kCCResolutioniPad];
-    picture = [[CCSprite alloc] initWithTexture:pictureTexture];
-    CGSize textureSize = [pictureTexture contentSize];
+    UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(1024, 1024) interpolationQuality:kCGInterpolationHigh];
+    picture = [[CCSprite alloc] initWithCGImage:image.CGImage key:nil];
+    CGSize textureSize = [picture contentSize];
     [picture setScaleX: w/textureSize.width];
     [picture setScaleY: w*textureSize.height/textureSize.width/textureSize.height];
     picture.position = ccp(x+w/2, y+h/2);

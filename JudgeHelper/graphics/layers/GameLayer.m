@@ -172,7 +172,7 @@ BOOL showDebugMessageEnable = NO;
 
         
         nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
-        nightLabel.position = ccp(REVERSE_X(60) , size.height-REVERSE_Y(100) );
+        nightLabel.position = ccp(REVERSE_X(60) , size.height-REVERSE_Y(40) );
         [self addChild: nightLabel];
         
 		// create and initialize a Label

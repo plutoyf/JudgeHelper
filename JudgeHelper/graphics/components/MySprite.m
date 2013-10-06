@@ -43,8 +43,8 @@
 
 -(void) showName {
     if(_name) {
-        CCLabelTTF* labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:REVERSE_X(16)];
-        labelTTF.position = ccp(self.boundingBox.size.width/2, -REVERSE_Y(14));
+        CCLabelTTF* labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:VALUE(16, 12)];
+        labelTTF.position = ccp(self.boundingBox.size.width/2, -VALUE(14, 10));
         [self addChild: labelTTF];
     }
 }

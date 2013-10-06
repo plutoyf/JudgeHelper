@@ -1733,6 +1733,7 @@
 				GCC_PREFIX_HEADER = JudgeHelper/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"JudgeHelper/libs/kazmath/include\"";
 				INFOPLIST_FILE = JudgeHelper/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -1755,6 +1756,7 @@
 				GCC_PREFIX_HEADER = JudgeHelper/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"JudgeHelper/libs/kazmath/include\"";
 				INFOPLIST_FILE = JudgeHelper/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",

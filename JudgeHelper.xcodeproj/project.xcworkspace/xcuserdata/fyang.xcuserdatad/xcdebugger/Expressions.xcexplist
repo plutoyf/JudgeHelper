@@ -66,6 +66,9 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
+      </ContextState>
+      <ContextState
          contextName = "-[Player rollbackStatus]:Player.m">
          <PersistentStrings>
             <PersistentString
@@ -82,13 +85,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SelectPlayerLayer selectPlayerById:fromPosition:]:SelectPlayerLayer.m">
+      </ContextState>
+      <ContextState
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
