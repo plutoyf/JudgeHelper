@@ -36,11 +36,12 @@
 +(NSString*) getRoleCode: (Role) r;
 +(NSArray*) getRulesArray;
 +(NSArray*) getResultRulesArray;
++(NSString*) getRoleLabel: (Role) r;
+-(NSString*) getRoleLabel: (Role) r;
+-(NSString*) getRoleActionLabel: (Role) r;
 
 -(void) action: (NSString*) id;
 -(void) setPlayerNumberForRole: (int) i;
--(NSString*) getRoleLabel: (Role) r;
--(NSString*) getRoleActionLabel: (Role) r;
 -(Role) getCurrentRole;
 -(int) getCurrentNight;
 

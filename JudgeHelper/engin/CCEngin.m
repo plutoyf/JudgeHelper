@@ -507,7 +507,7 @@ static CCEngin *engin = nil;
 }
 
 // labels - TODO: i18n
--(NSString*) getRoleLabel: (Role) r {
++(NSString*) getRoleLabel: (Role) r {
     switch (r) {
         case Guard:
             return @"花蝴蝶";
@@ -524,6 +524,10 @@ static CCEngin *engin = nil;
         default:
             return [Engin getRoleName: r];
     }
+}
+
+-(NSString*) getRoleLabel: (Role) r {
+    return [CCEngin getRoleName: r];
 }
 
 -(NSString*) getRoleActionTerm: (Role) r {

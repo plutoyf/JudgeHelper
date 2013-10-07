@@ -37,7 +37,7 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
-    if(isIgnorePresse) return;
+    if([self isInCreationMode] || isIgnorePresse) return;
     MySprite* icon = (MySprite*)sender.node;
     [self selectPlayerById: icon.id fromPosition:[icon convertToWorldSpace:ccp(IMG_WIDTH/4, 0)]];
 }
@@ -135,13 +135,15 @@
 }
 
 - (void) shortPressePlayer: (UILongPressGestureRecognizer*) sender {
+    if([self isInCreationMode]) return;
+
     if(sender.state == UIGestureRecognizerStateBegan) {
         isIgnorePresse = speed != 0;
     }
 }
 
 - (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
-    if(playerToRemove || isIgnorePresse || ((MySprite*)sender.node.parent).selected) return;
+    if([self isInCreationMode] || playerToRemove || isIgnorePresse || ((MySprite*)sender.node.parent).selected) return;
     
     NSString* id = ((MySprite*)sender.node).id;
     playerToRemove = [personIconsMap objectForKey:id];
@@ -215,9 +217,13 @@ CreatePlayerLayer* createPlayerLayer;
     
     createPlayerLayer = [[CreatePlayerLayer alloc] init];
     createPlayerLayer.delegate = self;
+    createPlayerLayer.tag = 11;
     [self addChild:createPlayerLayer];
 }
 
+-(BOOL) isInCreationMode {
+    return [self getChildByTag:11] != nil;
+}
 
 -(id) init
 {
