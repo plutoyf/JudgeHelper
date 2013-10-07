@@ -77,7 +77,7 @@
         MySprite *copyPersonIcon = [selPersonIconsMap objectForKey:selPersonIcon.id];
         [selPersonIconsMap removeObjectForKey:selPersonIcon.id];
         
-        if(p0.x == copyPersonIcon.position.x && p0.y == copyPersonIcon.position.y) {
+        if(p0.y == copyPersonIcon.position.y) {
             CGPoint p = [selPersonIcon convertToWorldSpace:ccp(0, 0)];
             CGPoint p2 = [selPersonIcon2 convertToWorldSpace:ccp(0, 0)];
             p0 = (p.x >= 0 && p.x <= [[CCDirector sharedDirector] winSize].width) ? p : p2;
