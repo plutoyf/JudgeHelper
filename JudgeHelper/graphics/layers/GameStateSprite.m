@@ -81,21 +81,21 @@
         [undoMenuItem setScaleX: IMG_WIDTH/undoMenuItem.contentSize.width];
         [undoMenuItem setScaleY: IMG_HEIGHT/undoMenuItem.contentSize.height];
         CCMenu *undoMenu = [CCMenu menuWithItems:undoMenuItem, nil];
-        undoMenu.position = ccp(REVERSE_X(60), size.height-REVERSE_Y(40));
+        undoMenu.position = ccp(REVERSE_X(60), size.height-REVERSE_Y(50));
         [self addChild: undoMenu];
         
         CCMenuItem* redoMenuItem = [CCMenuItemImage itemFromNormalImage:@"redo.png" selectedImage:@"redo-sel.png" target:self selector:@selector(redoButtonPressed:)];
         [redoMenuItem setScaleX: IMG_WIDTH/redoMenuItem.contentSize.width];
         [redoMenuItem setScaleY: IMG_HEIGHT/redoMenuItem.contentSize.height];
         CCMenu *redoMenu = [CCMenu menuWithItems:redoMenuItem, nil];
-        redoMenu.position = ccp(REVERSE_X(160), size.height-REVERSE_Y(40));
+        redoMenu.position = ccp(REVERSE_X(160), size.height-REVERSE_Y(50));
         [self addChild: redoMenu];
         
         CCMenuItem* quitMenuItem = [CCMenuItemImage itemFromNormalImage:@"quit.png" selectedImage:@"quit-sel.png" target:self selector:@selector(quitButtonPressed:)];
         [quitMenuItem setScaleX: IMG_WIDTH/quitMenuItem.contentSize.width];
         [quitMenuItem setScaleY: IMG_HEIGHT/quitMenuItem.contentSize.height];
         CCMenu *quitMenu = [CCMenu menuWithItems:quitMenuItem, nil];
-        quitMenu.position = ccp(REVERSE_X(260), size.height-REVERSE_Y(40));
+        quitMenu.position = ccp(REVERSE_X(260), size.height-REVERSE_Y(50));
         [self addChild: quitMenu];
         
         /*

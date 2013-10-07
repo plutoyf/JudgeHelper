@@ -527,7 +527,7 @@ static CCEngin *engin = nil;
 }
 
 -(NSString*) getRoleLabel: (Role) r {
-    return [CCEngin getRoleName: r];
+    return [CCEngin getRoleLabel: r];
 }
 
 -(NSString*) getRoleActionTerm: (Role) r {

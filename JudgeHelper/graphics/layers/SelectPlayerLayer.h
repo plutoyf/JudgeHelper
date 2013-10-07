@@ -24,6 +24,7 @@
 {
     CCEngin* engin;
     CCMenu* nextMenu;
+    CCMenu* addPlayerMenu;
     CCSprite* playersPool;
     CCSprite* playersPool2;
     MySprite* playerToRemove;
@@ -36,6 +37,7 @@
     int selPersonNumber;
     NSMutableDictionary* selPersonIconsMap;
     BOOL isIgnorePresse;
+    CreatePlayerLayer* createPlayerLayer;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

@@ -94,11 +94,11 @@
     if(name.length > 0) {
         CGSize size = [CCDirector sharedDirector].winSize;
         int w = size.height/3, h = size.width/3;
-        int x = size.width-REVERSE_X(430)-w*2;
-        int y = size.height-h-REVERSE_Y(35);
-        int bw = w - REVERSE_X(20);
+        int x = size.width-REVERSE(430)-w*2;
+        int y = size.height-h-REVERSE(35);
+        int bw = w - REVERSE(20);
         int bh = bw;
-        CGRect cropRect = CGRectMake(x+w/2-bw/2+1, h/2-bh/2+REVERSE_Y(36)+1, bw-2, bh-2);
+        CGRect cropRect = CGRectMake(x+w/2-bw/2+2, h/2-bh/2+REVERSE(36)+2, bw-4, bh-4);
         
         UIImage *screenshot = [self screenshotWithStartNode: cadre];
         screenshot = [screenshot resizedImage:CGSizeMake(size.width, size.height) interpolationQuality:kCGInterpolationDefault];
@@ -120,6 +120,7 @@
 -(void) returnButtonTapped: (id) sender {
     [userNameTextField removeFromSuperview];
     [self removeFromParent];
+    [_delegate didFinishCreatingPlayer];
 }
 
 -(void) showAlbumButtonTapped: (id) sender {
@@ -205,8 +206,8 @@
     cadre = [[ClippingSprite alloc] init];
     cadre.contentSize = cadreSize;
     int w = size.height/3, h = size.width/3;
-    int x = size.width-REVERSE_X(430)-w*2;
-    int y = size.height-h-REVERSE_Y(35);
+    int x = size.width-REVERSE(430)-w*2;
+    int y = size.height-h-REVERSE(35);
     cadre.openWindowRect = CGRectMake(x,y,w,h);
     cadre.touchRect = CGRectMake(x,y,w,h);
     cadre.position = ccp(cadreSize.width/2, cadreSize.height/2);
@@ -227,7 +228,7 @@
     [picture setScaleY: w*textureSize.height/textureSize.width/textureSize.height];
     picture.position = ccp(x+w/2, y+h/2);
     
-    int bw = w - REVERSE_X(20);
+    int bw = w - REVERSE(20);
     int bh = bw;
     border = [[BorderSprite alloc] init];
     [border setTextureRect: CGRectMake(0,0,bw,bh)];
@@ -243,13 +244,13 @@
     
     // Create textfield
     if(userNameTextField == nil) {
-        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x+w+REVERSE_X(20),REVERSE_Y(35),w,REVERSE_X(35))];
+        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x+w+REVERSE(20),REVERSE(35),w,REVERSE(35))];
         userNameTextField.placeholder = @"Enter name here." ;
         userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
         userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
         userNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        userNameTextField.font = [UIFont fontWithName:@"Verdana" size:REVERSE_X(16.0)];
-        userNameTextField.font = [UIFont systemFontOfSize:REVERSE_X(16.0)];
+        userNameTextField.font = [UIFont fontWithName:@"Verdana" size:VALUE(16, 12)];
+        userNameTextField.font = [UIFont systemFontOfSize:VALUE(16, 12)];
         userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing ;
         userNameTextField.adjustsFontSizeToFitWidth = YES;
         userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

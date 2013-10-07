@@ -36,4 +36,5 @@
 @protocol CreatePlayerDelegate
 @required
 -(void) createPlayer: (NSString*) name withImage: (UIImage*) image;
+-(void) didFinishCreatingPlayer;
 @end

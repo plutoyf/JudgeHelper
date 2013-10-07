@@ -37,7 +37,7 @@
 }
 
 - (void) selectPlayer: (UITapGestureRecognizer*) sender {
-    if([self isInCreationMode] || isIgnorePresse) return;
+    if(createPlayerLayer || isIgnorePresse) return;
     MySprite* icon = (MySprite*)sender.node;
     [self selectPlayerById: icon.id fromPosition:[icon convertToWorldSpace:ccp(IMG_WIDTH/4, 0)]];
 }
@@ -77,6 +77,12 @@
         MySprite *copyPersonIcon = [selPersonIconsMap objectForKey:selPersonIcon.id];
         [selPersonIconsMap removeObjectForKey:selPersonIcon.id];
         
+        if(p0.x == copyPersonIcon.position.x && p0.y == copyPersonIcon.position.y) {
+            CGPoint p = [selPersonIcon convertToWorldSpace:ccp(0, 0)];
+            CGPoint p2 = [selPersonIcon2 convertToWorldSpace:ccp(0, 0)];
+            p0 = (p.x >= 0 && p.x <= [[CCDirector sharedDirector] winSize].width) ? p : p2;
+        }
+        
         CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:p0];
         CCCallFuncN *clean = [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)];
         [copyPersonIcon runAction:[CCSequence actions:move, clean, nil]];
@@ -102,7 +108,14 @@
         copyPersonIcon.id = selPersonIcon.id;
         copyPersonIcon.name = selPersonIcon.name;
         [copyPersonIcon showName];
-        copyPersonIcon.avatar = [MySprite spriteWithTexture:selPersonIcon.avatar.texture];
+        MySprite *copyAvatar = [MySprite spriteWithTexture:selPersonIcon.avatar.texture];
+        copyAvatar.id = copyPersonIcon.id;
+        copyPersonIcon.avatar = copyAvatar;
+        
+        copyPersonIcon.avatar.isTouchEnabled = YES;
+        UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
+        tapGestureRecognizer.delegate = self;
+        [copyPersonIcon.avatar addGestureRecognizer:tapGestureRecognizer];
         
         BOOL hasP0 = p0.x!=0 || p0.y!=0;
         CGPoint p1 = ccp(VALUE(60, 30)+VALUE(100, 46)*(selPersonNumber%numPerLine), REVERSE_Y(570)-VALUE(100, 60)*(int)(selPersonNumber/numPerLine));
@@ -118,6 +131,8 @@
         
         selPersonNumber++;
     }
+    
+    nextMenu.opacity = selPersonNumber >= 2 ? 255 : 80;
 }
 
 
@@ -135,7 +150,7 @@
 }
 
 - (void) shortPressePlayer: (UILongPressGestureRecognizer*) sender {
-    if([self isInCreationMode]) return;
+    if(createPlayerLayer) return;
 
     if(sender.state == UIGestureRecognizerStateBegan) {
         isIgnorePresse = speed != 0;
@@ -143,7 +158,7 @@
 }
 
 - (void) longPressePlayer: (UILongPressGestureRecognizer*) sender {
-    if([self isInCreationMode] || playerToRemove || isIgnorePresse || ((MySprite*)sender.node.parent).selected) return;
+    if(createPlayerLayer || playerToRemove || isIgnorePresse || ((MySprite*)sender.node.parent).selected) return;
     
     NSString* id = ((MySprite*)sender.node).id;
     playerToRemove = [personIconsMap objectForKey:id];
@@ -209,20 +224,23 @@
     }
 }
 
-CreatePlayerLayer* createPlayerLayer;
 -(void) showCreatePlayerScreen {
-    if(createPlayerLayer) {
-        [self removeChild:createPlayerLayer];
+    if(!createPlayerLayer) {
+        nextMenu.opacity = 80;
+        addPlayerMenu.opacity = 80;
+        createPlayerLayer = [[CreatePlayerLayer alloc] init];
+        createPlayerLayer.delegate = self;
+        [self addChild:createPlayerLayer];
     }
-    
-    createPlayerLayer = [[CreatePlayerLayer alloc] init];
-    createPlayerLayer.delegate = self;
-    createPlayerLayer.tag = 11;
-    [self addChild:createPlayerLayer];
 }
 
--(BOOL) isInCreationMode {
-    return [self getChildByTag:11] != nil;
+-(void) hideCreatePlayerScreen {
+    if(createPlayerLayer) {
+        [self removeChild:createPlayerLayer];
+        createPlayerLayer = nil;
+        nextMenu.opacity = selPersonNumber >= 2 ? 255 : 80;
+        addPlayerMenu.opacity = 255;
+    }
 }
 
 -(id) init
@@ -245,15 +263,16 @@ CreatePlayerLayer* createPlayerLayer;
         CCMenuItem *addPlayerMenuItem = [CCMenuItemImage itemFromNormalImage:@"add.png" selectedImage:@"add-sel.png" target:self selector:@selector(addPlayerButtonTapped:)];
         [addPlayerMenuItem setScaleX: IMG_WIDTH/addPlayerMenuItem.contentSize.width];
         [addPlayerMenuItem setScaleY: IMG_HEIGHT/addPlayerMenuItem.contentSize.height];
-        CCMenu *playerMenu = [CCMenu menuWithItems:addPlayerMenuItem, nil];
-        playerMenu.position = ccp(size.width-REVERSE_X(200), REVERSE_Y(100));
-        [self addChild:playerMenu];
+        addPlayerMenu = [CCMenu menuWithItems:addPlayerMenuItem, nil];
+        addPlayerMenu.position = ccp(size.width-REVERSE_X(200), REVERSE_Y(100));
+        [self addChild:addPlayerMenu];
         
         CCMenuItem *nextMenuItem = [CCMenuItemImage itemFromNormalImage:@"next.png" selectedImage:@"next-sel.png" target:self selector:@selector(toNextScreen:)];
         [nextMenuItem setScaleX: IMG_WIDTH/nextMenuItem.contentSize.width];
         [nextMenuItem setScaleY: IMG_HEIGHT/nextMenuItem.contentSize.height];
         nextMenu = [CCMenu menuWithItems:nextMenuItem, nil];
         nextMenu.position = ccp(size.width-REVERSE_X(100), REVERSE_Y(100));
+        nextMenu.opacity = 80;
         [self addChild:nextMenu];
         
         playersPoolCadre = [[CCSprite alloc] init];
@@ -280,7 +299,7 @@ CreatePlayerLayer* createPlayerLayer;
 }
 
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
 
@@ -296,10 +315,7 @@ float speed = 0;
 }
 
 
-CreatePlayerLayer* createPlayerLayer;
 -(void) addPlayerButtonTapped: (id) sender {
-    //createPlayerLayer = [[CreatePlayerLayer alloc] init];
-    //[self addChild:createPlayerLayer];
     [self showCreatePlayerScreen];
 }
 
@@ -379,6 +395,10 @@ NSMutableArray* pids;
     }
     [self setPlayersPoolPosition: ccp(REVERSE_X(20), 0)];
     
+}
+
+-(void) didFinishCreatingPlayer {
+    [self hideCreatePlayerScreen];
 }
 
 -(void) createPlayer: (NSString*) name withImage: (UIImage*) image {

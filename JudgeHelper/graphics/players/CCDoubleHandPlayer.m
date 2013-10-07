@@ -40,7 +40,7 @@
         [_rightHandPlayer showRoleInfo];
         
         if ((_leftHandPlayer.role > 0 && _leftHandPlayer.role != Citizen) || (_rightHandPlayer.role > 0 && _rightHandPlayer.role != Citizen)) {
-            //[self setLabel: [NSString stringWithFormat:@"[%@] %@ [%@]", [Engin getRoleName: _leftHandPlayer.role], _name, [Engin getRoleName: _rightHandPlayer.role]]];
+            //[self setLabel: [NSString stringWithFormat:@"[%@] %@ [%@]", [Engin getRoleLabel: _leftHandPlayer.role], _name, [Engin getRoleLabel: _rightHandPlayer.role]]];
         } else {
             [super showRoleInfo];
         }
