@@ -75,23 +75,25 @@
 }
 
 -(void) addRole: (id) sender {
-    NSString* name = [Engin getRoleName:((CCMenuItem*)sender).tag];
+    NSString* name = [CCEngin getRoleName:((CCMenuItem*)sender).tag];
+    NSString* label = [CCEngin getRoleLabel:((CCMenuItem*)sender).tag];
     [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue+1] forKey: name];
-    [self updateRoleLable: name];
+    [self updateRole: name withLable: label];
     [self matchPlayerNumber];
 }
 
 -(void) removeRole: (id) sender {
-    NSString* name = [Engin getRoleName:((CCMenuItem*)sender).tag];
+    NSString* name = [CCEngin getRoleName:((CCMenuItem*)sender).tag];
+    NSString* label = [CCEngin getRoleLabel:((CCMenuItem*)sender).tag];
     if(((NSNumber*)[roleNumbers objectForKey: name]).intValue > 0) {
         [roleNumbers setObject: [NSNumber numberWithInt: ((NSNumber*)[roleNumbers objectForKey: name]).intValue-1] forKey: name];
-        [self updateRoleLable: name];
+        [self updateRole: name withLable: label];
         [self matchPlayerNumber];
     }
 }
 
--(void) updateRoleLable: (NSString*) name {
-    ((CCLabelTTF*)[roleLabels objectForKey:name]).string = [NSString stringWithFormat:@"%@ (%d)", name, ((NSNumber*)[roleNumbers objectForKey:name]).intValue];
+-(void) updateRole: (NSString*) name withLable: (NSString*) label {
+    ((CCLabelTTF*)[roleLabels objectForKey:name]).string = [NSString stringWithFormat:@"%@ (%d)", label, ((NSNumber*)[roleNumbers objectForKey:name]).intValue];
 }
 
 
@@ -149,14 +151,15 @@
             [icon setScaleX: IMG_WIDTH/icon.contentSize.width];
             [icon setScaleY: IMG_HEIGHT/icon.contentSize.height];
             icon.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300));
-            icon.name = [Engin getRoleName:r];
+            icon.id = [CCEngin getRoleName:r];
+            icon.name = [CCEngin getRoleLabel:r];
             [self addChild: icon];
-            [roleIconsMap setObject: icon forKey: icon.name];
+            [roleIconsMap setObject: icon forKey: icon.id];
             
-            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.name]).intValue] fontName:@"Marker Felt" fontSize:VALUE(12, 10)];
-            iconLabel.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(360));
+            CCLabelTTF *iconLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ (%d)", icon.name, ((NSNumber*)[roleNumbers objectForKey:icon.id]).intValue] fontName:@"Marker Felt" fontSize:VALUE(12, 10)];
+            iconLabel.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(370));
             [self addChild: iconLabel];
-            [roleLabels setObject:iconLabel forKey:icon.name];
+            [roleLabels setObject:iconLabel forKey:icon.id];
             
             if(r != Judge) {
                 CCMenuItem* increaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"up.png" selectedImage:@"up-sel.png" target:self selector:@selector(addRole:)];
@@ -164,7 +167,7 @@
                 [increaseRoleNumberMenuItem setScaleY: VALUE(20, 16)/increaseRoleNumberMenuItem.contentSize.height];
                 increaseRoleNumberMenuItem.tag = r;
                 CCMenu *increaseRoleNumberMenu = [CCMenu menuWithItems:increaseRoleNumberMenuItem, nil];
-                increaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300)+REVERSE_Y(65));
+                increaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(300)+REVERSE_Y(75));
                 [self addChild: increaseRoleNumberMenu];
                 
                 CCMenuItem* decreaseRoleNumberMenuItem = [CCMenuItemImage itemFromNormalImage:@"down.png" selectedImage:@"down-sel.png" target:self selector:@selector(removeRole:)];
@@ -172,7 +175,7 @@
                 [decreaseRoleNumberMenuItem setScaleY: VALUE(20, 16)/decreaseRoleNumberMenuItem.contentSize.height];
                 decreaseRoleNumberMenuItem.tag = r;
                 CCMenu *decreaseRoleNumberMenu = [CCMenu menuWithItems:decreaseRoleNumberMenuItem, nil];
-                decreaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(400));
+                decreaseRoleNumberMenu.position = ccp(REVERSE_X(60)+(REVERSE_X(100)*i), size.height-REVERSE_Y(410));
                 [self addChild: decreaseRoleNumberMenu];
             }
             

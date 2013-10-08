@@ -521,6 +521,8 @@ static CCEngin *engin = nil;
             return @"老婆";
         case Judge:
             return @"法官";
+        case Citizen:
+            return @"平民";
         default:
             return [Engin getRoleName: r];
     }
