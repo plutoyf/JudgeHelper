@@ -10,27 +10,37 @@
 
 @implementation Condition
 
--(BOOL) compare: (Player*) p1 with: (Player*) p2 {
+-(double) getValue: (Player*) p1 with: (Player*) p2 atNight: (long) night {
     double v = 0;
+    int i = _i != nil ? night+[_i intValue] : night;
     switch (_property) {
         case life:
-            v = p1.life;
+            v = i == night ? p1.life : [p1 getLifeAtNight: i];
             break;
         case note:
-            v = p1.note;
+            v = i == night ? p1.note : [p1 getNoteAtNight: i];
             break;
         case role:
-            v = p1.role;
+            v = i == night ? p1.role : [p1 getRoleAtNight: i];
             break;
         case status:
-            v = p1.status;
+            v = i == night ? p1.status : [p1 getStatusAtNight: i];
+            break;
+        case defaultDistance:
+            v = i == night ? [p1 getDefaultDistanceWith: p2.id] : [p1 getDefaultDistanceAtNight:i with: p2.id];
             break;
         case distance:
-            v = [p1 getDistanceWith: p2.id];
+            v = i == night ? [p1 getDistanceWith: p2.id] : [p1 getDistanceAtNight:i with: p2.id];
             break;
         default:
             break;
     }
+    
+    return v;
+}
+
+-(BOOL) compare: (Player*) p1 with: (Player*) p2 atNight: (long) night {
+    double v = [self getValue:p1 with:p2 atNight:night];
     
     if ([_op isEqualToString:@"=="]) {
         return v==_value;

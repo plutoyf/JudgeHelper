@@ -114,7 +114,7 @@
         NSLog(@"今夜%@%@", deadNames, @"死亡");
         
         //12. test if game is over, if not, continue the game
-        if([self printFinalResult]) {
+        if([self printFinalResultAtNight: i]) {
             break;
         }
         
@@ -145,7 +145,7 @@
         NSLog(@"------------------------------------------");
         
         //15. test if game is over, if not, continue the game
-        if([self printFinalResult]) {
+        if([self printFinalResultAtNight: i]) {
             break;
         }
         
@@ -155,8 +155,8 @@
     }
 }
 
--(BOOL) printFinalResult {
-    int result = [self calculateFinalResult];
+-(BOOL) printFinalResultAtNight: (long) i {
+    int result = [self calculateFinalResultAtNight: i ];
     if(result > 99) {
         NSLog(@"杀手及警察同时死亡，游戏平局");
         return true;

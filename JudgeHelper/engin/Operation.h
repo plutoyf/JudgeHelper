@@ -12,6 +12,6 @@
 {
 }
 
--(NSNumber*) execute: (Player*) p1 :(Player*) p2 :(NSArray*) players;
+-(NSNumber*) execute: (Player*) p1 :(Player*) p2 :(NSArray*) players atNight: (long) night ;
 
 @end

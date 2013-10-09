@@ -20,6 +20,10 @@
         [str appendString: @", "];
         [str appendString: [Engin getRoleName: _role2]];
     }
+    if (_i != nil) {
+        [str appendString: @", "];
+        [str appendString: [_i stringValue]];
+    }
     [str appendString: @") "];
     [str appendString: _op];
     [str appendString: @" "];

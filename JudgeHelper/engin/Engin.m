@@ -96,6 +96,7 @@
 +(Property) getPropertyFromString: (NSString*) str {
     if ([@"life" isEqualToString: str]) return life;
     if ([@"distance" isEqualToString: str]) return distance;
+    if ([@"defaultDistance" isEqualToString: str]) return defaultDistance;
     if ([@"role" isEqualToString: str]) return role;
     if ([@"note" isEqualToString: str]) return note;
     if ([@"status" isEqualToString: str]) return status;
@@ -112,6 +113,9 @@
             break;
         case distance:
             name = @"distance";
+            break;
+        case defaultDistance:
+            name = @"defaultDistance";
             break;
         case role:
             name = @"role";
@@ -178,6 +182,13 @@
         [p recordStatus];
     }
     NSLog(@"== Record Players Status, stack depth = %d", [((Player*)[_players objectAtIndex:0]) getStackDepth]);
+}
+
+-(void) recordNightStatus: (long) night{
+    for(Player* p in _players) {
+        [p recordNightStatus: night];
+    }
+    NSLog(@"== Record Players Night Status, night = %l", night);
 }
 
 -(void) rollbackPlayersStatus {
@@ -251,7 +262,7 @@
             for(Condition* c in rule.conditions) {
                 Player* p1 = [self getPlayerFrom: actor and: receiver withRole: c.role1];
                 Player* p2 = [self getPlayerFrom: actor and: receiver withRole: c.role2];
-                if(![c compare: p1 with: p2 ]) {
+                if(![c compare: p1 with: p2 atNight: i]) {
                     return NO;    
                 };
             }
@@ -323,10 +334,10 @@
     }
     
     if(o.role2 == 0 && (receiver.role == o.role1 || o.role1 == Receiver || o.role1 == Anybody)) {
-        result = [o execute: receiver : nil : self.players];
+        result = [o execute: receiver : nil : self.players atNight: i];
     } else {
         for(Player* a in actors) {
-            result = [o execute: a : receiver : self.players];
+            result = [o execute: a : receiver : self.players atNight: i];
         }
     }
     
@@ -334,7 +345,7 @@
 }
 
 
--(int) calculateFinalResult {
+-(int) calculateFinalResultAtNight: (long) i {
     Player* game = [[Player alloc] init: @"game" andName: @"Game" withRole: Game];
     
     for(Rule* r in self.resultRules) {
@@ -344,16 +355,16 @@
                 NSArray* p2s = [self getPlayersByRole: c.role2];
                 if(p2s != nil && [p2s count] > 0) {
                     for(Player* p2 in p2s) {
-                        isMatched = isMatched && [c compare: p1 with: p2];
+                        isMatched = isMatched && [c compare: p1 with: p2 atNight: i];
                     }
                 } else {
-                    isMatched = isMatched && [c compare: p1 with: nil];
+                    isMatched = isMatched && [c compare: p1 with: nil atNight: i];
                 } 
             }
         }
         if(isMatched) {
             for(Operation* o in r.operations) {
-                [o execute: game : nil : self.players];
+                [o execute: game : nil : self.players atNight: i];
             }
         }
     }

@@ -21,9 +21,18 @@
         _name = name;
         _role = role;
         _life = 1;
+        _note = 0;
         _status = IN_GAME;
-        
+        _defaultDistances = [NSMutableDictionary new];
         _distances = [NSMutableDictionary new];
+        
+        _lifeByNight = [NSMutableDictionary new];
+        _roleByNight = [NSMutableDictionary new];
+        _noteByNight = [NSMutableDictionary new];
+        _statusByNight = [NSMutableDictionary new];
+        _distancesByNight = [NSMutableDictionary new];
+        _defaultDistancesByNight = [NSMutableDictionary new];
+        
         _actionReceivers = [NSMutableDictionary new];
         _actionResults = [NSMutableDictionary new];
         _applicatedRules = [NSMutableDictionary new];
@@ -36,8 +45,48 @@
     return [_distances valueForKey:playerId] == nil ? 1 : [(NSNumber*)[_distances valueForKey:playerId] doubleValue];
 }
 
+-(double) getDistanceAtNight:(long) i with: (NSString*) playerId {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    NSDictionary* distances =  [_distancesByNight objectForKey: key] != nil ? [_distancesByNight objectForKey: key] : nil;
+    return (distances == nil || [distances valueForKey:playerId] == nil) ? 1 : [(NSNumber*)[distances valueForKey:playerId] doubleValue];
+}
+
 -(void) setDistance: (double) distance withPlayer: (NSString*) playerId {
     [_distances setValue: [NSNumber numberWithDouble:distance] forKey: playerId];
+}
+
+-(double) getDefaultDistanceWith: (NSString*) playerId {
+    return [_defaultDistances valueForKey:playerId] == nil ? 1 : [(NSNumber*)[_defaultDistances valueForKey:playerId] doubleValue];
+}
+
+-(double) getDefaultDistanceAtNight:(long) i with: (NSString*) playerId {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    NSDictionary* distances =  [_defaultDistancesByNight objectForKey: key] != nil ? [_defaultDistancesByNight objectForKey: key] : nil;
+    return (distances == nil || [distances valueForKey:playerId] == nil) ? 1 : [(NSNumber*)[distances valueForKey:playerId] doubleValue];
+}
+
+-(void) setDefaultDistance: (double) distance withPlayer: (NSString*) playerId {
+    [_defaultDistances setValue: [NSNumber numberWithDouble:distance] forKey: playerId];
+}
+
+-(double) getLifeAtNight:(long) i {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    return [_lifeByNight objectForKey: key] != nil ? [[_lifeByNight objectForKey: key] doubleValue] : 1;
+}
+
+-(double) getRoleAtNight:(long) i {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    return [_roleByNight objectForKey: key] != nil ? [[_roleByNight objectForKey: key] doubleValue] : 0;
+}
+
+-(double) getNoteAtNight:(long) i {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    return [_noteByNight objectForKey: key] != nil ? [[_noteByNight objectForKey: key] doubleValue] : 0;
+}
+
+-(double) getStatusAtNight:(long) i {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    return [_statusByNight objectForKey: key] != nil ? [[_statusByNight objectForKey: key] doubleValue] : 0;
 }
 
 -(void) addActionAtNight:(long) i to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules {
@@ -67,12 +116,21 @@
     return [_actionResults objectForKey: key] != nil ? [_actionResults objectForKey: key] : [NSNumber numberWithBool:NO];
 }
 
--(void) resetDistance {
-    for (NSString* key in [_distances allKeys]) {
-        [_distances setValue: [NSNumber numberWithDouble: 1] forKey: key];
-    }
+-(void) recordNightStatus: (long) i {
+    NSNumber* key = [NSNumber numberWithLong: i];
+    [_lifeByNight setObject: [NSNumber numberWithDouble: _life] forKey: key];
+    [_roleByNight setObject: [NSNumber numberWithDouble: _role] forKey: key];
+    [_noteByNight setObject: [NSNumber numberWithDouble: _note] forKey: key];
+    [_statusByNight setObject: [NSNumber numberWithDouble: _status] forKey: key];
+    [_distancesByNight setObject: [self cloneDistances: _distances] forKey: key];
+    [_defaultDistancesByNight setObject: [self cloneDistances: _defaultDistances] forKey: key];
 }
 
+-(void) resetDistance {
+    for (NSString* key in [_distances allKeys]) {
+        [_distances setValue: [NSNumber numberWithDouble: [self getDefaultDistanceWith:key]] forKey: key];
+    }
+}
 
 -(void) recordStatus {
     if(_lifeStack == nil) {
@@ -80,15 +138,30 @@
     }
     [_lifeStack addObject: [NSNumber numberWithDouble: _life]];
     
-    if(_distanceStack == nil) {
-        _distanceStack = [NSMutableArray new];
+    if(_roleStack == nil) {
+        _roleStack = [NSMutableArray new];
     }
-    [_distanceStack addObject: [self cloneDistances: _distances]];
+    [_roleStack addObject: [NSNumber numberWithDouble: _role]];
+    
+    if(_noteStack == nil) {
+        _noteStack = [NSMutableArray new];
+    }
+    [_noteStack addObject: [NSNumber numberWithDouble: _note]];
     
     if(_statusStack == nil) {
         _statusStack = [NSMutableArray new];
     }
     [_statusStack addObject: [NSNumber numberWithInt: _status]];
+    
+    if(_distanceStack == nil) {
+        _distanceStack = [NSMutableArray new];
+    }
+    [_distanceStack addObject: [self cloneDistances: _distances]];
+    
+    if(_defaultDistanceStack == nil) {
+        _defaultDistanceStack = [NSMutableArray new];
+    }
+    [_defaultDistanceStack addObject: [self cloneDistances: _defaultDistances]];
 }
 
 -(void) rollbackStatus {
@@ -96,13 +169,25 @@
         _life = [[_lifeStack lastObject] doubleValue];
         [_lifeStack removeLastObject];
     }
-    if(_distanceStack != nil && _distanceStack.count > 0) {
-        _distances = [_distanceStack lastObject];
-        [_distanceStack removeLastObject];
+    if(_roleStack != nil && _roleStack.count > 0) {
+        _role = [[_roleStack lastObject] doubleValue];
+        [_roleStack removeLastObject];
+    }
+    if(_noteStack != nil && _noteStack.count > 0) {
+        _note = [[_noteStack lastObject] doubleValue];
+        [_noteStack removeLastObject];
     }
     if(_statusStack != nil && _statusStack.count > 0) {
         _status = [((NSNumber *)[_statusStack lastObject]) intValue];
         [_statusStack removeLastObject];
+    }
+    if(_distanceStack != nil && _distanceStack.count > 0) {
+        _distances = [_distanceStack lastObject];
+        [_distanceStack removeLastObject];
+    }
+    if(_defaultDistanceStack != nil && _defaultDistanceStack.count > 0) {
+        _defaultDistances = [_defaultDistanceStack lastObject];
+        [_defaultDistanceStack removeLastObject];
     }
 }
 

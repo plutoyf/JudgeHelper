@@ -58,10 +58,11 @@
 -(NSArray*) getApplicatedRulesForActor: (Player*) actor atNight: (long) i;
 -(Player*) getPlayerFrom: (Player*) p1 and: (Player*) p2 withRole: (Role) r;
 
--(int) calculateFinalResult;
+-(int) calculateFinalResultAtNight: (long) i ;
 -(void) resetDistance;
 -(void) rollbackPlayersStatus;
 -(void) recordPlayersStatus;
+-(void) recordNightStatus: (long) i;
 
 -(void) run;
 

@@ -10,28 +10,8 @@
 
 @implementation Operation
 
--(NSNumber*) execute: (Player*) p1 :(Player*) p2 :(NSArray*) players {
-    double v = 0;
-    
-    switch (_property) {
-        case life:
-            v = p1.life;
-            break;
-        case note:
-            v = p1.note;
-            break;
-        case role:
-            v = p1.role;
-            break;
-        case status:
-            v = p1.status;
-            break;
-        case distance:
-            v = p2 != nil ? [p1 getDistanceWith: p2.id] : 0;
-            break;
-        default:
-            break;
-    }
+-(NSNumber*) execute: (Player*) p1 :(Player*) p2 :(NSArray*) players atNight: (long) night {
+    double v = [self getValue:p1 with:p2 atNight:night];
     
     if ([_op isEqualToString:@"="]) {
         v=_value;
@@ -44,7 +24,7 @@
     } else if ([_op isEqualToString:@"/="]) {
         v/=_value;
     } else {
-        return [NSNumber numberWithBool: [super compare: p1 with: p2]];
+        return [NSNumber numberWithBool: [super compare: p1 with: p2 atNight:night]];
     }
     
     switch (_property) {
@@ -56,6 +36,17 @@
             break;
         case status:
             p1.status = v;
+            break;
+        case defaultDistance:
+            if (p2 != nil) {
+                [p1 setDefaultDistance: v withPlayer: p2.id];
+                [p2 setDefaultDistance: v withPlayer: p1.id];
+            } else {
+                for (Player* p in players) {
+                    [p1 setDefaultDistance: v withPlayer: p.id];
+                    [p setDefaultDistance: v withPlayer: p1.id];
+                }
+            }
             break;
         case distance:
             if (p2 != nil) {

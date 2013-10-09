@@ -15,6 +15,7 @@
     Property _property;
     Role _role1;
     Role _role2;
+    NSNumber* _i;
     NSString* _op;
     double _value;
 }
@@ -22,6 +23,7 @@
 @property (nonatomic) Property property;
 @property (nonatomic) Role role1;
 @property (nonatomic) Role role2;
+@property (nonatomic) NSNumber* i;
 @property (nonatomic, strong) NSString* op;
 @property (atomic) double value;
 

@@ -7,5 +7,5 @@
 //
 
 typedef enum {
-    life = 1, distance = 2, role = 3, note = 4, status = 5
+    life = 1, defaultDistance = 2, distance = 3, role = 4, note = 5, status = 6
 } Property;

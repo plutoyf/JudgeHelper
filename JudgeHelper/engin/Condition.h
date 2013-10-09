@@ -13,6 +13,7 @@
 {
 }
 
--(BOOL) compare: (Player*) p1 with: (Player*) p2;
+-(BOOL) compare: (Player*) p1 with: (Player*) p2 atNight: (long) night ;
+-(double) getValue: (Player*) p1 with: (Player*) p2 atNight: (long) night ;
 
 @end

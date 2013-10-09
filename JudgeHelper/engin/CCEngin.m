@@ -50,7 +50,9 @@ static CCEngin *engin = nil;
 +(NSArray*) getRulesArray {
     NSMutableArray* rulesArray = [NSMutableArray new];
     [rulesArray addObject: @"Rule ( Guard+  ) :  Guard,  Anybody  -[ status(Anybody) == IN_GAME ; distance(Guard,  Anybody) == 1 ]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
+    //[rulesArray addObject: @"Rule ( Guard+  ) :  Guard,  Anybody  -[ status(Anybody) == IN_GAME ; distance(Guard,  Anybody) == 1 ; distance(Guard,  Anybody, -1) == 1]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
     [rulesArray addObject: @"Rule ( Guard-  ) :  Guard            -[ distance(Guard, Receiver) < 1 ; life(Guard) <= 0 ]>  life(Receiver) = 0 "];
+    [rulesArray addObject: @"Rule ( Guard0  ) :  Guard            -[ distance(Guard, Receiver) < 1 ; distance(Guard, Receiver, -1) < 1 ; ]>  defaultDistance(Guard, Anybody) = 2 "];
     [rulesArray addObject: @"Rule ( Killer  ) :  Killer, Anybody  -[ status(Anybody) == IN_GAME ; distance(Killer, Anybody) <= 1 ]>  life(Anybody) -= 1 "];
     [rulesArray addObject: @"Rule ( Doctor+ ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]> life(Anybody) += 1 "];
     [rulesArray addObject: @"Rule ( Doctor- ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) > 0 ]> life(Anybody) -= 0.5 "];
@@ -226,6 +228,8 @@ static CCEngin *engin = nil;
                     [self doActionAtNight: night withPlayer: p];
                 }
                 
+                [self recordNightStatus : night];
+                
                 //9. remove dead persons from game
                 deadPlayers = [NSMutableArray new];
                 for(Player* p in currentPlayers) {
@@ -269,7 +273,7 @@ static CCEngin *engin = nil;
         case 9:
             NSLog(@"case 9");
             //test if game is over, if not, continue the game
-            if([self printFinalResult]) {
+            if([self printFinalResultAtNight: night]) {
                 inGame = NO;
                 state = 0;
                 break;
@@ -323,7 +327,7 @@ static CCEngin *engin = nil;
         case 11:
             NSLog(@"case 11");
             //test if game is over, if not, continue the game
-            if([self printFinalResult]) {
+            if([self printFinalResultAtNight: night]) {
                 inGame = NO;
                 state = 0;
             }
@@ -436,6 +440,10 @@ static CCEngin *engin = nil;
     [super recordPlayersStatus];
 }
 
+-(void) recordNightStatus : (long) night {
+    [super recordNightStatus: night];
+}
+
 -(void) rollbackPlayersStatus {
     [super rollbackPlayersStatus];
     [self.displayDelegate rollbackPlayersStatus];
@@ -484,8 +492,8 @@ static CCEngin *engin = nil;
 }
 
 
--(BOOL) printFinalResult {
-    int result = [self calculateFinalResult];
+-(BOOL) printFinalResultAtNight: (long) i {
+    int result = [self calculateFinalResultAtNight: i];
     BOOL isFinished = NO;
     if(result > 99) {
         [self.displayDelegate showMessage:@"杀手及警察同时死亡，游戏平局"];

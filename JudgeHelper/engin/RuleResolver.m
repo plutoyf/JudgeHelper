@@ -148,15 +148,21 @@
     
     e.property = [Engin getPropertyFromString: part1];
     Role role1 = 0, role2 = 0;
-    long j = [part2 rangeOfString:@","].location;
-    if(j == NSNotFound) {
-        role1 = [Engin getRoleFromString: part2];
-    } else {
-        role1 = [Engin getRoleFromString: [part2 substringToIndex: j]];
-        role2 = [Engin getRoleFromString: [part2 substringFromIndex: j+1]];
+    NSNumber* i = nil;
+    NSArray* params = [part2 componentsSeparatedByString:@","];
+    if(params.count >= 1) {
+        role1 = [Engin getRoleFromString: [params objectAtIndex: 0]];
     }
+    if(params.count >= 2) {
+        role2 = [Engin getRoleFromString: [params objectAtIndex: 1]];
+    }
+    if(params.count >= 3) {
+        i = [NSNumber numberWithInteger: [[params objectAtIndex: 2] integerValue]];
+    }
+    
     e.role1 = role1;
     e.role2 = role2;
+    e.i = i;
     e.op = part3;
     
     double value = [Engin getRoleFromString : part4];
