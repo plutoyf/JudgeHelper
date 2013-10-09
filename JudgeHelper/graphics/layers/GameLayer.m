@@ -301,6 +301,10 @@ BOOL showDebugMessageEnable = NO;
     }
 }
 
+-(void) updatePlayerIconsToSelect: (NSArray*) eligiblePlayers withBypass: (BOOL) isShowBypass {
+    
+}
+
 -(void) showPlayerDebugMessage: (Player *) player inIncrement: (BOOL) increment {
     [self showDebugMessage:[player toString] inIncrement: increment];
 }

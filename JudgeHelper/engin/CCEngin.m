@@ -209,6 +209,16 @@ static CCEngin *engin = nil;
             NSLog(@"case 3");
             if([self getPlayersByRole: roleInAction].count == [self getCurrentRoleNumber: roleInAction]) {
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
+                NSArray* actors = [self getPlayersByRole: roleInAction];
+                NSMutableArray* eligiblePlayers = [NSMutableArray new];
+                BOOL isShowBypass = [self isEligibleActionAtNight: night withActors: actors andReceiver: [self getPlayerById:[Engin getRoleName:Game]]];
+                for(Player* p in _players) {
+                    if([self isEligibleActionAtNight: night withActors: actors andReceiver: p]) {
+                        [eligiblePlayers addObject:p];
+                    }
+                }
+                [self.displayDelegate updatePlayerIconsToSelect: eligiblePlayers withBypass: isShowBypass];
+                
                 state++;
             }
             break;
