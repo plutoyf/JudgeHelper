@@ -40,7 +40,7 @@
 - (void) selectPlayerById: (NSString*) id {
     CCPlayer* selPlayer = (CCPlayer*)[playersMap objectForKey:id];
     
-    id = (selPlayer.role == Judge) ? nil : selPlayer.id;
+    id = (selPlayer.role == Judge) ? @"Game" : selPlayer.id;
     
     if(rolePlayerToDefine > 0) {
         if(!defineRolePlayerBegin) {
@@ -54,7 +54,7 @@
                     [self initPlayersWithJudge: id];
                 }
                 
-                if([engin getRoleNumber:rolePlayerToDefine] == [engin getPlayersByRole:rolePlayerToDefine].count) {
+                if([engin didFinishedSettingPlayerForRole: rolePlayerToDefine]) {
                     rolePlayerToDefine = 0;
                     defineRolePlayerBegin = NO;
                     [engin action: id];

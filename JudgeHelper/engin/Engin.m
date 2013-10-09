@@ -199,6 +199,10 @@
 -(void) setPlayers: (NSArray*) players {
     _players = [NSMutableArray arrayWithArray:players];
     _playersMap = [NSMutableDictionary new];
+    
+    Player* game = [[Player new] init: [Engin getRoleName:Game] andName:[Engin getRoleName:Game] withRole:Game];
+    [_playersMap setValue:game forKey:game.id];
+    
     for(Player* p in players) {
         [_playersMap setValue: p forKey: p.id];
     }
@@ -331,7 +335,6 @@
     
     return result;
 }
-
 
 -(int) getRoleNumber : (Role) r {
     NSNumber* num = (NSNumber*)[_roleNumbers objectForKey:[Engin getRoleName:r]];

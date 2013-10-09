@@ -49,27 +49,28 @@ static CCEngin *engin = nil;
 
 +(NSArray*) getEligibilityRulesArray {
     NSMutableArray* rulesArray = [NSMutableArray new];
-    [rulesArray addObject: @"Rule ( Guard-select      ) :  Guard, Anybody       -[ status(Anybody) == IN_GAME ; distance(Guard,  Anybody) < 2 ]>"];
+    [rulesArray addObject: @"Rule ( Guard-select      ) :  Guard, Anybody       -[ status(Anybody) == IN_GAME ; distance(Guard, Anybody) < 2 ]>"];
     [rulesArray addObject: @"Rule ( Killer-select     ) :  Killer, Anybody      -[ status(Anybody) == IN_GAME ; ]>"];
     [rulesArray addObject: @"Rule ( Doctor-select     ) :  Doctor, Anybody      -[ status(Anybody) == IN_GAME ; ]>"];
     [rulesArray addObject: @"Rule ( Judge-select      ) :  Judge, Anybody       -[ status(Anybody) == IN_GAME ; ]>"];
     [rulesArray addObject: @"Rule ( Police-select     ) :  Police, Anybody      -[ ]>"];
     [rulesArray addObject: @"Rule ( Spy-select        ) :  Spy, Anybody         -[ ]>"];
     [rulesArray addObject: @"Rule ( Assassin-select   ) :  Assassin, Anybody    -[ status(Anybody) == IN_GAME ; ]>"];
+    [rulesArray addObject: @"Rule ( Assassin-select   ) :  Assassin, Anybody    -[ role(Anybody)   == Game    ; ]>"];
     [rulesArray addObject: @"Rule ( Undercover-select ) :  Undercover, Anybody  -[ ]>"];
     return rulesArray;
 }
 
 +(NSArray*) getActionRulesArray {
     NSMutableArray* rulesArray = [NSMutableArray new];
-    [rulesArray addObject: @"Rule ( Guard-protect        ) :  Guard, Anybody       -[ distance(Guard,  Anybody) <= 1 ]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
-    [rulesArray addObject: @"Rule ( Killer-kill          ) :  Killer, Anybody      -[ distance(Killer, Anybody) <= 1 ; role(Anybody) != Assassin ]>  life(Anybody) -= 1 "];
-    [rulesArray addObject: @"Rule ( Doctor-cure          ) :  Doctor, Anybody      -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]> life(Anybody) += 1   "];
-    [rulesArray addObject: @"Rule ( Doctor-miss          ) :  Doctor, Anybody      -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) >  0 ]> life(Anybody) -= 0.5 "];
-    [rulesArray addObject: @"Rule ( Judge-lyncher        ) :  Judge, Anybody       -[ distance(Judge,  Anybody) <= 1 ]>  life(Anybody) = 0 "];
-    [rulesArray addObject: @"Rule ( Police-research      ) :  Police, Anybody      -[ ]>  role(Anybody) == Killer "];
-    [rulesArray addObject: @"Rule ( Spy-research         ) :  Spy, Anybody         -[ ]>  role(Anybody) == Killer "];
-    [rulesArray addObject: @"Rule ( Assassin-kill        ) :  Assassin, Anybody    -[ ]>  role(Assassin) = Killer ; life(Anybody) -= 2 ; "];
+    [rulesArray addObject: @"Rule ( Guard-protect        ) :  Guard,      Anybody  -[ distance(Guard,  Anybody) <= 1 ]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
+    [rulesArray addObject: @"Rule ( Killer-kill          ) :  Killer,     Anybody  -[ distance(Killer, Anybody) <= 1 ; role(Anybody) != Assassin ]>  life(Anybody) -= 1 "];
+    [rulesArray addObject: @"Rule ( Doctor-cure          ) :  Doctor,     Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]> life(Anybody) += 1   "];
+    [rulesArray addObject: @"Rule ( Doctor-miss          ) :  Doctor,     Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) >  0 ]> life(Anybody) -= 0.5 "];
+    [rulesArray addObject: @"Rule ( Judge-lyncher        ) :  Judge,      Anybody  -[ distance(Judge,  Anybody) <= 1 ]>  life(Anybody) = 0 "];
+    [rulesArray addObject: @"Rule ( Assassin-kill        ) :  Assassin,   Anybody  -[ role(Anybody) != Game ]>  role(Assassin) = Killer ; life(Anybody) -= 2 ; "];
+    [rulesArray addObject: @"Rule ( Police-research      ) :  Police,     Anybody  -[ ]>  role(Anybody) == Killer "];
+    [rulesArray addObject: @"Rule ( Spy-research         ) :  Spy,        Anybody  -[ ]>  role(Anybody) == Killer "];
     [rulesArray addObject: @"Rule ( Undercover-research1 ) :  Undercover, Anybody  -[ ]>  role(Anybody) == Killer "];
     [rulesArray addObject: @"Rule ( Undercover-research2 ) :  Undercover, Anybody  -[ ]>  role(Anybody) == Assassin "];
     return rulesArray;
@@ -198,7 +199,7 @@ static CCEngin *engin = nil;
             [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请出来", [self getRoleLabel: roleInAction]]];
             state++;
             
-            if([self getPlayersByRole: roleInAction].count != [self getRoleNumber: roleInAction]) {
+            if([self getPlayersByRole: roleInAction].count != [self getCurrentRoleNumber: roleInAction]) {
                 [self.displayDelegate definePlayerForRole: roleInAction];
                 break;
             } else {
@@ -206,7 +207,7 @@ static CCEngin *engin = nil;
             }
         case 3:
             NSLog(@"case 3");
-            if([self getPlayersByRole: roleInAction].count == [self getRoleNumber: roleInAction]) {
+            if([self getPlayersByRole: roleInAction].count == [self getCurrentRoleNumber: roleInAction]) {
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
                 state++;
             }
@@ -227,8 +228,10 @@ static CCEngin *engin = nil;
                     NSNumber* result = [self doActionAtNight: night withActors: playersInAction andReceiver: selectedPlayer];
                     
                     [self.displayDelegate addPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
-                    [self.displayDelegate addActionIcon: ((Player*)[playersInAction objectAtIndex: 0]).role to: selectedPlayer withResult: [actor getActionResultAtNight:night].boolValue];
+                    [self.displayDelegate addActionIcon: roleInAction to: selectedPlayer withResult: [actor getActionResultAtNight:night].boolValue];
                     [self.displayDelegate updatePlayerLabels];
+                    [self updateCurrentRoleNumbers];
+                    
                     [self debugPlayers];
                     
                     state++;
@@ -270,6 +273,8 @@ static CCEngin *engin = nil;
                 for(Player* p in currentPlayers) {
                     [self doClearenceAtNight: night withPlayer: p];
                 }
+                
+                [self updateCurrentRoleNumbers];
                 
                 [self recordNightStatus : night];
                 
@@ -497,6 +502,31 @@ static CCEngin *engin = nil;
     for(Player* p in _players) {
         if([p isInGame]) {
             [currentPlayers addObject:p];
+        }
+    }
+}
+
+-(void) initRoles: (NSDictionary*) roleNumbers {
+    [super initRoles:roleNumbers];
+    _currentRoleNumbers = [NSMutableDictionary dictionaryWithDictionary:_roleNumbers];
+}
+
+-(BOOL) didFinishedSettingPlayerForRole:(Role)r {
+    return ([self getCurrentRoleNumber:r] == [self getPlayersByRole:r].count);
+}
+
+-(int) getCurrentRoleNumber : (Role) r {
+    NSNumber* num = (NSNumber*)[_currentRoleNumbers objectForKey:[Engin getRoleName:r]];
+    return (num && num.intValue > 0) ? num.intValue : 0;
+}
+
+-(void) updateCurrentRoleNumbers {
+    for(Player* p in _players) {
+        NSString* key0 = [Engin getRoleName: [p.roleStack.lastObject intValue]];
+        NSString* key1 = [Engin getRoleName: p.role];
+        if(key0 != key1) {
+            [_currentRoleNumbers setObject: [NSNumber numberWithInt:[[_currentRoleNumbers objectForKey:key0] intValue]-1] forKey: key0];
+            [_currentRoleNumbers setObject: [NSNumber numberWithInt:[[_currentRoleNumbers objectForKey:key1] intValue]+1] forKey: key1];
         }
     }
 }

@@ -21,6 +21,7 @@
     int state;
     int oIndex;
     Role roleInAction;
+    NSMutableDictionary* _currentRoleNumbers;
     NSString* selectedPlayerId;
     Player* selectedPlayer;
     NSMutableArray* initialPlayers;
@@ -45,6 +46,7 @@
 -(NSString*) getRoleActionLabel: (Role) r;
 
 -(void) action: (NSString*) id;
+-(BOOL) didFinishedSettingPlayerForRole: (Role) r;
 -(void) setPlayerNumberForRole: (int) i;
 -(Role) getCurrentRole;
 -(int) getCurrentNight;
