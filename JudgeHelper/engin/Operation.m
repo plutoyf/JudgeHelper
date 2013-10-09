@@ -34,6 +34,9 @@
         case note:
             p1.note = v;
             break;
+        case role:
+            p1.role = v;
+            break;
         case status:
             p1.status = v;
             break;

@@ -44,6 +44,8 @@
     if ([@"Doctor" isEqualToString: str]) return Doctor;
     if ([@"Spy" isEqualToString: str]) return Spy;
     if ([@"Citizen" isEqualToString: str]) return Citizen;
+    if ([@"Assassin" isEqualToString: str]) return Assassin;
+    if ([@"Undercover" isEqualToString: str]) return Undercover;
     if ([@"Anybody" isEqualToString: str]) return Anybody;
     if ([@"Receiver" isEqualToString: str]) return Receiver;
     if ([@"Judge" isEqualToString: str]) return Judge;
@@ -85,6 +87,10 @@
         case Receiver:
             name = @"Receiver";
             break;
+        case Assassin:
+            return @"Assassin";
+        case Undercover:
+            return @"Undercover";
         default:
             name = @"";
             break;
@@ -282,9 +288,12 @@
     }
     for(Rule* r in matchedRules) {
         isProcessed = YES;
+        NSNumber* rr = nil;
         for(Operation* o in r.operations) {
-            result = [self executeOperation: o withRule: r andActors: actors andReceiver: receiver atNight: i];
+            NSNumber* t = [self executeOperation: o withRule: r andActors: actors andReceiver: receiver atNight: i];
+            rr = rr == nil ? t : t == nil ? rr : [NSNumber numberWithBool: rr.boolValue && t.boolValue ];
         }
+        result = result == nil ? rr : rr == nil ? result : [NSNumber numberWithBool: rr.boolValue || result.boolValue ];
     }
     
     if(receiver != nil) {

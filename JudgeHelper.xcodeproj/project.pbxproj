@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		E011584717D0D037007B3BDD /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = E011584517D0D037007B3BDD /* down.png */; };
 		E011584817D0D037007B3BDD /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = E011584617D0D037007B3BDD /* up.png */; };
+		E01E17A0180590B3007CD3A4 /* Icon-20-assassin.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */; };
+		E01E17A1180590B3007CD3A4 /* Icon-20-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */; };
+		E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */; };
+		E01E17A3180590B3007CD3A4 /* Icon-72-assassin.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179D180590B3007CD3A4 /* Icon-72-assassin.png */; };
+		E01E17A4180590B3007CD3A4 /* Icon-72-undercover-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */; };
+		E01E17A5180590B3007CD3A4 /* Icon-72-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */; };
 		E024D6B117CFA2BB0032EE61 /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = E024D6B017CFA2BB0032EE61 /* quit.png */; };
 		E02AC33817D4FA8600923C8E /* btn_off2_red-40-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33717D4FA8600923C8E /* btn_off2_red-40-sel.png */; };
 		E02AC33A17D4FAE700923C8E /* btn_on2_green-40-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33917D4FAE700923C8E /* btn_on2_green-40-sel.png */; };
@@ -273,6 +279,12 @@
 /* Begin PBXFileReference section */
 		E011584517D0D037007B3BDD /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = down.png; path = Resources/down.png; sourceTree = "<group>"; };
 		E011584617D0D037007B3BDD /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = up.png; path = Resources/up.png; sourceTree = "<group>"; };
+		E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-assassin.png"; path = "Resources/Icon-20-assassin.png"; sourceTree = "<group>"; };
+		E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-undercover.png"; path = "Resources/Icon-20-undercover.png"; sourceTree = "<group>"; };
+		E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin-dead.png"; path = "Resources/Icon-72-assassin-dead.png"; sourceTree = "<group>"; };
+		E01E179D180590B3007CD3A4 /* Icon-72-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin.png"; path = "Resources/Icon-72-assassin.png"; sourceTree = "<group>"; };
+		E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-undercover-dead.png"; path = "Resources/Icon-72-undercover-dead.png"; sourceTree = "<group>"; };
+		E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-undercover.png"; path = "Resources/Icon-72-undercover.png"; sourceTree = "<group>"; };
 		E024D6B017CFA2BB0032EE61 /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quit.png; path = Resources/quit.png; sourceTree = "<group>"; };
 		E02AC33717D4FA8600923C8E /* btn_off2_red-40-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_off2_red-40-sel.png"; path = "Resources/btn_off2_red-40-sel.png"; sourceTree = "<group>"; };
 		E02AC33917D4FAE700923C8E /* btn_on2_green-40-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_on2_green-40-sel.png"; path = "Resources/btn_on2_green-40-sel.png"; sourceTree = "<group>"; };
@@ -797,6 +809,12 @@
 		E059F4A717B02BB40071829E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */,
+				E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */,
+				E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */,
+				E01E179D180590B3007CD3A4 /* Icon-72-assassin.png */,
+				E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */,
+				E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */,
 				E0381E95180459580040CE0E /* Icon-Small-40.png */,
 				E0381E96180459580040CE0E /* Icon-Small-80.png */,
 				E0381E97180459580040CE0E /* Icon-Small-100.png */,
@@ -1502,6 +1520,7 @@
 				E059F82117B02E870071829E /* Icon-72-citizen-dead.png in Resources */,
 				E059F82217B02E870071829E /* Icon-72-citizen.png in Resources */,
 				E059F82317B02E870071829E /* Icon-72-doctor-dead.png in Resources */,
+				E01E17A1180590B3007CD3A4 /* Icon-20-undercover.png in Resources */,
 				E059F82417B02E870071829E /* Icon-72-doctor.png in Resources */,
 				E059F82517B02E870071829E /* Icon-72-guard-dead.png in Resources */,
 				E059F82617B02E870071829E /* Icon-72-guard.png in Resources */,
@@ -1524,6 +1543,8 @@
 				E059F83717B02E870071829E /* save.png in Resources */,
 				E059F83817B02E870071829E /* start.png in Resources */,
 				E0381E99180459580040CE0E /* Icon-Small-80.png in Resources */,
+				E01E17A3180590B3007CD3A4 /* Icon-72-assassin.png in Resources */,
+				E01E17A0180590B3007CD3A4 /* Icon-20-assassin.png in Resources */,
 				E059F83917B02E870071829E /* undo.png in Resources */,
 				E06068B717B1145600F3E4CB /* delete_mini.png in Resources */,
 				E06068B817B1145600F3E4CB /* delete.png in Resources */,
@@ -1543,8 +1564,10 @@
 				E02AC33D17D4FB8800923C8E /* down-sel.png in Resources */,
 				E02AC33E17D4FB8800923C8E /* up-sel.png in Resources */,
 				E02AC34117D4FF5800923C8E /* add-sel.png in Resources */,
+				E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */,
 				E02AC34217D4FF5800923C8E /* next-sel.png in Resources */,
 				E02AC34C17D501ED00923C8E /* album-sel.png in Resources */,
+				E01E17A5180590B3007CD3A4 /* Icon-72-undercover.png in Resources */,
 				E02AC34D17D501ED00923C8E /* camera-sel.png in Resources */,
 				E02AC34E17D501ED00923C8E /* cancel-sel.png in Resources */,
 				E02AC34F17D501ED00923C8E /* previous-sel.png in Resources */,
@@ -1553,6 +1576,7 @@
 				E02AC35117D501ED00923C8E /* restart-sel.png in Resources */,
 				E02AC35217D501ED00923C8E /* return-sel.png in Resources */,
 				E02AC35317D501ED00923C8E /* save-sel.png in Resources */,
+				E01E17A4180590B3007CD3A4 /* Icon-72-undercover-dead.png in Resources */,
 				E02AC35417D501ED00923C8E /* undo-sel.png in Resources */,
 				E0798A9417D5200500CD7E47 /* left-sel.png in Resources */,
 				E0798A9517D5200500CD7E47 /* quit-sel.png in Resources */,

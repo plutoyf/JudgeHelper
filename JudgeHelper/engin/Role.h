@@ -7,5 +7,5 @@
 //
 
 typedef enum {
-    Game = 1, Guard = 2, Killer = 3, Police = 4, Doctor = 5, Spy = 6, Citizen = 7, Anybody = 8, Receiver = 9, Judge = 10
+    Game = 1, Anybody = 2, Receiver = 3, Judge = 4, Guard = 5, Killer = 6, Police = 7, Doctor = 8, Spy = 9, Citizen = 10, Assassin = 11, Undercover = 12,
 } Role;

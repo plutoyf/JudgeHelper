@@ -219,6 +219,10 @@
             return @"老婆";
         case Judge:
             return @"法官";
+        case Assassin:
+            return @"暗杀";
+        case Undercover:
+            return @"卧底";
         default:
             return [Engin getRoleName: r];
     }
@@ -238,6 +242,10 @@
             return @"认夫";
         case Judge:
             return @"判决";
+        case Assassin:
+            return @"杀人";
+        case Undercover:
+            return @"验人";
         default:
             return @"";
     }
@@ -257,6 +265,10 @@
             return @"认";
         case Judge:
             return @"处死";
+        case Assassin:
+            return @"杀";
+        case Undercover:
+            return @"验";
         default:
             return @"";
     }
