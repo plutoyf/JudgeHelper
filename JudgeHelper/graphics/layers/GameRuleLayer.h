@@ -14,7 +14,6 @@
 {
     CCEngin* engin;
     UITextView *rulesTextView;
-    UITextView *resultRulesTextView;
     UIButton *saveButton;
     UIButton *cancelButton;
     UIButton *restoreButton;

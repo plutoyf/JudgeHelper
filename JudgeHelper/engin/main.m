@@ -14,15 +14,19 @@ int main0(int argc, const char * argv[])
 {
 
     @autoreleasepool {        
-        NSString* rulesString = @"";
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Guard+  ) :  Guard,  Anybody  -[ distance(Guard,  Anybody) == 1                      ]>  distance(Anybody) =  1.1 ; distance(Guard, Anybody) = 0.1 ; "];   
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Guard-  ) :  Guard            -[ distance(Guard, Receiver) <  1 ; life(Guard) <= 0   ]>  life(Result)      =  0                                      "];
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Killer  ) :  Killer, Anybody  -[ distance(Killer, Anybody) <= 1                      ]>  life(Anybody)     -= 1                                      "];
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Doctor+ ) :  Doctor, Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]>  life(Anybody)     += 1                                      "];
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Doctor- ) :  Doctor, Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) >  0 ]>  life(Anybody)     -= 0.5                                    "];
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Judge   ) :  Judge,  Anybody  -[ distance(Judge,  Anybody) <= 1                      ]>  life(Anybody)     =  0                                      "];
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Police  ) :  Police, Anybody  -[                                                     ]>  role(Anybody)     == 3                                      "];
-        rulesString = [rulesString stringByAppendingString: @"Rule ( Spy     ) :  Spy,    Anybody  -[                                                     ]>  role(Anybody)     == 3                                      "];
+        NSString* eligibilityRulesString = @"";
+        
+        NSString* actionRulesString = @"";
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Guard+  ) :  Guard,  Anybody  -[ distance(Guard,  Anybody) == 1                      ]>  distance(Anybody) =  1.1 ; distance(Guard, Anybody) = 0.1 ; "];
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Killer  ) :  Killer, Anybody  -[ distance(Killer, Anybody) <= 1                      ]>  life(Anybody)     -= 1                                      "];
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Doctor+ ) :  Doctor, Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]>  life(Anybody)     += 1                                      "];
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Doctor- ) :  Doctor, Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) >  0 ]>  life(Anybody)     -= 0.5                                    "];
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Judge   ) :  Judge,  Anybody  -[ distance(Judge,  Anybody) <= 1                      ]>  life(Anybody)     =  0                                      "];
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Police  ) :  Police, Anybody  -[                                                     ]>  role(Anybody)     == 3                                      "];
+        actionRulesString = [actionRulesString stringByAppendingString: @"Rule ( Spy     ) :  Spy,    Anybody  -[                                                     ]>  role(Anybody)     == 3                                      "];
+        
+        NSString* clearenceRulesString = @"";
+        clearenceRulesString = [actionRulesString stringByAppendingString: @"Rule ( Guard-  ) :  Guard            -[ distance(Guard, Receiver) <  1 ; life(Guard) <= 0   ]>  life(Result)      =  0                                      "];
         
         NSString* ordersString = @"Guard, Killer, Police, Doctor, Spy";
         
@@ -33,16 +37,28 @@ int main0(int argc, const char * argv[])
         resultRulesString = [resultRulesString stringByAppendingString: @"Rule ( Equals  ) :  Game  -[ life(Police) <=0 ; life(Killer) <=0 ]>  note(Game) += 999 "];
         
         NSArray* orders = [RuleResolver resolveOrder: ordersString];
-        NSArray* rules = [RuleResolver resolveRules: rulesString];
+        NSArray* eligibilityRules = [RuleResolver resolveRules: eligibilityRulesString];
+        NSArray* actionRules = [RuleResolver resolveRules: actionRulesString];
+        NSArray* clearenceRules = [RuleResolver resolveRules: clearenceRulesString];
         NSArray* resultRules = [RuleResolver resolveRules: resultRulesString];
         
-        NSLog(@"\n====== Game Orders ======\n");
+        NSLog(@"\n====== Role Orders ======\n");
         for (NSString* o in orders) {
             NSLog(@"%@", o);
         }
         
-        NSLog(@"\n====== Game Rules ======\n");
-        for (Rule* r in rules) {
+        NSLog(@"\n====== Eligibility Rules ======\n");
+        for (Rule* r in eligibilityRules) {
+            NSLog(@"%@", [r toString]);
+        }
+        
+        NSLog(@"\n====== Action Rules ======\n");
+        for (Rule* r in actionRules) {
+            NSLog(@"%@", [r toString]);
+        }
+        
+        NSLog(@"\n====== Clearence Rules ======\n");
+        for (Rule* r in clearenceRules) {
             NSLog(@"%@", [r toString]);
         }
         
@@ -75,7 +91,7 @@ int main0(int argc, const char * argv[])
         [players addObject: citizen3];
         [players addObject: judge];
         
-        Engin* engin = [[ConsoleEngin new] initWithRules:rules andResultRules:resultRules andRoles:nil andOrders:orders];
+        Engin* engin = [[ConsoleEngin new] initWithRules:eligibilityRules :actionRules :clearenceRules :resultRules andRoles:nil andOrders:orders];
         [engin setPlayers: players];
         
         [engin run];

@@ -137,9 +137,11 @@
 -(void) run {
 }
 
--(id) initWithRules: (NSArray*) rules andResultRules: (NSArray*) resultRules andRoles: (NSArray*) roles andOrders: (NSArray*) orders {
+-(id) initWithRules: (NSArray*) eligibilityRules : (NSArray*) actionRules : (NSArray*) clearenceRules : (NSArray*) resultRules andRoles: (NSArray*) roles andOrders: (NSArray*) orders {
     if(self = [super init]) {
-        _rules = [NSMutableArray arrayWithArray:rules];
+        _eligibilityRules = [NSMutableArray arrayWithArray:eligibilityRules];
+        _actionRules = [NSMutableArray arrayWithArray:actionRules];
+        _clearenceRules = [NSMutableArray arrayWithArray:clearenceRules];
         _resultRules = [NSMutableArray arrayWithArray:resultRules];
         _roles = [NSMutableArray arrayWithArray:roles];
         _originalOrders = [NSMutableArray arrayWithArray:orders];
@@ -160,8 +162,27 @@
     }
 }
 
--(void) setRules: (NSArray*) rules {
-    _rules = [NSMutableArray arrayWithArray:rules];
+-(void) setRules: (NSArray*) eligibilityRules : (NSArray*) actionRules : (NSArray*) clearenceRules : (NSArray*) resultRules {
+    _eligibilityRules = [NSMutableArray arrayWithArray:eligibilityRules];
+    _actionRules = [NSMutableArray arrayWithArray:actionRules];
+    _clearenceRules = [NSMutableArray arrayWithArray:clearenceRules];
+    _resultRules = [NSMutableArray arrayWithArray:resultRules];
+
+}
+
+-(void) setEligibilityRules: (NSArray*) eligibilityRules {
+    _eligibilityRules = [NSMutableArray arrayWithArray:eligibilityRules];
+    
+}
+
+-(void) setActionRules: (NSArray*) actionRules {
+    _actionRules = [NSMutableArray arrayWithArray:actionRules];
+    
+}
+
+-(void) setClearenceRules: (NSArray*) clearenceRules {
+    _clearenceRules = [NSMutableArray arrayWithArray:clearenceRules];
+    
 }
 
 -(void) setResultRules: (NSArray*) resultRules {
@@ -198,6 +219,32 @@
     NSLog(@"== Rollback Players Status, stack depth = %d", [((Player*)[_players objectAtIndex:0]) getStackDepth]);
 }
 
+
+/* 
+ Actions' methodes : eligibilityTest / doAction / doClearence 
+ */
+-(BOOL) isEligibleActionAtNight: (long) i withPlayer: (Player*) player {
+    return [self isEligibleActionAtNight: i withActor: player andReceiver: nil];
+}
+
+-(BOOL) isEligibleActionAtNight: (long) i withActor: (Player*) actor andReceiver: (Player*) receiver {
+    return [self isEligibleActionAtNight: i withActors: [NSArray arrayWithObject: actor] andReceiver: nil];
+}
+
+-(BOOL) isEligibleActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
+    int actorsEligibilityRuleNum = 0;
+    for(Rule* r in self.eligibilityRules) {
+        Player* actor = [actors objectAtIndex:0];
+        if(r.actor == actor.role) {
+            actorsEligibilityRuleNum++;
+            if([self isRule: r matchedWithActors: actors andReceiver: receiver atNight: i]) {
+                return YES;
+            }
+        }
+    }
+    return actorsEligibilityRuleNum==0;
+}
+
 -(NSNumber*) doActionAtNight: (long) i withPlayer: (Player*) player {
     return [self doActionAtNight: i withActor: player andReceiver: nil];
 }
@@ -206,27 +253,29 @@
     return [self doActionAtNight: i withActors: [NSArray arrayWithObject: actor] andReceiver: nil];
 }
 
--(BOOL) isEligibleActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
-    if(receiver.status == IN_GAME) {
-        return YES;
-    }
-    
-    for(Rule* r in self.rules) {
-        if([self isRule: r matchedWithActors: actors andReceiver: receiver atNight: i]) {
-            return YES;
-        }
-    }
-    
-    return NO;
+-(NSNumber*) doActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
+    return [self runRules: self.actionRules atNight: i withActors: actors andReceiver: receiver];
 }
 
--(NSNumber*) doActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
+-(NSNumber*) doClearenceAtNight: (long) i withPlayer: (Player*) player {
+    return [self doClearenceAtNight: i withActor: player andReceiver: nil];
+}
+
+-(NSNumber*) doClearenceAtNight: (long) i withActor: (Player*) actor andReceiver: (Player*) receiver {
+    return [self doClearenceAtNight: i withActors: [NSArray arrayWithObject: actor] andReceiver: nil];
+}
+
+-(NSNumber*) doClearenceAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
+    return [self runRules: self.clearenceRules atNight: i withActors: actors andReceiver: receiver];
+}
+
+-(NSNumber*) runRules: (NSArray*) rules atNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
     NSNumber* result = nil;
     BOOL isProcessed = NO;
     
     // find rules to execute
     NSMutableArray* matchedRules = [NSMutableArray new];
-    for(Rule* r in self.rules) {
+    for(Rule* r in rules) {
         if([self isRule: r matchedWithActors: actors andReceiver: receiver atNight: i]) {
             [matchedRules addObject: r];
         }
@@ -273,6 +322,7 @@
     
     return result;
 }
+
 
 -(int) getRoleNumber : (Role) r {
     NSNumber* num = (NSNumber*)[_roleNumbers objectForKey:[Engin getRoleName:r]];

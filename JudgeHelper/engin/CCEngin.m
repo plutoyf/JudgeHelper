@@ -21,7 +21,7 @@ static CCEngin *engin = nil;
 
 +(CCEngin*) getEngin {
     if(engin == nil) {
-        engin = [[CCEngin new] initWithRules:[self createRules] andResultRules:[self createResultRules] andRoles:[self createRoles] andOrders:[self createOrders]];
+        engin = [[CCEngin new] initWithRules:[self createEligibilityRules] :[self createActionRules] :[self createClearenceRules] :[self createResultRules] andRoles:[self createRoles] andOrders:[self createOrders]];
         [engin initRoles:[self createRoleNumbers]];
     }
     return engin;
@@ -47,41 +47,79 @@ static CCEngin *engin = nil;
     return [RuleResolver resolveOrder: [self getOrdersString]];
 }
 
-+(NSArray*) getRulesArray {
++(NSArray*) getEligibilityRulesArray {
     NSMutableArray* rulesArray = [NSMutableArray new];
-    [rulesArray addObject: @"Rule ( Guard+  ) :  Guard,  Anybody  -[ status(Anybody) == IN_GAME ; distance(Guard,  Anybody) == 1 ]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
-    //[rulesArray addObject: @"Rule ( Guard+  ) :  Guard,  Anybody  -[ status(Anybody) == IN_GAME ; distance(Guard,  Anybody) == 1 ; distance(Guard,  Anybody, -1) == 1]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
-    [rulesArray addObject: @"Rule ( Guard-  ) :  Guard            -[ distance(Guard, Receiver) < 1 ; life(Guard) <= 0 ]>  life(Receiver) = 0 "];
-    [rulesArray addObject: @"Rule ( Guard0  ) :  Guard            -[ distance(Guard, Receiver) < 1 ; distance(Guard, Receiver, -1) < 1 ; ]>  defaultDistance(Guard, Anybody) = 2 "];
-    [rulesArray addObject: @"Rule ( Killer  ) :  Killer, Anybody  -[ status(Anybody) == IN_GAME ; distance(Killer, Anybody) <= 1 ]>  life(Anybody) -= 1 "];
-    [rulesArray addObject: @"Rule ( Doctor+ ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]> life(Anybody) += 1 "];
-    [rulesArray addObject: @"Rule ( Doctor- ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; distance(Doctor, Anybody) <= 1 ; life(Anybody) > 0 ]> life(Anybody) -= 0.5 "];
-    [rulesArray addObject: @"Rule ( Judge   ) :  Judge,  Anybody  -[ status(Anybody) == IN_GAME ; distance(Judge,  Anybody) <= 1 ]>  life(Anybody) = 0 "];
-    [rulesArray addObject: @"Rule ( Police  ) :  Police, Anybody  -[ ]>  role(Anybody) == Killer "];
-    [rulesArray addObject: @"Rule ( Spy     ) :  Spy,    Anybody  -[ ]>  role(Anybody) == Killer "];
+    [rulesArray addObject: @"Rule ( Guard-select    ) :  Guard, Anybody   -[ status(Anybody) == IN_GAME ; distance(Guard,  Anybody) < 2 ]>"];
+    [rulesArray addObject: @"Rule ( Killer-select   ) :  Killer, Anybody  -[ status(Anybody) == IN_GAME ; ]>"];
+    [rulesArray addObject: @"Rule ( Doctor-select   ) :  Doctor, Anybody  -[ status(Anybody) == IN_GAME ; ]>"];
+    [rulesArray addObject: @"Rule ( Judge-select    ) :  Judge, Anybody   -[ status(Anybody) == IN_GAME ; ]>"];
+    [rulesArray addObject: @"Rule ( Police-select   ) :  Police, Anybody  -[ ]>"];
+    [rulesArray addObject: @"Rule ( Spy-select      ) :  Spy, Anybody     -[ ]>"];
     return rulesArray;
 }
 
-+(NSString*) getRulesString {
++(NSArray*) getActionRulesArray {
+    NSMutableArray* rulesArray = [NSMutableArray new];
+    [rulesArray addObject: @"Rule ( Guard-protect   ) :  Guard, Anybody   -[ distance(Guard,  Anybody) <= 1 ]>  distance(Anybody) = 1.1 ; distance(Guard, Anybody) = 0.1 "];
+    [rulesArray addObject: @"Rule ( Killer-kill     ) :  Killer, Anybody  -[ distance(Killer, Anybody) <= 1 ]>  life(Anybody) -= 1 "];
+    [rulesArray addObject: @"Rule ( Doctor-cure     ) :  Doctor, Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) <= 0 ]> life(Anybody) += 1   "];
+    [rulesArray addObject: @"Rule ( Doctor-miss     ) :  Doctor, Anybody  -[ distance(Doctor, Anybody) <= 1 ; life(Anybody) >  0 ]> life(Anybody) -= 0.5 "];
+    [rulesArray addObject: @"Rule ( Judge-lyncher   ) :  Judge, Anybody   -[ distance(Judge,  Anybody) <= 1 ]>  life(Anybody) = 0 "];
+    [rulesArray addObject: @"Rule ( Police-research ) :  Police, Anybody  -[ ]>  role(Anybody) == Killer "];
+    [rulesArray addObject: @"Rule ( Spy-research    ) :  Spy, Anybody     -[ ]>  role(Anybody) == Killer "];
+    return rulesArray;
+}
+
++(NSArray*) getClearenceRulesArray {
+    NSMutableArray* rulesArray = [NSMutableArray new];
+    [rulesArray addObject: @"Rule ( Guard-dead      ) :  Guard            -[ distance(Guard, Receiver) < 1 ; life(Guard) <= 0 ]>  life(Receiver) = 0 "];
+    [rulesArray addObject: @"Rule ( Guard-maxi      ) :  Guard            -[ distance(Guard, Receiver) < 1 ; distance(Guard, Receiver, -1) < 1 ; ]>  defaultDistance(Guard, Anybody) = 2 "];
+    return rulesArray;
+}
+
++(NSArray*) getResultRulesArray {
+    NSMutableArray* rulesArray = [NSMutableArray new];
+    [rulesArray addObject: @"Rule ( Police1         ) :  Game  -[ life(Killer) <=0 ]>  note(Game) += 2 "];
+    [rulesArray addObject: @"Rule ( Killer1         ) :  Game  -[ life(Police) <=0 ]>  note(Game) -= 1 "];
+    [rulesArray addObject: @"Rule ( Killer2         ) :  Game  -[ life(Guard)  <=0 ; life(Doctor) <=0 ; life(Spy) <=0 ; life(Citizen) <=0 ]>  note(Game) -= 1 "];
+    [rulesArray addObject: @"Rule ( Equals          ) :  Game  -[ life(Police) <=0 ; life(Killer) <=0 ]>  note(Game) += 999 "];
+    return rulesArray;
+}
+
++(NSString*) getEligibilityRulesString {
     NSString* rulesString = @"";
-    for(NSString* r in [self getRulesArray]) {
+    for(NSString* r in [self getEligibilityRulesArray]) {
         rulesString = [rulesString stringByAppendingString: r];
     }
     return rulesString;
 }
 
-+(NSArray*) createRules {
-    return [RuleResolver resolveRules: [self getRulesString]];
-    
++(NSArray*) createEligibilityRules {
+    return [RuleResolver resolveRules: [self getEligibilityRulesString]];
 }
 
-+(NSArray*) getResultRulesArray {
-    NSMutableArray* rulesArray = [NSMutableArray new];
-    [rulesArray addObject: @"Rule ( Police1 ) :  Game  -[ life(Killer) <=0 ]>  note(Game) += 2 "];
-    [rulesArray addObject: @"Rule ( Killer1 ) :  Game  -[ life(Police) <=0 ]>  note(Game) -= 1 "];
-    [rulesArray addObject: @"Rule ( Killer2 ) :  Game  -[ life(Guard)  <=0 ; life(Doctor) <=0 ; life(Spy) <=0 ; life(Citizen) <=0 ]>  note(Game) -= 1 "];
-    [rulesArray addObject: @"Rule ( Equals  ) :  Game  -[ life(Police) <=0 ; life(Killer) <=0 ]>  note(Game) += 999 "];
-    return rulesArray;
++(NSString*) getActionRulesString {
+    NSString* rulesString = @"";
+    for(NSString* r in [self getActionRulesArray]) {
+        rulesString = [rulesString stringByAppendingString: r];
+    }
+    return rulesString;
+}
+
++(NSArray*) createActionRules {
+    return [RuleResolver resolveRules: [self getActionRulesString]];
+}
+
++(NSString*) getClearenceRulesString {
+    NSString* rulesString = @"";
+    for(NSString* r in [self getClearenceRulesArray]) {
+        rulesString = [rulesString stringByAppendingString: r];
+    }
+    return rulesString;
+}
+
++(NSArray*) createClearenceRules {
+    return [RuleResolver resolveRules: [self getClearenceRulesString]];
 }
 
 +(NSString*) getResultRulesString {
@@ -225,7 +263,7 @@ static CCEngin *engin = nil;
                 
                 //8. do clearence after one night
                 for(Player* p in currentPlayers) {
-                    [self doActionAtNight: night withPlayer: p];
+                    [self doClearenceAtNight: night withPlayer: p];
                 }
                 
                 [self recordNightStatus : night];
@@ -440,8 +478,8 @@ static CCEngin *engin = nil;
     [super recordPlayersStatus];
 }
 
--(void) recordNightStatus : (long) night {
-    [super recordNightStatus: night];
+-(void) recordNightStatus : (long) i {
+    [super recordNightStatus: i];
 }
 
 -(void) rollbackPlayersStatus {

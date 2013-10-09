@@ -19,7 +19,7 @@
     
     NSArray* rs = [input componentsSeparatedByString:@"Rule("];
     for (int i = 0; i<[rs count]; i++) {
-        NSString* r = [rs objectAtIndex: i];
+        NSString* r = [[rs objectAtIndex: i] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"\n"]];
         if([r length] == 0) {
             continue;
         }

@@ -29,12 +29,16 @@
 }
 
 @property (nonatomic, assign) id<CCEnginDisplayDelegate> displayDelegate;
-@property (nonatomic, retain) NSString* rulesString;
+@property (nonatomic, retain) NSString* eligibilityRulesString;
+@property (nonatomic, retain) NSString* actionRulesString;
+@property (nonatomic, retain) NSString* clearenceRulesString;
 @property (nonatomic, retain) NSString* resultRulesString;
 
 +(CCEngin*) getEngin;
 +(NSString*) getRoleCode: (Role) r;
-+(NSArray*) getRulesArray;
++(NSArray*) getEligibilityRulesArray;
++(NSArray*) getActionRulesArray;
++(NSArray*) getClearenceRulesArray;
 +(NSArray*) getResultRulesArray;
 +(NSString*) getRoleLabel: (Role) r;
 -(NSString*) getRoleLabel: (Role) r;
