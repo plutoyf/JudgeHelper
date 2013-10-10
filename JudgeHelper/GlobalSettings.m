@@ -20,7 +20,7 @@
     }
 }
 
-GameMode gameMode = NORMAL;
+GameMode gameMode = DOUBLE_HAND;
 -(void) setGameMode: (GameMode) mode {
     if(mode == NORMAL || mode == DOUBLE_HAND) {
         gameMode = mode;

@@ -40,7 +40,7 @@
 - (void) selectPlayerById: (NSString*) id {
     CCPlayer* selPlayer = (CCPlayer*)[playersMap objectForKey:id];
     
-    id = (selPlayer.role == Judge) ? @"Game" : selPlayer.id;
+    id = (selPlayer.role == Judge) ? (withBypass ? [Engin getRoleName:Game] : nil) : selPlayer.id;
     
     if(rolePlayerToDefine > 0) {
         if(!defineRolePlayerBegin) {
@@ -62,7 +62,9 @@
             }
         }
     } else {
-        [engin action: id];
+        if(id == nil || [self isEligiblePlayer : id]) {
+            [engin action: id];
+        }
     }
 }
 
@@ -301,8 +303,31 @@ BOOL showDebugMessageEnable = NO;
     }
 }
 
--(void) updatePlayerIconsToSelect: (NSArray*) eligiblePlayers withBypass: (BOOL) isShowBypass {
+-(BOOL) isEligiblePlayer: (NSString*) id {
+    if(!id) {
+        return NO;
+    }
     
+    if(withBypass && id == [Engin getRoleName:Game]) {
+        return YES;
+    }
+    
+    if(eligiblePlayers) {
+        for(Player* p in eligiblePlayers) {
+            if(p.id == id) {
+                return YES;
+            }
+        }
+    } else {
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(void) updateEligiblePlayers: (NSArray*) players withBypass: (BOOL) showBypass {
+    eligiblePlayers = players;
+    withBypass = showBypass;
 }
 
 -(void) showPlayerDebugMessage: (Player *) player inIncrement: (BOOL) increment {

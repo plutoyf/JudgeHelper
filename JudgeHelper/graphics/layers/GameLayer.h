@@ -32,6 +32,8 @@
     GameStateSprite* gameStateSprite;
     GameRuleLayer* gameRuleLayer;
     TableZone* tableZone;
+    NSArray* eligiblePlayers;
+    BOOL withBypass;
     
     CCEngin* engin;
 }

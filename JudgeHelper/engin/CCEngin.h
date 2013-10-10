@@ -27,6 +27,7 @@
     NSMutableArray* initialPlayers;
     NSMutableArray* currentPlayers;
     NSMutableArray* deadPlayers;
+    NSMutableArray* playersInActionHistory;
 }
 
 @property (nonatomic, assign) id<CCEnginDisplayDelegate> displayDelegate;
@@ -65,7 +66,7 @@
 -(void) updatePlayerLabels;
 -(void) resetPlayerIcons: (NSArray*) players;
 -(void) updatePlayerIcons;
--(void) updatePlayerIconsToSelect: (NSArray*) eligiblePlayers withBypass: (BOOL) isShowBypass;
+-(void) updateEligiblePlayers: (NSArray*) players withBypass: (BOOL) showBypass;
 -(void) showDebugMessage: (NSString*) message inIncrement: (BOOL) increment;
 -(void) showPlayerDebugMessage: (Player *) player inIncrement: (BOOL) increment;
 -(void) showMessage: (NSString *) message;

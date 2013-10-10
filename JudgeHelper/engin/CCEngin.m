@@ -147,6 +147,7 @@ static CCEngin *engin = nil;
     night = 0;
     state = 1;
     oIndex = 0;
+    playersInActionHistory = [NSMutableArray new];
     [self doAction];
 }
 
@@ -210,14 +211,7 @@ static CCEngin *engin = nil;
             if([self getPlayersByRole: roleInAction].count == [self getCurrentRoleNumber: roleInAction]) {
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
                 NSArray* actors = [self getPlayersByRole: roleInAction];
-                NSMutableArray* eligiblePlayers = [NSMutableArray new];
-                BOOL isShowBypass = [self isEligibleActionAtNight: night withActors: actors andReceiver: [self getPlayerById:[Engin getRoleName:Game]]];
-                for(Player* p in _players) {
-                    if([self isEligibleActionAtNight: night withActors: actors andReceiver: p]) {
-                        [eligiblePlayers addObject:p];
-                    }
-                }
-                [self.displayDelegate updatePlayerIconsToSelect: eligiblePlayers withBypass: isShowBypass];
+                [self.displayDelegate updateEligiblePlayers: [self getEligiblePlayersAtNight:night wtihActors:actors] withBypass: [self isBypassableActionAtNight:night withActors:actors]];
                 
                 state++;
             }
@@ -227,11 +221,14 @@ static CCEngin *engin = nil;
             //6. take action effect, show response if have one
             playersInAction = [self getPlayersByRole: roleInAction withIn: currentPlayers];
             if(playersInAction != nil && playersInAction.count > 0) {
+                
                 //calculate players with the same current role
                 selectedPlayer = [self getPlayerById: selectedPlayerId];
                 if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                     
+                    [playersInActionHistory addObject:playersInAction];
+                    [self.displayDelegate updateEligiblePlayers: nil withBypass: NO];
                     [self recordPlayersStatus];
                     
                     Player* actor = [playersInAction objectAtIndex:0];
@@ -449,7 +446,9 @@ static CCEngin *engin = nil;
                 if(state != 5 && state != 6)oIndex--;
                 //people who has role show up one after another
                 roleInAction = [Engin getRoleFromString: [_orders objectAtIndex: oIndex]];
-                NSArray* playersInAction = [self getPlayersByRole: roleInAction];
+                
+                NSArray* playersInAction = [playersInActionHistory lastObject];
+                [playersInActionHistory removeObject:playersInAction];
                 
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 [self rollbackPlayersStatus];
@@ -462,6 +461,7 @@ static CCEngin *engin = nil;
                 [self.displayDelegate updatePlayerLabels];
                 [self.displayDelegate removeActionIconFrom: [self getReceiverForActor: [playersInAction objectAtIndex:0] atNight: night]];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
+                [self.displayDelegate updateEligiblePlayers: [self getEligiblePlayersAtNight:night wtihActors:playersInAction] withBypass: [self isBypassableActionAtNight:night withActors:playersInAction]];
                 [self.displayDelegate definePlayerForRole:0];
                 state = 4;
             } else if(night > 1) {
@@ -539,6 +539,20 @@ static CCEngin *engin = nil;
             [_currentRoleNumbers setObject: [NSNumber numberWithInt:[[_currentRoleNumbers objectForKey:key1] intValue]+1] forKey: key1];
         }
     }
+}
+
+-(BOOL) isBypassableActionAtNight: (long) i withActors: (NSArray*) actors {
+    return [self isEligibleActionAtNight: i withActors: actors andReceiver: [self getPlayerById:[Engin getRoleName:Game]]];
+}
+
+-(NSArray*) getEligiblePlayersAtNight: (long) i wtihActors: (NSArray*) actors {
+    NSMutableArray* eligiblePlayers = [NSMutableArray new];
+    for(Player* p in _players) {
+        if([self isEligibleActionAtNight: i withActors: actors andReceiver: p]) {
+            [eligiblePlayers addObject:p];
+        }
+    }
+    return eligiblePlayers;
 }
 
 -(Role) getCurrentRole {
