@@ -10,7 +10,7 @@
 #import "CCEngin.h"
 #import "CCPlayer.h"
 
-@interface GameStateSprite : CCSprite
+@interface GameStateSprite : CCSprite <CCTargetedTouchDelegate>
 {
     CCEngin* engin;
     CCMenuItem* showGameStateMenuItem;

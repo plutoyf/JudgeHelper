@@ -242,6 +242,10 @@
 }
 
 -(BOOL) isEligibleActionAtNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
+    if(actors.count == 0) {
+        return NO;
+    }
+    
     int actorsEligibilityRuleNum = 0;
     for(Rule* r in self.eligibilityRules) {
         Player* actor = [actors objectAtIndex:0];

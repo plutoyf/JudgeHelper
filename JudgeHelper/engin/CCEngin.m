@@ -220,7 +220,7 @@ static CCEngin *engin = nil;
             NSLog(@"case 4");
             //6. take action effect, show response if have one
             playersInAction = [self getPlayersByRole: roleInAction withIn: currentPlayers];
-            if(playersInAction != nil && playersInAction.count > 0) {
+            if(playersInAction.count > 0) {
                 
                 //calculate players with the same current role
                 selectedPlayer = [self getPlayerById: selectedPlayerId];
@@ -251,6 +251,7 @@ static CCEngin *engin = nil;
                 }
                 
             } else {
+                [playersInActionHistory addObject:playersInAction];
                 [self recordPlayersStatus];
                 [self.displayDelegate addPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
@@ -466,7 +467,9 @@ static CCEngin *engin = nil;
                 [self updateCurrentRoleNumbersFromOldRoles: oldRoles];
                 
                 [self.displayDelegate updatePlayerLabels];
-                [self.displayDelegate removeActionIconFrom: [self getReceiverForActor: [playersInAction objectAtIndex:0] atNight: night]];
+                if(playersInAction.count > 0) {
+                    [self.displayDelegate removeActionIconFrom: [self getReceiverForActor: [playersInAction objectAtIndex:0] atNight: night]];
+                }
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
                 [self.displayDelegate updateEligiblePlayers: [self getEligiblePlayersAtNight:night wtihActors:playersInAction] withBypass: [self isBypassableActionAtNight:night withActors:playersInAction]];
                 [self.displayDelegate definePlayerForRole:0];
@@ -562,9 +565,11 @@ static CCEngin *engin = nil;
 
 -(NSArray*) getEligiblePlayersAtNight: (long) i wtihActors: (NSArray*) actors {
     NSMutableArray* eligiblePlayers = [NSMutableArray new];
-    for(Player* p in _players) {
-        if([self isEligibleActionAtNight: i withActors: actors andReceiver: p]) {
-            [eligiblePlayers addObject:p];
+    if(actors.count > 0) {
+        for(Player* p in _players) {
+            if([self isEligibleActionAtNight: i withActors: actors andReceiver: p]) {
+                [eligiblePlayers addObject:p];
+            }
         }
     }
     return eligiblePlayers;
