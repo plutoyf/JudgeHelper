@@ -166,23 +166,23 @@
 
 -(void) rollbackStatus {
     if(_lifeStack != nil && _lifeStack.count > 0) {
-        _life = [[_lifeStack lastObject] doubleValue];
+        self.life = [[_lifeStack lastObject] doubleValue];
         [_lifeStack removeLastObject];
     }
     if(_roleStack != nil && _roleStack.count > 0) {
-        _role = [[_roleStack lastObject] doubleValue];
+        self.role = [[_roleStack lastObject] doubleValue];
         [_roleStack removeLastObject];
     }
     if(_noteStack != nil && _noteStack.count > 0) {
-        _note = [[_noteStack lastObject] doubleValue];
+        self.note = [[_noteStack lastObject] doubleValue];
         [_noteStack removeLastObject];
     }
     if(_statusStack != nil && _statusStack.count > 0) {
-        _status = [((NSNumber *)[_statusStack lastObject]) intValue];
+        self.status = [((NSNumber *)[_statusStack lastObject]) intValue];
         [_statusStack removeLastObject];
     }
     if(_distanceStack != nil && _distanceStack.count > 0) {
-        _distances = [_distanceStack lastObject];
+        self.distances = [_distanceStack lastObject];
         [_distanceStack removeLastObject];
     }
     if(_defaultDistanceStack != nil && _defaultDistanceStack.count > 0) {

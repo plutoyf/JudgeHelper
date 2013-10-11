@@ -205,7 +205,9 @@
 
 -(void) showRoleInfo {
     if(!expanded) {
-        if(_role > 0 && _role != Citizen) {
+        if(_role == Citizen) {
+            [self setLabel: _name];
+        } else if(_role > 0) {
             [self setLabel: [NSString stringWithFormat:@"%@ [%@]", _name, [CCEngin getRoleLabel: _role]]];
         }
         expanded = YES;
