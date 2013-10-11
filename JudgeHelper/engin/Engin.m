@@ -282,6 +282,7 @@
 -(NSNumber*) runRules: (NSArray*) rules atNight: (long) i withActors: (NSArray*) actors andReceiver: (Player*) receiver {
     NSNumber* result = nil;
     BOOL isProcessed = NO;
+    Role role = ((Player*)[actors objectAtIndex:0]).role;
     
     // find rules to execute
     NSMutableArray* matchedRules = [NSMutableArray new];
@@ -302,7 +303,7 @@
     
     if(receiver != nil) {
         for(Player* p in actors) {
-            [p addActionAtNight: i to: receiver.id forResult: (result==nil?[NSNumber numberWithBool: isProcessed]:result) withMatchedRules: matchedRules];
+            [p addActionAtNight: i forRole: role to: receiver.id forResult: (result==nil?[NSNumber numberWithBool: isProcessed]:result) withMatchedRules: matchedRules];
         }
     }
     
@@ -365,15 +366,15 @@
 }
 
 -(Player*) getReceiverForActor: (Player*) actor atNight: (long) i {
-    return [self getPlayerById: [actor getActionReceiverAtNight: i]];
+    return [self getPlayerById: [actor getActionReceiverAtNight: i forRole: actor.role]];
 }
 
 -(BOOL) isEffectiveActionForActor: (Player*) actor atNight: (long) i {
-    return [actor isEffectiveActionAtNight: i];
+    return [actor isEffectiveActionAtNight: i forRole: actor.role];
 }
 
 -(NSArray*) getApplicatedRulesForActor: (Player*) actor atNight: (long) i {
-    return [actor getApplicatedRulesAtNight: i];
+    return [actor getApplicatedRulesAtNight: i forRole: actor.role];
 }
 
 

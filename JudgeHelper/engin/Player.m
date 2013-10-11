@@ -89,31 +89,47 @@
     return [_statusByNight objectForKey: key] != nil ? [[_statusByNight objectForKey: key] doubleValue] : 0;
 }
 
--(void) addActionAtNight:(long) i to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules {
-    NSNumber* key = [NSNumber numberWithLong: i];
-    [_actionReceivers setObject: receiverId forKey: key];
-    [_applicatedRules setObject: matchedRules forKey: key];
-    [_actionResults setObject: result forKey: key];
+-(void) setObject: (id) obj forNight: (long) i andRole: (Role) r to: (NSMutableDictionary*) dictonary {
+    NSNumber* night = [NSNumber numberWithLong: i];
+    NSNumber* role = [NSNumber numberWithInt: r];
+    if([dictonary objectForKey: night] == nil) {
+        [dictonary setObject: [NSMutableDictionary new] forKey: night];
+    }
+    [[dictonary objectForKey: night] setObject: obj forKey: role];
 }
 
--(NSString*) getActionReceiverAtNight: (long) i {
-    NSNumber* key = [NSNumber numberWithLong: i];
-    return [_actionReceivers objectForKey: key] != nil ? [_actionReceivers objectForKey: key] : @"";
+-(id) getObjectForNight: (long) i andRole: (Role) r from: (NSMutableDictionary*) dictonary {
+    NSNumber* night = [NSNumber numberWithLong: i];
+    NSNumber* role = [NSNumber numberWithInt: r];
+    NSMutableDictionary* values = [dictonary objectForKey: night];
+    id obj = [values objectForKey:role];
+    return obj;
 }
 
--(BOOL) isEffectiveActionAtNight: (long) i {
-    NSNumber* key = [NSNumber numberWithLong: i];
-    return [_actionResults objectForKey: key] != nil ? [[_actionResults objectForKey: key] boolValue] : NO;
+-(void) addActionAtNight:(long) i forRole: (Role) r to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules {
+    [self setObject: receiverId forNight: i andRole: r to: _actionReceivers];
+    [self setObject: matchedRules forNight: i andRole: r to: _applicatedRules];
+    [self setObject: result forNight: i andRole: r to: _actionResults];
 }
 
--(NSArray *) getApplicatedRulesAtNight: (long) i {
-    NSNumber* key = [NSNumber numberWithLong: i];
-    return [_applicatedRules objectForKey: key] != nil ? [_applicatedRules objectForKey: key] : [NSArray array];
+-(NSString*) getActionReceiverAtNight: (long) i forRole: (Role) r {
+    id value = [self getObjectForNight: i andRole: r from: _actionReceivers];
+    return value != nil ? value : @"";
 }
 
--(NSNumber *) getActionResultAtNight: (long) i {
-    NSNumber* key = [NSNumber numberWithLong: i];
-    return [_actionResults objectForKey: key] != nil ? [_actionResults objectForKey: key] : [NSNumber numberWithBool:NO];
+-(NSArray *) getApplicatedRulesAtNight: (long) i forRole: (Role) r {
+    id value = [self getObjectForNight: i andRole: r from: _applicatedRules];
+    return value != nil ? value : [NSArray array];
+}
+
+-(NSNumber *) getActionResultAtNight: (long) i forRole: (Role) r {
+    id value = [self getObjectForNight: i andRole: r from: _actionResults];
+    return value != nil ? value : [NSNumber numberWithBool:NO];
+}
+
+-(BOOL) isEffectiveActionAtNight: (long) i forRole: (Role) r {
+    id value = [self getObjectForNight: i andRole: r from: _actionResults];
+    return value != nil ? [value boolValue] : NO;
 }
 
 -(void) recordNightStatus: (long) i {

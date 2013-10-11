@@ -88,8 +88,6 @@
 
 -(void) setDistance: (double) distance withPlayer: (NSString*) playerId;
 
--(void) addActionAtNight:(long) i to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules;
-
 -(double) getLifeAtNight:(long) i;
 
 -(double) getRoleAtNight:(long) i;
@@ -98,19 +96,25 @@
 
 -(double) getStatusAtNight:(long) i;
 
--(NSString*) getActionReceiverAtNight: (long) i;
-
--(NSArray *) getApplicatedRulesAtNight: (long) i;
-
--(NSNumber *) getActionResultAtNight: (long) i;
-
--(BOOL) isEffectiveActionAtNight: (long) i;
-
 -(void) resetDistance;
+
 -(void) recordNightStatus: (long) i;
+
 -(void) rollbackStatus;
+
 -(void) recordStatus;
+
 -(int) getStackDepth;
+
+-(void) addActionAtNight:(long) i forRole: (Role) r to: (NSString*) receiverId forResult: (NSNumber*) result withMatchedRules: (NSArray*) matchedRules;
+
+-(NSString*) getActionReceiverAtNight: (long) i forRole: (Role) r;
+
+-(NSArray *) getApplicatedRulesAtNight: (long) i forRole: (Role) r;
+
+-(NSNumber *) getActionResultAtNight: (long) i forRole: (Role) r;
+
+-(BOOL) isEffectiveActionAtNight: (long) i forRole: (Role) r;
 
 @end
 

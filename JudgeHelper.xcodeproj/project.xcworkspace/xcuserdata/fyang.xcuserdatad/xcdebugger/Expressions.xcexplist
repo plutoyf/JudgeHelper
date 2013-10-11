@@ -11,6 +11,45 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLayer selectPlayerById:]:GameLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "defineRolePlayerBegin">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer longPressePlayer:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((MySprite*)sender.node)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[addedActionReceivers objectForKey:[NSNumber numberWithInt:i]]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLayer removeActionIconFrom:]:GameLayer.m">
+      </ContextState>
+      <ContextState
          contextName = "-[SelectPlayerLayer selectPlayer:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
@@ -28,22 +67,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "[addedActionReceivers objectForKey:[NSNumber numberWithInt:i]]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SelectPlayerLayer longPressePlayer:]:SelectPlayerLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "((MySprite*)sender.node)">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[CCEngin doAction:]:CCEngin.m">
          <PersistentStrings>
             <PersistentString
@@ -52,7 +75,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
+         contextName = "-[CCEngin updateCurrentRoleNumbersFromOldRoles:]:CCEngin.m">
       </ContextState>
       <ContextState
          contextName = "-[GameLayer init]:GameLayer.m">
@@ -63,7 +86,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[Player recordStatus]:Player.m">
+         contextName = "-[Player rollbackStatus]:Player.m">
          <PersistentStrings>
             <PersistentString
                value = "self.role">
@@ -71,13 +94,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
+         contextName = "-[SelectPlayerLayer selectPlayerById:fromPosition:]:SelectPlayerLayer.m">
       </ContextState>
       <ContextState
-         contextName = "-[CCEngin updateCurrentRoleNumbersFromOldRoles:]:CCEngin.m">
+         contextName = "-[MySprite showName]:MySprite.m">
       </ContextState>
       <ContextState
-         contextName = "-[Player rollbackStatus]:Player.m">
+         contextName = "-[Player getActionResultAtNight:forRole:]:Player.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "value != nil ? value : [NSNumber numberWithBool:NO]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Player recordStatus]:Player.m">
          <PersistentStrings>
             <PersistentString
                value = "self.role">
@@ -93,9 +124,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SelectPlayerLayer selectPlayerById:fromPosition:]:SelectPlayerLayer.m">
-      </ContextState>
-      <ContextState
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
@@ -107,29 +135,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[GameLayer selectPlayerById:]:GameLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "defineRolePlayerBegin">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[CreatePlayerLayer imagePickerController:didFinishPickingImage:editingInfo:]:CreatePlayerLayer.m">
          <PersistentStrings>
             <PersistentString
                value = "[[UIScreen mainScreen] bounds]">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MySprite showName]:MySprite.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

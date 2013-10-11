@@ -234,8 +234,8 @@ static CCEngin *engin = nil;
                     Player* actor = [playersInAction objectAtIndex:0];
                     NSNumber* result = [self doActionAtNight: night withActors: playersInAction andReceiver: selectedPlayer];
                     
-                    [self.displayDelegate addPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
-                    [self.displayDelegate addActionIcon: roleInAction to: selectedPlayer withResult: [actor getActionResultAtNight:night].boolValue];
+                    [self.displayDelegate addPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night forRole:roleInAction].boolValue];
+                    [self.displayDelegate addActionIcon: roleInAction to: selectedPlayer withResult: [actor getActionResultAtNight:night forRole:roleInAction].boolValue];
                     [self.displayDelegate updatePlayerLabels];
                     [self updateCurrentRoleNumbersFromLastRoles];
                     
@@ -371,7 +371,7 @@ static CCEngin *engin = nil;
                 [self debugPlayers];
                 [self debugPlayersInfo: currentPlayers];
                 
-                [self.displayDelegate addPlayersStatusWithActorRole:Judge andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
+                [self.displayDelegate addPlayersStatusWithActorRole:Judge andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night forRole:roleInAction].boolValue];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"投票结果：%@死亡", deadNames]];
                 state++;
