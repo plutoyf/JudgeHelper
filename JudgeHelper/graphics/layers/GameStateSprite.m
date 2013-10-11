@@ -14,7 +14,7 @@
 @implementation GameStateSprite
 
 -(void) swipeGameStateByUIGestureRecognizer:(UIGestureRecognizer*) sender {
-    [self swipeGameState: sender.node == showGameStateMenuItem];
+    [self swipeGameState: sender.node == showGameStateMenu];
 }
 
 -(void) swipeGameStateByMenu:(id) sender {
@@ -77,21 +77,21 @@
             i++;
         }
         
-        CCMenuItem* undoMenuItem = [CCMenuItemImage itemFromNormalImage:@"undo.png" selectedImage:@"undo-sel.png" target:self selector:@selector(undoButtonPressed:)];
+        CCMenuItem* undoMenuItem = [CCMenuItemImage itemWithNormalImage:@"undo.png" selectedImage:@"undo-sel.png" target:self selector:@selector(undoButtonPressed:)];
         [undoMenuItem setScaleX: IMG_WIDTH/undoMenuItem.contentSize.width];
         [undoMenuItem setScaleY: IMG_HEIGHT/undoMenuItem.contentSize.height];
         CCMenu *undoMenu = [CCMenu menuWithItems:undoMenuItem, nil];
         undoMenu.position = ccp(REVERSE_X(60), size.height-REVERSE_Y(50));
         [self addChild: undoMenu];
         
-        CCMenuItem* redoMenuItem = [CCMenuItemImage itemFromNormalImage:@"redo.png" selectedImage:@"redo-sel.png" target:self selector:@selector(redoButtonPressed:)];
+        CCMenuItem* redoMenuItem = [CCMenuItemImage itemWithNormalImage:@"redo.png" selectedImage:@"redo-sel.png" target:self selector:@selector(redoButtonPressed:)];
         [redoMenuItem setScaleX: IMG_WIDTH/redoMenuItem.contentSize.width];
         [redoMenuItem setScaleY: IMG_HEIGHT/redoMenuItem.contentSize.height];
         CCMenu *redoMenu = [CCMenu menuWithItems:redoMenuItem, nil];
         redoMenu.position = ccp(REVERSE_X(160), size.height-REVERSE_Y(50));
         [self addChild: redoMenu];
         
-        CCMenuItem* quitMenuItem = [CCMenuItemImage itemFromNormalImage:@"quit.png" selectedImage:@"quit-sel.png" target:self selector:@selector(quitButtonPressed:)];
+        CCMenuItem* quitMenuItem = [CCMenuItemImage itemWithNormalImage:@"quit.png" selectedImage:@"quit-sel.png" target:self selector:@selector(quitButtonPressed:)];
         [quitMenuItem setScaleX: IMG_WIDTH/quitMenuItem.contentSize.width];
         [quitMenuItem setScaleY: IMG_HEIGHT/quitMenuItem.contentSize.height];
         CCMenu *quitMenu = [CCMenu menuWithItems:quitMenuItem, nil];
@@ -116,17 +116,20 @@
         [self addChild: realPositionHandModeLabel];
          */
         
-        showGameStateMenuItem = [CCMenuItemImage itemFromNormalImage:@"left2.png" selectedImage:@"left2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
+        showGameStateMenuItem = [CCMenuItemImage itemWithNormalImage:@"left2.png" selectedImage:@"left2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
         [showGameStateMenuItem setScaleX: REVERSE(30)/showGameStateMenuItem.contentSize.width];
         [showGameStateMenuItem setScaleY: REVERSE(40)/showGameStateMenuItem.contentSize.height];
-        CCMenu* showGameStateMenu = [CCMenu menuWithItems:showGameStateMenuItem, nil];
+        showGameStateMenu = [CCMenu menuWithItems:showGameStateMenuItem, nil];
         showGameStateMenu.position = ccp(-showGameStateMenuItem.boundingBox.size.width/2, size.height/2);
+        //showGameStateMenu.isTouchEnabled = YES;
+        //[showGameStateMenu addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameStateByUIGestureRecognizer:)]];
         [self addChild: showGameStateMenu];
+
         
-        hideGameStateMenuItem = [CCMenuItemImage itemFromNormalImage:@"right2.png" selectedImage:@"right2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
+        hideGameStateMenuItem = [CCMenuItemImage itemWithNormalImage:@"right2.png" selectedImage:@"right2-sel.png" target:self selector:@selector(swipeGameStateByMenu:)];
         [hideGameStateMenuItem setScaleX: REVERSE(30)/hideGameStateMenuItem.contentSize.width];
         [hideGameStateMenuItem setScaleY: REVERSE(40)/hideGameStateMenuItem.contentSize.height];
-        CCMenu* hideGameStateMenu = [CCMenu menuWithItems:hideGameStateMenuItem, nil];
+        hideGameStateMenu = [CCMenu menuWithItems:hideGameStateMenuItem, nil];
         hideGameStateMenu.position = ccp(size.width-hideGameStateMenuItem.boundingBox.size.width/2, size.height/2);
         [self addChild: hideGameStateMenu];
         

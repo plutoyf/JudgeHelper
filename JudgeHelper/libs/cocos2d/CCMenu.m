@@ -193,7 +193,7 @@ enum {
 
 			CGPoint local = [item convertToNodeSpace:touchLocation];
 			CGRect r = [item activeArea];
-
+            
 			if( CGRectContainsPoint( r, local ) )
 				return item;
 		}

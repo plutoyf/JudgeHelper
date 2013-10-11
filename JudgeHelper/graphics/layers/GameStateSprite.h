@@ -10,10 +10,12 @@
 #import "CCEngin.h"
 #import "CCPlayer.h"
 
-@interface GameStateSprite : CCSprite
+@interface GameStateSprite : CCSprite<UIGestureRecognizerDelegate>
 {
     CCEngin* engin;
+    CCMenu* showGameStateMenu;
     CCMenuItem* showGameStateMenuItem;
+    CCMenu* hideGameStateMenu;
     CCMenuItem* hideGameStateMenuItem;
     NSMutableDictionary* playerLines;
     NSMutableDictionary* playerVisibleObjects;
