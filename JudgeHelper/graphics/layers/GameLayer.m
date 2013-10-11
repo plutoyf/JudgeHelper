@@ -146,11 +146,14 @@ BOOL showDebugMessageEnable = NO;
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
         
-        self.isTouchEnabled = YES;
+        CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
+        layerColer.position = ccp(0, 0);
+        layerColer.opacity = 0;
+        layerColer.isTouchEnabled = YES;
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(emptyClick:)];
-        tapGestureRecognizer.cancelsTouchesInView = NO;
-        [self addGestureRecognizer:tapGestureRecognizer];
-		
+        [layerColer addGestureRecognizer:tapGestureRecognizer];
+        [self addChild:layerColer z:-1];
+        
         engin = [CCEngin getEngin];
         engin.displayDelegate = self;
         

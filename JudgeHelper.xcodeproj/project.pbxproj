@@ -16,7 +16,6 @@
 		E01E17A4180590B3007CD3A4 /* Icon-72-undercover-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */; };
 		E01E17A5180590B3007CD3A4 /* Icon-72-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */; };
 		E024D6B117CFA2BB0032EE61 /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = E024D6B017CFA2BB0032EE61 /* quit.png */; };
-		E0274756180853C10006D989 /* CCToucheSwallowedMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E0274755180853C10006D989 /* CCToucheSwallowedMenu.m */; };
 		E02AC33817D4FA8600923C8E /* btn_off2_red-40-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33717D4FA8600923C8E /* btn_off2_red-40-sel.png */; };
 		E02AC33A17D4FAE700923C8E /* btn_on2_green-40-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33917D4FAE700923C8E /* btn_on2_green-40-sel.png */; };
 		E02AC33D17D4FB8800923C8E /* down-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33B17D4FB8800923C8E /* down-sel.png */; };
@@ -287,8 +286,6 @@
 		E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-undercover-dead.png"; path = "Resources/Icon-72-undercover-dead.png"; sourceTree = "<group>"; };
 		E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-undercover.png"; path = "Resources/Icon-72-undercover.png"; sourceTree = "<group>"; };
 		E024D6B017CFA2BB0032EE61 /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quit.png; path = Resources/quit.png; sourceTree = "<group>"; };
-		E0274754180853C10006D989 /* CCToucheSwallowedMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCToucheSwallowedMenu.h; sourceTree = "<group>"; };
-		E0274755180853C10006D989 /* CCToucheSwallowedMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCToucheSwallowedMenu.m; sourceTree = "<group>"; };
 		E02AC33717D4FA8600923C8E /* btn_off2_red-40-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_off2_red-40-sel.png"; path = "Resources/btn_off2_red-40-sel.png"; sourceTree = "<group>"; };
 		E02AC33917D4FAE700923C8E /* btn_on2_green-40-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_on2_green-40-sel.png"; path = "Resources/btn_on2_green-40-sel.png"; sourceTree = "<group>"; };
 		E02AC33B17D4FB8800923C8E /* down-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "down-sel.png"; path = "Resources/down-sel.png"; sourceTree = "<group>"; };
@@ -1358,8 +1355,6 @@
 				E059F86C17B02EC70071829E /* MySprite.m */,
 				E0D3755A17BA390D00E14D7D /* TableZone.h */,
 				E0D3755B17BA390D00E14D7D /* TableZone.m */,
-				E0274754180853C10006D989 /* CCToucheSwallowedMenu.h */,
-				E0274755180853C10006D989 /* CCToucheSwallowedMenu.m */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1607,7 +1602,6 @@
 				E059F84317B02EB20071829E /* GlobalSettings.m in Sources */,
 				E059F85B17B02EBD0071829E /* CCEngin.m in Sources */,
 				E059F85C17B02EBD0071829E /* Condition.m in Sources */,
-				E0274756180853C10006D989 /* CCToucheSwallowedMenu.m in Sources */,
 				E059F85D17B02EBD0071829E /* ConsoleEngin.m in Sources */,
 				E059F85E17B02EBD0071829E /* Engin.m in Sources */,
 				E059F85F17B02EBD0071829E /* Expression.m in Sources */,
