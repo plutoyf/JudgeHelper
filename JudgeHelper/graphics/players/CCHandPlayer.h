@@ -20,6 +20,4 @@ typedef enum {
 @property (atomic) Hand* hand;
 @property (nonatomic, strong) CCPlayer* player;
 
--(void) setRole : (Role) r;
-
 @end

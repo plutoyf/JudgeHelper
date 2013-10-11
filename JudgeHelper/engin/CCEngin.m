@@ -528,11 +528,11 @@ static CCEngin *engin = nil;
     _currentRoleNumbers = [NSMutableDictionary dictionaryWithDictionary:_roleNumbers];
 }
 
--(BOOL) didFinishedSettingPlayerForRole:(Role)r {
+-(BOOL) didFinishedSettingPlayerForRole: (Role) r {
     return ([self getCurrentRoleNumber:r] == [self getPlayersByRole:r].count);
 }
 
--(int) getCurrentRoleNumber : (Role) r {
+-(int) getCurrentRoleNumber: (Role) r {
     NSNumber* num = (NSNumber*)[_currentRoleNumbers objectForKey:[Engin getRoleName:r]];
     return (num && num.intValue > 0) ? num.intValue : 0;
 }

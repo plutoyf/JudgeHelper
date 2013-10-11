@@ -25,17 +25,6 @@
     return self;
 }
 
--(void) setRole : (Role) r {
-    if(_role != r) {
-        _role = r;
-        
-        if(expanded) {
-            [self hideRoleInfo];
-            [self showRoleInfo];
-        }
-    }
-}
-
 -(void) showRoleInfo {
     if(!expanded) {
         if(_role > 0) {

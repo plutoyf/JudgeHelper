@@ -18,6 +18,7 @@ typedef enum {
 
 @interface CCPlayer : Player <UIGestureRecognizerDelegate>
 {
+    Role _initialRole;
     CCLabelTTF* labelTTF;
     CCSprite* avatar;
     CCLayerColor *layerColer;
@@ -52,15 +53,15 @@ typedef enum {
 -(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role;
 -(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role withAvatar: (BOOL) hasAvatar;
 
+-(void) setRole: (Role) role;
+
 -(void) addChild: (CCNode*) child;
 -(void) removeChild: (CCNode*)child;
 
 -(void) setPosition: (POSITION) position;
 -(void) setRealPositionModeEnable: (BOOL) realPositionModeEnable;
 -(void) selectPlayer: (UITapGestureRecognizer*) sender;
--(void) setSettled: (BOOL) settled;
--(void) setRole: (Role) role;
--(void) setLabel: (NSString*) label;
+-(void) setSettled: (BOOL) settled;-(void) setLabel: (NSString*) label;
 -(void) showRoleInfo;
 -(void) hideRoleInfo;
 -(void) updatePlayerIcon;

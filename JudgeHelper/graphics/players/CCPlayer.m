@@ -193,7 +193,11 @@
 
 -(void) setRole: (Role) role {
     if(_role != role) {
+        if(_initialRole == 0) {
+            _initialRole = role;
+        }
         _role = role;
+        
         [self hideRoleInfo];
         [self showRoleInfo];
     }
@@ -218,6 +222,14 @@
     if(expanded) {
         [self setLabel: _name];
         expanded = NO;
+    }
+}
+
+-(void) rollbackStatus {
+    [super rollbackStatus];
+    
+    if(_roleStack.count == 0 && _initialRole > 0) {
+        self.role = _initialRole;
     }
 }
 

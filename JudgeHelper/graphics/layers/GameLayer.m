@@ -356,6 +356,7 @@ BOOL showDebugMessageEnable = NO;
 
 -(void) definePlayerForRole: (Role) r {
     rolePlayerToDefine = r;
+    defineRolePlayerBegin = NO;
 }
 
 -(void) gameFinished {

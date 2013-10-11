@@ -45,6 +45,11 @@
       </ContextState>
       <ContextState
          contextName = "-[CCEngin doAction:]:CCEngin.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.players">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
@@ -69,6 +74,9 @@
          contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
       </ContextState>
       <ContextState
+         contextName = "-[CCEngin updateCurrentRoleNumbersFromOldRoles:]:CCEngin.m">
+      </ContextState>
+      <ContextState
          contextName = "-[Player rollbackStatus]:Player.m">
          <PersistentStrings>
             <PersistentString
@@ -91,10 +99,18 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLayer selectPlayerById:]:GameLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "defineRolePlayerBegin">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
