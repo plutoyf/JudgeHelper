@@ -237,7 +237,7 @@ static CCEngin *engin = nil;
                     [self.displayDelegate addPlayersStatusWithActorRole:roleInAction andReceiver:selectedPlayer andResult: [actor getActionResultAtNight:night].boolValue];
                     [self.displayDelegate addActionIcon: roleInAction to: selectedPlayer withResult: [actor getActionResultAtNight:night].boolValue];
                     [self.displayDelegate updatePlayerLabels];
-                    [self updateCurrentRoleNumbers];
+                    [self updateCurrentRoleNumbersFromLastRoles];
                     
                     [self debugPlayers];
                     
@@ -281,7 +281,7 @@ static CCEngin *engin = nil;
                     [self doClearenceAtNight: night withPlayer: p];
                 }
                 
-                [self updateCurrentRoleNumbers];
+                [self updateCurrentRoleNumbersFromLastRoles];
                 
                 [self recordNightStatus : night];
                 
@@ -451,6 +451,11 @@ static CCEngin *engin = nil;
                 [playersInActionHistory removeObject:playersInAction];
                 
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
+                NSMutableDictionary* oldRoles = [NSMutableDictionary new];
+                for(Player* p in _players) {
+                    [oldRoles setObject: [NSNumber numberWithInt:p.role] forKey:p.id];
+                }
+                
                 [self rollbackPlayersStatus];
                 if(oIndex == _orders.count-1 && state >= 7) {
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
@@ -458,6 +463,8 @@ static CCEngin *engin = nil;
                     [self calculateCurrentPlayers];
                     [self.displayDelegate resetPlayerIcons: currentPlayers];
                 }
+                [self updateCurrentRoleNumbersFromOldRoles: oldRoles];
+                
                 [self.displayDelegate updatePlayerLabels];
                 [self.displayDelegate removeActionIconFrom: [self getReceiverForActor: [playersInAction objectAtIndex:0] atNight: night]];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
@@ -530,9 +537,17 @@ static CCEngin *engin = nil;
     return (num && num.intValue > 0) ? num.intValue : 0;
 }
 
--(void) updateCurrentRoleNumbers {
+-(void) updateCurrentRoleNumbersFromLastRoles {
+    NSMutableDictionary* oldRoles = [NSMutableDictionary new];
     for(Player* p in _players) {
-        NSString* key0 = [Engin getRoleName: [p.roleStack.lastObject intValue]];
+        [oldRoles setObject: p.roleStack.lastObject forKey:p.id];
+    }
+    [self updateCurrentRoleNumbersFromOldRoles: oldRoles];
+}
+
+-(void) updateCurrentRoleNumbersFromOldRoles: (NSDictionary*) oldRoles {
+    for(Player* p in _players) {
+        NSString* key0 = [Engin getRoleName: [[oldRoles objectForKey:p.id ] intValue]];
         NSString* key1 = [Engin getRoleName: p.role];
         if(key0 != key1) {
             [_currentRoleNumbers setObject: [NSNumber numberWithInt:[[_currentRoleNumbers objectForKey:key0] intValue]-1] forKey: key0];
