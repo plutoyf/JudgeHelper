@@ -26,6 +26,7 @@
     CCLabelTTF *realPositionHandModeLabel;
 }
 
+- (BOOL) isTouchInsideOpenMenuWithTouch:(UITouch*)touch;
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
 -(void) revertStatus;
 @end

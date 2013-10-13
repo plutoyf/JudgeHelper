@@ -158,6 +158,7 @@ BOOL showDebugMessageEnable = NO;
         maskLayer.isTouchEnabled = YES;
         UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(emptyClick:)];
         tapGestureRecognizer.cancelsTouchesInView = NO;
+        tapGestureRecognizer.delegate = self;
         [maskLayer addGestureRecognizer:tapGestureRecognizer];
         [self addChild:maskLayer z:-1];
 
@@ -223,6 +224,10 @@ BOOL showDebugMessageEnable = NO;
 	}
     
 	return self;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return gameStateSprite ? [gameStateSprite isTouchInsideOpenMenuWithTouch: touch] : YES;
 }
 
 -(void) emptyClick: (UITapGestureRecognizer*) sender {
@@ -398,4 +403,5 @@ BOOL showDebugMessageEnable = NO;
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	[[app navController] dismissModalViewControllerAnimated:YES];
 }
+
 @end

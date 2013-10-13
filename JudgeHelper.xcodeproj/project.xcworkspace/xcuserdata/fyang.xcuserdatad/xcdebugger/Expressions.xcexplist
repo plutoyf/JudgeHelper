@@ -34,13 +34,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[Player getDistanceAtNight:with:]:Player.m">
+         contextName = "-[CCEngin undoAction]:CCEngin.m">
       </ContextState>
       <ContextState
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[CCEngin undoAction]:CCEngin.m">
+         contextName = "-[Player getDistanceAtNight:with:]:Player.m">
       </ContextState>
       <ContextState
          contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
@@ -99,6 +99,17 @@
          contextName = "-[Condition getValue:with:atNight:]:Condition.m">
       </ContextState>
       <ContextState
+         contextName = "-[GameLayer gestureRecognizer:shouldReceiveTouch:]:GameLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "touch.view">
+            </PersistentString>
+            <PersistentString
+               value = "touch.view.class">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Engin resetDistance]:Engin.m">
       </ContextState>
       <ContextState
@@ -133,10 +144,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

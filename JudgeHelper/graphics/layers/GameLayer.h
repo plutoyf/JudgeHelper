@@ -17,7 +17,7 @@
 #import "GameRuleLayer.h"
 #import "TableZone.h"
 
-@interface GameLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, CCEnginDisplayDelegate>
+@interface GameLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, CCEnginDisplayDelegate, UIGestureRecognizerDelegate>
 {
     CCLabelTTF* debugLabel;
     CCLabelTTF* nightLabel;

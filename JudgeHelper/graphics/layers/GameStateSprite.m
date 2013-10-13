@@ -182,6 +182,10 @@
     }
 }
 */
+
+- (BOOL) isTouchInsideOpenMenuWithTouch:(UITouch*)touch {
+    return ![showGameStateMenu isPointInArea: [touch locationInView: [touch view]]];
+}
  
 -(void) undoButtonPressed : (id) sender {
     [engin action: @"UNDO_ACTION"];
