@@ -83,7 +83,7 @@
         
         longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressMovePlayer:)];
         longPressGestureRecognizer.minimumPressDuration = 1.2;
-        longPressGestureRecognizer.allowableMovement = 5;
+        longPressGestureRecognizer.allowableMovement = 20;
         longPressGestureRecognizer.delegate = self;
         [avatar addGestureRecognizer:longPressGestureRecognizer];
         
@@ -134,7 +134,7 @@
     CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
     CGPoint locationInMySpriteSpace = [sender.node.parent convertToNodeSpace:locationInWorldSpace];
     
-    if(wasSetteledBeforeShortPressMove) {
+    if(wasSetteledBeforeShortPressMove && !shortPressMoveBegan) {
         if(sender.state == UIGestureRecognizerStateBegan) {
             sender.node.position = positionBeforeShortPressMove;
             _settled = wasSetteledBeforeShortPressMove;
@@ -172,7 +172,9 @@
             [self setReadyToMove: YES];
         } else if(sender.state == UIGestureRecognizerStateEnded) {
             [_delegate playerPositionChanged: self];
-        } else if(!longPressMoveBegan) {
+            shortPressMoveBegan = NO;
+        } else {
+            shortPressMoveBegan = YES;
             [_delegate movePlayer: self toPosition:ccpSub(ccpAdd(sender.node.position, locationInWorldSpace), originalPoint)];
         }
     }

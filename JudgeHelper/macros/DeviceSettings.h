@@ -21,11 +21,13 @@
 
 /* OFFSETS TO ACCOMMODATE IPAD */
 #define kOffsetiPad         0
+#define kOffsetiPad2         0
 #define kXoffsetiPad        0
 #define kYoffsetiPad        0
 
 
 #define kRate               1.8
+#define kRate2              1.4
 #define kXrate              2.13
 #define kYrate              2.4
 
@@ -65,6 +67,16 @@ __x__)
 #define REVERSE(__x__)         \
 (IS_IPAD() == NO ?             \
 ( __x__ - kOffsetiPad ) / kRate :      \
+__x__)
+
+#define ADJUST2(__x__)         \
+(IS_IPAD() == YES ?             \
+( __x__ * kRate2 ) + kOffsetiPad2 :      \
+__x__)
+
+#define REVERSE2(__x__)         \
+(IS_IPAD() == NO ?             \
+( __x__ - kOffsetiPad2 ) / kRate2 :      \
 __x__)
 
 #define ADJUST_X(__x__)         \

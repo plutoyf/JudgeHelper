@@ -25,6 +25,7 @@ typedef enum {
     BOOL _realPositionModeEnable;
     POSITION _position;
     BOOL expanded;
+    BOOL shortPressMoveBegan;
     BOOL longPressMoveBegan;
     BOOL wasSetteledBeforeShortPressMove;
     CGPoint positionBeforeShortPressMove;
