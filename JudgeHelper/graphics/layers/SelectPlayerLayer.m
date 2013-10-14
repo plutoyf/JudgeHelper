@@ -255,7 +255,7 @@
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:REVERSE_Y(32)];
+        CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:REVERSE(32)];
         titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20) , size.height-REVERSE_Y(40) );
         [self addChild: titleLabel];
         
@@ -264,14 +264,14 @@
         [addPlayerMenuItem setScaleX: IMG_WIDTH/addPlayerMenuItem.contentSize.width];
         [addPlayerMenuItem setScaleY: IMG_HEIGHT/addPlayerMenuItem.contentSize.height];
         addPlayerMenu = [CCMenu menuWithItems:addPlayerMenuItem, nil];
-        addPlayerMenu.position = ccp(size.width-REVERSE_X(200), REVERSE_Y(100));
+        addPlayerMenu.position = ccp(size.width-REVERSE_X(180), REVERSE_Y(80));
         [self addChild:addPlayerMenu];
         
         CCMenuItem *nextMenuItem = [CCMenuItemImage itemFromNormalImage:@"next.png" selectedImage:@"next-sel.png" target:self selector:@selector(toNextScreen:)];
         [nextMenuItem setScaleX: IMG_WIDTH/nextMenuItem.contentSize.width];
         [nextMenuItem setScaleY: IMG_HEIGHT/nextMenuItem.contentSize.height];
         nextMenu = [CCMenu menuWithItems:nextMenuItem, nil];
-        nextMenu.position = ccp(size.width-REVERSE_X(100), REVERSE_Y(100));
+        nextMenu.position = ccp(size.width-REVERSE_X(80), REVERSE_Y(80));
         nextMenu.opacity = 80;
         [self addChild:nextMenu];
         

@@ -21,7 +21,7 @@
 
 /* OFFSETS TO ACCOMMODATE IPAD */
 #define kOffsetiPad         0
-#define kOffsetiPad2         0
+#define kOffsetiPad2        0
 #define kXoffsetiPad        0
 #define kYoffsetiPad        0
 

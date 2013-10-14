@@ -178,7 +178,7 @@ BOOL showDebugMessageEnable = NO;
         [self addChild:layerColer2 z:-2];
 
         
-        nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:REVERSE_X(28)];
+        nightLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:REVERSE(30)];
         nightLabel.position = ccp(REVERSE_X(60) , size.height-REVERSE_Y(40) );
         [self addChild: nightLabel];
         
