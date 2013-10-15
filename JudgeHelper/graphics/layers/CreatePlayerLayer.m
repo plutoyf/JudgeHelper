@@ -124,7 +124,7 @@
 }
 
 -(void) showAlbumButtonTapped: (id) sender {
-    [self showPhotoLibrary:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+    [self showPhotoLibrary:UIImagePickerControllerSourceTypePhotoLibrary];
 }
 
 -(void) showCameraButtonTapped: (id) sender {
@@ -154,7 +154,7 @@
     if([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         _picker.sourceType = sourceType;
     } else {
-        _picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
     
     
