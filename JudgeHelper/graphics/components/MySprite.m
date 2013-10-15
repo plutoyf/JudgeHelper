@@ -22,8 +22,8 @@
 -(void) showDeleteButtonWithTarget: (id)target action:(SEL)action {
     if(_deleteButton == nil) {
         _deleteButton = [CCSprite spriteWithFile:@"delete_mini.png"];
-        [_deleteButton setScaleX: REVERSE_X(30)/_deleteButton.contentSize.width];
-        [_deleteButton setScaleY: REVERSE_X(30)/_deleteButton.contentSize.height];
+        [_deleteButton setScaleX: REVERSE(30)/_deleteButton.contentSize.width];
+        [_deleteButton setScaleY: REVERSE(30)/_deleteButton.contentSize.height];
         _deleteButton.position = ccp(-AVATAR_IMG_WIDTH/2, AVATAR_IMG_HEIGHT);
         _deleteButton.isTouchEnabled = YES;
         
@@ -42,10 +42,10 @@
 }
 
 -(void) showName {
-    if(_name) {
-        CCLabelTTF* labelTTF = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:REVERSE(20)];
-        labelTTF.position = ccp(self.boundingBox.size.width/2, -REVERSE(20));
-        [self addChild: labelTTF];
+    if(_name && !_label) {
+        _label = [CCLabelTTF labelWithString:_name fontName:@"Marker Felt" fontSize:REVERSE(20)];
+        _label.position = ccp(self.boundingBox.size.width/2, -REVERSE(20));
+        [self addChild: _label];
     }
 }
 

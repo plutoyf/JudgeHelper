@@ -205,9 +205,9 @@
     CGSize cadreSize = CGSizeMake(size.width, size.height);
     cadre = [[ClippingSprite alloc] init];
     cadre.contentSize = cadreSize;
-    int w = size.height/3, h = size.width/3;
-    int x = size.width-REVERSE(430)-w*2;
-    int y = size.height-h-REVERSE(35);
+    int w = VALUE(size.height/3, size.height/2), h = VALUE(size.width/3, size.width/2);
+    int x = VALUE(size.width-REVERSE(430)-w*2, w/3);
+    int y = size.height-h-VALUE(35, 30);
     cadre.openWindowRect = CGRectMake(x,y,w,h);
     cadre.touchRect = CGRectMake(x,y,w,h);
     cadre.position = ccp(cadreSize.width/2, cadreSize.height/2);
@@ -244,7 +244,7 @@
     
     // Create textfield
     if(userNameTextField == nil) {
-        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(x+w+REVERSE(20),REVERSE(35),w,REVERSE(35))];
+        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(VALUE(x+w+20, size.width-w-20),VALUE(35, 60),w,REVERSE(35))];
         userNameTextField.placeholder = @"Enter name here." ;
         userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
         userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;

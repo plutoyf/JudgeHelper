@@ -63,10 +63,6 @@
     MySprite* selPersonIcon = [personIconsMap objectForKey:id];
     MySprite* selPersonIcon2 = [personIconsMap2 objectForKey:id];
     
-    if(!selPersonIconsMap) {
-        selPersonIconsMap = [NSMutableDictionary new];
-    }
-    
     int numPerLine = 10;
     
     if (selPersonIcon.selected) {
@@ -138,7 +134,7 @@
 
 -(void) selectPersonIcon: (MySprite*) personIcon {
     personIcon.selected = YES;
-    personIcon.avatar.opacity = 100;
+    personIcon.avatar.opacity = 80;
     //[personIcon runAction:[CCRepeatForever actionWithAction:[CCSequence actions: [CCRotateBy actionWithDuration:0.1 angle:-4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], [CCRotateBy actionWithDuration:0.1 angle:4.0], [CCRotateBy actionWithDuration:0.1 angle:0.0], nil]]];
 }
 
@@ -228,6 +224,7 @@
     if(!createPlayerLayer) {
         nextMenu.opacity = 80;
         addPlayerMenu.opacity = 80;
+        [self disableAllPlayers];
         createPlayerLayer = [[CreatePlayerLayer alloc] init];
         createPlayerLayer.delegate = self;
         [self addChild:createPlayerLayer];
@@ -240,8 +237,36 @@
         createPlayerLayer = nil;
         nextMenu.opacity = selPersonNumber >= 2 ? 255 : 80;
         addPlayerMenu.opacity = 255;
+        [self enableAllPlayers];
     }
 }
+
+-(void) disableAllPlayers {
+    for(MySprite* player in [personIconsMap allValues]) {
+        player.selectable = NO;
+        player.avatar.opacity = 80;
+        player.label.opacity = 80;
+    }
+    for(MySprite* player in [personIconsMap2 allValues]) {
+        player.selectable = NO;
+        player.avatar.opacity = 80;
+        player.label.opacity = 80;
+    }
+}
+
+-(void) enableAllPlayers {
+    for(MySprite* player in [personIconsMap allValues]) {
+        player.selectable = YES;
+        player.avatar.opacity = [selPersonIconsMap objectForKey:player.id] ? 80 : 255;
+        player.label.opacity = 255;
+    }
+    for(MySprite* player in [personIconsMap2 allValues]) {
+        player.selectable = YES;
+        player.avatar.opacity = [selPersonIconsMap objectForKey:player.id] ? 80 : 255;
+        player.label.opacity = 255;
+    }
+}
+
 
 -(id) init
 {
@@ -282,7 +307,6 @@
         UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
         panGestureRecognizer.delegate = self;
         [playersPoolCadre addGestureRecognizer:panGestureRecognizer];
-
         
         playersPool = [[CCSprite alloc] init];
         playersPool.position = ccp(0, 0);
@@ -290,6 +314,8 @@
         playersPool2 = [[CCSprite alloc] init];
         playersPool2.position = ccp(0, 0);
         [playersPoolCadre addChild:playersPool2];
+        
+        selPersonIconsMap = [NSMutableDictionary new];
         
         [self addChild:playersPoolCadre];
         [self initPlayers];
