@@ -413,8 +413,8 @@ NSMutableArray* pids;
         NSString* name = [userDefaults stringForKey:[id stringByAppendingString:@"-name"]];
         NSData* imgData = [userDefaults dataForKey:[id stringByAppendingString:@"-img"]];
         UIImage* image = [UIImage imageWithData:imgData];
-        [self addPlayer:id withName:name andImage:image forDouble:NO];
-        [self addPlayer:id withName:name andImage:image forDouble:YES];
+        [self addPlayer:id withName:name andImage:image andOpacity:255 forDouble:NO];
+        [self addPlayer:id withName:name andImage:image andOpacity:255 forDouble:YES];
         if([selPlayerIds containsObject:id]) {
             [self selectPlayerById: id];
         }
@@ -439,8 +439,8 @@ NSMutableArray* pids;
     [userDefaults synchronize];
     
     //2. show player in the list
-    [self addPlayer:id withName:name andImage:image forDouble:NO];
-    [self addPlayer:id withName:name andImage:image forDouble:YES];
+    [self addPlayer:id withName:name andImage:image andOpacity:80 forDouble:NO];
+    [self addPlayer:id withName:name andImage:image andOpacity:80 forDouble:YES];
     [self setPlayersPoolPosition: ccp(REVERSE_X(20), 0)];
     CCSprite* lastPlayer = (CCSprite*)[personIcons lastObject];
     CGPoint newPosition = playersPool.position;
@@ -449,7 +449,7 @@ NSMutableArray* pids;
 
 }
 
--(void) addPlayer: (NSString*) id withName: (NSString*) name andImage: (UIImage*) image forDouble: (BOOL) isDouble {
+-(void) addPlayer: (NSString*) id withName: (NSString*) name andImage: (UIImage*) image andOpacity: (int) opacity forDouble: (BOOL) isDouble {
     if(id.length <= 0 || name.length <= 0) return;
     
     MySprite *icon = [MySprite new];
@@ -464,6 +464,7 @@ NSMutableArray* pids;
     MySprite *avatar = [MySprite spriteWithTexture: texture];
     avatar.id = id;
     avatar.name = name;
+    avatar.opacity = opacity;
     icon.avatar = avatar;
     
     avatar.isTouchEnabled = YES;

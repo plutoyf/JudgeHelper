@@ -93,12 +93,12 @@
     NSString* name = userNameTextField.text;
     if(name.length > 0) {
         CGSize size = [CCDirector sharedDirector].winSize;
-        int w = size.height/3, h = size.width/3;
-        int x = size.width-REVERSE(430)-w*2;
-        int y = size.height-h-REVERSE(35);
+        int w = VALUE(size.height/3, size.height/2), h = VALUE(size.width/3, size.width/2);
+        int x = VALUE(size.width-REVERSE(430)-w*2, w/3);
+        int y = size.height-h-VALUE(35, 30);
         int bw = w - REVERSE(20);
         int bh = bw;
-        CGRect cropRect = CGRectMake(x+w/2-bw/2+2, h/2-bh/2+REVERSE(36)+2, bw-4, bh-4);
+        CGRect cropRect = CGRectMake(x+w/2-bw/2+2, h/2-bh/2+VALUE(36, 30)+2, bw-4, bh-4);
         
         UIImage *screenshot = [self screenshotWithStartNode: cadre];
         screenshot = [screenshot resizedImage:CGSizeMake(size.width, size.height) interpolationQuality:kCGInterpolationDefault];
