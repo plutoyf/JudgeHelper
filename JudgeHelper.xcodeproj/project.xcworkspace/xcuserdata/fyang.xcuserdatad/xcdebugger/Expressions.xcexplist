@@ -75,6 +75,11 @@
       </ContextState>
       <ContextState
          contextName = "-[CCEngin doAction:]:CCEngin.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_currentRoleNumbers">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[GameLayer init]:GameLayer.m">
@@ -144,10 +149,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

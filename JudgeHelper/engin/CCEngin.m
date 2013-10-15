@@ -208,9 +208,9 @@ static CCEngin *engin = nil;
         case 3:
             NSLog(@"case 3");
             if([self getPlayersByRole: roleInAction].count == [self getCurrentRoleNumber: roleInAction]) {
+                playersInAction = [self getPlayersByRole: roleInAction withIn: currentPlayers];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"%@请%@", [self getRoleLabel: roleInAction], [self getRoleActionTerm: roleInAction]]];
-                NSArray* actors = [self getPlayersByRole: roleInAction];
-                [self.displayDelegate updateEligiblePlayers: [self getEligiblePlayersAtNight:night wtihActors:actors] withBypass: [self isBypassableActionAtNight:night withActors:actors]];
+                [self.displayDelegate updateEligiblePlayers: [self getEligiblePlayersAtNight:night wtihActors:playersInAction] withBypass: [self isBypassableActionAtNight:night withActors:playersInAction]];
                 
                 state++;
             }
@@ -249,6 +249,7 @@ static CCEngin *engin = nil;
                 }
                 
             } else {
+                [self.displayDelegate updateEligiblePlayers: nil withBypass: NO];
                 [self recordPlayersStatus];
                 [self.displayDelegate addPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
@@ -563,11 +564,9 @@ static CCEngin *engin = nil;
 
 -(NSArray*) getEligiblePlayersAtNight: (long) i wtihActors: (NSArray*) actors {
     NSMutableArray* eligiblePlayers = [NSMutableArray new];
-    if(actors.count > 0) {
-        for(Player* p in _players) {
-            if([self isEligibleActionAtNight: i withActors: actors andReceiver: p]) {
-                [eligiblePlayers addObject:p];
-            }
+    for(Player* p in _players) {
+        if(actors.count == 0 || [self isEligibleActionAtNight: i withActors: actors andReceiver: p]) {
+            [eligiblePlayers addObject:p];
         }
     }
     return eligiblePlayers;
