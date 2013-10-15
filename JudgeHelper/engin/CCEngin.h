@@ -27,6 +27,7 @@
     NSMutableArray* initialPlayers;
     NSMutableArray* currentPlayers;
     NSMutableArray* deadPlayers;
+    NSArray* playersInAction;
     NSMutableArray* playersInActionHistory;
 }
 

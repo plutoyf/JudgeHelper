@@ -166,7 +166,6 @@ static CCEngin *engin = nil;
     }
     
     NSString* deadNames;
-    NSArray* playersInAction;
     switch (state) {
         case 1:
             NSLog(@"case 1");
@@ -227,7 +226,6 @@ static CCEngin *engin = nil;
                 if(selectedPlayer != nil && [self isEligibleActionAtNight: night withActors: [self getPlayersByRole: roleInAction] andReceiver: selectedPlayer]){
                     NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                     
-                    [playersInActionHistory addObject:playersInAction];
                     [self.displayDelegate updateEligiblePlayers: nil withBypass: NO];
                     [self recordPlayersStatus];
                     
@@ -251,7 +249,6 @@ static CCEngin *engin = nil;
                 }
                 
             } else {
-                [playersInActionHistory addObject:playersInAction];
                 [self recordPlayersStatus];
                 [self.displayDelegate addPlayersStatusWithActorRole:nil andReceiver:nil andResult:nil];
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
@@ -414,6 +411,7 @@ static CCEngin *engin = nil;
             // go back to state 10
             NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
             [self rollbackPlayersStatus];
+            [self.displayDelegate restoreBackupActionIcon];
             [self.displayDelegate updatePlayerLabels];
             [self.displayDelegate updatePlayerIcons];
             [self.displayDelegate showMessage: @"请投票"];
@@ -424,16 +422,16 @@ static CCEngin *engin = nil;
         case 4:
             if((oIndex <= 0 || oIndex >= _orders.count) && night>1) {
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
-                [self rollbackPlayersStatus];   
+                roleInAction = Judge;
+                [self rollbackPlayersStatus];
                 [self calculateCurrentPlayers];
+                [self.displayDelegate restoreBackupActionIcon];
                 [self.displayDelegate updatePlayerLabels];
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: @"请投票"];
-                roleInAction = Judge;
                 oIndex = _orders.count;
                 night--;
                 [self.displayDelegate showNightMessage: night];
-                [self.displayDelegate restoreBackupActionIcon];
                 state=10;
                 break;
             }
@@ -447,9 +445,6 @@ static CCEngin *engin = nil;
                 if(state != 5 && state != 6)oIndex--;
                 //people who has role show up one after another
                 roleInAction = [Engin getRoleFromString: [_orders objectAtIndex: oIndex]];
-                
-                NSArray* playersInAction = [playersInActionHistory lastObject];
-                [playersInActionHistory removeObject:playersInAction];
                 
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 NSMutableDictionary* oldRoles = [NSMutableDictionary new];
@@ -492,8 +487,8 @@ static CCEngin *engin = nil;
         return;
     }
     
-    NSArray* playersInAction = [self getPlayersByRole: roleInAction withIn: currentPlayers];
-    if(playersInAction != nil && [playersInAction count] > 0) {
+    playersInAction = [self getPlayersByRole: roleInAction withIn: currentPlayers];
+    if(playersInAction.count > 0) {
         Player* actor = (Player*)[playersInAction objectAtIndex:0];
         Player* receiver = [self getReceiverForActor:actor atNight:night];
         [self action: (receiver==nil ? @"" : receiver.id) inSpeed:YES];
@@ -504,16 +499,19 @@ static CCEngin *engin = nil;
     [self debugPlayers];
 }
 
--(void) recordPlayersStatus {
-    [super recordPlayersStatus];
-}
-
 -(void) recordNightStatus : (long) i {
     [super recordNightStatus: i];
 }
 
+-(void) recordPlayersStatus {
+    [super recordPlayersStatus];
+    [playersInActionHistory addObject:playersInAction];
+}
+
 -(void) rollbackPlayersStatus {
     [super rollbackPlayersStatus];
+    playersInAction = [playersInActionHistory lastObject];
+    [playersInActionHistory removeLastObject];
     [self.displayDelegate rollbackPlayersStatus];
 }
 
