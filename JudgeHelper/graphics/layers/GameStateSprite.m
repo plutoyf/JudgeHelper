@@ -36,6 +36,17 @@
     [self runAction:[CCSequence actions:move, nil]];
 }
 
+-(void) movePlayerStatusLayer: (UIPanGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
+    CGPoint locationInMySpriteSpace = [sender.node.parent convertToNodeSpace:locationInWorldSpace];
+    
+    playerStatusLayer.position = ccpAdd(sender.node.position, locationInWorldSpace);
+}
+
+-(void) selectPlayerStatusLayer: (UITapGestureRecognizer*) sender {
+    NSLog(@"tapped");
+}
 
 -(id) init {
     if(self = [super init]) {
@@ -49,7 +60,7 @@
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
         layerColer.position = ccp(0, 0);
         layerColer.opacity = 230;
-        [self addChild:layerColer z:-1];        
+        //[self addChild:layerColer z:-1];
         
         _position = ccp(size.width/2*3, size.height/2);
         
@@ -57,7 +68,13 @@
         playerStatusLayer = [CCLayerColor layerWithColor:ccc4(0,30,130,200)];
         playerStatusLayer.contentSize = CGSizeMake(size.width, REVERSE(40)*engin.players.count-REVERSE(40));
         playerStatusLayer.position = ccp(0, size.height-playerStatusLayer.contentSize.height-REVERSE_Y(100));
-        [self addChild:playerStatusLayer z:-1];
+        playerStatusLayer.isTouchEnabled = YES;
+        UIGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayerStatusLayer:)];
+        //[playerStatusLayer addGestureRecognizer:panGestureRecognizer];
+        UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayerStatusLayer:)];
+        [playerStatusLayer addGestureRecognizer:tapGestureRecognizer];
+        [self addChild:playerStatusLayer];
+        
         
         pIds = [NSMutableArray new];
         playerLines = [NSMutableDictionary new];
@@ -162,7 +179,7 @@
         [self addChild: hideGameState];
          */
         
-        self.isTouchEnabled = YES;
+        //self.isTouchEnabled = YES;
         UISwipeGestureRecognizer* hideGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameStateByUIGestureRecognizer:)];
         hideGameStateSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
         [self addGestureRecognizer: hideGameStateSwipeGestureRecognizer];

@@ -10,7 +10,7 @@
 #import "CCEngin.h"
 #import "CCPlayer.h"
 
-@interface GameStateSprite : CCSprite<UIGestureRecognizerDelegate>
+@interface GameStateSprite : CCSprite <UIGestureRecognizerDelegate>
 {
     CCEngin* engin;
     CCMenu* showGameStateMenu;
@@ -27,7 +27,7 @@
     CCLabelTTF *realPositionHandModeLabel;
 }
 
-- (BOOL) isTouchInsideOpenMenuWithTouch:(UITouch*)touch;
+-(BOOL) isTouchInsideOpenMenuWithTouch:(UITouch*)touch;
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
 -(void) revertStatus;
 @end
