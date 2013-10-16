@@ -321,6 +321,16 @@
         [self initPlayers];
     }
     [self scheduleUpdate];
+    
+    //test
+    int t = 2;
+    for(NSString* id in [personIconsMap2 allKeys]) {
+        if(t>0){
+            [self selectPlayerById:id];
+            t--;
+        }
+    }
+    
 	return self;
 }
 

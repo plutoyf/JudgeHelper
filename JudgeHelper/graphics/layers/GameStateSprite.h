@@ -17,6 +17,7 @@
     CCMenuItem* showGameStateMenuItem;
     CCMenu* hideGameStateMenu;
     CCMenuItem* hideGameStateMenuItem;
+    CCLayer *playerStatusLayer;
     NSMutableDictionary* playerLines;
     NSMutableDictionary* playerVisibleObjects;
     NSMutableDictionary* playerLifeBoxes;

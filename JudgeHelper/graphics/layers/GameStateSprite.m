@@ -54,6 +54,11 @@
         _position = ccp(size.width/2*3, size.height/2);
         
         //init
+        playerStatusLayer = [CCLayerColor layerWithColor:ccc4(0,30,130,200)];
+        playerStatusLayer.contentSize = CGSizeMake(size.width, REVERSE(40)*engin.players.count-REVERSE(40));
+        playerStatusLayer.position = ccp(0, size.height-playerStatusLayer.contentSize.height-REVERSE_Y(100));
+        [self addChild:playerStatusLayer z:-1];
+        
         pIds = [NSMutableArray new];
         playerLines = [NSMutableDictionary new];
         playerVisibleObjects = [NSMutableDictionary new];
@@ -66,36 +71,37 @@
             [playerLifeBoxes setObject:[NSMutableArray new] forKey:p.id];
             
             CCSprite* playerLine = [CCSprite new];
-            playerLine.position = REVERSE_XY(0, 80+40*i);
+            playerLine.position = ccp(0, playerStatusLayer.contentSize.height-REVERSE(40)*i-REVERSE(20));
             [playerLines setObject:playerLine forKey:p.id];
-            [self addChild:playerLine];
+            [playerStatusLayer addChild:playerLine];
             
-            CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:VALUE(14, 9)];
-            label.position = REVERSE_XY(50, 0);
+            CCLabelTTF* label = [CCLabelTTF labelWithString:p.name fontName:@"Marker Felt" fontSize:VALUE(14, 10)];
+            label.position = REVERSE_XY(60, 0);
             [playerLine addChild:label];
             
             i++;
         }
+
         
         CCMenuItem* undoMenuItem = [CCMenuItemImage itemWithNormalImage:@"undo.png" selectedImage:@"undo-sel.png" target:self selector:@selector(undoButtonPressed:)];
-        [undoMenuItem setScaleX: IMG_WIDTH/undoMenuItem.contentSize.width];
-        [undoMenuItem setScaleY: IMG_HEIGHT/undoMenuItem.contentSize.height];
+        [undoMenuItem setScaleX: REVERSE(60)/undoMenuItem.contentSize.width];
+        [undoMenuItem setScaleY: REVERSE(60)/undoMenuItem.contentSize.height];
         CCMenu *undoMenu = [CCMenu menuWithItems:undoMenuItem, nil];
-        undoMenu.position = ccp(REVERSE_X(60), size.height-REVERSE_Y(50));
+        undoMenu.position = ccp(size.width - REVERSE_X(250), size.height-REVERSE_Y(50));
         [self addChild: undoMenu];
         
         CCMenuItem* redoMenuItem = [CCMenuItemImage itemWithNormalImage:@"redo.png" selectedImage:@"redo-sel.png" target:self selector:@selector(redoButtonPressed:)];
-        [redoMenuItem setScaleX: IMG_WIDTH/redoMenuItem.contentSize.width];
-        [redoMenuItem setScaleY: IMG_HEIGHT/redoMenuItem.contentSize.height];
+        [redoMenuItem setScaleX: REVERSE(60)/redoMenuItem.contentSize.width];
+        [redoMenuItem setScaleY: REVERSE(60)/redoMenuItem.contentSize.height];
         CCMenu *redoMenu = [CCMenu menuWithItems:redoMenuItem, nil];
-        redoMenu.position = ccp(REVERSE_X(160), size.height-REVERSE_Y(50));
+        redoMenu.position = ccp(size.width - REVERSE_X(150), size.height-REVERSE_Y(50));
         [self addChild: redoMenu];
         
         CCMenuItem* quitMenuItem = [CCMenuItemImage itemWithNormalImage:@"quit.png" selectedImage:@"quit-sel.png" target:self selector:@selector(quitButtonPressed:)];
-        [quitMenuItem setScaleX: IMG_WIDTH/quitMenuItem.contentSize.width];
-        [quitMenuItem setScaleY: IMG_HEIGHT/quitMenuItem.contentSize.height];
+        [quitMenuItem setScaleX: REVERSE(60)/quitMenuItem.contentSize.width];
+        [quitMenuItem setScaleY: REVERSE(60)/quitMenuItem.contentSize.height];
         CCMenu *quitMenu = [CCMenu menuWithItems:quitMenuItem, nil];
-        quitMenu.position = ccp(REVERSE_X(260), size.height-REVERSE_Y(50));
+        quitMenu.position = ccp(size.width - REVERSE_X(50), size.height-REVERSE_Y(50));
         [self addChild: quitMenu];
         
         /*
@@ -203,6 +209,10 @@
     for(NSMutableArray* visibleObjects in [playerVisibleObjects allValues]) {
         [visibleObjects addObject:[NSMutableArray new]];
     }
+   
+    int iconSize = 30;
+    int marginLeft = 130;
+    int lifeBoxHeight = 6;
     
     if(receiver) {
         CCSprite* playerLine = [playerLines objectForKey:receiver.id];
@@ -210,17 +220,17 @@
         NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:receiver.id];
         
         MySprite* icon = [MySprite spriteWithFile: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
-        [icon setScaleX: REVERSE_X(20)/icon.contentSize.width];
-        [icon setScaleY: REVERSE_X(20)/icon.contentSize.height];
+        [icon setScaleX: REVERSE(iconSize)/icon.contentSize.width];
+        [icon setScaleY: REVERSE(iconSize)/icon.contentSize.height];
         if(!result) icon.opacity = 80;
-        icon.position = REVERSE_XY(100+20*lifeBoxes.count, 0);
+        icon.position = ccp(REVERSE(marginLeft+iconSize*lifeBoxes.count), 0);
         [visibleNodes addObject:icon];
         [playerLine addChild:icon];
         
         ccColor4B color = (receiver.life >= 1) ? ccc4(0, 255, 0, 255) : (receiver.life <= 0) ? ccc4(255, 0, 0, 255) : ccc4(100, 100, 0, 255);
         CCLayerColor *lifeBox = [CCLayerColor layerWithColor:color];
-        lifeBox.contentSize = CGSizeMake(REVERSE_X(20), REVERSE_Y(4));
-        lifeBox.position = REVERSE_XY(100+20*lifeBoxes.count-10, -14);
+        lifeBox.contentSize = CGSizeMake(REVERSE(iconSize), REVERSE(lifeBoxHeight));
+        lifeBox.position = ccp(REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize/2), REVERSE(-iconSize/2-lifeBoxHeight));
         int opacity = (receiver.status == IN_GAME) ? 255 : 80;
         lifeBox.opacity = opacity;
         [visibleNodes addObject:lifeBox];
@@ -246,8 +256,8 @@
             if(player.status == IN_GAME) {
                 for(;lifeBoxes.count < maxLifeBoxesNumber;) {
                     CCLayerColor *lifeBox = [CCLayerColor layerWithColor:ccc4(color.r, color.g, color.b, 255)];
-                    lifeBox.contentSize = CGSizeMake(REVERSE_X(20), REVERSE_Y(4));
-                    lifeBox.position = REVERSE_XY(100+20*lifeBoxes.count-10, -14);
+                    lifeBox.contentSize = CGSizeMake(REVERSE(iconSize), REVERSE(4));
+                    lifeBox.position = ccp(REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize/2), REVERSE(-iconSize/2-lifeBoxHeight));
                     [visibleNodes addObject:lifeBox];
                     [lifeBoxes addObject:lifeBox];
                     [playerLine addChild:lifeBox];
@@ -262,8 +272,8 @@
             for(NSString* id in pIds) {
                 CCSprite* playerLine = [playerLines objectForKey:id];
                 CCLayerColor *separatorBox = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255)];
-                separatorBox.contentSize = CGSizeMake(1, REVERSE_Y(40));
-                separatorBox.position = REVERSE_XY(100+20*maxCount-10, -20);
+                separatorBox.contentSize = CGSizeMake(1, REVERSE(40));
+                separatorBox.position = ccp(REVERSE(marginLeft+iconSize*maxCount-iconSize/2), REVERSE(-iconSize));
                 [playerLine addChild:separatorBox z:1];
             }
         }
