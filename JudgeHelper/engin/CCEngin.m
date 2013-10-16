@@ -29,13 +29,13 @@ static CCEngin *engin = nil;
 
 +(NSMutableArray*) createRoles {
     NSString* rolesString = @"Judge(1), Guard(1), Killer(2), Police(2), Doctor(1), Spy(1), Citizen(3), Assassin(0), Undercover(0)";
-    rolesString = @"Judge(1), Guard(0), Killer(1), Police(1), Doctor(0), Spy(0), Citizen(16), Assassin(0), Undercover(0)";
+    //rolesString = @"Judge(1), Guard(0), Killer(1), Police(1), Doctor(0), Spy(0), Citizen(16), Assassin(0), Undercover(0)";
     return [RuleResolver resolveRoles: rolesString];
 }
 
 +(NSMutableDictionary*) createRoleNumbers {
     NSString* rolesString = @"Judge(1), Guard(1), Killer(2), Police(2), Doctor(1), Spy(1), Citizen(3), Assassin(0), Undercover(0)";
-    rolesString = @"Judge(1), Guard(0), Killer(1), Police(1), Doctor(0), Spy(0), Citizen(16), Assassin(0), Undercover(0)";
+    //rolesString = @"Judge(1), Guard(0), Killer(1), Police(1), Doctor(0), Spy(0), Citizen(16), Assassin(0), Undercover(0)";
     return [RuleResolver resolveRoleNumbers: rolesString];
 }
 
