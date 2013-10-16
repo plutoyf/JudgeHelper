@@ -86,8 +86,8 @@
         for(MySprite* personIcon in selPersonIconsMap.allValues) {
             if(personIcon.position.y<copyPersonIcon.position.y || (personIcon.position.y==copyPersonIcon.position.y && personIcon.position.x>copyPersonIcon.position.x)) {
                 if(personIcon.position.x == VALUE(60, 30)) {
-                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(100, 60))];
-                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(100, 60))];
+                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(110, 60))];
+                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(110, 60))];
                     [personIcon runAction:[CCSequence actions:move1, move2, nil]];
                 } else {
                     CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-VALUE(100, 46), personIcon.position.y)];
@@ -114,7 +114,7 @@
         [copyPersonIcon.avatar addGestureRecognizer:tapGestureRecognizer];
         
         BOOL hasP0 = p0.x!=0 || p0.y!=0;
-        CGPoint p1 = ccp(VALUE(60, 30)+VALUE(100, 46)*(selPersonNumber%numPerLine), REVERSE_Y(570)-VALUE(100, 60)*(int)(selPersonNumber/numPerLine));
+        CGPoint p1 = ccp(VALUE(60, 30)+VALUE(100, 46)*(selPersonNumber%numPerLine), REVERSE_Y(570)-VALUE(110, 60)*(int)(selPersonNumber/numPerLine));
         copyPersonIcon.position = hasP0?p0:p1;
         
         [selPersonIconsMap setObject:copyPersonIcon forKey:copyPersonIcon.id];
@@ -323,7 +323,7 @@
     [self scheduleUpdate];
     
     //test
-    int t = 2;
+    int t = 20;
     for(NSString* id in [personIconsMap2 allKeys]) {
         if(t>0){
             [self selectPlayerById:id];
@@ -475,6 +475,7 @@ NSMutableArray* pids;
     avatar.id = id;
     avatar.name = name;
     avatar.opacity = opacity;
+    icon.label.opacity = opacity;
     icon.avatar = avatar;
     
     avatar.isTouchEnabled = YES;

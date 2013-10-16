@@ -26,9 +26,9 @@
     CGSize size = [[CCDirector sharedDirector] winSize];
     
     if(open) {
-        newPoint = ccp(self.boundingBox.size.width/2, self.boundingBox.size.height/2);
+        newPoint = ccp(size.width/2, size.height/2);
     } else {
-        newPoint = ccp(size.width+self.boundingBox.size.width/2, self.boundingBox.size.height/2);
+        newPoint = ccp(size.width/2*3, size.height/2);
     }
     
     CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:newPoint];
@@ -37,42 +37,52 @@
 }
 
 -(void) movePlayerStatusLayer: (UIPanGestureRecognizer*) sender {
-    CGPoint location = [sender locationInView:sender.view];
-    CGPoint locationInWorldSpace = [[CCDirector sharedDirector] convertToGL:location];
-    CGPoint locationInMySpriteSpace = [sender.node.parent convertToNodeSpace:locationInWorldSpace];
+    float H = self.contentSize.height;
+    float h = playerStatusLayer.contentSize.height;
+    float m = REVERSE(40);
     
-    playerStatusLayer.position = ccpAdd(sender.node.position, locationInWorldSpace);
-}
-
--(void) selectPlayerStatusLayer: (UITapGestureRecognizer*) sender {
-    NSLog(@"tapped");
+    if(h+m <= H) return;
+    
+    CGPoint translation = [sender translationInView:sender.view];
+    translation.y *= -1;
+    [sender setTranslation:CGPointZero inView:sender.view];
+    CGPoint p1 = ccpAdd(playerStatusLayer.position, translation);
+    
+    p1.x = playerStatusLayer.position.x;
+    
+    if(p1.y < H-m-h) {
+        p1.y = H-m-h;
+    } else if(p1.y > 0) {
+        p1.y = 0;
+    }
+    
+    playerStatusLayer.position = p1;
 }
 
 -(id) init {
     if(self = [super init]) {
-        CGSize size = [[CCDirector sharedDirector] winSize];
+        CGSize globalSize = [[CCDirector sharedDirector] winSize];
         GlobalSettings* global = [GlobalSettings globalSettings];
         
-        self.contentSize = size;
+        self.contentSize = globalSize;
+        CGSize size = self.contentSize;
         
         engin = [CCEngin getEngin];
         
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
         layerColer.position = ccp(0, 0);
         layerColer.opacity = 230;
-        //[self addChild:layerColer z:-1];
+        [self addChild:layerColer z:-1];
         
-        _position = ccp(size.width/2*3, size.height/2);
+        _position = ccp(globalSize.width/2*3, globalSize.height/2);
         
         //init
-        playerStatusLayer = [CCLayerColor layerWithColor:ccc4(0,30,130,200)];
+        playerStatusLayer = [CCLayer new];
         playerStatusLayer.contentSize = CGSizeMake(size.width, REVERSE(40)*engin.players.count-REVERSE(40));
-        playerStatusLayer.position = ccp(0, size.height-playerStatusLayer.contentSize.height-REVERSE_Y(100));
+        playerStatusLayer.position = ccp(0, size.height-playerStatusLayer.contentSize.height-REVERSE(40));
         playerStatusLayer.isTouchEnabled = YES;
         UIGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayerStatusLayer:)];
-        //[playerStatusLayer addGestureRecognizer:panGestureRecognizer];
-        UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayerStatusLayer:)];
-        [playerStatusLayer addGestureRecognizer:tapGestureRecognizer];
+        [playerStatusLayer addGestureRecognizer:panGestureRecognizer];
         [self addChild:playerStatusLayer];
         
         
@@ -104,6 +114,7 @@
         [undoMenuItem setScaleX: REVERSE(60)/undoMenuItem.contentSize.width];
         [undoMenuItem setScaleY: REVERSE(60)/undoMenuItem.contentSize.height];
         CCMenu *undoMenu = [CCMenu menuWithItems:undoMenuItem, nil];
+        undoMenu.contentSize = undoMenuItem.contentSize;
         undoMenu.position = ccp(size.width - REVERSE_X(250), size.height-REVERSE_Y(50));
         [self addChild: undoMenu];
         
@@ -111,6 +122,7 @@
         [redoMenuItem setScaleX: REVERSE(60)/redoMenuItem.contentSize.width];
         [redoMenuItem setScaleY: REVERSE(60)/redoMenuItem.contentSize.height];
         CCMenu *redoMenu = [CCMenu menuWithItems:redoMenuItem, nil];
+        redoMenu.contentSize = redoMenuItem.contentSize;
         redoMenu.position = ccp(size.width - REVERSE_X(150), size.height-REVERSE_Y(50));
         [self addChild: redoMenu];
         
@@ -118,6 +130,7 @@
         [quitMenuItem setScaleX: REVERSE(60)/quitMenuItem.contentSize.width];
         [quitMenuItem setScaleY: REVERSE(60)/quitMenuItem.contentSize.height];
         CCMenu *quitMenu = [CCMenu menuWithItems:quitMenuItem, nil];
+        quitMenu.contentSize = quitMenuItem.contentSize;
         quitMenu.position = ccp(size.width - REVERSE_X(50), size.height-REVERSE_Y(50));
         [self addChild: quitMenu];
         
@@ -143,9 +156,8 @@
         [showGameStateMenuItem setScaleX: REVERSE(30)/showGameStateMenuItem.contentSize.width];
         [showGameStateMenuItem setScaleY: REVERSE(40)/showGameStateMenuItem.contentSize.height];
         showGameStateMenu = [CCMenu menuWithItems:showGameStateMenuItem, nil];
+        showGameStateMenu.contentSize = showGameStateMenuItem.contentSize;
         showGameStateMenu.position = ccp(-showGameStateMenuItem.boundingBox.size.width/2, size.height/2);
-        //showGameStateMenu.isTouchEnabled = YES;
-        //[showGameStateMenu addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameStateByUIGestureRecognizer:)]];
         [self addChild: showGameStateMenu];
 
         
@@ -153,6 +165,7 @@
         [hideGameStateMenuItem setScaleX: REVERSE(30)/hideGameStateMenuItem.contentSize.width];
         [hideGameStateMenuItem setScaleY: REVERSE(40)/hideGameStateMenuItem.contentSize.height];
         hideGameStateMenu = [CCMenu menuWithItems:hideGameStateMenuItem, nil];
+        hideGameStateMenu.contentSize = hideGameStateMenuItem.contentSize;
         hideGameStateMenu.position = ccp(size.width-hideGameStateMenuItem.boundingBox.size.width/2, size.height/2);
         [self addChild: hideGameStateMenu];
         
@@ -179,7 +192,7 @@
         [self addChild: hideGameState];
          */
         
-        //self.isTouchEnabled = YES;
+        self.isTouchEnabled = YES;
         UISwipeGestureRecognizer* hideGameStateSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGameStateByUIGestureRecognizer:)];
         hideGameStateSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
         [self addGestureRecognizer: hideGameStateSwipeGestureRecognizer];
