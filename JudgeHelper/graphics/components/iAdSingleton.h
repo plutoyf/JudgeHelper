@@ -15,6 +15,7 @@
     ADBannerView *bannerView;
     UINavigationController *navController;
     BOOL _adBannerViewIsVisible;
+    CGRect frame;    
 }
 
 @property (nonatomic,retain) ADBannerView *bannerView;

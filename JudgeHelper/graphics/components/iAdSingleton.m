@@ -47,7 +47,6 @@
         // We want this banner to be at the bottom of the view controller, but placed
         // offscreen to ensure that the user won't see the banner until its ready.
         // We'll be informed when we have an ad to show because -bannerViewDidLoadAd: will be called.
-        CGRect frame;
         frame.size = [ADBannerView sizeFromBannerContentSizeIdentifier:contentSize];
         frame.origin = CGPointMake(0.0f, CGRectGetMaxY(app.navController.view.bounds));
         
@@ -68,9 +67,8 @@
         
         [navController.view addSubview:self.bannerView];
         
-        [self moveBannerOffScreen];
+        //[self moveBannerOffScreen];
     }
-    
 }
 
 - (int)getBannerHeight:(UIDeviceOrientation)orientation {
@@ -82,7 +80,7 @@
 }
 
 - (int)getBannerHeight {
-    return self.bannerView.frame.size.height;
+    return frame.size.height;
     return [self getBannerHeight:[UIDevice currentDevice].orientation];
 }
 
@@ -119,7 +117,8 @@
                          completion:^(BOOL finished)
          {
          }];
-    }    NSLog(@"Banner moved out of the screen");
+    }
+    NSLog(@"Banner moved out of the screen");
 }
 
 //Move the banner on to the screen
@@ -169,6 +168,7 @@
 //After banner is closed (you should restore any services paused by your application/banner)
 -(void)bannerViewActionDidFinish:(ADBannerView *)banner
 {
+    return;
     if (self.bannerView)
     {
         [UIView animateWithDuration:0.5

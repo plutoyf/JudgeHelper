@@ -130,8 +130,7 @@
 	// for rotation and other messages
 	[director_ setDelegate:navController_];
 	
-    [[iAdSingleton sharedInstance]createAdView]; //to call the create view method
-    [navController_.view addSubview: [iAdSingleton sharedInstance].bannerView];
+    [self createIAd];
     
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
@@ -140,6 +139,17 @@
 	[window_ makeKeyAndVisible];
 
 	return YES;
+}
+
+-(void) createIAd {
+    [[iAdSingleton sharedInstance]createAdView];
+    [navController_.view addSubview: [iAdSingleton sharedInstance].bannerView];
+}
+
+-(void) resumeIAd {
+    if([iAdSingleton sharedInstance].bannerView == nil) {
+        [[iAdSingleton sharedInstance]createAdView];
+    }
 }
 
 // getting a call, pause the game
@@ -153,8 +163,10 @@
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
-	if( [navController_ visibleViewController] == director_ )
-		[director_ resume];
+	if( [navController_ visibleViewController] == director_ ) [director_ resume];
+    
+    [self resumeIAd];
+
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
