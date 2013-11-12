@@ -12,6 +12,7 @@
 #import "CCNode+SFGestureRecognizers.h"
 #import "UIImage+Resize.h"
 #import "AppDelegate.h"
+#import "iAdSingleton.h"
 
 @implementation CreatePlayerLayer
 
@@ -53,6 +54,7 @@
 {
     if( (self=[super init]) ) {
         CGSize size = [[CCDirector sharedDirector] winSize];
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         
         [self setContentSize: CGSizeMake(size.width, size.height)];
         _position = ccp(size.width/2, size.height/2);
@@ -93,6 +95,7 @@
     NSString* name = userNameTextField.text;
     if(name.length > 0) {
         CGSize size = [CCDirector sharedDirector].winSize;
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         int w = VALUE(size.height/3, size.height/2), h = VALUE(size.width/3, size.width/2);
         int x = VALUE(size.width-REVERSE(430)-w*2, w/3);
         int y = size.height-h-VALUE(35, 30);
@@ -141,6 +144,7 @@
     }
     
     CGSize winsize = [[CCDirector sharedDirector] winSize];
+    winsize.height -= [iAdSingleton sharedInstance].getBannerHeight;
     
     _picker = [[UIImagePickerController alloc] init];
     _picker.delegate = self;
@@ -202,6 +206,7 @@
         [self removeChild:cadre];
     }
     CGSize size = [[CCDirector sharedDirector] winSize];
+    size.height -= [iAdSingleton sharedInstance].getBannerHeight;
     CGSize cadreSize = CGSizeMake(size.width, size.height);
     cadre = [[ClippingSprite alloc] init];
     cadre.contentSize = cadreSize;
@@ -244,7 +249,7 @@
     
     // Create textfield
     if(userNameTextField == nil) {
-        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(VALUE(x+w+20, size.width-w-20),VALUE(35, 60),w,REVERSE(35))];
+        userNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(VALUE(x+w+20, size.width-w-20),VALUE(35, 60)+[iAdSingleton sharedInstance].getBannerHeight,w,REVERSE(35))];
         userNameTextField.placeholder = @"Enter name here." ;
         userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
         userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
@@ -301,6 +306,7 @@
     [CCDirector sharedDirector].nextDeltaTimeZero = YES;
     
     CGSize winSize = [CCDirector sharedDirector].winSize;
+    winSize.height -= [iAdSingleton sharedInstance].getBannerHeight;
     CCRenderTexture* rtx = [CCRenderTexture renderTextureWithWidth:winSize.width height:winSize.height];
     [rtx begin];
     [startNode visit];

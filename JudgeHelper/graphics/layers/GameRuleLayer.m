@@ -9,6 +9,7 @@
 #import "GameRuleLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "RuleResolver.h"
+#import "iAdSingleton.h"
 
 @implementation GameRuleLayer
 
@@ -27,7 +28,7 @@ NSString *const RESULT_RULES_HEADER = @"==RESULT RULES==";
         _position = ccp(size.width/2, size.height/2);
         
         //init
-        rulesTextView = [[UITextView alloc] initWithFrame: CGRectMake(0,0, size.width, REVERSE_Y(300))];
+        rulesTextView = [[UITextView alloc] initWithFrame: CGRectMake(0,[iAdSingleton sharedInstance].getBannerHeight, size.width, REVERSE_Y(300)-[iAdSingleton sharedInstance].getBannerHeight)];
         rulesTextView.textAlignment = NSTextAlignmentLeft;
         [rulesTextView setDelegate:self];
         [self restore:nil];

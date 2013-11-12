@@ -15,6 +15,7 @@
 #import "GlobalSettings.h"
 #import "RuleResolver.h"
 #import "CCNode+SFGestureRecognizers.h"
+#import "iAdSingleton.h"
 
 #pragma mark - GameLayer
 
@@ -151,6 +152,7 @@ BOOL showDebugMessageEnable = NO;
         
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         
         CCLayerColor* maskLayer = [CCLayerColor layerWithColor:ccc4(0,100,100,255)];
         maskLayer.opacity = 0;
@@ -162,7 +164,7 @@ BOOL showDebugMessageEnable = NO;
         [maskLayer addGestureRecognizer:tapGestureRecognizer];
         [self addChild:maskLayer z:-1];
 
-        float tWidth = REVERSE_X(700), tHeight = REVERSE_Y(500), x = size.width/2-tWidth/2, y = size.height/2-tHeight/2;
+        float tWidth = REVERSE_X(700), tHeight = REVERSE_Y(500)-[iAdSingleton sharedInstance].getBannerHeight/2, x = size.width/2-tWidth/2, y = size.height/2-tHeight/2;
         tableZone = [[TableZone alloc] init:tWidth : tHeight];
         
         CGRect siteZone1 = CGRectMake(x-2, y-2, tWidth+4, tHeight+4);

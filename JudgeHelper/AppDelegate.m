@@ -9,6 +9,7 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
+#import "iAdSingleton.h"
 #import "IntroLayer.h"
 
 @implementation MyNavigationController
@@ -82,7 +83,7 @@
 									sharegroup:nil
 								 multiSampling:NO
 							   numberOfSamples:0];
-	
+    
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director_.wantsFullScreenLayout = YES;
@@ -129,6 +130,9 @@
 	// for rotation and other messages
 	[director_ setDelegate:navController_];
 	
+    [[iAdSingleton sharedInstance]createAdView]; //to call the create view method
+    [navController_.view addSubview: [iAdSingleton sharedInstance].bannerView];
+    
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
 	

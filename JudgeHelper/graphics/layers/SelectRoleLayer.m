@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
+#import "iAdSingleton.h"
 
 @implementation SelectRoleLayer
 
@@ -104,6 +105,7 @@
 	if( (self=[super init]) ) {
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         GlobalSettings* global = [GlobalSettings globalSettings];
         
         CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"角色设定 (%d名玩家)", ((NSArray*)[global getPlayerIds]).count] fontName:@"Marker Felt" fontSize:REVERSE(32)];

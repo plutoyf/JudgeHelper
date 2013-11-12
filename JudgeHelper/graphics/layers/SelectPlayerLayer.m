@@ -13,6 +13,7 @@
 #import "ClippingSprite.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "UIImage+Resize.h"
+#import "iAdSingleton.h"
 
 @implementation SelectPlayerLayer
 
@@ -86,8 +87,8 @@
         for(MySprite* personIcon in selPersonIconsMap.allValues) {
             if(personIcon.position.y<copyPersonIcon.position.y || (personIcon.position.y==copyPersonIcon.position.y && personIcon.position.x>copyPersonIcon.position.x)) {
                 if(personIcon.position.x == VALUE(60, 30)) {
-                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(110, 60))];
-                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(110, 60))];
+                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(110, 60)+[iAdSingleton sharedInstance].getBannerHeight)];
+                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(110, 60)+[iAdSingleton sharedInstance].getBannerHeight)];
                     [personIcon runAction:[CCSequence actions:move1, move2, nil]];
                 } else {
                     CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-VALUE(100, 46), personIcon.position.y)];
@@ -114,7 +115,7 @@
         [copyPersonIcon.avatar addGestureRecognizer:tapGestureRecognizer];
         
         BOOL hasP0 = p0.x!=0 || p0.y!=0;
-        CGPoint p1 = ccp(VALUE(60, 30)+VALUE(100, 46)*(selPersonNumber%numPerLine), REVERSE_Y(570)-VALUE(110, 60)*(int)(selPersonNumber/numPerLine));
+        CGPoint p1 = ccp(VALUE(60, 30)+VALUE(100, 46)*(selPersonNumber%numPerLine), REVERSE_Y(570)-VALUE(110, 60)*(int)(selPersonNumber/numPerLine)-[iAdSingleton sharedInstance].getBannerHeight);
         copyPersonIcon.position = hasP0?p0:p1;
         
         [selPersonIconsMap setObject:copyPersonIcon forKey:copyPersonIcon.id];
@@ -273,12 +274,14 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
+        
         isIgnorePresse = NO;
         selPersonNumber = 0;
         engin = [CCEngin getEngin];
         
         // ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         
         CCLabelTTF* titleLabel = [CCLabelTTF labelWithString:@"玩家设定" fontName:@"Marker Felt" fontSize:REVERSE(32)];
         titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20) , size.height-REVERSE_Y(40) );
@@ -302,7 +305,7 @@
         
         playersPoolCadre = [[CCSprite alloc] init];
         [playersPoolCadre setContentSize:CGSizeMake(size.width, VALUE(100, 60))];
-        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(150)+VALUE(100, 60)/2);
+        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(150)+VALUE(100, 60)/2-[iAdSingleton sharedInstance].getBannerHeight);
         playersPoolCadre.isTouchEnabled = YES;
         UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
         panGestureRecognizer.delegate = self;

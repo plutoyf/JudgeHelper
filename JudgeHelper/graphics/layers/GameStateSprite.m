@@ -10,6 +10,7 @@
 #import "GlobalSettings.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "SelectPlayerLayer.h"
+#import "iAdSingleton.h"
 
 @implementation GameStateSprite
 
@@ -66,6 +67,7 @@
         
         self.contentSize = globalSize;
         CGSize size = self.contentSize;
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         
         engin = [CCEngin getEngin];
         

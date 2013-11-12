@@ -7,12 +7,14 @@
 //
 
 #import "TableZone.h"
+#import "iAdSingleton.h"
 
 @implementation TableZone
 
 -(id) init: (float) width : (float) height {
     if(self = [super init]) {
         CGSize size = [[CCDirector sharedDirector] winSize];
+        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
         float innerMargin = 200, outerMargin = 200;
         siteZone = CGRectMake(size.width/2-width/2, size.height/2-height/2, width, height);
         innerZone = CGRectMake(size.width/2-width/2+innerMargin/2, size.height/2-height/2+innerMargin/2, width-innerMargin, height-innerMargin);
