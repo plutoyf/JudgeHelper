@@ -87,8 +87,8 @@
         for(MySprite* personIcon in selPersonIconsMap.allValues) {
             if(personIcon.position.y<copyPersonIcon.position.y || (personIcon.position.y==copyPersonIcon.position.y && personIcon.position.x>copyPersonIcon.position.x)) {
                 if(personIcon.position.x == VALUE(60, 30)) {
-                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(110, 60)+[iAdSingleton sharedInstance].getBannerHeight)];
-                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(110, 60)+[iAdSingleton sharedInstance].getBannerHeight)];
+                    CCMoveTo *move1 = [CCMoveTo actionWithDuration:0.1 position:ccp(VALUE(60, 30)+VALUE(100, 46)*numPerLine, personIcon.position.y+VALUE(110, 60))];
+                    CCMoveTo *move2 = [CCMoveTo actionWithDuration:0.15 position:ccp(VALUE(60, 30)+VALUE(100, 46)*(numPerLine-1), personIcon.position.y+VALUE(110, 60))];
                     [personIcon runAction:[CCSequence actions:move1, move2, nil]];
                 } else {
                     CCMoveTo *move = [CCMoveTo actionWithDuration:0.25 position:ccp(personIcon.position.x-VALUE(100, 46), personIcon.position.y)];
@@ -305,7 +305,7 @@
         
         playersPoolCadre = [[CCSprite alloc] init];
         [playersPoolCadre setContentSize:CGSizeMake(size.width, VALUE(100, 60))];
-        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(150)+VALUE(100, 60)/2-[iAdSingleton sharedInstance].getBannerHeight);
+        playersPoolCadre.position = ccp(size.width/2, REVERSE_Y(150)+VALUE(100, 60)/2);
         playersPoolCadre.isTouchEnabled = YES;
         UIPanGestureRecognizer* panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePlayersByPanGesture:)];
         panGestureRecognizer.delegate = self;
