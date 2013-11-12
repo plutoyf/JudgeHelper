@@ -198,8 +198,8 @@
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
     NSLog(@"banner got error");
-    [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-    [self moveBannerOffScreen];
+    //[UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+    //[self moveBannerOffScreen];
 }
 // NO need of delloc (using ARC)
 @end
