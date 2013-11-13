@@ -38,7 +38,7 @@
 }
 
 -(void) movePlayerStatusLayer: (UIPanGestureRecognizer*) sender {
-    float H = self.contentSize.height;
+    float H = self.contentSize.height-[iAdSingleton sharedInstance].getBannerHeight;
     float h = playerStatusLayer.contentSize.height;
     float m = REVERSE(40);
     
@@ -288,7 +288,7 @@
             if(player.status == IN_GAME) {
                 for(;lifeBoxes.count < maxLifeBoxesNumber;) {
                     CCLayerColor *lifeBox = [CCLayerColor layerWithColor:ccc4(color.r, color.g, color.b, 255)];
-                    lifeBox.contentSize = CGSizeMake(REVERSE(iconSize), REVERSE(4));
+                    lifeBox.contentSize = CGSizeMake(REVERSE(iconSize), REVERSE(lifeBoxHeight));
                     lifeBox.position = ccp(REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize/2), REVERSE(-iconSize/2-lifeBoxHeight));
                     [visibleNodes addObject:lifeBox];
                     [lifeBoxes addObject:lifeBox];

@@ -60,7 +60,7 @@
         _position = ccp(size.width/2, size.height/2);
                 
         CCLayerColor *layerColer = [CCLayerColor layerWithColor:ccc4(0,0,0,255)];
-        layerColer.position = ccp(0, size.height/2-REVERSE_Y(80));
+        layerColer.position = ccp(0, size.height/2+[iAdSingleton sharedInstance].getBannerHeight/2-REVERSE_Y(80));
         [self addChild:layerColer];
         
         
