@@ -43,6 +43,14 @@
          contextName = "-[Player getDistanceAtNight:with:]:Player.m">
       </ContextState>
       <ContextState
+         contextName = "-[MainMenuViewController tableView:cellForRowAtIndexPath:]:MainMenuViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
          <PersistentStrings>
             <PersistentString
@@ -149,10 +157,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

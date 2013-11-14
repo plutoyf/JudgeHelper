@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainMenuViewController : UIViewController {
+@interface MainMenuViewController : UIViewController <UITableViewDataSource> {
 }
 
-- (IBAction)buttonTapped:(id)sender;
+@property (unsafe_unretained, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) NSArray *tweetsArray;
+
+- (IBAction)nextButtonTapped:(id)sender;
 
 @end

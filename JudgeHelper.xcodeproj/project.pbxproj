@@ -265,6 +265,7 @@
 		E0D298A51834D050007736FE /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A31834D050007736FE /* RootViewController.xib */; };
 		E0D298A91834E3CD007736FE /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A71834E3CD007736FE /* MainMenuViewController.m */; };
 		E0D298AA1834E3CD007736FE /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A81834E3CD007736FE /* MainMenuViewController.xib */; };
+		E0D298AD18350F44007736FE /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298AC18350F44007736FE /* PlayerTableViewCell.m */; };
 		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
@@ -723,6 +724,8 @@
 		E0D298A61834E3CD007736FE /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
 		E0D298A71834E3CD007736FE /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
 		E0D298A81834E3CD007736FE /* MainMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
+		E0D298AB18350F44007736FE /* PlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTableViewCell.h; sourceTree = "<group>"; };
+		E0D298AC18350F44007736FE /* PlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTableViewCell.m; sourceTree = "<group>"; };
 		E0D3755A17BA390D00E14D7D /* TableZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableZone.h; sourceTree = "<group>"; };
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
@@ -1378,6 +1381,8 @@
 				E0D3755B17BA390D00E14D7D /* TableZone.m */,
 				E086489B1832519300D872D7 /* iAdSingleton.h */,
 				E086489C1832519300D872D7 /* iAdSingleton.m */,
+				E0D298AB18350F44007736FE /* PlayerTableViewCell.h */,
+				E0D298AC18350F44007736FE /* PlayerTableViewCell.m */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1643,6 +1648,7 @@
 				E059F85B17B02EBD0071829E /* CCEngin.m in Sources */,
 				E059F85C17B02EBD0071829E /* Condition.m in Sources */,
 				E059F85D17B02EBD0071829E /* ConsoleEngin.m in Sources */,
+				E0D298AD18350F44007736FE /* PlayerTableViewCell.m in Sources */,
 				E059F85E17B02EBD0071829E /* Engin.m in Sources */,
 				E059F85F17B02EBD0071829E /* Expression.m in Sources */,
 				E059F86017B02EBD0071829E /* main.m in Sources */,
