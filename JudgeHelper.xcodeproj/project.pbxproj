@@ -260,6 +260,11 @@
 		E086489D1832519300D872D7 /* iAdSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = E086489C1832519300D872D7 /* iAdSingleton.m */; };
 		E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A5B4E617BED294007F97BD /* GameRuleLayer.m */; };
 		E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A5B4E817BED77E007F97BD /* rightUp.png */; };
+		E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D2989E1834CD6B007736FE /* MainWindow.xib */; };
+		E0D298A41834D050007736FE /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A21834D050007736FE /* RootViewController.m */; };
+		E0D298A51834D050007736FE /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A31834D050007736FE /* RootViewController.xib */; };
+		E0D298A91834E3CD007736FE /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A71834E3CD007736FE /* MainMenuViewController.m */; };
+		E0D298AA1834E3CD007736FE /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A81834E3CD007736FE /* MainMenuViewController.xib */; };
 		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
@@ -711,6 +716,13 @@
 		E0A5B4E517BED294007F97BD /* GameRuleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRuleLayer.h; sourceTree = "<group>"; };
 		E0A5B4E617BED294007F97BD /* GameRuleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRuleLayer.m; sourceTree = "<group>"; };
 		E0A5B4E817BED77E007F97BD /* rightUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightUp.png; path = Resources/rightUp.png; sourceTree = "<group>"; };
+		E0D2989E1834CD6B007736FE /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		E0D298A11834D050007736FE /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		E0D298A21834D050007736FE /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		E0D298A31834D050007736FE /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		E0D298A61834E3CD007736FE /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		E0D298A71834E3CD007736FE /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		E0D298A81834E3CD007736FE /* MainMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
 		E0D3755A17BA390D00E14D7D /* TableZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableZone.h; sourceTree = "<group>"; };
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
@@ -809,6 +821,7 @@
 				E059F63E17B02BC30071829E /* IntroLayer.m */,
 				E059F4A717B02BB40071829E /* Resources */,
 				E059F63317B02BC20071829E /* Supporting Files */,
+				E0D2989E1834CD6B007736FE /* MainWindow.xib */,
 			);
 			path = JudgeHelper;
 			sourceTree = "<group>";
@@ -1344,6 +1357,7 @@
 		E059F86517B02EC70071829E /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				E0D298A01834D00C007736FE /* conrollers */,
 				E059F86617B02EC70071829E /* components */,
 				E059F86D17B02EC70071829E /* layers */,
 				E059F87817B02EC70071829E /* players */,
@@ -1411,6 +1425,19 @@
 				E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */,
 			);
 			path = "UIImage+";
+			sourceTree = "<group>";
+		};
+		E0D298A01834D00C007736FE /* conrollers */ = {
+			isa = PBXGroup;
+			children = (
+				E0D298A11834D050007736FE /* RootViewController.h */,
+				E0D298A21834D050007736FE /* RootViewController.m */,
+				E0D298A31834D050007736FE /* RootViewController.xib */,
+				E0D298A61834E3CD007736FE /* MainMenuViewController.h */,
+				E0D298A71834E3CD007736FE /* MainMenuViewController.m */,
+				E0D298A81834E3CD007736FE /* MainMenuViewController.xib */,
+			);
+			path = conrollers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1513,12 +1540,14 @@
 				E0381E9A180459580040CE0E /* Icon-Small-100.png in Resources */,
 				E0381E8D180455D40040CE0E /* Icon-76.png in Resources */,
 				E0381E8E180455D40040CE0E /* Icon-120@2x.png in Resources */,
+				E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */,
 				E059F81517B02E860071829E /* btn_on_green.png in Resources */,
 				E059F81617B02E860071829E /* btn_on_red.png in Resources */,
 				E059F81717B02E860071829E /* btn_on2_green-40.png in Resources */,
 				E059F81817B02E860071829E /* btn_on2_green.png in Resources */,
 				E059F81917B02E860071829E /* camera.png in Resources */,
 				E059F81A17B02E860071829E /* cancel.png in Resources */,
+				E0D298AA1834E3CD007736FE /* MainMenuViewController.xib in Resources */,
 				E059F81B17B02E860071829E /* Icon-20-doctor.png in Resources */,
 				E059F81C17B02E860071829E /* Icon-20-guard.png in Resources */,
 				E059F81D17B02E860071829E /* Icon-20-judge.png in Resources */,
@@ -1573,6 +1602,7 @@
 				E02AC33D17D4FB8800923C8E /* down-sel.png in Resources */,
 				E02AC33E17D4FB8800923C8E /* up-sel.png in Resources */,
 				E02AC34117D4FF5800923C8E /* add-sel.png in Resources */,
+				E0D298A51834D050007736FE /* RootViewController.xib in Resources */,
 				E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */,
 				E02AC34217D4FF5800923C8E /* next-sel.png in Resources */,
 				E02AC34C17D501ED00923C8E /* album-sel.png in Resources */,
@@ -1630,9 +1660,11 @@
 				E059F88617B02EC70071829E /* SelectRoleLayer.m in Sources */,
 				E059F88717B02EC70071829E /* CCDoubleHandPlayer.m in Sources */,
 				E059F88817B02EC70071829E /* CCHandPlayer.m in Sources */,
+				E0D298A91834E3CD007736FE /* MainMenuViewController.m in Sources */,
 				E059F88917B02EC70071829E /* CCPlayer.m in Sources */,
 				E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */,
 				E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */,
+				E0D298A41834D050007736FE /* RootViewController.m in Sources */,
 				E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */,
 				E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */,
 				E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */,

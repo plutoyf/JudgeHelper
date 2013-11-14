@@ -11,8 +11,11 @@
 #import "AppDelegate.h"
 #import "iAdSingleton.h"
 #import "IntroLayer.h"
+#import "SelectPlayerLayer.h"
 
-@implementation MyNavigationController
+@implementation AppController
+
+@synthesize window=window_, viewController=viewController_, director=director_;
 
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
@@ -48,54 +51,44 @@
 	if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-		[director runWithScene: [IntroLayer scene]];
 	}
 }
-@end
 
-
-@implementation AppController
-
-@synthesize window=window_, navController=navController_, director=director_;
+- (void) removeStartupFlicker
+{
+	//
+	// THIS CODE REMOVES THE STARTUP FLICKER
+	//
+	// Uncomment the following code if you Application only supports landscape mode
+	//
+#if GAME_AUTOROTATION == kGameAutorotationUIViewController
+    
+    //	CC_ENABLE_DEFAULT_GL_STATES();
+    //	CCDirector *director = [CCDirector sharedDirector];
+    //	CGSize size = [director winSize];
+    //	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
+    //	sprite.position = ccp(size.width/2, size.height/2);
+    //	sprite.rotation = -90;
+    //	[sprite visit];
+    //	[[director openGLView] swapBuffers];
+    //	CC_ENABLE_DEFAULT_GL_STATES();
+	
+#endif // GAME_AUTOROTATION == kGameAutorotationUIViewController
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Create the main window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// CCGLView creation
-	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
-	//  - Possible values: any CGRect
-	// pixelFormat: Format of the render buffer. Use RGBA8 for better color precision (eg: gradients). But it takes more memory and it is slower
-	//	- Possible values: kEAGLColorFormatRGBA8, kEAGLColorFormatRGB565
-	// depthFormat: Use stencil if you plan to use CCClippingNode. Use Depth if you plan to use 3D effects, like CCCamera or CCNode#vertexZ
-	//  - Possible values: 0, GL_DEPTH_COMPONENT24_OES, GL_DEPTH24_STENCIL8_OES
-	// sharegroup: OpenGL sharegroup. Useful if you want to share the same OpenGL context between different threads
-	//  - Possible values: nil, or any valid EAGLSharegroup group
-	// multiSampling: Whether or not to enable multisampling
-	//  - Possible values: YES, NO
-	// numberOfSamples: Only valid if multisampling is enabled
-	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGB565
-								   depthFormat:0
-							preserveBackbuffer:NO
-									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
-    
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director_.wantsFullScreenLayout = YES;
-	
+    
+    director_.delegate = self;
+    
 	// Display FSP and SPF
 	[director_ setDisplayStats:NO];
 	
 	// set FPS at 60
 	[director_ setAnimationInterval:1.0/60];
-	
-	// attach the openglView to the director
-	[director_ setView:glView];
 	
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];
@@ -123,27 +116,22 @@
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 	
-	// Create a Navigation Controller with the Director
-	navController_ = [[MyNavigationController alloc] initWithRootViewController:director_];
-	navController_.navigationBarHidden = YES;
-
-	// for rotation and other messages
-	[director_ setDelegate:navController_];
-	
-    [self createIAd];
+    //[self createIAd];
     
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navController_];
+    viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
+    
+	// Removes the startup flicker
+	[self removeStartupFlicker];
 
 	return YES;
 }
 
 -(void) createIAd {
     [[iAdSingleton sharedInstance]createAdView];
-    [navController_.view addSubview: [iAdSingleton sharedInstance].bannerView];
+    [viewController_.view addSubview: [iAdSingleton sharedInstance].bannerView];
 }
 
 -(void) resumeIAd {
@@ -155,30 +143,27 @@
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	if( [navController_ visibleViewController] == director_ )
-		[director_ pause];
+	[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];	
-	if( [navController_ visibleViewController] == director_ ) [director_ resume];
+	[director_ resume];
     
-    [self resumeIAd];
+    //[self resumeIAd];
 
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	if( [navController_ visibleViewController] == director_ )
-		[director_ stopAnimation];
+	[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if( [navController_ visibleViewController] == director_ )
-		[director_ startAnimation];
+	[director_ startAnimation];
 }
 
 // application will be killed
@@ -190,13 +175,13 @@
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] purgeCachedData];
+	[director_ purgeCachedData];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	[director_ setNextDeltaTimeZero:YES];
 }
 
 @end

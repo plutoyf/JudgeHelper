@@ -8,21 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
+#import "RootViewController.h"
 
-// Added only for iOS 6 support
-@interface MyNavigationController : UINavigationController <CCDirectorDelegate>
-@end
-
-@interface AppController : NSObject <UIApplicationDelegate>
+@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
 {
 	UIWindow *window_;
-	MyNavigationController *navController_;
+	RootViewController *viewController_;
 
 	CCDirectorIOS	*__unsafe_unretained director_;							// weak ref
 }
 
-@property (nonatomic, strong) UIWindow *window;
-@property (readonly) MyNavigationController *navController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (readonly) RootViewController *viewController;
 @property (unsafe_unretained, readonly) CCDirectorIOS *director;
 
 @end
