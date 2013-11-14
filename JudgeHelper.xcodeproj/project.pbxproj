@@ -245,6 +245,7 @@
 		E059F88717B02EC70071829E /* CCDoubleHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87A17B02EC70071829E /* CCDoubleHandPlayer.m */; };
 		E059F88817B02EC70071829E /* CCHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87C17B02EC70071829E /* CCHandPlayer.m */; };
 		E059F88917B02EC70071829E /* CCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87E17B02EC70071829E /* CCPlayer.m */; };
+		E05A3E63183585D7008FDE75 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05A3E62183585D7008FDE75 /* PlayerTableViewCell.xib */; };
 		E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A317B0F63F00F3E4CB /* UIImage+Alpha.m */; };
 		E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A517B0F63F00F3E4CB /* UIImage+Resize.m */; };
 		E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A717B0F63F00F3E4CB /* UIImage+RoundedCorner.m */; };
@@ -697,6 +698,7 @@
 		E059F87C17B02EC70071829E /* CCHandPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCHandPlayer.m; sourceTree = "<group>"; };
 		E059F87D17B02EC70071829E /* CCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlayer.h; sourceTree = "<group>"; };
 		E059F87E17B02EC70071829E /* CCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlayer.m; sourceTree = "<group>"; };
+		E05A3E62183585D7008FDE75 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
 		E06068A217B0F63F00F3E4CB /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
 		E06068A317B0F63F00F3E4CB /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		E06068A417B0F63F00F3E4CB /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -1383,6 +1385,7 @@
 				E086489C1832519300D872D7 /* iAdSingleton.m */,
 				E0D298AB18350F44007736FE /* PlayerTableViewCell.h */,
 				E0D298AC18350F44007736FE /* PlayerTableViewCell.m */,
+				E05A3E62183585D7008FDE75 /* PlayerTableViewCell.xib */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1528,6 +1531,7 @@
 				E059F4AB17B02BB40071829E /* Default@2x.png in Resources */,
 				E059F4AD17B02BB50071829E /* Default-568h@2x.png in Resources */,
 				E0381E94180458A00040CE0E /* Icon-72-judge-dead.png in Resources */,
+				E05A3E63183585D7008FDE75 /* PlayerTableViewCell.xib in Resources */,
 				E059F4AF17B02BB50071829E /* Default-Landscape~ipad.png in Resources */,
 				E059F4B117B02BB50071829E /* Icon-72.png in Resources */,
 				E059F4B317B02BB50071829E /* Icon-Small-50.png in Resources */,

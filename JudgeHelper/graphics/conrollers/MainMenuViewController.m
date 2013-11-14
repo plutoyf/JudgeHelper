@@ -9,6 +9,7 @@
 #import "MainMenuViewController.h"
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
+#import "PlayerTableViewCell.h"
 
 @interface MainMenuViewController ()
 
@@ -70,14 +71,20 @@
 //4
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //5
-    static NSString *cellIdentifier = @"PlayerTableViewCell";
+    static NSString *cellIdentifier = @"playerTableViewCell";
     
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    PlayerTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     //5.1 you do not need this if you have set SettingsCell as identifier in the storyboard (else you can remove the comments on this code)
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PlayerTableViewCell" owner:nil options:nil];
+        for(id currentObject in topLevelObjects) {
+            if([currentObject isKindOfClass:[PlayerTableViewCell class]]) {
+                cell = (PlayerTableViewCell *)currentObject;
+                break;
+            }
+        }
     }
     
     
@@ -94,8 +101,8 @@
     //UILabel *label = (UILabel *)[cell viewWithTag:2];
     //[imageView setImage:image];
     //[label setText:name];
-    cell.imageView.image = image;
-    cell.textLabel.text = name;
+    //cell.imageView.image = image;
+    //cell.textLabel.text = name;
     
     return cell;
 }
