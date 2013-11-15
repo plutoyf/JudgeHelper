@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayerTableViewCell : UITableViewCell
+@interface PlayerTableViewCell : UITableViewCell {
+}
 
-@property (nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UIImageView *userImage;
+@property (weak, nonatomic) IBOutlet UILabel *userName;
 
 @end

@@ -62,7 +62,8 @@
 
 - (IBAction)nextButtonTapped:(id)sender {
     UIViewController *rootViewController = (UIViewController*)[(AppController*)[[UIApplication sharedApplication] delegate] viewController];
-    [self.navigationController pushViewController:rootViewController animated:YES];}
+    [self.navigationController pushViewController:rootViewController animated:YES];
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [pids count];
@@ -101,8 +102,8 @@
     //UILabel *label = (UILabel *)[cell viewWithTag:2];
     //[imageView setImage:image];
     //[label setText:name];
-    //cell.imageView.image = image;
-    //cell.textLabel.text = name;
+    cell.userImage.image = image;
+    cell.userName.text = name;
     
     return cell;
 }

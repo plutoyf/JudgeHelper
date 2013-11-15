@@ -16,12 +16,27 @@
 
 @implementation RootViewController
 
+-(CGRect)currentScreenBoundsDependOnOrientation
+{
+    CGRect screenBounds = [UIScreen mainScreen].bounds ;
+    CGFloat width = CGRectGetWidth(screenBounds)  ;
+    CGFloat height = CGRectGetHeight(screenBounds) ;
+    UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    if(UIInterfaceOrientationIsPortrait(interfaceOrientation)){
+        screenBounds.size = CGSizeMake(width, height);
+    }else if(UIInterfaceOrientationIsLandscape(interfaceOrientation)){
+        screenBounds.size = CGSizeMake(height, width);
+    }
+    return screenBounds ;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    CCGLView *glView = [CCGLView viewWithFrame:self.view.bounds
+    CCGLView *glView = [CCGLView viewWithFrame:[self currentScreenBoundsDependOnOrientation]
                                    pixelFormat:kEAGLColorFormatRGB565
                                    depthFormat:0
                             preserveBackbuffer:NO
@@ -31,7 +46,7 @@
     
     CCDirector *director = [CCDirector sharedDirector];
     if([director isViewLoaded] == NO) {
-        glView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        //glView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         director.view = glView;
     }
     

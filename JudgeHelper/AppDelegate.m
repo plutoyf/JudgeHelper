@@ -119,7 +119,7 @@
     //[self createIAd];
     
     viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	
+    
 	// make main window visible
 	[window_ makeKeyAndVisible];
     

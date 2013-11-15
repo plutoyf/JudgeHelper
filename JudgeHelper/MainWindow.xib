@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1072" identifier="iOS"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
@@ -16,27 +16,27 @@
                 <outlet property="window" destination="TgT-08-afY" id="PPx-pM-a1R"/>
             </connections>
         </customObject>
-        <window opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="TgT-08-afY">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+        <window autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" id="TgT-08-afY">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="rootViewController" destination="mDt-j8-8dF" id="EFd-Rd-Ttv"/>
             </connections>
         </window>
-        <navigationController definesPresentationContext="YES" id="mDt-j8-8dF">
+        <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="mDt-j8-8dF">
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <navigationBar key="navigationBar" contentMode="scaleToFill" id="Srx-dg-NXq">
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Srx-dg-NXq">
                 <autoresizingMask key="autoresizingMask"/>
             </navigationBar>
             <viewControllers>
-                <viewController id="JJc-WX-ca1" customClass="MainMenuViewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" id="JJc-WX-ca1" customClass="MainMenuViewController">
                     <navigationItem key="navigationItem" title="Root View Controller" id="Z7M-MU-xu8"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>

@@ -822,11 +822,11 @@
 				E059F65617B02DDA0071829E /* libs */,
 				E059F63717B02BC20071829E /* AppDelegate.h */,
 				E059F63817B02BC30071829E /* AppDelegate.m */,
+				E0D2989E1834CD6B007736FE /* MainWindow.xib */,
 				E059F63D17B02BC30071829E /* IntroLayer.h */,
 				E059F63E17B02BC30071829E /* IntroLayer.m */,
 				E059F4A717B02BB40071829E /* Resources */,
 				E059F63317B02BC20071829E /* Supporting Files */,
-				E0D2989E1834CD6B007736FE /* MainWindow.xib */,
 			);
 			path = JudgeHelper;
 			sourceTree = "<group>";
@@ -1853,7 +1853,7 @@
 				GCC_PREFIX_HEADER = JudgeHelper/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"JudgeHelper/libs/kazmath/include\"";
 				INFOPLIST_FILE = JudgeHelper/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -1880,7 +1880,7 @@
 				GCC_PREFIX_HEADER = JudgeHelper/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"JudgeHelper/libs/kazmath/include\"";
 				INFOPLIST_FILE = JudgeHelper/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",

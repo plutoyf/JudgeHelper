@@ -23,7 +23,12 @@
          contextName = "-[Engin recordNightStatus:]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
+         contextName = "-[MainMenuViewController tableView:cellForRowAtIndexPath:]:MainMenuViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[SelectPlayerLayer longPressePlayer:]:SelectPlayerLayer.m">
@@ -40,15 +45,10 @@
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[Player getDistanceAtNight:with:]:Player.m">
+         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
       </ContextState>
       <ContextState
-         contextName = "-[MainMenuViewController tableView:cellForRowAtIndexPath:]:MainMenuViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "cell">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[Player getDistanceAtNight:with:]:Player.m">
       </ContextState>
       <ContextState
          contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
@@ -146,6 +146,9 @@
          contextName = "-[CCTouchDispatcher touchesBegan:withEvent:]:CCTouchDispatcher.m">
       </ContextState>
       <ContextState
+         contextName = "-[MainMenuViewController viewDidLoad]:MainMenuViewController.m">
+      </ContextState>
+      <ContextState
          contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
@@ -157,10 +160,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
