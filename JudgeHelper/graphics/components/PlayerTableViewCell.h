@@ -11,6 +11,7 @@
 @interface PlayerTableViewCell : UITableViewCell {
 }
 
+@property (weak, nonatomic) NSString *userId;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 

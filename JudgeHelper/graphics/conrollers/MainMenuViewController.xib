@@ -16,15 +16,6 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zWH-xl-xqW">
-                    <rect key="frame" x="0.0" y="30" width="480" height="260"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="lEG-b8-3ZO"/>
-                        <outlet property="delegate" destination="-1" id="GLb-uG-JwO"/>
-                    </connections>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0W6-Wo-Htk" userLabel="TopBarView">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -50,6 +41,15 @@
                         <constraint firstAttribute="trailing" secondItem="jXj-ih-Ygz" secondAttribute="trailing" constant="5" id="xjc-2Z-a38"/>
                     </constraints>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zWH-xl-xqW">
+                    <rect key="frame" x="0.0" y="30" width="480" height="260"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="lEG-b8-3ZO"/>
+                        <outlet property="delegate" destination="-1" id="GLb-uG-JwO"/>
+                    </connections>
+                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3FQ-Kv-GdP" userLabel="BottomBarView">
                     <rect key="frame" x="0.0" y="290" width="480" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
