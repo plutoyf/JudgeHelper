@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
 #import "PlayerTableViewCell.h"
+#import "PlayerCollectionViewCell.h"
 
 @interface MainMenuViewController ()
 
@@ -26,11 +27,13 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    selectedPIds = [NSMutableArray new];
     [self initPlayerIds];
 }
 
@@ -68,18 +71,25 @@
     [self.navigationController pushViewController:rootViewController animated:YES];
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [pids count];
+
+
+NSMutableArray* pids;
+
+-(void) initPlayerIds {
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    id obj = [userDefaults objectForKey:@"pids"];
+    pids = obj==nil ? [NSMutableArray new] : [NSMutableArray arrayWithArray:obj];
 }
 
-//4
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return pids.count;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //5
     static NSString *cellIdentifier = @"playerTableViewCell";
     
     PlayerTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    //5.1 you do not need this if you have set SettingsCell as identifier in the storyboard (else you can remove the comments on this code)
     if (cell == nil) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PlayerTableViewCell" owner:nil options:nil];
         for(id currentObject in topLevelObjects) {
@@ -90,27 +100,69 @@
         }
     }
     
-    
-    //6
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString* id = [pids objectAtIndex:indexPath.row];
-    NSString* name = [userDefaults stringForKey:[id stringByAppendingString:@"-name"]];
-    NSData* imgData = [userDefaults dataForKey:[id stringByAppendingString:@"-img"]];
+    NSString* pid = [pids objectAtIndex:indexPath.row];
+    NSString* name = [userDefaults stringForKey:[pid stringByAppendingString:@"-name"]];
+    NSData* imgData = [userDefaults dataForKey:[pid stringByAppendingString:@"-img"]];
     UIImage* image = [UIImage imageWithData:imgData];
-
-    //7
-    cell.userId = id;
+    
+    cell.userId = pid;
     cell.userImage.image = image;
     cell.userName.text = name;
     
     return cell;
 }
 
-NSMutableArray* pids;
--(void) initPlayerIds {
-    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    id obj = [userDefaults objectForKey:@"pids"];
-    pids = obj==nil ? [NSMutableArray new] : [NSMutableArray arrayWithArray:obj];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PlayerTableViewCell *cell = (PlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    if(![selectedPIds containsObject:cell.userId]) {
+        NSMutableArray *indexPaths = [NSMutableArray array];
+        [indexPaths addObject:[NSIndexPath indexPathForRow:selectedPIds.count inSection:0]];
+        [selectedPIds addObject:cell.userId];
+        [self.collectionView performBatchUpdates:^{
+            [self.collectionView insertItemsAtIndexPaths:indexPaths];
+        }
+        completion: ^(BOOL finished){
+            [self.collectionView scrollToItemAtIndexPath:indexPaths.lastObject atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+        }];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PlayerTableViewCell *cell = (PlayerTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    if([selectedPIds containsObject:cell.userId]) {
+        NSInteger* i = [selectedPIds indexOfObject:cell.userId];
+        NSMutableArray *indexPaths = [NSMutableArray array];
+        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        [selectedPIds removeObjectAtIndex:i];
+        [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+    }
+}
+
+
+NSMutableArray* selectedPIds;
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return selectedPIds.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"playerCollectionViewCell";
+    [self.collectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:cellIdentifier];
+    PlayerCollectionViewCell *cell = (PlayerCollectionViewCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    NSString *pid = [selectedPIds objectAtIndex:indexPath.row];
+    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* name = [userDefaults stringForKey:[pid stringByAppendingString:@"-name"]];
+    NSData* imgData = [userDefaults dataForKey:[pid stringByAppendingString:@"-img"]];
+    UIImage* image = [UIImage imageWithData:imgData];
+    
+    cell.userName.text = name;
+    cell.userImage.image = image;
+    
+    return cell;
+    
 }
 
 @end

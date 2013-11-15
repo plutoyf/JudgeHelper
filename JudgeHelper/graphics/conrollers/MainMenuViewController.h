@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainMenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface MainMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource> {
 }
 
-@property (unsafe_unretained, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 - (IBAction)nextButtonTapped:(id)sender;
 

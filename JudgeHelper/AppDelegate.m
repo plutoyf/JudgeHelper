@@ -17,6 +17,10 @@
 
 @synthesize window=window_, viewController=viewController_, director=director_;
 
+- (NSUInteger)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
+    return [self supportedInterfaceOrientations];
+}
+
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.

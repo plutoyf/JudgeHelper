@@ -45,6 +45,9 @@
                     <nil key="simulatedDestinationMetrics"/>
                 </viewController>
             </viewControllers>
+            <connections>
+                <outlet property="delegate" destination="5oS-DR-Dl2" id="16A-YO-w5a"/>
+            </connections>
         </navigationController>
     </objects>
 </document>
