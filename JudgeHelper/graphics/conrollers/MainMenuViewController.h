@@ -29,10 +29,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *roleImageView;
 @property (strong, nonatomic) IBOutlet UIPickerView *roleNumberPicker;
 
-@property (weak, nonatomic) IBOutlet UIButton *modifyPlayerButton;
-@property (weak, nonatomic) IBOutlet UIButton *modifyRoleButton;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *topBarView;
+@property (weak, nonatomic) IBOutlet UIView *bottomBarView;
+@property (weak, nonatomic) IBOutlet UIView *bodyView;
 @property (weak, nonatomic) IBOutlet UIView *leftBodyView;
 @property (weak, nonatomic) IBOutlet UIView *rightBodyView;
 
@@ -46,8 +47,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftRoleViewSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightRoleViewSpace;
 
+- (void) reloadPlayers;
+
 - (IBAction)nextButtonTapped:(id)sender;
-- (IBAction)modifyPlayerButtonTapped:(id)sender;
-- (IBAction)ModifyRoleButtonTapped:(id)sender;
+- (IBAction)createPlayerButtonTapped:(id)sender;
 
 @end

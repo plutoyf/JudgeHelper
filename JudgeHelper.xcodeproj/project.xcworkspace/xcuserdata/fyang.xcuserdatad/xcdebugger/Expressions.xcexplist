@@ -41,6 +41,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[MainMenuViewController reloadPlayerTableView]:MainMenuViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[pids indexOfObject:pid]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
@@ -133,21 +141,21 @@
          contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
       </ContextState>
       <ContextState
-         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
-            </PersistentString>
-            <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[MainMenuViewController roleCellTapped:]:MainMenuViewController.m">
          <PersistentStrings>
             <PersistentString
                value = "self.modifyRoleButton.alpha">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+            </PersistentString>
+            <PersistentString
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

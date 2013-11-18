@@ -7,13 +7,13 @@
 //
 
 #import "MainMenuViewController.h"
-#import "RoleViewController.h"
 #import "GameLayer.h"
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
 #import "PlayerTableViewCell.h"
 #import "PlayerCollectionViewCell.h"
 #import "RoleCollectionViewCell.h"
+#import "PlayerCreationView.h"
 #import "CCEngin.h"
 #import "Role.h"
 
@@ -69,16 +69,11 @@
         case 0:
             isReadyToStart = [self isRedyToStart];
             self.view.tag = isReadyToStart ? 2 : 1;
-            if (isReadyToStart ) {
-                self.modifyPlayerButton.alpha = 1.0;
-                self.modifyRoleButton.alpha = 1.0;
-            }
+            [self matchPlayerNumber];
             [self animateViewWithLeftPart:!isReadyToStart andRightPart:YES];
             break;
         case 1:
             self.view.tag = 2;
-            self.modifyPlayerButton.alpha = 1.0;
-            self.modifyRoleButton.alpha = 1.0;
             [self matchPlayerNumber];
             [self animateViewWithLeftPart:YES andRightPart:NO];
             break;
@@ -96,23 +91,28 @@
     }
 }
 
-- (IBAction)modifyPlayerButtonTapped:(id)sender {
-    if (self.view.tag == 2) {
-        self.view.tag = 0;
-        self.modifyPlayerButton.alpha = 0.0;
-        self.modifyRoleButton.alpha = 0.0;
-        self.statusLabel.text = @"";
-        [self animateViewWithLeftPart:NO andRightPart:YES];
-    }
-}
-
-- (IBAction)ModifyRoleButtonTapped:(id)sender {
-    if (self.view.tag == 2) {
-        self.view.tag = 1;
-        self.modifyPlayerButton.alpha = 0.0;
-        self.modifyRoleButton.alpha = 0.0;
-        [self animateViewWithLeftPart:YES andRightPart:NO];
-    }
+- (IBAction)createPlayerButtonTapped:(id)sender {
+    // Declaring the popover layer
+    PlayerCreationView *playerCreationView = [[[NSBundle mainBundle] loadNibNamed:@"PlayerCreationView" owner:self options:nil] objectAtIndex:0];
+    playerCreationView.frame = CGRectMake(0, -70, playerCreationView.bounds.size.width, playerCreationView.bounds.size.height);
+    [self.view insertSubview:playerCreationView aboveSubview:self.bodyView];
+    
+    //playerCreationView.layer.borderWidth = 1.0f;
+    //playerCreationView.layer.borderColor = [[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f] CGColor];
+    playerCreationView.playerImage.layer.borderWidth = 1.0f;
+    playerCreationView.playerImage.layer.borderColor = [[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f] CGColor];
+    
+    playerCreationView.playerImage.layer.cornerRadius = 0.6f;
+    playerCreationView.playerImage.clipsToBounds = YES;
+    
+    playerCreationView.shieldView = [[UIView alloc] initWithFrame:self.view.bounds];
+    playerCreationView.shieldView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
+    [self.view insertSubview:playerCreationView.shieldView belowSubview:playerCreationView];
+    
+    [UIView animateWithDuration:.5 animations:^(void) {
+        [playerCreationView setFrame:CGRectOffset([playerCreationView frame], 0, playerCreationView.bounds.size.height)];
+    } completion:^(BOOL Finished) {
+    }];
 }
 
 - (void) animateViewWithLeftPart:(BOOL) animateLeftPartView andRightPart:(BOOL) animateRightPartView {
@@ -247,9 +247,44 @@
     [self deselectPlayer:cell.userId];
 }
 
-- (void) deselectPlayer: (NSString *) pid {
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        PlayerTableViewCell *cell = (PlayerTableViewCell *)[self.playerTableView cellForRowAtIndexPath:indexPath];
+        NSString *pid = cell.userId;
+        [self deselectPlayer:pid];
+        
+        NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+        [pids removeObject:pid];
+        [userDefaults setObject:pids forKey:@"pids"];
+        [userDefaults removeObjectForKey:[pid stringByAppendingString:@"-name"]];
+        [userDefaults removeObjectForKey:[pid stringByAppendingString:@"-img"]];
+        [userDefaults synchronize];
+    }
+    
+    [self reloadPlayerTableView];
+}
+
+- (void) reloadPlayers {
+    [self initPlayerIds];
+    [self reloadPlayerTableView];
+}
+
+- (void) reloadPlayerTableView {
+    [self.playerTableView reloadData];
+    for (NSString *pid in selectedPIds) {
+        int i = [pids indexOfObject:pid];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [self.playerTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+}
+
+- (void)deselectPlayer: (NSString *) pid {
     if([selectedPIds containsObject:pid]) {
-        NSInteger* i = [selectedPIds indexOfObject:pid];
+        int i = [selectedPIds indexOfObject:pid];
         NSMutableArray *indexPaths = [NSMutableArray array];
         [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         [selectedPIds removeObjectAtIndex:i];
@@ -308,20 +343,21 @@
 }
 
 - (void)playerCellTapped:(UITapGestureRecognizer *)inGestureRecognizer {
-    if (self.modifyPlayerButton.alpha == 1) return;
-    
-    NSIndexPath *indexPath = [self.playerCollectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];
-    
-    NSString *pid = [selectedPIds objectAtIndex:indexPath.row];
-    
-    NSIndexPath *tableViewCellIndexPath = [NSIndexPath indexPathForRow:[pids indexOfObject:pid] inSection:0];
-    [self.playerTableView deselectRowAtIndexPath:tableViewCellIndexPath animated:YES];
-    [self deselectPlayer:pid];
+    if (self.view.tag == 2) {
+        self.view.tag = 0;
+        [self animateViewWithLeftPart:self.leftPlayerView.tag!=1 andRightPart:self.rightPlayerView.tag!=1];
+    } else {
+        NSIndexPath *indexPath = [self.playerCollectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];
+        
+        NSString *pid = [selectedPIds objectAtIndex:indexPath.row];
+        
+        NSIndexPath *tableViewCellIndexPath = [NSIndexPath indexPathForRow:[pids indexOfObject:pid] inSection:0];
+        [self.playerTableView deselectRowAtIndexPath:tableViewCellIndexPath animated:YES];
+        [self deselectPlayer:pid];
+    }
 }
 
 - (void)roleCellTapped:(UITapGestureRecognizer *)inGestureRecognizer {
-    if (self.modifyRoleButton.alpha == 1) return;
-    
     NSIndexPath *indexPath = [self.roleCollectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];
     
     RoleCollectionViewCell *cell = (RoleCollectionViewCell *)[self.roleCollectionView cellForItemAtIndexPath:indexPath];
@@ -329,6 +365,11 @@
     int row = [roles indexOfObject:[Engin getRoleName:cell.role]];
     [self.roleNumberPicker selectRow:row inComponent:0 animated:YES];
     [self selectRole:cell.role];
+    
+    if (self.view.tag == 2) {
+        self.view.tag = 1;
+        [self animateViewWithLeftPart:self.leftRoleView.tag!=1 andRightPart:self.rightRoleView.tag!=1];
+    }
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -374,7 +415,7 @@
         maxRoleNumber = 1;
         staticRoleNumber = ((NSNumber*)[roleNumbers objectForKey:[CCEngin getRoleName:r]]).intValue;
     } else {
-        maxRoleNumber = 99;
+        maxRoleNumber = 100;
     }
     [self.roleNumberPicker reloadComponent:1];
     

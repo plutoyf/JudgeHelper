@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E011584717D0D037007B3BDD /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = E011584517D0D037007B3BDD /* down.png */; };
 		E011584817D0D037007B3BDD /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = E011584617D0D037007B3BDD /* up.png */; };
+		E015665C183A47C100447B55 /* PlayerCreationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E015665B183A47C100447B55 /* PlayerCreationView.m */; };
+		E015665E183A47E000447B55 /* PlayerCreationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E015665D183A47E000447B55 /* PlayerCreationView.xib */; };
 		E01E17A0180590B3007CD3A4 /* Icon-20-assassin.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */; };
 		E01E17A1180590B3007CD3A4 /* Icon-20-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */; };
 		E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */; };
@@ -248,8 +250,6 @@
 		E059F88817B02EC70071829E /* CCHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87C17B02EC70071829E /* CCHandPlayer.m */; };
 		E059F88917B02EC70071829E /* CCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F87E17B02EC70071829E /* CCPlayer.m */; };
 		E05A3E63183585D7008FDE75 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05A3E62183585D7008FDE75 /* PlayerTableViewCell.xib */; };
-		E05A3E671836EFEB008FDE75 /* RoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E05A3E651836EFEB008FDE75 /* RoleViewController.m */; };
-		E05A3E681836EFEB008FDE75 /* RoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05A3E661836EFEB008FDE75 /* RoleViewController.xib */; };
 		E05A3E6B1836F830008FDE75 /* RoleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E05A3E6A1836F830008FDE75 /* RoleCollectionViewCell.m */; };
 		E05A3E6D1836F847008FDE75 /* RoleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E05A3E6C1836F847008FDE75 /* RoleCollectionViewCell.xib */; };
 		E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = E06068A317B0F63F00F3E4CB /* UIImage+Alpha.m */; };
@@ -294,6 +294,9 @@
 /* Begin PBXFileReference section */
 		E011584517D0D037007B3BDD /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = down.png; path = Resources/down.png; sourceTree = "<group>"; };
 		E011584617D0D037007B3BDD /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = up.png; path = Resources/up.png; sourceTree = "<group>"; };
+		E015665A183A47C100447B55 /* PlayerCreationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerCreationView.h; sourceTree = "<group>"; };
+		E015665B183A47C100447B55 /* PlayerCreationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerCreationView.m; sourceTree = "<group>"; };
+		E015665D183A47E000447B55 /* PlayerCreationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerCreationView.xib; sourceTree = "<group>"; };
 		E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-assassin.png"; path = "Resources/Icon-20-assassin.png"; sourceTree = "<group>"; };
 		E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-undercover.png"; path = "Resources/Icon-20-undercover.png"; sourceTree = "<group>"; };
 		E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin-dead.png"; path = "Resources/Icon-72-assassin-dead.png"; sourceTree = "<group>"; };
@@ -708,9 +711,6 @@
 		E059F87D17B02EC70071829E /* CCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlayer.h; sourceTree = "<group>"; };
 		E059F87E17B02EC70071829E /* CCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlayer.m; sourceTree = "<group>"; };
 		E05A3E62183585D7008FDE75 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
-		E05A3E641836EFEB008FDE75 /* RoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleViewController.h; sourceTree = "<group>"; };
-		E05A3E651836EFEB008FDE75 /* RoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleViewController.m; sourceTree = "<group>"; };
-		E05A3E661836EFEB008FDE75 /* RoleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoleViewController.xib; sourceTree = "<group>"; };
 		E05A3E691836F830008FDE75 /* RoleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleCollectionViewCell.h; sourceTree = "<group>"; };
 		E05A3E6A1836F830008FDE75 /* RoleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleCollectionViewCell.m; sourceTree = "<group>"; };
 		E05A3E6C1836F847008FDE75 /* RoleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoleCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1407,6 +1407,9 @@
 				E05A3E691836F830008FDE75 /* RoleCollectionViewCell.h */,
 				E05A3E6A1836F830008FDE75 /* RoleCollectionViewCell.m */,
 				E05A3E6C1836F847008FDE75 /* RoleCollectionViewCell.xib */,
+				E015665A183A47C100447B55 /* PlayerCreationView.h */,
+				E015665B183A47C100447B55 /* PlayerCreationView.m */,
+				E015665D183A47E000447B55 /* PlayerCreationView.xib */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1465,9 +1468,6 @@
 				E0D298A61834E3CD007736FE /* MainMenuViewController.h */,
 				E0D298A71834E3CD007736FE /* MainMenuViewController.m */,
 				E0D298A81834E3CD007736FE /* MainMenuViewController.xib */,
-				E05A3E641836EFEB008FDE75 /* RoleViewController.h */,
-				E05A3E651836EFEB008FDE75 /* RoleViewController.m */,
-				E05A3E661836EFEB008FDE75 /* RoleViewController.xib */,
 			);
 			name = controllers;
 			path = conrollers;
@@ -1576,7 +1576,6 @@
 				E0381E8E180455D40040CE0E /* Icon-120@2x.png in Resources */,
 				E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */,
 				E059F81517B02E860071829E /* btn_on_green.png in Resources */,
-				E05A3E681836EFEB008FDE75 /* RoleViewController.xib in Resources */,
 				E059F81617B02E860071829E /* btn_on_red.png in Resources */,
 				E059F81717B02E860071829E /* btn_on2_green-40.png in Resources */,
 				E059F81817B02E860071829E /* btn_on2_green.png in Resources */,
@@ -1625,6 +1624,7 @@
 				E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */,
 				E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */,
 				E024D6B117CFA2BB0032EE61 /* quit.png in Resources */,
+				E015665E183A47E000447B55 /* PlayerCreationView.xib in Resources */,
 				E011584717D0D037007B3BDD /* down.png in Resources */,
 				E011584817D0D037007B3BDD /* up.png in Resources */,
 				E051E21417D4F16F00D6E131 /* Default-Landscape@2x~ipad.png in Resources */,
@@ -1672,7 +1672,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E059F63617B02BC20071829E /* main.m in Sources */,
-				E05A3E671836EFEB008FDE75 /* RoleViewController.m in Sources */,
 				E086489D1832519300D872D7 /* iAdSingleton.m in Sources */,
 				E059F63917B02BC30071829E /* AppDelegate.m in Sources */,
 				E059F63F17B02BC30071829E /* IntroLayer.m in Sources */,
@@ -1690,6 +1689,7 @@
 				E059F86317B02EBD0071829E /* Rule.m in Sources */,
 				E059F86417B02EBD0071829E /* RuleResolver.m in Sources */,
 				E05A3E6B1836F830008FDE75 /* RoleCollectionViewCell.m in Sources */,
+				E015665C183A47C100447B55 /* PlayerCreationView.m in Sources */,
 				E059F87F17B02EC70071829E /* BorderSprite.m in Sources */,
 				E059F88017B02EC70071829E /* ClippingSprite.m in Sources */,
 				E059F88117B02EC70071829E /* MySprite.m in Sources */,
