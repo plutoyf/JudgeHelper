@@ -41,10 +41,10 @@
 @property (strong, nonatomic) IBOutlet UIView *leftRoleView;
 @property (strong, nonatomic) IBOutlet UIView *rightRoleView;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftRoleViewLeftSpace;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftPlayerViewLeftSpace;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightPlayerViewRightSpace;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightRoleViewRightSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftPlayerViewSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightPlayerViewSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftRoleViewSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightRoleViewSpace;
 
 - (IBAction)nextButtonTapped:(id)sender;
 - (IBAction)modifyPlayerButtonTapped:(id)sender;

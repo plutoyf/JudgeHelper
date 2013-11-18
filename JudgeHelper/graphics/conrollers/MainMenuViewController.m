@@ -42,9 +42,7 @@
     [self initRoles];
     [self selectRole:Judge];
     
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    self.leftRoleViewLeftSpace.constant = -self.leftRoleView.bounds.size.width;
-    self.rightRoleViewRightSpace.constant = self.leftRoleView.bounds.size.width-(orientation==UIInterfaceOrientationLandscapeRight || orientation==UIInterfaceOrientationLandscapeLeft?[[UIScreen mainScreen] bounds].size.height:[[UIScreen mainScreen] bounds].size.width);
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.leftBodyView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
     
     [self.playerCollectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"playerCollectionViewCell"];
     [self.roleCollectionView registerNib:[UINib nibWithNibName:@"RoleCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"roleCollectionViewCell"];
@@ -119,55 +117,61 @@
 
 - (void) animateViewWithLeftPart:(BOOL) animateLeftPartView andRightPart:(BOOL) animateRightPartView {
     NSLayoutConstraint *leftPartConstraint, *rightPartConstraint;
+    float newLeftPartSpaceValue, newRightPartSpaceValue;
     UIView *leftPartView, *rightPartView;
     
     if (animateLeftPartView) {
         leftPartView = self.leftPlayerView.tag == 1 ? self.leftPlayerView : self.leftRoleView;
-        leftPartConstraint = self.leftPlayerView.tag == 1 ? self.leftPlayerViewLeftSpace : self.leftRoleViewLeftSpace;
+        leftPartConstraint = self.leftPlayerView.tag == 1 ? self.leftPlayerViewSpace : self.leftRoleViewSpace;
+        newLeftPartSpaceValue = self.leftPlayerView.tag == 1 ? -leftPartView.bounds.size.width : 0;
         leftPartView.tag = 0;
     }
     
     if (animateRightPartView) {
         rightPartView = self.rightPlayerView.tag == 1 ? self.rightPlayerView : self.rightRoleView;
-        rightPartConstraint = self.rightPlayerView.tag == 1 ? self.rightPlayerViewRightSpace : self.rightRoleViewRightSpace;
+        rightPartConstraint = self.rightPlayerView.tag == 1 ? self.rightPlayerViewSpace : self.rightRoleViewSpace;
+        newRightPartSpaceValue = self.rightPlayerView.tag == 1 ? -rightPartView.bounds.size.width : 0;
         rightPartView.tag = 0;
     }
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:0.5 animations:^{
         if (animateLeftPartView) {
-            leftPartConstraint.constant = -leftPartView.bounds.size.width;
-            [self.leftBodyView layoutIfNeeded];
+            leftPartConstraint.constant = newLeftPartSpaceValue;
+            [self.view layoutIfNeeded];
         }
         
         if (animateRightPartView) {
-            rightPartConstraint.constant = -rightPartView.bounds.size.width;
-            [self.rightBodyView layoutIfNeeded];
+            rightPartConstraint.constant = newRightPartSpaceValue;
+            [self.view layoutIfNeeded];
         }
     }];
      
     if (animateLeftPartView) {
         leftPartView = leftPartView == self.leftPlayerView ? self.leftRoleView : self.leftPlayerView;
-        leftPartConstraint = leftPartView == self.leftPlayerView ? self.leftPlayerViewLeftSpace : self.leftRoleViewLeftSpace;
+        leftPartConstraint = leftPartView == self.leftPlayerView ? self.leftPlayerViewSpace : self.leftRoleViewSpace;
+        newLeftPartSpaceValue = leftPartView == self.leftPlayerView ? 0 : -leftPartView.bounds.size.width;
         leftPartView.tag = 1;
     }
     
     if (animateRightPartView) {
         rightPartView = rightPartView == self.rightPlayerView ? self.rightRoleView : self.rightPlayerView;
-        rightPartConstraint = rightPartView == self.rightPlayerView ? self.rightPlayerViewRightSpace : self.rightRoleViewRightSpace;
+        rightPartConstraint = rightPartView == self.rightPlayerView ? self.rightPlayerViewSpace : self.rightRoleViewSpace;
+        newRightPartSpaceValue = rightPartView == self.rightPlayerView ? 0 : -rightPartView.bounds.size.width;
+
         rightPartView.tag = 1;
     }
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:0.5 delay:0.5 options:nil animations:^{
         if (animateLeftPartView) {
-            leftPartConstraint.constant = 0;
-            [self.leftBodyView layoutIfNeeded];
+            leftPartConstraint.constant = newLeftPartSpaceValue;
+            [self.view layoutIfNeeded];
         }
         
         if (animateRightPartView) {
-            rightPartConstraint.constant = 0;
-            [self.rightBodyView layoutIfNeeded];
+            rightPartConstraint.constant = newRightPartSpaceValue;
+            [self.view layoutIfNeeded];
         }
     } completion:nil];
 }
