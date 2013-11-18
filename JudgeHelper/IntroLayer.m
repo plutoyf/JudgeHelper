@@ -10,6 +10,8 @@
 // Import the interfaces
 #import "IntroLayer.h"
 #import "SelectPlayerLayer.h"
+#import "SelectRoleLayer.h"
+#import "GameLayer.h"
 
 
 #pragma mark - IntroLayer

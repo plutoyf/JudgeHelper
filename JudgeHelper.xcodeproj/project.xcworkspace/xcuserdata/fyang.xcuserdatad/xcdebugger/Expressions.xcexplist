@@ -3,52 +3,48 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[CreatePlayerLayer handlePicturePanGesture:]:CreatePlayerLayer.m">
+         contextName = "-[RoleViewController pickerView:didSelectRow:inComponent:]:RoleViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLayer gestureRecognizer:shouldReceiveTouch:]:GameLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "picture.boundingBox">
+               value = "touch.view">
+            </PersistentString>
+            <PersistentString
+               value = "touch.view.class">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[Engin doActionAtNight:withPlayer:]:Engin.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Condition getValue:with:]:Condition.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Player recordNightStatus:]:Player.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Engin recordNightStatus:]:Engin.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MainMenuViewController tableView:cellForRowAtIndexPath:]:MainMenuViewController.m">
+         contextName = "-[CCEngin updateRoleNumbers]:CCEngin.m">
          <PersistentStrings>
             <PersistentString
-               value = "cell">
+               value = "[Engin getRoleName:r0]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SelectPlayerLayer longPressePlayer:]:SelectPlayerLayer.m">
+         contextName = "-[MyNavigationController viewDidLoad]:MyNavigationController.m">
          <PersistentStrings>
             <PersistentString
-               value = "((MySprite*)sender.node)">
+               value = "self.view.bounds">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CCEngin undoAction]:CCEngin.m">
+         contextName = "-[MainMenuViewController viewWillDisappear:]:MainMenuViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.modifyPlayerButton.alpha">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[Engin doActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Player getDistanceAtNight:with:]:Player.m">
+         contextName = "-[Engin recordNightStatus:]:Engin.m">
       </ContextState>
       <ContextState
          contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
@@ -59,10 +55,59 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[GameLayer init]:GameLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "p.sprite.position">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[Engin isRule:matchedWithActors:andReceiver:atNight:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Player recordStatus]:Player.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.role">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer selectPlayerById:fromPosition:]:SelectPlayerLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CreatePlayerLayer handlePicturePanGesture:]:CreatePlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "picture.boundingBox">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
+         contextName = "-[Player rollbackStatus]:Player.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.role">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CreatePlayerLayer imagePickerController:didFinishPickingImage:editingInfo:]:CreatePlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[UIScreen mainScreen] bounds]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__60-[MainMenuViewController tableView:didSelectRowAtIndexPath:]_block_invoke105:MainMenuViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Condition getValue:with:atNight:]:Condition.m">
       </ContextState>
       <ContextState
          contextName = "-[SelectPlayerLayer selectPlayer:]:SelectPlayerLayer.m">
@@ -82,6 +127,43 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[Engin doActionAtNight:withPlayer:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CreatePlayerLayer showPhotoLibrary:]:CreatePlayerLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
+            </PersistentString>
+            <PersistentString
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MainMenuViewController roleCellTapped:]:MainMenuViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.modifyRoleButton.alpha">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CCTouchDispatcher touchesBegan:withEvent:]:CCTouchDispatcher.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Player recordNightStatus:]:Player.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MySprite showName]:MySprite.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameStateSprite updateState]:GameStateSprite.m">
+      </ContextState>
+      <ContextState
          contextName = "-[CCEngin doAction:]:CCEngin.m">
          <PersistentStrings>
             <PersistentString
@@ -90,63 +172,32 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[GameLayer init]:GameLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "p.sprite.position">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[Player rollbackStatus]:Player.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.role">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[SelectPlayerLayer selectPlayerById:fromPosition:]:SelectPlayerLayer.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Condition getValue:with:atNight:]:Condition.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[GameLayer gestureRecognizer:shouldReceiveTouch:]:GameLayer.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "touch.view">
-            </PersistentString>
-            <PersistentString
-               value = "touch.view.class">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[CCEngin undoAction]:CCEngin.m">
       </ContextState>
       <ContextState
          contextName = "-[Engin resetDistance]:Engin.m">
       </ContextState>
       <ContextState
-         contextName = "-[MySprite showName]:MySprite.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Engin initWithRules:andResultRules:andRoles:andOrders:]:Engin.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Engin isRule:matchedWithActors:andReceiver:atNight:]:Engin.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[Player recordStatus]:Player.m">
+         contextName = "-[MainMenuViewController playerCellTapped:]:MainMenuViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.role">
+               value = "[pids indexOfObject:pid]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CCTouchDispatcher touchesBegan:withEvent:]:CCTouchDispatcher.m">
+         contextName = "-[Condition getValue:with:]:Condition.m">
       </ContextState>
       <ContextState
-         contextName = "-[MainMenuViewController viewDidLoad]:MainMenuViewController.m">
+         contextName = "-[Player getDistanceAtNight:with:]:Player.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MainMenuViewController viewDidDisappear:]:MainMenuViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.modifyPlayerButton.alpha">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[SelectPlayerLayer leftButtonTapped:]:SelectPlayerLayer.m">
@@ -157,31 +208,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
+         contextName = "-[SelectPlayerLayer longPressePlayer:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
-            </PersistentString>
-            <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "((MySprite*)sender.node)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CreatePlayerLayer imagePickerController:didFinishPickingImage:editingInfo:]:CreatePlayerLayer.m">
+         contextName = "-[MainMenuViewController viewWillAppear:]:MainMenuViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "[[UIScreen mainScreen] bounds]">
+               value = "self.rightRoleView">
+            </PersistentString>
+            <PersistentString
+               value = "self.modifyPlayerButton.alpha">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CCEngin updateRoleNumbers]:CCEngin.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "[Engin getRoleName:r0]">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[Engin initWithRules:andResultRules:andRoles:andOrders:]:Engin.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

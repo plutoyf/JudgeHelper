@@ -10,7 +10,7 @@
 #import "cocos2d.h"
 #import "RootViewController.h"
 
-@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate, UINavigationControllerDelegate>
+@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
 {
 	UIWindow *window_;
 	RootViewController *viewController_;
@@ -19,6 +19,8 @@
 }
 
 @property (nonatomic, strong) IBOutlet UIWindow *window;
+
+@property (nonatomic, strong) UINavigationController *navigationController;
 @property (readonly) RootViewController *viewController;
 @property (unsafe_unretained, readonly) CCDirectorIOS *director;
 

@@ -49,18 +49,17 @@
         //glView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         director.view = glView;
     }
-    
+
     // Add the director as a child view controller of this view controller.
     [self addChildViewController:director];
     
     // Add the director's OpenGL view as a subview so we can see it.
-    [self.view insertSubview:director.view atIndex:0];
-    //[self.view addSubview:director.view];
+    [self.view addSubview:director.view];
     //[self.view sendSubviewToBack:director.view];
     
     // Finish up our view controller containment responsibilities.
-    //[director didMoveToParentViewController:self];
-    
+    [director didMoveToParentViewController:self];
+     
     // Run whatever scene we'd like to run here.
     [director runWithScene:[IntroLayer scene]];
 }

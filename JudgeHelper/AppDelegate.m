@@ -52,48 +52,36 @@
 // This is not needed on iOS6 and could be added to the application:didFinish...
 -(void) directorDidReshapeProjection:(CCDirector*)director
 {
-	if(director.runningScene == nil) {
+    if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
+        [director runWithScene: [GameLayer scene]];
 	}
-}
-
-- (void) removeStartupFlicker
-{
-	//
-	// THIS CODE REMOVES THE STARTUP FLICKER
-	//
-	// Uncomment the following code if you Application only supports landscape mode
-	//
-#if GAME_AUTOROTATION == kGameAutorotationUIViewController
-    
-    //	CC_ENABLE_DEFAULT_GL_STATES();
-    //	CCDirector *director = [CCDirector sharedDirector];
-    //	CGSize size = [director winSize];
-    //	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
-    //	sprite.position = ccp(size.width/2, size.height/2);
-    //	sprite.rotation = -90;
-    //	[sprite visit];
-    //	[[director openGLView] swapBuffers];
-    //	CC_ENABLE_DEFAULT_GL_STATES();
-	
-#endif // GAME_AUTOROTATION == kGameAutorotationUIViewController
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
+                                   pixelFormat:kEAGLColorFormatRGB565
+                                   depthFormat:0
+                            preserveBackbuffer:NO
+                                    sharegroup:nil
+                                 multiSampling:NO
+                               numberOfSamples:0];
+    
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director_.wantsFullScreenLayout = YES;
-    
-    director_.delegate = self;
     
 	// Display FSP and SPF
 	[director_ setDisplayStats:NO];
 	
 	// set FPS at 60
 	[director_ setAnimationInterval:1.0/60];
-	
+    
+    // attach the openglView to the director
+    [director_ setView:glView];
+    
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];
 	//	[director setProjection:kCCDirectorProjection3D];
@@ -119,16 +107,16 @@
 	
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
-	
+    
+    [director_ setDelegate:self];
+    
     //[self createIAd];
     
-    viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    // set the Navigation Controller as the root view controller
+    //[self.window setRootViewController:self.navigationController];
     
-	// make main window visible
-	[window_ makeKeyAndVisible];
-    
-	// Removes the startup flicker
-	[self removeStartupFlicker];
+    // make main window visible
+    [self.window makeKeyAndVisible];
 
 	return YES;
 }

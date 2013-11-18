@@ -23,6 +23,7 @@
 @interface SelectPlayerLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate, UIGestureRecognizerDelegate, CreatePlayerDelegate>
 {
     CCEngin* engin;
+    CCMenu* previousMenu;
     CCMenu* nextMenu;
     CCMenu* addPlayerMenu;
     CCSprite* playersPool;
