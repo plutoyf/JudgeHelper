@@ -11,6 +11,7 @@
 #import "CCNode+SFGestureRecognizers.h"
 #import "SelectPlayerLayer.h"
 #import "iAdSingleton.h"
+#import "AppDelegate.h"
 
 @implementation GameStateSprite
 
@@ -234,7 +235,8 @@
 }
 
 -(void) quitButtonPressed : (id) sender {
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
+    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
+    //[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
 }
 
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result {

@@ -29,6 +29,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *roleImageView;
 @property (strong, nonatomic) IBOutlet UIPickerView *roleNumberPicker;
 
+@property (weak, nonatomic) IBOutlet UIButton *createPlayerButton;
+@property (weak, nonatomic) IBOutlet UISwitch *doubleHandModeSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *doubleHandModeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *topBarView;
@@ -51,5 +54,6 @@
 
 - (IBAction)nextButtonTapped:(id)sender;
 - (IBAction)createPlayerButtonTapped:(id)sender;
+- (IBAction)doubleHandModeSwitchChanged:(id)sender;
 
 @end

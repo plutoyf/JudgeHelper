@@ -42,6 +42,9 @@
     [self initRoles];
     [self selectRole:Judge];
     
+    GlobalSettings *globals = [GlobalSettings globalSettings];
+    self.doubleHandModeSwitch.on = [globals getGameMode] == DOUBLE_HAND;
+    
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.leftBodyView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
     
     [self.playerCollectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"playerCollectionViewCell"];
@@ -67,10 +70,17 @@
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
         case 0:
-            isReadyToStart = [self isRedyToStart];
-            self.view.tag = isReadyToStart ? 2 : 1;
-            [self matchPlayerNumber];
-            [self animateViewWithLeftPart:!isReadyToStart andRightPart:YES];
+            if (selectedPIds.count < 3) {
+                self.statusLabel.text = @"Please select 3 players at least";
+            } else {
+                isReadyToStart = [self isRedyToStart];
+                self.view.tag = isReadyToStart ? 2 : 1;
+                self.createPlayerButton.alpha = 0.0f;
+                self.doubleHandModeLabel.alpha = 1.0f;
+                self.doubleHandModeSwitch.alpha = 1.0f;
+                [self matchPlayerNumber];
+                [self animateViewWithLeftPart:!isReadyToStart andRightPart:YES];
+            }
             break;
         case 1:
             self.view.tag = 2;
@@ -113,6 +123,16 @@
         [playerCreationView setFrame:CGRectOffset([playerCreationView frame], 0, playerCreationView.bounds.size.height)];
     } completion:^(BOOL Finished) {
     }];
+}
+
+- (IBAction)doubleHandModeSwitchChanged:(id)sender {
+    GlobalSettings *globals = [GlobalSettings globalSettings];
+    if(self.doubleHandModeSwitch.on) {
+        [globals setGameMode:DOUBLE_HAND];
+    } else {
+        [globals setGameMode:NORMAL];
+    }
+    [self matchPlayerNumber];
 }
 
 - (void) animateViewWithLeftPart:(BOOL) animateLeftPartView andRightPart:(BOOL) animateRightPartView {
@@ -256,29 +276,47 @@
         PlayerTableViewCell *cell = (PlayerTableViewCell *)[self.playerTableView cellForRowAtIndexPath:indexPath];
         NSString *pid = cell.userId;
         [self deselectPlayer:pid];
-        
-        NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
         [pids removeObject:pid];
+
+        NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:pids forKey:@"pids"];
         [userDefaults removeObjectForKey:[pid stringByAppendingString:@"-name"]];
         [userDefaults removeObjectForKey:[pid stringByAppendingString:@"-img"]];
         [userDefaults synchronize];
+ 
+        [tableView reloadData];
+        [tableView setEditing:NO];
     }
+    NSLog(@"commitEditingStyle : %d",indexPath.row);
+}
+
+- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self reloadPlayerTableView];
+    NSLog(@"willBeginEditingRowAtIndexPath : %d",indexPath.row);
+}
+
+- (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self reselectPlayersInTableView:tableView];
+     NSLog(@"didEndEditingRowAtIndexPath : %d",indexPath.row);
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"editingStyleForRowAtIndexPath : %d",indexPath.row);
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (void) reloadPlayers {
     [self initPlayerIds];
-    [self reloadPlayerTableView];
+    [self.playerTableView reloadData];
+    [self reselectPlayersInTableView:self.playerTableView];
 }
 
-- (void) reloadPlayerTableView {
-    [self.playerTableView reloadData];
+- (void) reselectPlayersInTableView:(UITableView*)tableView {
     for (NSString *pid in selectedPIds) {
         int i = [pids indexOfObject:pid];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        [self.playerTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
 }
 
@@ -345,6 +383,9 @@
 - (void)playerCellTapped:(UITapGestureRecognizer *)inGestureRecognizer {
     if (self.view.tag == 2) {
         self.view.tag = 0;
+        self.createPlayerButton.alpha = 1.0f;
+        self.doubleHandModeLabel.alpha = 0.0f;
+        self.doubleHandModeSwitch.alpha = 0.0f;
         [self animateViewWithLeftPart:self.leftPlayerView.tag!=1 andRightPart:self.rightPlayerView.tag!=1];
     } else {
         NSIndexPath *indexPath = [self.playerCollectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];

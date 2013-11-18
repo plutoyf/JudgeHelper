@@ -2,13 +2,16 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainMenuViewController">
             <connections>
                 <outlet property="bodyView" destination="ldV-ff-NLa" id="BFe-CT-eRF"/>
                 <outlet property="bottomBarView" destination="3FQ-Kv-GdP" id="OcC-kI-GVp"/>
+                <outlet property="createPlayerButton" destination="rF1-zP-arN" id="q9S-g2-v2p"/>
+                <outlet property="doubleHandModeLabel" destination="U8s-QI-acd" id="gvm-Fl-fja"/>
+                <outlet property="doubleHandModeSwitch" destination="T4P-It-KYb" id="zAv-HP-f2a"/>
                 <outlet property="leftBodyView" destination="sKt-cD-vtZ" id="1pu-xt-3C9"/>
                 <outlet property="leftPlayerView" destination="CwB-oq-UCd" id="9Co-99-xSd"/>
                 <outlet property="leftPlayerViewSpace" destination="14N-dk-zso" id="pVO-3r-bGK"/>
@@ -35,7 +38,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ldV-ff-NLa" userLabel="BodyView">
-                    <rect key="frame" x="0.0" y="30" width="480" height="260"/>
+                    <rect key="frame" x="0.0" y="40" width="480" height="260"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sKt-cD-vtZ" userLabel="LeftBodyView">
@@ -84,7 +87,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9KC-NB-t00" userLabel="RoleImageView">
-                                    <rect key="frame" x="20" y="20" width="91" height="71"/>
+                                    <rect key="frame" x="20" y="20" width="100" height="5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvZ-96-C77" userLabel="RoleNumberPicker">
@@ -112,7 +115,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="270" height="260"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zWH-xl-xqW" userLabel="PlayerTableView">
+                                        <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zWH-xl-xqW" userLabel="PlayerTableView">
                                             <rect key="frame" x="5" y="10" width="255" height="240"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -190,11 +193,11 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0W6-Wo-Htk" userLabel="TopBarView">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="30"/>
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rF1-zP-arN" userLabel="CreatePlayerButton">
-                            <rect key="frame" x="5" y="-7" width="30" height="44"/>
+                            <rect key="frame" x="5" y="-2" width="30" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="26"/>
                             <state key="normal" title="+">
@@ -205,7 +208,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jXj-ih-Ygz" userLabel="NextButton">
-                            <rect key="frame" x="438" y="0.0" width="32" height="30"/>
+                            <rect key="frame" x="438" y="5" width="32" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Next">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -214,22 +217,39 @@
                                 <action selector="nextButtonTapped:" destination="-1" eventType="touchUpInside" id="aKM-xH-VIu"/>
                             </connections>
                         </button>
+                        <switch opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="T4P-It-KYb" userLabel="DoubleHandModeSwitch">
+                            <rect key="frame" x="76" y="5" width="51" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="doubleHandModeSwitchChanged:" destination="-1" eventType="valueChanged" id="Ei4-pq-JST"/>
+                            </connections>
+                        </switch>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="双手模式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8s-QI-acd" userLabel="DoubleHandModeLabel">
+                            <rect key="frame" x="10" y="12" width="56" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="T4P-It-KYb" firstAttribute="leading" secondItem="U8s-QI-acd" secondAttribute="trailing" constant="10" id="H9B-8m-PS4"/>
                         <constraint firstAttribute="trailing" secondItem="jXj-ih-Ygz" secondAttribute="trailing" constant="10" id="JTy-Py-Nna"/>
+                        <constraint firstAttribute="centerY" secondItem="T4P-It-KYb" secondAttribute="centerY" id="gtd-Ds-enF"/>
                         <constraint firstItem="rF1-zP-arN" firstAttribute="centerY" secondItem="0W6-Wo-Htk" secondAttribute="centerY" id="ini-3e-Srz"/>
-                        <constraint firstAttribute="height" constant="30" id="osk-jH-HiV"/>
+                        <constraint firstAttribute="height" constant="40" id="osk-jH-HiV"/>
+                        <constraint firstAttribute="centerY" secondItem="U8s-QI-acd" secondAttribute="centerY" id="rA4-Tq-dmU"/>
                         <constraint firstItem="jXj-ih-Ygz" firstAttribute="centerY" secondItem="0W6-Wo-Htk" secondAttribute="centerY" id="uu4-aR-cjf"/>
+                        <constraint firstItem="U8s-QI-acd" firstAttribute="leading" secondItem="0W6-Wo-Htk" secondAttribute="leading" constant="10" id="xgf-nC-Da7"/>
                         <constraint firstItem="rF1-zP-arN" firstAttribute="leading" secondItem="0W6-Wo-Htk" secondAttribute="leading" constant="5" id="xjb-Mu-96M"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3FQ-Kv-GdP" userLabel="BottomBarView">
-                    <rect key="frame" x="0.0" y="290" width="480" height="30"/>
+                    <rect key="frame" x="0.0" y="300" width="480" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQ6-q1-Cbv" userLabel="StatusLabel">
-                            <rect key="frame" x="0.0" y="15" width="480" height="0.0"/>
+                            <rect key="frame" x="0.0" y="10" width="480" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -238,7 +258,7 @@
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="4UU-gk-Uzf"/>
+                        <constraint firstAttribute="height" constant="20" id="4UU-gk-Uzf"/>
                         <constraint firstAttribute="centerY" secondItem="BQ6-q1-Cbv" secondAttribute="centerY" id="5ZK-7U-cNM"/>
                         <constraint firstAttribute="trailing" secondItem="BQ6-q1-Cbv" secondAttribute="trailing" id="NxR-gd-4Yi"/>
                         <constraint firstItem="BQ6-q1-Cbv" firstAttribute="leading" secondItem="3FQ-Kv-GdP" secondAttribute="leading" id="dhB-LG-PLc"/>
