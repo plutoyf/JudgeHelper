@@ -44,23 +44,23 @@ static size_t const kDashedCount            = (2.0f);
 }
 
 - (void)showImagePicker: (UIImagePickerControllerSourceType) sourceType {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.wantsFullScreenLayout = YES;
+    self.picker = [[UIImagePickerController alloc] init];
+    self.picker.delegate = self;
+    self.picker.allowsEditing = YES;
+    self.picker.wantsFullScreenLayout = YES;
     if([UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        picker.sourceType = sourceType;
+        self.picker.sourceType = sourceType;
     } else {
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        self.picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     }
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        popover = [[UIPopoverController alloc] initWithContentViewController:picker];
-        popover.delegate = self;
-        [popover presentPopoverFromRect:self.playerImage.frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
+        && sourceType != UIImagePickerControllerSourceTypeCamera) {
+        self.popover = [[UIPopoverController alloc] initWithContentViewController:self.picker];
+        [self.popover presentPopoverFromRect:self.playerImage.frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else {
         UINavigationController *navigationController =  ((AppController*)[[UIApplication sharedApplication] delegate]).navigationController;
-        [navigationController presentModalViewController:picker animated:NO];
+        [navigationController presentViewController:self.picker animated:YES completion:nil];
     }
 }
 
@@ -134,7 +134,7 @@ static size_t const kDashedCount            = (2.0f);
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [popover dismissPopoverAnimated:YES];
+        [self.popover dismissPopoverAnimated:YES];
     } else {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
         [picker dismissModalViewControllerAnimated:YES];

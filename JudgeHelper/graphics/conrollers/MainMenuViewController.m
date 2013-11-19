@@ -23,16 +23,6 @@
 
 @implementation MainMenuViewController
 
--(BOOL)shouldAutorotate
-{
-    return YES;
-}
-
--(NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
-
 // Add new method
 - (void) viewWillAppear:(BOOL)animated
 {

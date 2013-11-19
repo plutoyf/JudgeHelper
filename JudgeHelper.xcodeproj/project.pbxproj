@@ -33,8 +33,6 @@
 		E02AC35217D501ED00923C8E /* return-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC34917D501ED00923C8E /* return-sel.png */; };
 		E02AC35317D501ED00923C8E /* save-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC34A17D501ED00923C8E /* save-sel.png */; };
 		E02AC35417D501ED00923C8E /* undo-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC34B17D501ED00923C8E /* undo-sel.png */; };
-		E03100FD183BAFCB00B7ADAA /* MainUINavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E03100FC183BAFCB00B7ADAA /* MainUINavigationController.m */; };
-		E0310106183BC3E400B7ADAA /* CCDirector (Rotate).m in Sources */ = {isa = PBXBuildFile; fileRef = E0310105183BC3E400B7ADAA /* CCDirector (Rotate).m */; };
 		E0381E8D180455D40040CE0E /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = E0381E89180455D40040CE0E /* Icon-76.png */; };
 		E0381E8E180455D40040CE0E /* Icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0381E8A180455D40040CE0E /* Icon-120@2x.png */; };
 		E0381E8F180455D40040CE0E /* Icon-ipad-152@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0381E8B180455D40040CE0E /* Icon-ipad-152@2x.png */; };
@@ -321,10 +319,6 @@
 		E02AC34917D501ED00923C8E /* return-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "return-sel.png"; path = "Resources/return-sel.png"; sourceTree = "<group>"; };
 		E02AC34A17D501ED00923C8E /* save-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "save-sel.png"; path = "Resources/save-sel.png"; sourceTree = "<group>"; };
 		E02AC34B17D501ED00923C8E /* undo-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "undo-sel.png"; path = "Resources/undo-sel.png"; sourceTree = "<group>"; };
-		E03100FB183BAFCB00B7ADAA /* MainUINavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainUINavigationController.h; sourceTree = "<group>"; };
-		E03100FC183BAFCB00B7ADAA /* MainUINavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainUINavigationController.m; sourceTree = "<group>"; };
-		E0310104183BC3E400B7ADAA /* CCDirector (Rotate).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDirector (Rotate).h"; sourceTree = "<group>"; };
-		E0310105183BC3E400B7ADAA /* CCDirector (Rotate).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCDirector (Rotate).m"; sourceTree = "<group>"; };
 		E03455CC17FEE99E00010B4C /* DeviceSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeviceSettings.h; path = macros/DeviceSettings.h; sourceTree = "<group>"; };
 		E0381E89180455D40040CE0E /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76.png"; path = "Resources/Icon-76.png"; sourceTree = "<group>"; };
 		E0381E8A180455D40040CE0E /* Icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-120@2x.png"; path = "Resources/Icon-120@2x.png"; sourceTree = "<group>"; };
@@ -1474,10 +1468,6 @@
 				E0D298A61834E3CD007736FE /* MainMenuViewController.h */,
 				E0D298A71834E3CD007736FE /* MainMenuViewController.m */,
 				E0D298A81834E3CD007736FE /* MainMenuViewController.xib */,
-				E03100FB183BAFCB00B7ADAA /* MainUINavigationController.h */,
-				E03100FC183BAFCB00B7ADAA /* MainUINavigationController.m */,
-				E0310104183BC3E400B7ADAA /* CCDirector (Rotate).h */,
-				E0310105183BC3E400B7ADAA /* CCDirector (Rotate).m */,
 			);
 			name = controllers;
 			path = conrollers;
@@ -1682,7 +1672,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E059F63617B02BC20071829E /* main.m in Sources */,
-				E0310106183BC3E400B7ADAA /* CCDirector (Rotate).m in Sources */,
 				E086489D1832519300D872D7 /* iAdSingleton.m in Sources */,
 				E059F63917B02BC30071829E /* AppDelegate.m in Sources */,
 				E059F63F17B02BC30071829E /* IntroLayer.m in Sources */,
@@ -1696,7 +1685,6 @@
 				E059F85F17B02EBD0071829E /* Expression.m in Sources */,
 				E059F86017B02EBD0071829E /* main.m in Sources */,
 				E059F86117B02EBD0071829E /* Operation.m in Sources */,
-				E03100FD183BAFCB00B7ADAA /* MainUINavigationController.m in Sources */,
 				E059F86217B02EBD0071829E /* Player.m in Sources */,
 				E059F86317B02EBD0071829E /* Rule.m in Sources */,
 				E059F86417B02EBD0071829E /* RuleResolver.m in Sources */,

@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayerCreationView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate> {
-    UIPopoverController *popover;
+@interface PlayerCreationView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate> {
 }
 
+@property (strong, nonatomic) UIImagePickerController *picker;
+@property (strong, nonatomic) UIPopoverController *popover;
 @property (strong, nonatomic) UIView *shieldView;
 
 @property (weak, nonatomic) IBOutlet UILabel *addImageLabel;

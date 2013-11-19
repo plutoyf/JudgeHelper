@@ -12,28 +12,22 @@
 #import "iAdSingleton.h"
 #import "IntroLayer.h"
 #import "SelectPlayerLayer.h"
-#import "CCDirector (Rotate).h"
 
 @implementation AppController
 
 @synthesize window=window_, viewController=viewController_, director=director_;
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-    NSLog(@"supportedInterfaceOrientationsForWindow");
-    return UIInterfaceOrientationMaskAll;
+    return [self supportedInterfaceOrientations];
 }
 
 -(BOOL)shouldAutorotate
 {
-    NSLog(@"shouldAutorotate");
     return YES;
 }
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    NSLog(@"supportedInterfaceOrientations");
-    return UIInterfaceOrientationMaskAll;
-    
     // iPhone only
 	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
 		return UIInterfaceOrientationMaskLandscape;
@@ -43,12 +37,10 @@
 }
 
 - (NSUInteger)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
-    NSLog(@"navigationControllerSupportedInterfaceOrientations");
     return [self supportedInterfaceOrientations];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    NSLog(@"shouldAutorotateToInterfaceOrientation");
     return interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight;
 }
 
@@ -63,7 +55,7 @@
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
         [director runWithScene: [GameLayer scene]];
 	}
-    
+    /*
     UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
     if( interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         CGAffineTransform rotationTransform = CGAffineTransformIdentity;
@@ -72,6 +64,7 @@
     } else {
         director.view.transform = CGAffineTransformIdentity;
     }
+     */
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
