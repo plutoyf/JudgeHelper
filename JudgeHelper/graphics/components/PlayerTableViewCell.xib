@@ -2,30 +2,44 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playerTableViewCell" id="wcb-on-kbl" customClass="PlayerTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playerTableViewCell" rowHeight="42" id="wcb-on-kbl" customClass="PlayerTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="426" height="42"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wcb-on-kbl" id="pjW-QZ-tEN">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <rect key="frame" x="0.0" y="0.0" width="426" height="41"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVf-BQ-Ykt" userLabel="userImage">
-                        <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OVf-BQ-Ykt" userLabel="userImage">
+                        <rect key="frame" x="1" y="-1" width="43" height="43"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="43" id="fqr-go-Wxx"/>
+                            <constraint firstAttribute="height" constant="43" id="hSe-gX-UhR"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfx-bB-cpm" userLabel="userName">
-                        <rect key="frame" x="51" y="11" width="264" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfx-bB-cpm" userLabel="userName">
+                        <rect key="frame" x="64.000000108372063" y="9" width="352" height="24"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="Dev-SQ-bEd"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="OVf-BQ-Ykt" secondAttribute="centerY" id="5E2-Jh-uNn"/>
+                    <constraint firstAttribute="centerY" secondItem="bfx-bB-cpm" secondAttribute="centerY" id="NPZ-pB-Nv6"/>
+                    <constraint firstItem="OVf-BQ-Ykt" firstAttribute="leading" secondItem="pjW-QZ-tEN" secondAttribute="leading" constant="1" id="Xf2-6S-ZfD"/>
+                    <constraint firstAttribute="trailing" secondItem="bfx-bB-cpm" secondAttribute="trailing" constant="10" id="uJk-e1-k8z"/>
+                    <constraint firstItem="bfx-bB-cpm" firstAttribute="leading" secondItem="OVf-BQ-Ykt" secondAttribute="trailing" constant="20" id="xFf-oG-atJ"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="userImage" destination="OVf-BQ-Ykt" id="ZdS-RV-bd4"/>

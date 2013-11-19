@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayerCreationView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
+@interface PlayerCreationView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate> {
+    UIPopoverController *popover;
+}
 
 @property (strong, nonatomic) UIView *shieldView;
 

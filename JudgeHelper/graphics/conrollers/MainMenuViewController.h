@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *roleImageView;
 @property (strong, nonatomic) IBOutlet UIPickerView *roleNumberPicker;
 
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIButton *createPlayerButton;
 @property (weak, nonatomic) IBOutlet UISwitch *doubleHandModeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *doubleHandModeLabel;
@@ -50,8 +51,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftRoleViewSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightRoleViewSpace;
 
-- (void) reloadPlayers;
-
+- (void) didFinishedCreatingPlayerWithId:(NSString *)pid;
 - (IBAction)nextButtonTapped:(id)sender;
 - (IBAction)createPlayerButtonTapped:(id)sender;
 - (IBAction)doubleHandModeSwitchChanged:(id)sender;

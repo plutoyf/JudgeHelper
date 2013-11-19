@@ -12,21 +12,29 @@
 #import "iAdSingleton.h"
 #import "IntroLayer.h"
 #import "SelectPlayerLayer.h"
+#import "CCDirector (Rotate).h"
 
 @implementation AppController
 
 @synthesize window=window_, viewController=viewController_, director=director_;
 
-- (NSUInteger)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
-    return [self supportedInterfaceOrientations];
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+    NSLog(@"supportedInterfaceOrientationsForWindow");
+    return UIInterfaceOrientationMaskLandscape;
 }
 
-// The available orientations should be defined in the Info.plist file.
-// And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
-// Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
--(NSUInteger)supportedInterfaceOrientations {
-	
-	// iPhone only
+-(BOOL)shouldAutorotate
+{
+    NSLog(@"shouldAutorotate");
+    return YES;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    NSLog(@"supportedInterfaceOrientations");
+    return UIInterfaceOrientationMaskLandscape;
+    
+    // iPhone only
 	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
 		return UIInterfaceOrientationMaskLandscape;
 	
@@ -34,17 +42,14 @@
 	return UIInterfaceOrientationMaskLandscape;
 }
 
-// Supported orientations. Customize it for your own needs
-// Only valid on iOS 4 / 5. NOT VALID for iOS 6.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	// iPhone only
-	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
-		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-	
-	// iPad only
-	// iPhone only
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+- (NSUInteger)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
+    NSLog(@"navigationControllerSupportedInterfaceOrientations");
+    return [self supportedInterfaceOrientations];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    NSLog(@"shouldAutorotateToInterfaceOrientation");
+    return interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight;
 }
 
 // This is needed for iOS4 and iOS5 in order to ensure
@@ -52,6 +57,7 @@
 // This is not needed on iOS6 and could be added to the application:didFinish...
 -(void) directorDidReshapeProjection:(CCDirector*)director
 {
+    NSLog(@"directorDidReshapeProjection");
     if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.

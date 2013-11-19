@@ -23,6 +23,16 @@
 
 @implementation MainMenuViewController
 
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
 // Add new method
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -71,10 +81,11 @@
     switch (self.view.tag) {
         case 0:
             if (selectedPIds.count < 3) {
-                self.statusLabel.text = @"Please select 3 players at least";
+                self.statusLabel.text = @"请至少选择3名玩家";
             } else {
                 isReadyToStart = [self isRedyToStart];
                 self.view.tag = isReadyToStart ? 2 : 1;
+                [self.nextButton setTitle:isReadyToStart ? @"开始" : @"下一步" forState:UIControlStateNormal];
                 self.createPlayerButton.alpha = 0.0f;
                 self.doubleHandModeLabel.alpha = 1.0f;
                 self.doubleHandModeSwitch.alpha = 1.0f;
@@ -84,6 +95,7 @@
             break;
         case 1:
             self.view.tag = 2;
+            self.nextButton.titleLabel.text = @"开始";
             [self matchPlayerNumber];
             [self animateViewWithLeftPart:YES andRightPart:NO];
             break;
@@ -104,8 +116,8 @@
 - (IBAction)createPlayerButtonTapped:(id)sender {
     // Declaring the popover layer
     PlayerCreationView *playerCreationView = [[[NSBundle mainBundle] loadNibNamed:@"PlayerCreationView" owner:self options:nil] objectAtIndex:0];
-    playerCreationView.frame = CGRectMake(0, -70, playerCreationView.bounds.size.width, playerCreationView.bounds.size.height);
-    [self.view insertSubview:playerCreationView aboveSubview:self.bodyView];
+    playerCreationView.frame = CGRectMake(0, -playerCreationView.bounds.size.height, self.bodyView.bounds.size.width, playerCreationView.bounds.size.height);
+    [self.bodyView addSubview:playerCreationView];
     
     //playerCreationView.layer.borderWidth = 1.0f;
     //playerCreationView.layer.borderColor = [[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f] CGColor];
@@ -117,8 +129,11 @@
     
     playerCreationView.shieldView = [[UIView alloc] initWithFrame:self.view.bounds];
     playerCreationView.shieldView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
-    [self.view insertSubview:playerCreationView.shieldView belowSubview:playerCreationView];
+    [self.bodyView insertSubview:playerCreationView.shieldView belowSubview:playerCreationView];
     
+    
+    self.createPlayerButton.alpha = 0.0f;
+    self.nextButton.alpha = 0.0f;
     [UIView animateWithDuration:.5 animations:^(void) {
         [playerCreationView setFrame:CGRectOffset([playerCreationView frame], 0, playerCreationView.bounds.size.height)];
     } completion:^(BOOL Finished) {
@@ -283,32 +298,25 @@
         [userDefaults removeObjectForKey:[pid stringByAppendingString:@"-name"]];
         [userDefaults removeObjectForKey:[pid stringByAppendingString:@"-img"]];
         [userDefaults synchronize];
- 
-        [tableView reloadData];
-        [tableView setEditing:NO];
+        
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
-    NSLog(@"commitEditingStyle : %d",indexPath.row);
-}
-
-- (void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"willBeginEditingRowAtIndexPath : %d",indexPath.row);
 }
 
 - (void)tableView:(UITableView*)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [self reselectPlayersInTableView:tableView];
      NSLog(@"didEndEditingRowAtIndexPath : %d",indexPath.row);
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"editingStyleForRowAtIndexPath : %d",indexPath.row);
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (void) reloadPlayers {
-    [self initPlayerIds];
-    [self.playerTableView reloadData];
+- (void) didFinishedCreatingPlayerWithId:(NSString *)pid {
+    self.createPlayerButton.alpha = 1.0f;
+    self.nextButton.alpha = 1.0f;
+    if(pid && ![pids containsObject:pid]) {
+        [pids addObject:pid];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:pids.count-1 inSection:0];
+        [self.playerTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.playerTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
     [self reselectPlayersInTableView:self.playerTableView];
 }
 
@@ -383,6 +391,7 @@
 - (void)playerCellTapped:(UITapGestureRecognizer *)inGestureRecognizer {
     if (self.view.tag == 2) {
         self.view.tag = 0;
+        [self.nextButton setTitle:@"下一步" forState:UIControlStateNormal];
         self.createPlayerButton.alpha = 1.0f;
         self.doubleHandModeLabel.alpha = 0.0f;
         self.doubleHandModeSwitch.alpha = 0.0f;
@@ -409,6 +418,7 @@
     
     if (self.view.tag == 2) {
         self.view.tag = 1;
+        [self.nextButton setTitle:@"下一步" forState:UIControlStateNormal];
         [self animateViewWithLeftPart:self.leftRoleView.tag!=1 andRightPart:self.rightRoleView.tag!=1];
     }
 }

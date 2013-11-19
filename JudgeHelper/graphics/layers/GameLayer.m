@@ -186,7 +186,7 @@ BOOL showDebugMessageEnable = NO;
         
 		// create and initialize a Label
 		// position the label on the center of the screen
-		messageLabel = [CCLabelTTF labelWithString:@"Killer" fontName:@"Marker Felt" fontSize:REVERSE_X(48)];
+		messageLabel = [CCLabelTTF labelWithString:@"天黑请闭眼" fontName:@"Marker Felt" fontSize:REVERSE_X(48)];
         messageLabel.position = ccp( size.width /2 , size.height/2-(showDebugMessageEnable?REVERSE_Y(200):0) );
         [self addChild: messageLabel z:1];
         
@@ -373,7 +373,8 @@ BOOL showDebugMessageEnable = NO;
 -(void) gameFinished {
     CCMenuItem *restarMenuItem = [CCMenuItemImage itemFromNormalImage:@"restart.png" selectedImage:@"restart-sel.png"
         block:^(id sender){
-            [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
+            [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
+            //[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:0.5 scene:[SelectPlayerLayer scene] ]];
         }];
     [restarMenuItem setScaleX: IMG_WIDTH/restarMenuItem.contentSize.width];
     [restarMenuItem setScaleY: IMG_HEIGHT/restarMenuItem.contentSize.height];
