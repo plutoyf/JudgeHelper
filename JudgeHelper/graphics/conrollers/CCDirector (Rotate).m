@@ -13,7 +13,7 @@
 -(BOOL)shouldAutorotate
 {
     NSLog(@"CCDirector :shouldAutorotate ");
-    return NO;
+    return YES;
 }
 
 -(NSUInteger)supportedInterfaceOrientations
@@ -26,6 +26,13 @@
 {
     NSLog(@"CCDirector :preferredInterfaceOrientationForPresentation ");
     return UIInterfaceOrientationLandscapeLeft;
+}
+
+- (CGSize) winSize {
+    if(_winSizeInPoints.width < _winSizeInPoints.height) {
+        return CGSizeMake(_winSizeInPoints.height, _winSizeInPoints.width);
+    }
+    return _winSizeInPoints;
 }
 
 @end

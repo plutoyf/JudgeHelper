@@ -20,7 +20,7 @@
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
     NSLog(@"supportedInterfaceOrientationsForWindow");
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskAll;
 }
 
 -(BOOL)shouldAutorotate
@@ -32,7 +32,7 @@
 -(NSUInteger)supportedInterfaceOrientations
 {
     NSLog(@"supportedInterfaceOrientations");
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskAll;
     
     // iPhone only
 	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
@@ -63,6 +63,15 @@
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
         [director runWithScene: [GameLayer scene]];
 	}
+    
+    UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+    if( interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+        CGAffineTransform rotationTransform = CGAffineTransformIdentity;
+        rotationTransform = CGAffineTransformRotate(rotationTransform, (-90*M_PI)/180.0);
+        director.view.transform = rotationTransform;
+    } else {
+        director.view.transform = CGAffineTransformIdentity;
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
