@@ -21,7 +21,6 @@
     int maxRoleNumber;
     int staticRoleNumber;
 }
-@property (weak, nonatomic) IBOutlet UIView *testView;
 
 @property (weak, nonatomic) IBOutlet UITableView *playerTableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *playerCollectionView;

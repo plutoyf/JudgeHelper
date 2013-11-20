@@ -164,14 +164,14 @@
     if (animateLeftPartView) {
         leftPartView = self.leftPlayerView.tag == 1 ? self.leftPlayerView : self.leftRoleView;
         leftPartConstraintToDelete = [self findConstraintWithItem:leftPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading from:self.bodyView.constraints];
-        leftPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:leftPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:0.f constant:0.f];
+        leftPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:leftPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];
         leftPartView.tag = 0;
     }
     
     if (animateRightPartView) {
         rightPartView = self.rightPlayerView.tag == 1 ? self.rightPlayerView : self.rightRoleView;
         rightPartConstraintToDelete = [self findConstraintWithItem:rightPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing from:self.bodyView.constraints];
-        rightPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:rightPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:0.f constant:0.f];
+        rightPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:rightPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f];
         rightPartView.tag = 0;
     }
     
@@ -193,14 +193,14 @@
     if (animateLeftPartView) {
         leftPartView = leftPartView == self.leftPlayerView ? self.leftRoleView : self.leftPlayerView;
         leftPartConstraintToDelete = [self findConstraintWithItem:leftPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading from:self.bodyView.constraints];
-        leftPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:leftPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:0.f constant:0.f];
+        leftPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:leftPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];
         leftPartView.tag = 1;
     }
     
     if (animateRightPartView) {
         rightPartView = rightPartView == self.rightPlayerView ? self.rightRoleView : self.rightPlayerView;
         rightPartConstraintToDelete = [self findConstraintWithItem:rightPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing from:self.bodyView.constraints];
-        rightPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:rightPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:0.f constant:0.f];
+        rightPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:rightPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f];
         rightPartView.tag = 1;
     }
     

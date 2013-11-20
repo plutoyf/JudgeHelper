@@ -23,7 +23,6 @@
                 <outlet property="roleImageView" destination="9KC-NB-t00" id="O3n-lN-A8p"/>
                 <outlet property="roleNumberPicker" destination="uvZ-96-C77" id="Urb-9p-yRY"/>
                 <outlet property="statusLabel" destination="BQ6-q1-Cbv" id="Kww-Ic-m6o"/>
-                <outlet property="testView" destination="smn-is-dGg" id="Lga-QH-RjL"/>
                 <outlet property="topBarView" destination="0W6-Wo-Htk" id="dMI-qg-jvl"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -58,15 +57,6 @@
                     <rect key="frame" x="0.0" y="40" width="480" height="250"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="smn-is-dGg">
-                            <rect key="frame" x="190" y="75" width="100" height="100"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="100" id="7k0-Yg-gSJ"/>
-                                <constraint firstAttribute="width" constant="100" id="Xbz-2T-VmY"/>
-                            </constraints>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXt-I8-JrC" userLabel="LeftRoleView">
                             <rect key="frame" x="-210" y="0.0" width="210" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -180,7 +170,6 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="c2q-g0-dqs" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="2hw-8N-2DG"/>
-                        <constraint firstItem="smn-is-dGg" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="4Bc-E4-na0"/>
                         <constraint firstItem="pXt-I8-JrC" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="4SM-Iz-1nW"/>
                         <constraint firstAttribute="trailing" secondItem="3GM-7w-PgR" secondAttribute="trailing" placeholder="YES" id="7t5-uB-Flp"/>
                         <constraint firstItem="pXt-I8-JrC" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="95l-ZV-cR5"/>
@@ -188,7 +177,6 @@
                         <constraint firstItem="CwB-oq-UCd" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="FHu-Hc-jJe"/>
                         <constraint firstAttribute="trailing" secondItem="c2q-g0-dqs" secondAttribute="leading" placeholder="YES" id="KoI-mt-cuO"/>
                         <constraint firstItem="c2q-g0-dqs" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="LaD-ce-geu"/>
-                        <constraint firstItem="smn-is-dGg" firstAttribute="centerX" secondItem="ldV-ff-NLa" secondAttribute="centerX" id="ZAg-U5-33D"/>
                         <constraint firstItem="CwB-oq-UCd" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="mcI-v4-9xQ"/>
                         <constraint firstItem="pXt-I8-JrC" firstAttribute="trailing" secondItem="ldV-ff-NLa" secondAttribute="leading" placeholder="YES" id="tO4-TJ-Dfs"/>
                         <constraint firstItem="3GM-7w-PgR" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="uVZ-k4-HrT"/>
