@@ -44,24 +44,24 @@ static size_t const kDashedCount            = (2.0f);
 }
 
 - (void)showImagePicker: (UIImagePickerControllerSourceType) sourceType {
-    self.picker = [[UIImagePickerController alloc] init];
-    self.picker.delegate = self;
-    self.picker.allowsEditing = YES;
-    self.picker.wantsFullScreenLayout = YES;
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    //self.picker.wantsFullScreenLayout = YES;
     if([UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        self.picker.sourceType = sourceType;
+        picker.sourceType = sourceType;
     } else {
-        self.picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     }
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
         && sourceType != UIImagePickerControllerSourceTypeCamera) {
-        self.popover = [[UIPopoverController alloc] initWithContentViewController:self.picker];
+        self.popover = [[UIPopoverController alloc] initWithContentViewController:picker];
         [self.popover presentPopoverFromRect:self.playerImage.frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else {
         UINavigationController *navigationController =  ((AppController*)[[UIApplication sharedApplication] delegate]).navigationController;
         UIViewController *controller = navigationController.topViewController;
-        [controller presentViewController:self.picker animated:YES completion:nil];
+        [controller presentViewController:picker animated:YES completion:nil];
     }
 }
 
@@ -134,11 +134,12 @@ static size_t const kDashedCount            = (2.0f);
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if (self.popover) {
         [self.popover dismissPopoverAnimated:YES];
+        self.popover = nil;
     } else {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
-        [picker dismissModalViewControllerAnimated:YES];
+        [picker dismissViewControllerAnimated:YES completion:nil];
         [picker.view removeFromSuperview];
     }
 }
@@ -151,4 +152,5 @@ static size_t const kDashedCount            = (2.0f);
     
     [self imagePickerControllerDidCancel:picker];
 }
+
 @end

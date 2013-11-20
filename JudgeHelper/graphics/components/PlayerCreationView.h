@@ -11,7 +11,6 @@
 @interface PlayerCreationView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate> {
 }
 
-@property (strong, nonatomic) UIImagePickerController *picker;
 @property (strong, nonatomic) UIPopoverController *popover;
 @property (strong, nonatomic) UIView *shieldView;
 
