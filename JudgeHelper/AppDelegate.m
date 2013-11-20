@@ -18,7 +18,7 @@
 @synthesize window=window_, viewController=viewController_, director=director_;
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-    return [self supportedInterfaceOrientations];
+    return UIInterfaceOrientationMaskAll;
 }
 
 -(BOOL)shouldAutorotate

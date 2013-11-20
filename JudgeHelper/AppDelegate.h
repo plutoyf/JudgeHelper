@@ -10,10 +10,9 @@
 #import "cocos2d.h"
 #import "RootViewController.h"
 
-@interface AppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
+@interface AppController : NSObject <UIApplicationDelegate, UINavigationControllerDelegate, CCDirectorDelegate>
 {
 	UIWindow *window_;
-	RootViewController *viewController_;
 
 	CCDirectorIOS	*__unsafe_unretained director_;							// weak ref
 }

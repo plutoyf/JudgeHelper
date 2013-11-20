@@ -45,7 +45,15 @@
     GlobalSettings *globals = [GlobalSettings globalSettings];
     self.doubleHandModeSwitch.on = [globals getGameMode] == DOUBLE_HAND;
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.leftBodyView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.6f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.6f constant:0.f]];
+    
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftRoleView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftPlayerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightPlayerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightRoleView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f]];
     
     [self.playerCollectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"playerCollectionViewCell"];
     [self.roleCollectionView registerNib:[UINib nibWithNibName:@"RoleCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"roleCollectionViewCell"];
@@ -140,62 +148,73 @@
     [self matchPlayerNumber];
 }
 
+- (NSLayoutConstraint*)findConstraintWithItem:(id)view1 attribute:(NSLayoutAttribute)attr1 relatedBy:(NSLayoutRelation)relation toItem:(id)view2 attribute:(NSLayoutAttribute)attr2 from:(NSArray*)contraints {
+    for(NSLayoutConstraint *c in contraints) {
+        if(c.firstItem == view1 && c.firstAttribute == attr1 && c.relation == relation && c.secondItem == view2 && c.secondAttribute == attr2) {
+            return c;
+        }
+    }
+    return nil;
+}
+
 - (void) animateViewWithLeftPart:(BOOL) animateLeftPartView andRightPart:(BOOL) animateRightPartView {
-    NSLayoutConstraint *leftPartConstraint, *rightPartConstraint;
-    float newLeftPartSpaceValue, newRightPartSpaceValue;
+    NSLayoutConstraint *leftPartConstraintToDelete, *leftPartConstraintToAdd, *rightPartConstraintToDelete, *rightPartConstraintToAdd;
     UIView *leftPartView, *rightPartView;
     
     if (animateLeftPartView) {
         leftPartView = self.leftPlayerView.tag == 1 ? self.leftPlayerView : self.leftRoleView;
-        leftPartConstraint = self.leftPlayerView.tag == 1 ? self.leftPlayerViewSpace : self.leftRoleViewSpace;
-        newLeftPartSpaceValue = self.leftPlayerView.tag == 1 ? -leftPartView.bounds.size.width : 0;
+        leftPartConstraintToDelete = [self findConstraintWithItem:leftPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading from:self.bodyView.constraints];
+        leftPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:leftPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:0.f constant:0.f];
         leftPartView.tag = 0;
     }
     
     if (animateRightPartView) {
         rightPartView = self.rightPlayerView.tag == 1 ? self.rightPlayerView : self.rightRoleView;
-        rightPartConstraint = self.rightPlayerView.tag == 1 ? self.rightPlayerViewSpace : self.rightRoleViewSpace;
-        newRightPartSpaceValue = self.rightPlayerView.tag == 1 ? -rightPartView.bounds.size.width : 0;
+        rightPartConstraintToDelete = [self findConstraintWithItem:rightPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing from:self.bodyView.constraints];
+        rightPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:rightPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:0.f constant:0.f];
         rightPartView.tag = 0;
     }
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:0.5 animations:^{
         if (animateLeftPartView) {
-            leftPartConstraint.constant = newLeftPartSpaceValue;
+            [self.bodyView removeConstraint:leftPartConstraintToDelete];
+            [self.bodyView addConstraint:leftPartConstraintToAdd];
             [self.view layoutIfNeeded];
         }
         
         if (animateRightPartView) {
-            rightPartConstraint.constant = newRightPartSpaceValue;
+            [self.bodyView removeConstraint:rightPartConstraintToDelete];
+            [self.bodyView addConstraint:rightPartConstraintToAdd];
             [self.view layoutIfNeeded];
         }
     }];
      
     if (animateLeftPartView) {
         leftPartView = leftPartView == self.leftPlayerView ? self.leftRoleView : self.leftPlayerView;
-        leftPartConstraint = leftPartView == self.leftPlayerView ? self.leftPlayerViewSpace : self.leftRoleViewSpace;
-        newLeftPartSpaceValue = leftPartView == self.leftPlayerView ? 0 : -leftPartView.bounds.size.width;
+        leftPartConstraintToDelete = [self findConstraintWithItem:leftPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading from:self.bodyView.constraints];
+        leftPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:leftPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:0.f constant:0.f];
         leftPartView.tag = 1;
     }
     
     if (animateRightPartView) {
         rightPartView = rightPartView == self.rightPlayerView ? self.rightRoleView : self.rightPlayerView;
-        rightPartConstraint = rightPartView == self.rightPlayerView ? self.rightPlayerViewSpace : self.rightRoleViewSpace;
-        newRightPartSpaceValue = rightPartView == self.rightPlayerView ? 0 : -rightPartView.bounds.size.width;
-
+        rightPartConstraintToDelete = [self findConstraintWithItem:rightPartView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing from:self.bodyView.constraints];
+        rightPartConstraintToAdd = [NSLayoutConstraint constraintWithItem:rightPartView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:0.f constant:0.f];
         rightPartView.tag = 1;
     }
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:0.5 delay:0.5 options:nil animations:^{
         if (animateLeftPartView) {
-            leftPartConstraint.constant = newLeftPartSpaceValue;
+            [self.bodyView removeConstraint:leftPartConstraintToDelete];
+            [self.bodyView addConstraint:leftPartConstraintToAdd];
             [self.view layoutIfNeeded];
         }
         
         if (animateRightPartView) {
-            rightPartConstraint.constant = newRightPartSpaceValue;
+            [self.bodyView removeConstraint:rightPartConstraintToDelete];
+            [self.bodyView addConstraint:rightPartConstraintToAdd];
             [self.view layoutIfNeeded];
         }
     } completion:nil];

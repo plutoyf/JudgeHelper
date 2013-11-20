@@ -21,13 +21,14 @@
     int maxRoleNumber;
     int staticRoleNumber;
 }
+@property (weak, nonatomic) IBOutlet UIView *testView;
 
 @property (weak, nonatomic) IBOutlet UITableView *playerTableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *playerCollectionView;
 
-@property (strong, nonatomic) IBOutlet UICollectionView *roleCollectionView;
-@property (strong, nonatomic) IBOutlet UIImageView *roleImageView;
-@property (strong, nonatomic) IBOutlet UIPickerView *roleNumberPicker;
+@property (weak, nonatomic) IBOutlet UICollectionView *roleCollectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *roleImageView;
+@property (weak, nonatomic) IBOutlet UIPickerView *roleNumberPicker;
 
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIButton *createPlayerButton;
@@ -38,18 +39,10 @@
 @property (weak, nonatomic) IBOutlet UIView *topBarView;
 @property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 @property (weak, nonatomic) IBOutlet UIView *bodyView;
-@property (weak, nonatomic) IBOutlet UIView *leftBodyView;
-@property (weak, nonatomic) IBOutlet UIView *rightBodyView;
-
-@property (strong, nonatomic) IBOutlet UIView *leftPlayerView;
-@property (strong, nonatomic) IBOutlet UIView *rightPlayerView;
-@property (strong, nonatomic) IBOutlet UIView *leftRoleView;
-@property (strong, nonatomic) IBOutlet UIView *rightRoleView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftPlayerViewSpace;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightPlayerViewSpace;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftRoleViewSpace;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightRoleViewSpace;
+@property (weak, nonatomic) IBOutlet UIView *leftPlayerView;
+@property (weak, nonatomic) IBOutlet UIView *rightPlayerView;
+@property (weak, nonatomic) IBOutlet UIView *leftRoleView;
+@property (weak, nonatomic) IBOutlet UIView *rightRoleView;
 
 - (void) didFinishedCreatingPlayerWithId:(NSString *)pid;
 - (IBAction)nextButtonTapped:(id)sender;

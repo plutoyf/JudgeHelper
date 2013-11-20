@@ -60,7 +60,8 @@ static size_t const kDashedCount            = (2.0f);
         [self.popover presentPopoverFromRect:self.playerImage.frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else {
         UINavigationController *navigationController =  ((AppController*)[[UIApplication sharedApplication] delegate]).navigationController;
-        [navigationController presentViewController:self.picker animated:YES completion:nil];
+        UIViewController *controller = navigationController.topViewController;
+        [controller presentViewController:self.picker animated:YES completion:nil];
     }
 }
 
