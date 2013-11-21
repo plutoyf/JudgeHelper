@@ -125,8 +125,8 @@ static size_t const kDashedCount            = (2.0f);
         [self setFrame:CGRectOffset([self frame], 0, -self.bounds.size.height)];
     } completion:^(BOOL Finished) {
         [self removeFromSuperview];
+        [self.shieldView removeFromSuperview];
     }];
-    [self.shieldView removeFromSuperview];
     
     UINavigationController *navigationController = ((AppController*)[[UIApplication sharedApplication] delegate]).navigationController;
     MainMenuViewController *rootViewController = (MainMenuViewController*)[navigationController.viewControllers objectAtIndex:0];

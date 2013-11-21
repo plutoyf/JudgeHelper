@@ -114,8 +114,17 @@
 - (IBAction)createPlayerButtonTapped:(id)sender {
     // Declaring the popover layer
     PlayerCreationView *playerCreationView = [[[NSBundle mainBundle] loadNibNamed:@"PlayerCreationView" owner:self options:nil] objectAtIndex:0];
-    playerCreationView.frame = CGRectMake(0, -playerCreationView.bounds.size.height, self.bodyView.bounds.size.width, playerCreationView.bounds.size.height);
+    
+    playerCreationView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.bodyView addSubview:playerCreationView];
+    
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:playerCreationView.frame.size.height]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:1.f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.f]];
+    __block NSLayoutConstraint *playerCreationViewYConstraint = [NSLayoutConstraint constraintWithItem:playerCreationView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.f];
+    [self.bodyView addConstraint:playerCreationViewYConstraint];
+    [self.bodyView layoutIfNeeded];
+    
     
     //playerCreationView.layer.borderWidth = 1.0f;
     //playerCreationView.layer.borderColor = [[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f] CGColor];
@@ -127,13 +136,22 @@
     
     playerCreationView.shieldView = [[UIView alloc] initWithFrame:self.view.bounds];
     playerCreationView.shieldView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
-    [self.bodyView insertSubview:playerCreationView.shieldView belowSubview:playerCreationView];
+    playerCreationView.shieldView.translatesAutoresizingMaskIntoConstraints = NO;
     
+    [self.bodyView insertSubview:playerCreationView.shieldView belowSubview:playerCreationView];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView.shieldView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:1.f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView.shieldView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeHeight multiplier:1.f constant:self.topBarView.frame.size.height+self.bottomBarView.frame.size.height]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView.shieldView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.f]];
+    [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerCreationView.shieldView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.f]];
+    [self.bodyView layoutIfNeeded];
     
     self.createPlayerButton.alpha = 0.0f;
     self.nextButton.alpha = 0.0f;
     [UIView animateWithDuration:.5 animations:^(void) {
-        [playerCreationView setFrame:CGRectOffset([playerCreationView frame], 0, playerCreationView.bounds.size.height)];
+        [self.bodyView removeConstraint:playerCreationViewYConstraint];
+        playerCreationViewYConstraint = [NSLayoutConstraint constraintWithItem:playerCreationView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.f];
+        [self.bodyView addConstraint:playerCreationViewYConstraint];
+        [self.bodyView layoutIfNeeded];
     } completion:^(BOOL Finished) {
     }];
 }

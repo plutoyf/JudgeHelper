@@ -28,6 +28,7 @@
 
 -(NSUInteger)supportedInterfaceOrientations
 {
+    return UIInterfaceOrientationMaskAll;
     // iPhone only
 	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
 		return UIInterfaceOrientationMaskLandscape;
