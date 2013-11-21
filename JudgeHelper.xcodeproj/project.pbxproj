@@ -265,6 +265,7 @@
 		E0798A9B17D5255A00CD7E47 /* right2-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E0798A9917D5255A00CD7E47 /* right2-sel.png */; };
 		E08648961832442A00D872D7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08648951832442A00D872D7 /* iAd.framework */; };
 		E086489D1832519300D872D7 /* iAdSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = E086489C1832519300D872D7 /* iAdSingleton.m */; };
+		E093D21D183E7889002DDB8C /* CCDirector (Landscape).m in Sources */ = {isa = PBXBuildFile; fileRef = E093D21C183E7889002DDB8C /* CCDirector (Landscape).m */; };
 		E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A5B4E617BED294007F97BD /* GameRuleLayer.m */; };
 		E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A5B4E817BED77E007F97BD /* rightUp.png */; };
 		E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D2989E1834CD6B007736FE /* MainWindow.xib */; };
@@ -731,6 +732,8 @@
 		E08648951832442A00D872D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		E086489B1832519300D872D7 /* iAdSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAdSingleton.h; sourceTree = "<group>"; };
 		E086489C1832519300D872D7 /* iAdSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAdSingleton.m; sourceTree = "<group>"; };
+		E093D21B183E7889002DDB8C /* CCDirector (Landscape).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDirector (Landscape).h"; sourceTree = "<group>"; };
+		E093D21C183E7889002DDB8C /* CCDirector (Landscape).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCDirector (Landscape).m"; sourceTree = "<group>"; };
 		E0A5B4E517BED294007F97BD /* GameRuleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRuleLayer.h; sourceTree = "<group>"; };
 		E0A5B4E617BED294007F97BD /* GameRuleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRuleLayer.m; sourceTree = "<group>"; };
 		E0A5B4E817BED77E007F97BD /* rightUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightUp.png; path = Resources/rightUp.png; sourceTree = "<group>"; };
@@ -1468,6 +1471,8 @@
 				E0D298A61834E3CD007736FE /* MainMenuViewController.h */,
 				E0D298A71834E3CD007736FE /* MainMenuViewController.m */,
 				E0D298A81834E3CD007736FE /* MainMenuViewController.xib */,
+				E093D21B183E7889002DDB8C /* CCDirector (Landscape).h */,
+				E093D21C183E7889002DDB8C /* CCDirector (Landscape).m */,
 			);
 			name = controllers;
 			path = conrollers;
@@ -1690,6 +1695,7 @@
 				E059F86417B02EBD0071829E /* RuleResolver.m in Sources */,
 				E05A3E6B1836F830008FDE75 /* RoleCollectionViewCell.m in Sources */,
 				E015665C183A47C100447B55 /* PlayerCreationView.m in Sources */,
+				E093D21D183E7889002DDB8C /* CCDirector (Landscape).m in Sources */,
 				E059F87F17B02EC70071829E /* BorderSprite.m in Sources */,
 				E059F88017B02EC70071829E /* ClippingSprite.m in Sources */,
 				E059F88117B02EC70071829E /* MySprite.m in Sources */,

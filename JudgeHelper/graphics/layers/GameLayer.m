@@ -16,6 +16,7 @@
 #import "RuleResolver.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "iAdSingleton.h"
+#import "CCDirector (Landscape).h"
 
 #pragma mark - GameLayer
 

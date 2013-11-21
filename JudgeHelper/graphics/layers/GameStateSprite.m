@@ -12,6 +12,7 @@
 #import "SelectPlayerLayer.h"
 #import "iAdSingleton.h"
 #import "AppDelegate.h"
+#import "CCDirector (Landscape).h"
 
 @implementation GameStateSprite
 
@@ -65,7 +66,6 @@
     if(self = [super init]) {
         CGSize globalSize = [[CCDirector sharedDirector] winSize];
         GlobalSettings* global = [GlobalSettings globalSettings];
-        
         self.contentSize = globalSize;
         CGSize size = self.contentSize;
         size.height -= [iAdSingleton sharedInstance].getBannerHeight;
