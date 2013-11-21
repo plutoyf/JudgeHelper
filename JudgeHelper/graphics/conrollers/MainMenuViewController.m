@@ -93,7 +93,7 @@
             break;
         case 1:
             self.view.tag = 2;
-            self.nextButton.titleLabel.text = @"开始";
+            [self.nextButton setTitle:@"开始" forState:UIControlStateNormal];
             [self matchPlayerNumber];
             [self animateViewWithLeftPart:YES andRightPart:NO];
             break;
