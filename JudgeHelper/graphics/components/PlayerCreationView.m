@@ -140,7 +140,6 @@ static size_t const kDashedCount            = (2.0f);
     } else {
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
         [picker dismissViewControllerAnimated:YES completion:nil];
-        [picker.view removeFromSuperview];
     }
 }
 
