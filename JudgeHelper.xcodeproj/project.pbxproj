@@ -270,12 +270,14 @@
 		E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D2989E1834CD6B007736FE /* MainWindow.xib */; };
 		E0D298A41834D050007736FE /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A21834D050007736FE /* RootViewController.m */; };
 		E0D298A51834D050007736FE /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A31834D050007736FE /* RootViewController.xib */; };
-		E0D298A91834E3CD007736FE /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A71834E3CD007736FE /* MainMenuViewController.m */; };
-		E0D298AA1834E3CD007736FE /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A81834E3CD007736FE /* MainMenuViewController.xib */; };
+		E0D298A91834E3CD007736FE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A71834E3CD007736FE /* MainViewController.m */; };
+		E0D298AA1834E3CD007736FE /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A81834E3CD007736FE /* MainViewController.xib */; };
 		E0D298AD18350F44007736FE /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298AC18350F44007736FE /* PlayerTableViewCell.m */; };
 		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
+		E0F38F48183F523400529670 /* MainViewController~ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F38F46183F523400529670 /* MainViewController~ipad.m */; };
+		E0F38F49183F523400529670 /* MainViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F38F47183F523400529670 /* MainViewController~ipad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -738,15 +740,18 @@
 		E0D298A11834D050007736FE /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		E0D298A21834D050007736FE /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		E0D298A31834D050007736FE /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
-		E0D298A61834E3CD007736FE /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
-		E0D298A71834E3CD007736FE /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
-		E0D298A81834E3CD007736FE /* MainMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
+		E0D298A61834E3CD007736FE /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		E0D298A71834E3CD007736FE /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		E0D298A81834E3CD007736FE /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		E0D298AB18350F44007736FE /* PlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTableViewCell.h; sourceTree = "<group>"; };
 		E0D298AC18350F44007736FE /* PlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTableViewCell.m; sourceTree = "<group>"; };
 		E0D3755A17BA390D00E14D7D /* TableZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableZone.h; sourceTree = "<group>"; };
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
 		E0D5CF8617B682FA00EF0AAB /* right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = right2.png; path = Resources/right2.png; sourceTree = "<group>"; };
+		E0F38F45183F523400529670 /* MainViewController~ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController~ipad.h"; sourceTree = "<group>"; };
+		E0F38F46183F523400529670 /* MainViewController~ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainViewController~ipad.m"; sourceTree = "<group>"; };
+		E0F38F47183F523400529670 /* MainViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainViewController~ipad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1465,9 +1470,12 @@
 				E0D298A11834D050007736FE /* RootViewController.h */,
 				E0D298A21834D050007736FE /* RootViewController.m */,
 				E0D298A31834D050007736FE /* RootViewController.xib */,
-				E0D298A61834E3CD007736FE /* MainMenuViewController.h */,
-				E0D298A71834E3CD007736FE /* MainMenuViewController.m */,
-				E0D298A81834E3CD007736FE /* MainMenuViewController.xib */,
+				E0D298A61834E3CD007736FE /* MainViewController.h */,
+				E0D298A71834E3CD007736FE /* MainViewController.m */,
+				E0D298A81834E3CD007736FE /* MainViewController.xib */,
+				E0F38F45183F523400529670 /* MainViewController~ipad.h */,
+				E0F38F46183F523400529670 /* MainViewController~ipad.m */,
+				E0F38F47183F523400529670 /* MainViewController~ipad.xib */,
 			);
 			name = controllers;
 			path = conrollers;
@@ -1581,7 +1589,7 @@
 				E059F81817B02E860071829E /* btn_on2_green.png in Resources */,
 				E059F81917B02E860071829E /* camera.png in Resources */,
 				E059F81A17B02E860071829E /* cancel.png in Resources */,
-				E0D298AA1834E3CD007736FE /* MainMenuViewController.xib in Resources */,
+				E0D298AA1834E3CD007736FE /* MainViewController.xib in Resources */,
 				E059F81B17B02E860071829E /* Icon-20-doctor.png in Resources */,
 				E059F81C17B02E860071829E /* Icon-20-guard.png in Resources */,
 				E059F81D17B02E860071829E /* Icon-20-judge.png in Resources */,
@@ -1600,6 +1608,7 @@
 				E059F82817B02E870071829E /* Icon-72-killer-dead.png in Resources */,
 				E059F82917B02E870071829E /* Icon-72-killer.png in Resources */,
 				E059F82A17B02E870071829E /* Icon-72-police-dead.png in Resources */,
+				E0F38F49183F523400529670 /* MainViewController~ipad.xib in Resources */,
 				E059F82B17B02E870071829E /* Icon-72-police.png in Resources */,
 				E059F82C17B02E870071829E /* Icon-72-spy-dead.png in Resources */,
 				E059F82D17B02E870071829E /* Icon-72-spy.png in Resources */,
@@ -1693,6 +1702,7 @@
 				E059F87F17B02EC70071829E /* BorderSprite.m in Sources */,
 				E059F88017B02EC70071829E /* ClippingSprite.m in Sources */,
 				E059F88117B02EC70071829E /* MySprite.m in Sources */,
+				E0F38F48183F523400529670 /* MainViewController~ipad.m in Sources */,
 				E059F88217B02EC70071829E /* CreatePlayerLayer.m in Sources */,
 				E059F88317B02EC70071829E /* GameLayer.m in Sources */,
 				E059F88417B02EC70071829E /* GameStateSprite.m in Sources */,
@@ -1700,7 +1710,7 @@
 				E059F88617B02EC70071829E /* SelectRoleLayer.m in Sources */,
 				E059F88717B02EC70071829E /* CCDoubleHandPlayer.m in Sources */,
 				E059F88817B02EC70071829E /* CCHandPlayer.m in Sources */,
-				E0D298A91834E3CD007736FE /* MainMenuViewController.m in Sources */,
+				E0D298A91834E3CD007736FE /* MainViewController.m in Sources */,
 				E059F88917B02EC70071829E /* CCPlayer.m in Sources */,
 				E05028C318369E6A000083DF /* PlayerCollectionViewCell.m in Sources */,
 				E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */,

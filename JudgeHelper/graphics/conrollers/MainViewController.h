@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Engin.h"
 
-@interface MainMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface MainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     
     Engin *engin;
     

@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "PlayerCreationView.h"
-#import "MainMenuViewController.h"
+#import "MainViewController.h"
 #import "AppDelegate.h"
 
 @implementation PlayerCreationView
@@ -129,7 +129,7 @@ static size_t const kDashedCount            = (2.0f);
     }];
     
     UINavigationController *navigationController = ((AppController*)[[UIApplication sharedApplication] delegate]).navigationController;
-    MainMenuViewController *rootViewController = (MainMenuViewController*)[navigationController.viewControllers objectAtIndex:0];
+    MainViewController *rootViewController = (MainViewController*)[navigationController.viewControllers objectAtIndex:0];
     [rootViewController didFinishedCreatingPlayerWithId:pid];
 }
 

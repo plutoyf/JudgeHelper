@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
-#import "MainMenuViewController.h"
+#import "MainViewController.h"
 #import "GameLayer.h"
 #import "AppDelegate.h"
 #import "GlobalSettings.h"
@@ -17,11 +17,11 @@
 #import "CCEngin.h"
 #import "Role.h"
 
-@interface MainMenuViewController ()
+@interface MainViewController ()
 
 @end
 
-@implementation MainMenuViewController
+@implementation MainViewController
 
 // Add new method
 - (void) viewWillAppear:(BOOL)animated
