@@ -55,6 +55,14 @@
          contextName = "-[Engin recordNightStatus:]:Engin.m">
       </ContextState>
       <ContextState
+         contextName = "-[CCDirector setView:]:CCDirector.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_winSizeInPixels">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[GameStateSprite hasAddedActionReceiverForRole:atNight:]:GameStateSprite.m">
          <PersistentStrings>
             <PersistentString
@@ -94,6 +102,14 @@
       </ContextState>
       <ContextState
          contextName = "-[Engin isEligibleActionAtNight:withActors:andReceiver:]:Engin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[AppController application:didFinishLaunchingWithOptions:]:AppDelegate.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[glView bounds]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[Player rollbackStatus]:Player.m">
@@ -160,10 +176,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

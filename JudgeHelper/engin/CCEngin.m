@@ -79,7 +79,7 @@ static CCEngin *engin = nil;
 +(NSArray*) getClearenceRulesArray {
     NSMutableArray* rulesArray = [NSMutableArray new];
     [rulesArray addObject: @"Rule ( Guard-dead      ) :  Guard            -[ distance(Guard, Receiver) < 1 ; life(Guard) <= 0 ]>  life(Receiver) = 0 "];
-    [rulesArray addObject: @"Rule ( Guard-maxi      ) :  Guard            -[ distance(Guard, Receiver) < 1 ; distance(Guard, Receiver, -1) < 1 ; ]>  defaultDistance(Guard, Anybody) = 2 "];
+    [rulesArray addObject: @"Rule ( Guard-maxi      ) :  Guard            -[ distance(Guard, Receiver) < 1 ; distance(Guard, Receiver, -1) < 1 ; ]>  defaultDistance(Guard, Receiver) = 2 "];
     return rulesArray;
 }
 

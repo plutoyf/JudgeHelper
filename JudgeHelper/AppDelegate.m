@@ -52,7 +52,6 @@
 // This is not needed on iOS6 and could be added to the application:didFinish...
 -(void) directorDidReshapeProjection:(CCDirector*)director
 {
-    NSLog(@"directorDidReshapeProjection");
     if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
@@ -71,7 +70,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
+    CGRect rect = [window_ bounds];
+    if(rect.size.width  < rect.size.height) {
+        rect.size = CGSizeMake(rect.size.height, rect.size.width);
+    }
+    CCGLView *glView = [CCGLView viewWithFrame:rect
                                    pixelFormat:kEAGLColorFormatRGB565
                                    depthFormat:0
                             preserveBackbuffer:NO
@@ -79,7 +82,7 @@
                                  multiSampling:NO
                                numberOfSamples:0];
     
-	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
+    director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director_.wantsFullScreenLayout = YES;
     

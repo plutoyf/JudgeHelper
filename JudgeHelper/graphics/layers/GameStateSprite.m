@@ -12,7 +12,6 @@
 #import "SelectPlayerLayer.h"
 #import "iAdSingleton.h"
 #import "AppDelegate.h"
-#import "CCDirector (Landscape).h"
 
 @implementation GameStateSprite
 
