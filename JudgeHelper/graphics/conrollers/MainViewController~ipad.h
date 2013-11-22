@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
 
-@interface MainViewControllerIPad : MainViewController
+@interface MainViewController (ipad)
 
 @end

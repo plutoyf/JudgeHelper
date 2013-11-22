@@ -45,6 +45,13 @@
     GlobalSettings *globals = [GlobalSettings globalSettings];
     self.doubleHandModeSwitch.on = [globals getGameMode] == DOUBLE_HAND;
     
+    [self initLayoutConstraints];
+    
+    [self.playerCollectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"playerCollectionViewCell"];
+    [self.roleCollectionView registerNib:[UINib nibWithNibName:@"RoleCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"roleCollectionViewCell"];
+}
+
+- (void) initLayoutConstraints {
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.4f constant:0.f]];
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.6f constant:0.f]];
@@ -54,9 +61,6 @@
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftPlayerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f]];
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightPlayerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f]];
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightRoleView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f]];
-    
-    [self.playerCollectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"playerCollectionViewCell"];
-    [self.roleCollectionView registerNib:[UINib nibWithNibName:@"RoleCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"roleCollectionViewCell"];
 }
 
 - (void)didReceiveMemoryWarning

@@ -57,38 +57,12 @@
                     <rect key="frame" x="0.0" y="40" width="1024" height="698"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3o-v6-N81" userLabel="LeftRoleView">
-                            <rect key="frame" x="-210" y="0.0" width="210" height="698"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1D-zc-oAV" userLabel="RoleImageView">
-                                    <rect key="frame" x="20" y="20" width="88" height="27"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                                <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dto-cx-RQi" userLabel="RoleNumberPicker">
-                                    <rect key="frame" x="10" y="78" width="195" height="216"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <connections>
-                                        <outlet property="dataSource" destination="-1" id="Dc3-9u-vi9"/>
-                                        <outlet property="delegate" destination="-1" id="xk5-lV-n1A"/>
-                                    </connections>
-                                </pickerView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="G1D-zc-oAV" firstAttribute="top" secondItem="W3o-v6-N81" secondAttribute="top" constant="20" id="3vg-sq-cl1"/>
-                                <constraint firstItem="dto-cx-RQi" firstAttribute="leading" secondItem="W3o-v6-N81" secondAttribute="leading" constant="10" id="aVg-fS-hE2"/>
-                                <constraint firstItem="G1D-zc-oAV" firstAttribute="leading" secondItem="W3o-v6-N81" secondAttribute="leading" constant="20" id="bfQ-1b-iVj"/>
-                                <constraint firstAttribute="width" constant="210" placeholder="YES" id="eEB-17-KXv"/>
-                                <constraint firstAttribute="trailing" secondItem="dto-cx-RQi" secondAttribute="trailing" constant="5" id="rcz-gp-5CH"/>
-                                <constraint firstAttribute="bottom" secondItem="dto-cx-RQi" secondAttribute="bottom" constant="10" id="smH-Zg-cja"/>
-                            </constraints>
-                        </view>
                         <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWC-oj-NDq" userLabel="LeftPlayerView">
-                            <rect key="frame" x="0.0" y="0.0" width="210" height="698"/>
+                            <rect key="frame" x="0.0" y="0.0" width="210" height="349"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="dqN-t3-iHO" userLabel="SelectedPlayerCollectionView">
-                                    <rect key="frame" x="10" y="10" width="195" height="678"/>
+                                    <rect key="frame" x="10" y="10" width="195" height="329"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="QzO-sZ-ld9">
@@ -110,14 +84,15 @@
                                 <constraint firstItem="dqN-t3-iHO" firstAttribute="leading" secondItem="aWC-oj-NDq" secondAttribute="leading" constant="10" id="H2s-dx-I9X"/>
                                 <constraint firstAttribute="bottom" secondItem="dqN-t3-iHO" secondAttribute="bottom" constant="10" id="LlE-XT-FWv"/>
                                 <constraint firstAttribute="width" constant="210" placeholder="YES" id="dg8-au-TRc"/>
+                                <constraint firstAttribute="height" constant="349" placeholder="YES" id="oZq-EJ-b2l"/>
                             </constraints>
                         </view>
                         <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cZ-dW-nnB" userLabel="RightPlayerView">
-                            <rect key="frame" x="754" y="0.0" width="270" height="698"/>
+                            <rect key="frame" x="0.0" y="349" width="210" height="349"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ksK-IV-uo7" userLabel="PlayerTableView">
-                                    <rect key="frame" x="5" y="10" width="255" height="678"/>
+                                    <rect key="frame" x="5" y="10" width="195" height="329"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <connections>
@@ -128,19 +103,47 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="width" constant="210" placeholder="YES" id="00R-9a-cyJ"/>
                                 <constraint firstAttribute="trailing" secondItem="ksK-IV-uo7" secondAttribute="trailing" constant="10" id="D7g-vF-sdA"/>
                                 <constraint firstItem="ksK-IV-uo7" firstAttribute="leading" secondItem="7cZ-dW-nnB" secondAttribute="leading" constant="5" id="DuX-kn-yfw"/>
                                 <constraint firstItem="ksK-IV-uo7" firstAttribute="top" secondItem="7cZ-dW-nnB" secondAttribute="top" constant="10" id="KXf-PR-eWs"/>
-                                <constraint firstAttribute="width" constant="270" placeholder="YES" id="P89-f8-Ifu"/>
+                                <constraint firstAttribute="height" constant="349" id="ODz-w8-hBn"/>
                                 <constraint firstAttribute="bottom" secondItem="ksK-IV-uo7" secondAttribute="bottom" constant="10" id="whe-lY-RcL"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3o-v6-N81" userLabel="LeftRoleView">
+                            <rect key="frame" x="814" y="0.0" width="210" height="349"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1D-zc-oAV" userLabel="RoleImageView">
+                                    <rect key="frame" x="20" y="20" width="94" height="95"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dto-cx-RQi" userLabel="RoleNumberPicker">
+                                    <rect key="frame" x="10" y="123" width="195" height="216"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="Dc3-9u-vi9"/>
+                                        <outlet property="delegate" destination="-1" id="xk5-lV-n1A"/>
+                                    </connections>
+                                </pickerView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="G1D-zc-oAV" firstAttribute="top" secondItem="W3o-v6-N81" secondAttribute="top" constant="20" id="3vg-sq-cl1"/>
+                                <constraint firstAttribute="height" constant="349" id="9ti-Da-YRl"/>
+                                <constraint firstItem="dto-cx-RQi" firstAttribute="leading" secondItem="W3o-v6-N81" secondAttribute="leading" constant="10" id="aVg-fS-hE2"/>
+                                <constraint firstItem="G1D-zc-oAV" firstAttribute="leading" secondItem="W3o-v6-N81" secondAttribute="leading" constant="20" id="bfQ-1b-iVj"/>
+                                <constraint firstAttribute="width" constant="210" placeholder="YES" id="eEB-17-KXv"/>
+                                <constraint firstAttribute="trailing" secondItem="dto-cx-RQi" secondAttribute="trailing" constant="5" id="rcz-gp-5CH"/>
+                                <constraint firstAttribute="bottom" secondItem="dto-cx-RQi" secondAttribute="bottom" constant="10" id="smH-Zg-cja"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yu-mo-4Wi" userLabel="RightRoleView">
-                            <rect key="frame" x="1024" y="0.0" width="270" height="698"/>
+                            <rect key="frame" x="754" y="349" width="270" height="349"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="TEE-KT-u7D">
-                                    <rect key="frame" x="5" y="10" width="255" height="678"/>
+                                    <rect key="frame" x="5" y="10" width="255" height="329"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <inset key="scrollIndicatorInsets" minX="5" minY="5" maxX="0.0" maxY="0.0"/>
@@ -160,27 +163,24 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="TEE-KT-u7D" firstAttribute="top" secondItem="4yu-mo-4Wi" secondAttribute="top" constant="10" id="RVu-AZ-A6v"/>
-                                <constraint firstAttribute="width" constant="270" placeholder="YES" id="jnQ-cj-HJA"/>
+                                <constraint firstAttribute="width" constant="270" placeholder="YES" id="itS-bl-ZvN"/>
                                 <constraint firstAttribute="trailing" secondItem="TEE-KT-u7D" secondAttribute="trailing" constant="10" id="mMd-36-sll"/>
                                 <constraint firstAttribute="bottom" secondItem="TEE-KT-u7D" secondAttribute="bottom" constant="10" id="pc6-Xb-ZHw"/>
                                 <constraint firstItem="TEE-KT-u7D" firstAttribute="leading" secondItem="4yu-mo-4Wi" secondAttribute="leading" constant="5" id="yhV-0d-Hk4"/>
+                                <constraint firstAttribute="height" constant="349" id="ykb-Yh-ZBu"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="7cZ-dW-nnB" secondAttribute="trailing" placeholder="YES" id="HTq-aa-TGd"/>
-                        <constraint firstItem="4yu-mo-4Wi" firstAttribute="centerY" secondItem="6NV-Mb-uDz" secondAttribute="centerY" id="L5p-Ev-YTt"/>
-                        <constraint firstItem="W3o-v6-N81" firstAttribute="trailing" secondItem="6NV-Mb-uDz" secondAttribute="leading" placeholder="YES" id="VRo-Bn-ftp"/>
-                        <constraint firstItem="W3o-v6-N81" firstAttribute="height" secondItem="6NV-Mb-uDz" secondAttribute="height" id="ZhO-Fh-S3R"/>
-                        <constraint firstItem="7cZ-dW-nnB" firstAttribute="height" secondItem="6NV-Mb-uDz" secondAttribute="height" id="c6t-pT-tnc"/>
+                        <constraint firstAttribute="bottom" secondItem="4yu-mo-4Wi" secondAttribute="bottom" id="JdH-Mn-h6C"/>
+                        <constraint firstAttribute="trailing" secondItem="W3o-v6-N81" secondAttribute="trailing" id="NWw-DD-or2"/>
+                        <constraint firstAttribute="trailing" secondItem="4yu-mo-4Wi" secondAttribute="trailing" id="RUF-1p-c6O"/>
+                        <constraint firstItem="7cZ-dW-nnB" firstAttribute="leading" secondItem="6NV-Mb-uDz" secondAttribute="leading" id="U4O-g5-2sc"/>
+                        <constraint firstItem="aWC-oj-NDq" firstAttribute="top" secondItem="6NV-Mb-uDz" secondAttribute="top" id="Ua2-Ur-j3l"/>
+                        <constraint firstAttribute="bottom" secondItem="7cZ-dW-nnB" secondAttribute="bottom" id="aX2-hS-aPT"/>
                         <constraint firstItem="aWC-oj-NDq" firstAttribute="leading" secondItem="6NV-Mb-uDz" secondAttribute="leading" placeholder="YES" id="cQ8-TM-4Eu"/>
-                        <constraint firstItem="aWC-oj-NDq" firstAttribute="centerY" secondItem="6NV-Mb-uDz" secondAttribute="centerY" id="d0f-l2-DSx"/>
-                        <constraint firstItem="4yu-mo-4Wi" firstAttribute="height" secondItem="6NV-Mb-uDz" secondAttribute="height" id="dIj-Vh-NKs"/>
-                        <constraint firstItem="W3o-v6-N81" firstAttribute="centerY" secondItem="6NV-Mb-uDz" secondAttribute="centerY" id="jWT-SA-0kc"/>
-                        <constraint firstAttribute="trailing" secondItem="4yu-mo-4Wi" secondAttribute="leading" placeholder="YES" id="r6r-sN-CwT"/>
-                        <constraint firstItem="7cZ-dW-nnB" firstAttribute="centerY" secondItem="6NV-Mb-uDz" secondAttribute="centerY" id="ucA-NT-5Ud"/>
-                        <constraint firstItem="aWC-oj-NDq" firstAttribute="height" secondItem="6NV-Mb-uDz" secondAttribute="height" id="z9q-y8-gna"/>
+                        <constraint firstItem="W3o-v6-N81" firstAttribute="top" secondItem="6NV-Mb-uDz" secondAttribute="top" id="ijW-8Q-v1U"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u2f-w8-LqV" userLabel="TopBarView">

@@ -43,6 +43,8 @@
 @property (weak, nonatomic) IBOutlet UIView *leftRoleView;
 @property (weak, nonatomic) IBOutlet UIView *rightRoleView;
 
+- (void) initLayoutConstraints;
+
 - (void) didFinishedCreatingPlayerWithId:(NSString *)pid;
 - (IBAction)nextButtonTapped:(id)sender;
 - (IBAction)createPlayerButtonTapped:(id)sender;
