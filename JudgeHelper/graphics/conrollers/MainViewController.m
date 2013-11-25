@@ -16,6 +16,7 @@
 #import "PlayerCreationView.h"
 #import "CCEngin.h"
 #import "Role.h"
+#import "GameViewController.h"
 
 @interface MainViewController ()
 
@@ -79,6 +80,9 @@
     GlobalSettings* global = [GlobalSettings globalSettings];
     [global setPlayerIds: selectedPIds];
 
+    [self.navigationController pushViewController:[GameViewController new] animated:YES];
+    return;
+    
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
         case 0:
