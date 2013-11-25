@@ -101,6 +101,13 @@
             [self matchPlayerNumber];
             [self animateViewWithLeftPart:YES andRightPart:NO];
             break;
+        case 3:
+            if (selectedPIds.count < 3) {
+                self.statusLabel.text = @"请至少选择3名玩家";
+                break;
+            } else {
+                [self matchPlayerNumber];
+            }
         case 2:
             if ([self isRedyToStart]) {
                 CCDirector *director = [CCDirector sharedDirector];
@@ -118,8 +125,8 @@
                 }
                 
                 [self.navigationController pushViewController:director animated:YES];
-
             }
+            break;
         default:
             break;
     }

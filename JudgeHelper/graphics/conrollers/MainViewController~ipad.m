@@ -25,7 +25,12 @@
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:0.5f constant:0.f]];
     [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightRoleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeHeight multiplier:0.5f constant:0.f]];
     
-    self.view.tag = 2;
+    NSLayoutConstraint *contraint = [self findConstraintWithItem:self.doubleHandModeLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeLeading from:self.topBarView.constraints];
+    contraint.constant += self.createPlayerButton.frame.size.width + 20;
+    self.doubleHandModeLabel.alpha = 1.f;
+    self.doubleHandModeSwitch.alpha = 1.f;
+    
+    self.view.tag = 3;
     [self.nextButton setTitle:@"开始" forState:UIControlStateNormal];
 }
 @end

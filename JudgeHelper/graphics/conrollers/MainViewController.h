@@ -44,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIView *rightRoleView;
 
 - (void) initLayoutConstraints;
+- (NSLayoutConstraint*)findConstraintWithItem:(id)view1 attribute:(NSLayoutAttribute)attr1 relatedBy:(NSLayoutRelation) relation toItem:(id)view2 attribute:(NSLayoutAttribute)attr2 from:(NSArray*)contraints;
 
 - (void) didFinishedCreatingPlayerWithId:(NSString *)pid;
 - (IBAction)nextButtonTapped:(id)sender;
