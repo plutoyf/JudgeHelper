@@ -16,6 +16,8 @@
 		E0163AB61843E66000A4FEA6 /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163AB51843E66000A4FEA6 /* PlayerView.m */; };
 		E0163AB81843E67600A4FEA6 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0163AB71843E67600A4FEA6 /* PlayerView.xib */; };
 		E0163ABC1843EB8800A4FEA6 /* UIPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163ABB1843EB8800A4FEA6 /* UIPlayer.m */; };
+		E0163ABF18452EC300A4FEA6 /* UIHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163ABE18452EC300A4FEA6 /* UIHandPlayer.m */; };
+		E0163AC218452F5D00A4FEA6 /* UIDoubleHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163AC118452F5D00A4FEA6 /* UIDoubleHandPlayer.m */; };
 		E01E17A0180590B3007CD3A4 /* Icon-20-assassin.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */; };
 		E01E17A1180590B3007CD3A4 /* Icon-20-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */; };
 		E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */; };
@@ -312,6 +314,10 @@
 		E0163AB71843E67600A4FEA6 /* PlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
 		E0163ABA1843EB8800A4FEA6 /* UIPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlayer.h; sourceTree = "<group>"; };
 		E0163ABB1843EB8800A4FEA6 /* UIPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlayer.m; sourceTree = "<group>"; };
+		E0163ABD18452EC300A4FEA6 /* UIHandPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHandPlayer.h; sourceTree = "<group>"; };
+		E0163ABE18452EC300A4FEA6 /* UIHandPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHandPlayer.m; sourceTree = "<group>"; };
+		E0163AC018452F5C00A4FEA6 /* UIDoubleHandPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDoubleHandPlayer.h; sourceTree = "<group>"; };
+		E0163AC118452F5D00A4FEA6 /* UIDoubleHandPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDoubleHandPlayer.m; sourceTree = "<group>"; };
 		E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-assassin.png"; path = "Resources/Icon-20-assassin.png"; sourceTree = "<group>"; };
 		E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-undercover.png"; path = "Resources/Icon-20-undercover.png"; sourceTree = "<group>"; };
 		E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin-dead.png"; path = "Resources/Icon-72-assassin-dead.png"; sourceTree = "<group>"; };
@@ -1465,6 +1471,10 @@
 				E059F87E17B02EC70071829E /* CCPlayer.m */,
 				E0163ABA1843EB8800A4FEA6 /* UIPlayer.h */,
 				E0163ABB1843EB8800A4FEA6 /* UIPlayer.m */,
+				E0163ABD18452EC300A4FEA6 /* UIHandPlayer.h */,
+				E0163ABE18452EC300A4FEA6 /* UIHandPlayer.m */,
+				E0163AC018452F5C00A4FEA6 /* UIDoubleHandPlayer.h */,
+				E0163AC118452F5D00A4FEA6 /* UIDoubleHandPlayer.m */,
 			);
 			path = players;
 			sourceTree = "<group>";
@@ -1711,6 +1721,7 @@
 				E059F83D17B02EA00071829E /* CCNode+SFGestureRecognizers.m in Sources */,
 				E059F84317B02EB20071829E /* GlobalSettings.m in Sources */,
 				E059F85B17B02EBD0071829E /* CCEngin.m in Sources */,
+				E0163ABF18452EC300A4FEA6 /* UIHandPlayer.m in Sources */,
 				E059F85C17B02EBD0071829E /* Condition.m in Sources */,
 				E059F85D17B02EBD0071829E /* ConsoleEngin.m in Sources */,
 				E0D298AD18350F44007736FE /* PlayerTableViewCell.m in Sources */,
@@ -1726,6 +1737,7 @@
 				E059F87F17B02EC70071829E /* BorderSprite.m in Sources */,
 				E059F88017B02EC70071829E /* ClippingSprite.m in Sources */,
 				E059F88117B02EC70071829E /* MySprite.m in Sources */,
+				E0163AC218452F5D00A4FEA6 /* UIDoubleHandPlayer.m in Sources */,
 				E0F38F48183F523400529670 /* MainViewController~ipad.m in Sources */,
 				E059F88217B02EC70071829E /* CreatePlayerLayer.m in Sources */,
 				E0163AB61843E66000A4FEA6 /* PlayerView.m in Sources */,

@@ -40,6 +40,10 @@
     selectedPIds = [NSMutableArray new];
     [self initPlayerIds];
     
+    for(int i = 0; i<6; i++) {
+        [selectedPIds addObject:[pids objectAtIndex:i]];
+    }
+    
     [self initRoles];
     [self selectRole:Judge];
     
@@ -80,8 +84,7 @@
     GlobalSettings* global = [GlobalSettings globalSettings];
     [global setPlayerIds: selectedPIds];
 
-    [self.navigationController pushViewController:[GameViewController new] animated:YES];
-    return;
+    //[self.navigationController pushViewController:[GameViewController new] animated:YES];return;
     
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
@@ -128,7 +131,8 @@
                     director.view.transform = CGAffineTransformIdentity;
                 }
                 
-                [self.navigationController pushViewController:director animated:YES];
+                //[self.navigationController pushViewController:director animated:YES];
+                [self.navigationController pushViewController:[GameViewController new] animated:YES];
             }
             break;
         default:

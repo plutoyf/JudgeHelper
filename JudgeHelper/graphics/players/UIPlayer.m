@@ -10,4 +10,8 @@
 
 @implementation UIPlayer
 
+-(void) selectPlayer {
+    [self.delegate selectPlayerById: self.id];
+}
+
 @end

@@ -2,11 +2,13 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameViewController">
             <connections>
+                <outlet property="messageLabel" destination="6Ea-u2-ds5" id="DqJ-nh-cQQ"/>
+                <outlet property="nightLabel" destination="cP5-jT-77a" id="FIZ-71-EGA"/>
                 <outlet property="tableView" destination="uAw-ug-khW" id="DKV-N8-dcc"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -19,10 +21,31 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAw-ug-khW" userLabel="TableView">
                     <rect key="frame" x="50" y="50" width="468" height="220"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ea-u2-ds5" userLabel="MessageLabel">
+                            <rect key="frame" x="50" y="50" width="368" height="120"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="6Ea-u2-ds5" firstAttribute="top" secondItem="uAw-ug-khW" secondAttribute="top" constant="50" id="3PK-ct-zEN"/>
+                        <constraint firstItem="6Ea-u2-ds5" firstAttribute="leading" secondItem="uAw-ug-khW" secondAttribute="leading" constant="50" id="KWz-4b-0Yf"/>
+                        <constraint firstAttribute="trailing" secondItem="6Ea-u2-ds5" secondAttribute="trailing" constant="50" id="gUO-sv-csH"/>
+                        <constraint firstAttribute="bottom" secondItem="6Ea-u2-ds5" secondAttribute="bottom" constant="50" id="kdE-sH-GU0"/>
+                    </constraints>
                 </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cP5-jT-77a" userLabel="NightLabel">
+                    <rect key="frame" x="14" y="8" width="150" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="uAw-ug-khW" secondAttribute="bottom" constant="50" id="GSk-Y5-Qjt"/>
                 <constraint firstItem="uAw-ug-khW" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50" id="Ot5-8b-xse"/>
@@ -32,6 +55,14 @@
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="dTY-Mx-Xyd" appends="YES" id="YLC-qO-xFO"/>
+            </connections>
         </view>
+        <tapGestureRecognizer id="dTY-Mx-Xyd">
+            <connections>
+                <action selector="emptyClick:" destination="-1" id="Nss-ps-O3h"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

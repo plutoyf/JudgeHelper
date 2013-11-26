@@ -47,5 +47,6 @@
 }
 
 - (IBAction)selectPlayer:(id)sender {
+    [self.delegate selectPlayer];
 }
 @end

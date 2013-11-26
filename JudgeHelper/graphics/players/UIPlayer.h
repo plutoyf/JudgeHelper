@@ -10,8 +10,20 @@
 #import "Player.h"
 #import "PlayerView.h"
 
-@interface UIPlayer : Player
+@protocol UIPlayerControleDelegate;
+
+@interface UIPlayer : Player<PlayerViewDelegate>
 
 @property (nonatomic, strong) PlayerView* view;
+@property (nonatomic, assign) id<UIPlayerControleDelegate> delegate;
 
+@end
+
+@protocol UIPlayerControleDelegate
+@required
+-(void) selectPlayerById: (NSString*) id;
+-(void) selectAllPlayersToMove;
+-(void) playerPositionChanged : (UIPlayer*) player;
+-(void) superLongPressPlayer : (UIPlayer*) player;
+-(void) movePlayer: (UIPlayer*) player toPosition: (CGPoint) point;
 @end
