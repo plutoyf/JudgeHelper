@@ -176,10 +176,10 @@
          contextName = "-[SelectPlayerLayer rightButtonTapped:]:SelectPlayerLayer.m">
          <PersistentStrings>
             <PersistentString
-               value = "((CCSprite*)[personIcons lastObject]).position.x">
+               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
             </PersistentString>
             <PersistentString
-               value = "IMG_WIDTH/2+(IMG_WIDTH+20)*9">
+               value = "((CCSprite*)[personIcons lastObject]).position.x">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -222,6 +222,14 @@
       </ContextState>
       <ContextState
          contextName = "-[Player getDistanceAtNight:with:]:Player.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[UIPlayer addActionIcon:withResult:]:UIPlayer.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "icon.alpha">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[MainMenuViewController viewDidDisappear:]:MainMenuViewController.m">

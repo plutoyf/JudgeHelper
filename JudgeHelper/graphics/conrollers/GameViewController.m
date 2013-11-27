@@ -65,11 +65,18 @@ NSMutableArray *players;
         [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
         [pv layoutIfNeeded];
         
+        // test
+        CGRect rect = pv.frame;
+        rect.origin.x += 100*n;
+        pv.frame = rect;
+        
         p.view = pv;
         p.view.name.text = name;
         p.view.imageView.image = image;
         [players addObject:p];
         [playersMap setObject:p forKey:id];
+        
+        n++;
     }
     [engin setPlayers: players];
     
@@ -149,6 +156,8 @@ NSMutableArray *players;
     
 }
 -(void) addActionIcon: (Role) role to: (Player*) player withResult: (BOOL) result {
+    UIPlayer* p = [playersMap objectForKey:player.id];
+    [p addActionIcon: role withResult: result];
     
 }
 -(void) removeActionIconFrom: (Player*) player {

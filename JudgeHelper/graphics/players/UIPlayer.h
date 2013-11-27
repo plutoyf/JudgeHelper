@@ -12,10 +12,16 @@
 
 @protocol UIPlayerControleDelegate;
 
-@interface UIPlayer : Player<PlayerViewDelegate>
+@interface UIPlayer : Player<PlayerViewDelegate> {
+    Role _initialRole;
+    NSMutableArray* _actionIcons;
+    NSMutableArray* _actionIconsBackup;
+}
 
 @property (nonatomic, strong) PlayerView* view;
 @property (nonatomic, assign) id<UIPlayerControleDelegate> delegate;
+
+-(void) addActionIcon: (Role) roler withResult: (BOOL) result;
 
 @end
 
