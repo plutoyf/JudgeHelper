@@ -37,9 +37,10 @@ NSMutableArray *players;
     engin.displayDelegate = self;
     
     // init players without role
-    GlobalSettings* global = [GlobalSettings globalSettings];
     playersMap = [[NSMutableDictionary alloc] init];
     players = [[NSMutableArray alloc] init];
+    
+    GlobalSettings* global = [GlobalSettings globalSettings];
     NSArray* ids = [global getPlayerIds];
 
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
@@ -63,12 +64,11 @@ NSMutableArray *players;
         [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
         [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
         [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
-        [pv layoutIfNeeded];
         
-        // test
-        CGRect rect = pv.frame;
-        rect.origin.x += 100*n;
-        pv.frame = rect;
+        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterX multiplier:0.f constant:0.f]];
+        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterY multiplier:0.f constant:0.f]];
+        
+        [pv layoutIfNeeded];
         
         p.view = pv;
         p.view.name.text = name;
@@ -81,6 +81,39 @@ NSMutableArray *players;
     [engin setPlayers: players];
     
     [engin run];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    int n = 0;
+    for(UIPlayer *p in players) {
+        float bWidth = self.tableView.bounds.size.width;
+        float bHeight = self.tableView.bounds.size.height;
+        /*
+        [self findConstraintWithItem:p.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterX from:self.tableView.constraints];
+        [self findConstraintWithItem:p.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterY from:self.tableView.constraints];
+        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:0+100*n :bWidth] constant:0]];
+        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:0+20 :bHeight] constant:0]];
+        */
+        [p.view layoutIfNeeded];
+        
+        n++;
+    }
+}
+
+- (NSLayoutConstraint*)findConstraintWithItem:(id)view1 attribute:(NSLayoutAttribute)attr1 relatedBy:(NSLayoutRelation)relation toItem:(id)view2 attribute:(NSLayoutAttribute)attr2 from:(NSArray*)contraints {
+    for(NSLayoutConstraint *c in contraints) {
+        if(c.firstItem == view1 && c.firstAttribute == attr1 && c.relation == relation && c.secondItem == view2 && c.secondAttribute == attr2) {
+            return c;
+        }
+    }
+    return nil;
+}
+
+- (float)getMultiplier:(float)d :(float)b {
+    return 2*d/b;
 }
 
 - (void)didReceiveMemoryWarning
