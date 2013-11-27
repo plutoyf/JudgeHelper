@@ -47,6 +47,9 @@ NSMutableArray *players;
     id obj = [userDefaults objectForKey:@"pids"];
     ids = obj==nil ? [NSMutableArray new] : [NSMutableArray arrayWithArray:obj];
 
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:.8f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:.8f constant:0.f]];
+    
     int n = 0;
     for(NSString* id in ids) {
         NSString* name = [[NSUserDefaults standardUserDefaults] objectForKey:[id stringByAppendingString:@"-name"]];
@@ -58,15 +61,12 @@ NSMutableArray *players;
         PlayerView *pv = [[[NSBundle mainBundle] loadNibNamed:@"PlayerView" owner:self options:nil] objectAtIndex:0];
         pv.delegate = p;
         pv.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.tableView addSubview: pv];
+        [self.playerView addSubview: pv];
         
         [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
         [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
         [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
         [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
-        
-        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterX multiplier:0.f constant:0.f]];
-        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterY multiplier:0.f constant:0.f]];
         
         [pv layoutIfNeeded];
         
@@ -83,21 +83,25 @@ NSMutableArray *players;
     [engin run];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewDidLayoutSubviews];
 
+    UIPlayer *player = [players firstObject];
+    float bWidth = self.playerView.bounds.size.width;
+    float bHeight = self.playerView.bounds.size.height;
+    tableZone = [[TableZone alloc] init:self.tableView.frame.size.width :self.tableView.frame.size.height :bWidth :bHeight :player.view.bounds.size.width :player.view.bounds.size.height];
+    
     int n = 0;
-    for(UIPlayer *p in players) {
-        float bWidth = self.tableView.bounds.size.width;
-        float bHeight = self.tableView.bounds.size.height;
-        /*
-        [self findConstraintWithItem:p.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterX from:self.tableView.constraints];
-        [self findConstraintWithItem:p.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterY from:self.tableView.constraints];
-        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:0+100*n :bWidth] constant:0]];
-        [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:0+20 :bHeight] constant:0]];
-        */
-        [p.view layoutIfNeeded];
+    for(UIPlayer *player in players) {
+        if([self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX from:self.playerView.constraints] == nil) {
+            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:(player.view.frame.size.width*1.5)*n+player.view.frame.size.width/2 :bWidth] constant:0]];
+        }
+        if([self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY from:self.playerView.constraints] == nil) {
+            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:player.view.frame.size.height/2 :bHeight]  constant:0.f]];
+        }
+        
+        [player.view layoutIfNeeded];
         
         n++;
     }
@@ -273,9 +277,45 @@ NSMutableArray *players;
 -(void) selectAllPlayersToMove {
     
 }
+
 -(void) playerPositionChanged : (UIPlayer*) player {
+    CGPoint point = player.view.frame.origin;
+    point.x += player.view.frame.size.width/2;
+    point.y += player.view.frame.size.height/2;
+    if([tableZone isInside:point]) {
+        point = [tableZone getBestPosition:point];
+        point.x -= player.view.frame.size.width/2;
+        point.y -= player.view.frame.size.height/2;
+        
+        if(point.x != player.view.frame.origin.x || point.y != player.view.frame.origin.y) {
+            [UIView animateWithDuration:0.25 animations:^{
+                CGRect rect = player.view.frame;
+                rect.origin.x = point.x;
+                rect.origin.y = point.y;
+                player.view.frame = rect;
+            }];
+        }
+        //player.settled = YES;
+    } else {
+        //player.settled = NO;
+    }
+    //player.readyToMove = NO;
+    //player.position = [tableZone getPlayerPosition:point];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%f,%f", point.x, point.y] forKey:[player.id stringByAppendingString:@"-pos"]];
+
     
+    float bWidth = self.playerView.bounds.size.width;
+    float bHeight = self.playerView.bounds.size.height;
+    
+    [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX from:self.playerView.constraints]];
+    [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY from:self.playerView.constraints]];
+    
+    [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:player.view.frame.origin.x+player.view.frame.size.width/2 :bWidth] constant:0.f]];
+    [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:player.view.frame.origin.y+player.view.frame.size.height/2 :bHeight]  constant:0.f]];
+    
+    [player.view layoutIfNeeded];
 }
+
 -(void) superLongPressPlayer : (UIPlayer*) player {
     
 }

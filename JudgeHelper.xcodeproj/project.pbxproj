@@ -18,6 +18,7 @@
 		E0163ABC1843EB8800A4FEA6 /* UIPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163ABB1843EB8800A4FEA6 /* UIPlayer.m */; };
 		E0163ABF18452EC300A4FEA6 /* UIHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163ABE18452EC300A4FEA6 /* UIHandPlayer.m */; };
 		E0163AC218452F5D00A4FEA6 /* UIDoubleHandPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163AC118452F5D00A4FEA6 /* UIDoubleHandPlayer.m */; };
+		E0163AC51846A04700A4FEA6 /* TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163AC41846A04700A4FEA6 /* TableView.m */; };
 		E01E17A0180590B3007CD3A4 /* Icon-20-assassin.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */; };
 		E01E17A1180590B3007CD3A4 /* Icon-20-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */; };
 		E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */; };
@@ -318,6 +319,8 @@
 		E0163ABE18452EC300A4FEA6 /* UIHandPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHandPlayer.m; sourceTree = "<group>"; };
 		E0163AC018452F5C00A4FEA6 /* UIDoubleHandPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDoubleHandPlayer.h; sourceTree = "<group>"; };
 		E0163AC118452F5D00A4FEA6 /* UIDoubleHandPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDoubleHandPlayer.m; sourceTree = "<group>"; };
+		E0163AC31846A04700A4FEA6 /* TableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableView.h; sourceTree = "<group>"; };
+		E0163AC41846A04700A4FEA6 /* TableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableView.m; sourceTree = "<group>"; };
 		E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-assassin.png"; path = "Resources/Icon-20-assassin.png"; sourceTree = "<group>"; };
 		E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-undercover.png"; path = "Resources/Icon-20-undercover.png"; sourceTree = "<group>"; };
 		E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin-dead.png"; path = "Resources/Icon-72-assassin-dead.png"; sourceTree = "<group>"; };
@@ -1437,6 +1440,8 @@
 				E0163AB41843E66000A4FEA6 /* PlayerView.h */,
 				E0163AB51843E66000A4FEA6 /* PlayerView.m */,
 				E0163AB71843E67600A4FEA6 /* PlayerView.xib */,
+				E0163AC31846A04700A4FEA6 /* TableView.h */,
+				E0163AC41846A04700A4FEA6 /* TableView.m */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -1731,6 +1736,7 @@
 				E059F86117B02EBD0071829E /* Operation.m in Sources */,
 				E059F86217B02EBD0071829E /* Player.m in Sources */,
 				E059F86317B02EBD0071829E /* Rule.m in Sources */,
+				E0163AC51846A04700A4FEA6 /* TableView.m in Sources */,
 				E059F86417B02EBD0071829E /* RuleResolver.m in Sources */,
 				E05A3E6B1836F830008FDE75 /* RoleCollectionViewCell.m in Sources */,
 				E015665C183A47C100447B55 /* PlayerCreationView.m in Sources */,

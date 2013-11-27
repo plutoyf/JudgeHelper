@@ -165,7 +165,8 @@ BOOL showDebugMessageEnable = NO;
         [self addChild:maskLayer z:-1];
 
         float tWidth = REVERSE_X(700), tHeight = REVERSE_Y(500)-[iAdSingleton sharedInstance].getBannerHeight/2, x = size.width/2-tWidth/2, y = size.height/2-tHeight/2;
-        tableZone = [[TableZone alloc] init:tWidth : tHeight];
+        
+        tableZone = [[TableZone alloc] init:tWidth : tHeight : size.width : size.height];
         
         CGRect siteZone1 = CGRectMake(x-2, y-2, tWidth+4, tHeight+4);
         CGRect siteZone2 = CGRectMake(x, y, tWidth, tHeight);

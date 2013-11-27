@@ -26,4 +26,5 @@
 @protocol PlayerViewDelegate
 @required
 -(void) selectPlayer;
+-(void) playerPositionDidChanged;
 @end

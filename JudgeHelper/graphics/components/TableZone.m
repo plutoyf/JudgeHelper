@@ -7,18 +7,18 @@
 //
 
 #import "TableZone.h"
-#import "iAdSingleton.h"
 
 @implementation TableZone
 
--(id) init: (float) width : (float) height {
+-(id) init:(float) tWidth :(float) tHeight :(float) wWidth :(float) wHeight {
+    return [self init:tWidth :tHeight :wWidth :wHeight :200 :200];
+}
+
+-(id) init:(float) tWidth :(float) tHeight :(float) wWidth :(float) wHeight :(float) innerMargin :(float) outerMargin {
     if(self = [super init]) {
-        CGSize size = [[CCDirector sharedDirector] winSize];
-        size.height -= [iAdSingleton sharedInstance].getBannerHeight;
-        float innerMargin = 200, outerMargin = 200;
-        siteZone = CGRectMake(size.width/2-width/2, size.height/2-height/2, width, height);
-        innerZone = CGRectMake(size.width/2-width/2+innerMargin/2, size.height/2-height/2+innerMargin/2, width-innerMargin, height-innerMargin);
-        outerZone = CGRectMake(size.width/2-width/2-outerMargin/2, size.height/2-height/2-outerMargin/2, width+outerMargin, height+outerMargin);
+        siteZone = CGRectMake(wWidth/2-tWidth/2, wHeight/2-tHeight/2, tWidth, tHeight);
+        innerZone = CGRectMake(wWidth/2-tWidth/2+innerMargin/2, wHeight/2-tHeight/2+innerMargin/2, tWidth-innerMargin, tHeight-innerMargin);
+        outerZone = CGRectMake(wWidth/2-tWidth/2-outerMargin/2, wHeight/2-tHeight/2-outerMargin/2, tWidth+outerMargin, tHeight+outerMargin);
         
         w = siteZone.size.width;
         h = siteZone.size.height;

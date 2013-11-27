@@ -16,7 +16,8 @@
     float w, h, x, y, x0, x1, y0, y1;
 }
 
--(id) init: (float) width : (float) height;
+-(id) init:(float) tWidth :(float) tHeight :(float) wWidth :(float) wHeight;
+-(id) init:(float) tWidth :(float) tHeight :(float) wWidth :(float) wHeight :(float) innerMargin :(float) outerMargin;
 -(BOOL) isInside: (CGPoint) p;
 -(CGPoint) getBestPosition: (CGPoint) p;
 -(float) getDistanceFrom: (CGPoint) p0 to: (CGPoint) p1;

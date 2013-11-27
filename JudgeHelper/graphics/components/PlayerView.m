@@ -43,6 +43,7 @@
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
         [[sender view] setCenter:CGPointMake(translatedPoint.x, translatedPoint.y)];
+        [self.delegate playerPositionDidChanged];
     }
 }
 

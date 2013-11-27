@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CCEngin.h"
 #import "UIPlayer.h"
+#import "TableZone.h"
+#import "TableView.h"
 
 @interface GameViewController : UIViewController<CCEnginDisplayDelegate, UIPlayerControleDelegate> {
     
+    TableZone *tableZone;
     UIPlayer* selPlayer;
     BOOL selPlayerInMove;
     NSMutableDictionary* playersMap;
@@ -24,7 +27,8 @@
     CCEngin* engin;
 }
 
-@property (weak, nonatomic) IBOutlet UIView *tableView;
+@property (weak, nonatomic) IBOutlet TableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *playerView;
 @property (weak, nonatomic) IBOutlet UILabel *nightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 

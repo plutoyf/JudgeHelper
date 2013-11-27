@@ -23,6 +23,10 @@
     [self.delegate selectPlayerById: self.id];
 }
 
+-(void) playerPositionDidChanged {
+    [self.delegate playerPositionChanged: self];
+}
+
 -(void) setRole: (Role) role {
     if(_role != role) {
         if(_initialRole == 0) {
