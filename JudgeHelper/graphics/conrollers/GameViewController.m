@@ -10,6 +10,7 @@
 #import "GlobalSettings.h"
 #import "CCEngin.h"
 #import "UIDoubleHandPlayer.h"
+#import "AppDelegate.h"
 
 @interface GameViewController ()
 
@@ -33,6 +34,8 @@ NSMutableArray *players;
 {
     [super viewDidLoad];
     
+    layoutInited = NO;
+    
     engin = [CCEngin getEngin];
     engin.displayDelegate = self;
     
@@ -47,8 +50,8 @@ NSMutableArray *players;
     id obj = [userDefaults objectForKey:@"pids"];
     ids = obj==nil ? [NSMutableArray new] : [NSMutableArray arrayWithArray:obj];
 
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:.8f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:.8f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:.7f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:.7f constant:0.f]];
     
     int n = 0;
     for(NSString* id in ids) {
@@ -81,6 +84,49 @@ NSMutableArray *players;
     [engin setPlayers: players];
     
     [engin run];
+    
+    
+    UIButton *undoButton = [UIButton new];
+    [undoButton addTarget:self
+                      action:@selector(undoButtonTapped:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
+    [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
+    
+    undoButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:undoButton];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f]];
+
+    
+    UIButton *redoButton = [UIButton new];
+    [redoButton addTarget:self
+                      action:@selector(redoButtonTapped:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [redoButton setImage:[UIImage imageNamed:@"redo.png"] forState:UIControlStateNormal];
+    [redoButton setImage:[UIImage imageNamed:@"redo-sel.png"] forState:UIControlStateSelected];
+    
+    redoButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:redoButton];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:undoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:20.f]];
+
+    
+    UIButton *quitButton = [UIButton new];
+    [quitButton addTarget:self
+                      action:@selector(quitButtonTapped:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
+    [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
+    
+    quitButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:quitButton];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:20.f]];
+
 }
 
 - (void)viewDidLayoutSubviews
@@ -90,20 +136,33 @@ NSMutableArray *players;
     UIPlayer *player = [players firstObject];
     float bWidth = self.playerView.bounds.size.width;
     float bHeight = self.playerView.bounds.size.height;
-    tableZone = [[TableZone alloc] init:self.tableView.frame.size.width :self.tableView.frame.size.height :bWidth :bHeight :player.view.bounds.size.width :player.view.bounds.size.height];
+    float tWidth = self.tableView.frame.size.width;
+    float tHeight = self.tableView.frame.size.height;
+    float pWidth = player.view.bounds.size.width;
+    float pHeight = player.view.bounds.size.height;
+    float dx = self.tableView.frame.origin.x;
+    float dy = self.tableView.frame.origin.y;
+    tableZone = [[TableZone alloc] init:tWidth :tHeight :bWidth :bHeight :pWidth :pHeight];
     
-    int n = 0;
-    for(UIPlayer *player in players) {
-        if([self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX from:self.playerView.constraints] == nil) {
-            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:(player.view.frame.size.width*1.5)*n+player.view.frame.size.width/2 :bWidth] constant:0]];
-        }
-        if([self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY from:self.playerView.constraints] == nil) {
-            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:player.view.frame.size.height/2 :bHeight]  constant:0.f]];
-        }
+    if(!layoutInited) {
+        int n = 0, i = 0, j = 0;
+        float m = (tWidth-pWidth)/(pWidth*2);
         
-        [player.view layoutIfNeeded];
-        
-        n++;
+        for(UIPlayer *player in players) {
+            if(i >= m) {
+                i = 0;
+                j++;
+            }
+            
+            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:pWidth*2*i+pWidth :bWidth] constant:dx]];
+            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:pHeight*1.5*j+pHeight :bHeight] constant:dy]];
+            
+            [player.view layoutIfNeeded];
+            
+            n++;
+            i++;
+        }
+        layoutInited = YES;
     }
 }
 
@@ -150,10 +209,61 @@ NSMutableArray *players;
             [players addObject:dhp.rightHandPlayer];
             [newPlayers addObject:dhp.leftHandPlayer];
             [newPlayers addObject:dhp.rightHandPlayer];
+            
+            [dhp hideRoleInfo];
+            [dhp showRoleInfo];
         }
     }
     
     [engin setPlayers: newPlayers];
+}
+
+
+
+-(void) addPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver  andResult: (BOOL) result{
+    //[gameStateSprite addNewStatusWithActorRole:role andReceiver:receiver andResult:result];
+}
+
+-(void) rollbackPlayersStatus {
+    //[gameStateSprite revertStatus];
+}
+
+-(void) backupActionIcon {
+    for(UIPlayer* p in players) {
+        [p backupActionIcons];
+    }
+}
+
+-(void) restoreBackupActionIcon {
+    for(UIPlayer* p in players) {
+        [p restoreActionIcons];
+    }
+}
+-(void) addActionIcon: (Role) role to: (Player*) player withResult: (BOOL) result {
+    UIPlayer* p = [playersMap objectForKey:player.id];
+    [p addActionIcon: role withResult: result];
+    
+}
+-(void) removeActionIconFrom: (Player*) player {
+    UIPlayer* p = [playersMap objectForKey:player.id];
+    [p removeLastActionIcon];
+}
+
+-(void) updatePlayerLabels {
+}
+
+-(void) resetPlayerIcons: (NSArray*) players {
+    for(UIPlayer* player in players) {
+        UIPlayer* p = [playersMap objectForKey:player.id];
+        [p updatePlayerIcon];
+    }
+}
+
+-(void) updatePlayerIcons {
+    for(UIPlayer* player in engin.players) {
+        UIPlayer* p = [playersMap objectForKey:player.id];
+        [p updatePlayerIcon];
+    }
 }
 
 -(BOOL) isEligiblePlayer: (NSString*) id {
@@ -178,45 +288,26 @@ NSMutableArray *players;
     return NO;
 }
 
-
-
--(void) addPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result {
-    
-}
--(void) rollbackPlayersStatus {
-    
-}
--(void) backupActionIcon {
-    
-}
--(void) restoreBackupActionIcon {
-    
-}
--(void) addActionIcon: (Role) role to: (Player*) player withResult: (BOOL) result {
-    UIPlayer* p = [playersMap objectForKey:player.id];
-    [p addActionIcon: role withResult: result];
-    
-}
--(void) removeActionIconFrom: (Player*) player {
-    
-}
--(void) updatePlayerLabels {
-    
-}
--(void) resetPlayerIcons: (NSArray*) players {
-    
-}
--(void) updatePlayerIcons {
-    
-}
 -(void) updateEligiblePlayers: (NSArray*) players withBypass: (BOOL) showBypass {
-    
+    eligiblePlayers = players;
+    withBypass = showBypass;
 }
+
+
 -(void) showDebugMessage: (NSString*) message inIncrement: (BOOL) increment {
-    
+    /*
+     if(showDebugMessageEnable) {
+        if(increment) {
+            debugLabel.string = [[debugLabel.string stringByAppendingString:@"\n"] stringByAppendingString:message];
+        } else {
+            debugLabel.string = message;
+        }
+    }
+     */
 }
+
 -(void) showPlayerDebugMessage: (Player *) player inIncrement: (BOOL) increment {
-    
+    [self showDebugMessage:[player toString] inIncrement: increment];
 }
 
 -(void) showMessage: (NSString *) message {
@@ -234,7 +325,37 @@ NSMutableArray *players;
 }
 
 -(void) gameFinished {
+    UIButton *restartButton = [UIButton new];
+    [restartButton addTarget:self
+                      action:@selector(restartButtonTapped:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [restartButton setImage:[UIImage imageNamed:@"restart.png"] forState:UIControlStateNormal];
+    [restartButton setImage:[UIImage imageNamed:@"restart-sel.png"] forState:UIControlStateSelected];
     
+    restartButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:restartButton];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:restartButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:restartButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:.8f constant:0.f]];
+    
+    [self.view layoutIfNeeded];
+
+}
+
+- (IBAction)restartButtonTapped:(id)sender {
+    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)undoButtonTapped:(id)sender {
+    [engin action: @"UNDO_ACTION"];
+}
+
+- (IBAction)redoButtonTapped:(id)sender {
+    [engin action: @"REDO_ACTION"];
+}
+
+- (IBAction)quitButtonTapped:(id)sender {
+    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
 }
 
 

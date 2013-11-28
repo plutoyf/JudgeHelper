@@ -61,8 +61,30 @@
     
 }
 
+-(void) updatePlayerIcon {
+    handIcon.alpha = _status == OUT_GAME ? .3f : 1.f;
+    [_player updatePlayerIcon];
+}
+
 -(void) selectHandPlayer: (UITapGestureRecognizer*) sender {
     [self selectPlayer];
 }
+
+-(void) addActionIcon: (Role) role withResult:(BOOL)result {
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]]];
+    icon.alpha = result ? 1.f : .3f;
+    icon.translatesAutoresizingMaskIntoConstraints = NO;
+    [_actionIcons addObject:icon];
+    [self addChild:icon];
+    [_player.view layoutIfNeeded];
+}
+
+-(void) addChild: (UIView*) child {
+    [_player.view addSubview:child];
+    
+    [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_player.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:20.f*(_actionIcons.count-1)]];
+    [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:_hand==LEFTHAND?NSLayoutAttributeTrailing:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_player.view.imageView attribute:_hand==LEFTHAND?NSLayoutAttributeLeading:NSLayoutAttributeTrailing multiplier:1.f constant:0.f]];
+}
+
 
 @end

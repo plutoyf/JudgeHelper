@@ -31,10 +31,20 @@ typedef enum {
 @property (atomic) BOOL realPositionModeEnable;
 @property (atomic) POSITION position;
 
--(void) addActionIcon: (Role) roler withResult: (BOOL) result;
 
+-(void) setRole: (Role) role;
+-(void) addChild: (UIView*) child;
+-(void) removeChild: (UIView*)child;
+
+-(void) addActionIcon: (Role) roler withResult: (BOOL) result;
 -(void) showRoleInfo;
 -(void) hideRoleInfo;
+-(void) updatePlayerIcon;
+-(void) addActionIcon: (Role) roler withResult: (BOOL) result;
+-(void) removeLastActionIcon;
+-(void) backupActionIcons;
+-(void) restoreActionIcons;
+
 
 @end
 

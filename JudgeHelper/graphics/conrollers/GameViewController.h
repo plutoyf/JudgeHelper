@@ -13,7 +13,7 @@
 #import "TableView.h"
 
 @interface GameViewController : UIViewController<CCEnginDisplayDelegate, UIPlayerControleDelegate> {
-    
+    BOOL layoutInited;
     TableZone *tableZone;
     UIPlayer* selPlayer;
     BOOL selPlayerInMove;

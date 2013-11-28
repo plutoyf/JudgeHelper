@@ -63,17 +63,69 @@
     }
 }
 
+-(void) rollbackStatus {
+    [super rollbackStatus];
+    
+    if(_roleStack.count == 0 && _initialRole > 0) {
+        self.role = _initialRole;
+    }
+}
+
+-(void) updatePlayerIcon {
+    self.view.alpha = _status == OUT_GAME ? .3f : 1.f;
+}
+
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
     UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]]];
-    icon.alpha = result ? 1.f : .2f;
-    [_actionIcons addObject:icon];
-    [self.view addSubview:icon];
-    
+    icon.alpha = result ? 1.f : .3f;
     icon.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:-20.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeLeading multiplier:1.f constant:20.f*(_actionIcons.count-1)]];
+    [_actionIcons addObject:icon];
+    [self addChild:icon];
+    [self.view layoutIfNeeded];
+}
+
+-(void) removeLastActionIcon {
+    if(_actionIcons && _actionIcons.count > 0){
+        [self removeChild:[_actionIcons lastObject]];
+        [_actionIcons removeLastObject];
+    }
+}
+
+-(void) removeAllActionIcon {
+    while(_actionIcons.count > 0) {
+        [self removeChild:[_actionIcons lastObject]];
+        [_actionIcons removeLastObject];
+    }
+}
+
+-(void) backupActionIcons {
+    NSMutableArray* iconsBackup = [NSMutableArray arrayWithArray:_actionIcons];
+    [_actionIconsBackup addObject:iconsBackup];
+    
+    [self removeAllActionIcon];
+}
+
+-(void) restoreActionIcons {
+    NSMutableArray* iconsBackup = (NSMutableArray*)[_actionIconsBackup lastObject];
+    [_actionIconsBackup removeLastObject];
+    for(UIImageView* icon in iconsBackup) {
+        [_actionIcons addObject:icon];
+        [self addChild:icon];
+    }
     
     [self.view layoutIfNeeded];
 }
+
+-(void) addChild: (UIView*) child {
+    [self.view addSubview:child];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:-20.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeLeading multiplier:1.f constant:20.f*(_actionIcons.count-1)]];
+}
+
+-(void) removeChild: (UIView*)child {
+    [child removeFromSuperview];
+}
+
 
 @end
