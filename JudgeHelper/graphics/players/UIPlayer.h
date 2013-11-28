@@ -10,9 +10,16 @@
 #import "Player.h"
 #import "PlayerView.h"
 
+typedef enum {
+    BOTTEM = 0, LEFT = 2, TOP = 3, RIGHT = 4
+} POSITION;
+
 @protocol UIPlayerControleDelegate;
 
 @interface UIPlayer : Player<PlayerViewDelegate> {
+    BOOL _realPositionModeEnable;
+    POSITION _position;
+    BOOL expanded;
     Role _initialRole;
     NSMutableArray* _actionIcons;
     NSMutableArray* _actionIconsBackup;
@@ -21,7 +28,13 @@
 @property (nonatomic, strong) PlayerView* view;
 @property (nonatomic, assign) id<UIPlayerControleDelegate> delegate;
 
+@property (atomic) BOOL realPositionModeEnable;
+@property (atomic) POSITION position;
+
 -(void) addActionIcon: (Role) roler withResult: (BOOL) result;
+
+-(void) showRoleInfo;
+-(void) hideRoleInfo;
 
 @end
 

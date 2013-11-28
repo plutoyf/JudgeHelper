@@ -14,7 +14,7 @@ typedef enum {
 
 @interface UIHandPlayer : UIPlayer
 {
-    CCSprite* handIcon;
+    UIImageView* handIcon;
 }
 
 @property (atomic) Hand* hand;

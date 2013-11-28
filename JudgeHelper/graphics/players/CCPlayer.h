@@ -9,10 +9,7 @@
 #import "DeviceSettings.h"
 #import "Player.h"
 #import "MySprite.h"
-
-typedef enum {
-    BOTTEM = 0, LEFT = 2, TOP = 3, RIGHT = 4
-} POSITION;
+#import "UIPlayer.h"
 
 @protocol CCPlayerControleDelegate;
 

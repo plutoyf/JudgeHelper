@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BordlessView.h"
 
 @protocol PlayerViewDelegate;
 
-@interface PlayerView : UIView {
+@interface PlayerView : BordlessView {
     CGFloat firstX, firstY;
 }
 

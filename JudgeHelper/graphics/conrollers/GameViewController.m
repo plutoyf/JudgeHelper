@@ -56,7 +56,7 @@ NSMutableArray *players;
         NSData* imgData = [[NSUserDefaults standardUserDefaults] dataForKey:[id stringByAppendingString:@"-img"]];
         UIImage* image = [UIImage imageWithData:imgData];
         
-        UIPlayer *p = [[UIPlayer alloc] init: id andName: name withRole: Citizen];
+        UIPlayer* p = ([global getGameMode] == DOUBLE_HAND) ? [[UIDoubleHandPlayer alloc] init:id andName: name withRole: Citizen] : [[UIPlayer alloc] init:id andName: name withRole: Citizen];
         p.delegate = self;
         PlayerView *pv = [[[NSBundle mainBundle] loadNibNamed:@"PlayerView" owner:self options:nil] objectAtIndex:0];
         pv.delegate = p;

@@ -11,13 +11,17 @@
             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K6W-KH-dWc" userLabel="ImageView">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K6W-KH-dWc" userLabel="ImageView">
                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" placeholder="YES" id="6lP-1U-VRn"/>
                         <constraint firstAttribute="height" constant="80" placeholder="YES" id="LAO-sx-fPE"/>
                     </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Y99-3W-qGw" appends="YES" id="ATK-0F-k7q"/>
+                        <outletCollection property="gestureRecognizers" destination="70J-Tk-ceX" appends="YES" id="RxH-bf-b3V"/>
+                    </connections>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQR-pq-N5h" userLabel="NameLabel">
                     <rect key="frame" x="40" y="80" width="0.0" height="0.0"/>
@@ -40,18 +44,16 @@
             <connections>
                 <outlet property="imageView" destination="K6W-KH-dWc" id="6u6-rE-jlm"/>
                 <outlet property="name" destination="cQR-pq-N5h" id="SuQ-L0-zls"/>
-                <outletCollection property="gestureRecognizers" destination="Y99-3W-qGw" appends="YES" id="eUx-J8-oNB"/>
-                <outletCollection property="gestureRecognizers" destination="70J-Tk-ceX" appends="YES" id="ETS-6k-PcA"/>
             </connections>
         </view>
         <panGestureRecognizer minimumNumberOfTouches="1" id="Y99-3W-qGw">
             <connections>
-                <action selector="movePlayer:" destination="1" id="nPv-3g-iOC"/>
+                <action selector="movePlayer:" destination="1" id="Y7a-Uk-QPQ"/>
             </connections>
         </panGestureRecognizer>
         <tapGestureRecognizer id="70J-Tk-ceX">
             <connections>
-                <action selector="selectPlayer:" destination="1" id="JKk-Oz-AYQ"/>
+                <action selector="selectPlayer:" destination="1" id="UBC-8D-YBl"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

@@ -33,16 +33,16 @@
     CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self];
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
-        firstX = [[sender view] center].x;
-        firstY = [[sender view] center].y;
+        firstX = [self center].x;
+        firstY = [self center].y;
     }
     
     translatedPoint = CGPointMake(firstX+translatedPoint.x, firstY+translatedPoint.y);
     
-    [[sender view] setCenter:translatedPoint];
+    [self setCenter:translatedPoint];
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
-        [[sender view] setCenter:CGPointMake(translatedPoint.x, translatedPoint.y)];
+        [self setCenter:CGPointMake(translatedPoint.x, translatedPoint.y)];
         [self.delegate playerPositionDidChanged];
     }
 }

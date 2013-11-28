@@ -34,15 +34,32 @@
         }
         _role = role;
         
+        [self hideRoleInfo];
         [self showRoleInfo];
     }
 }
 
+
+
+-(void) setLabel: (NSString*) label {
+    self.view.name.text = label;
+}
+
 -(void) showRoleInfo {
-    if(_role == Citizen) {
-        self.view.name.text = _name;
-    } else if(_role > 0) {
-        self.view.name.text = [NSString stringWithFormat:@"%@ [%@]", _name, [CCEngin getRoleLabel: _role]];
+    if(!expanded) {
+        if(_role == Citizen) {
+            [self setLabel: _name];
+        } else if(_role > 0) {
+            [self setLabel: [NSString stringWithFormat:@"%@ [%@]", _name, [CCEngin getRoleLabel: _role]]];
+        }
+        expanded = YES;
+    }
+}
+
+-(void) hideRoleInfo {
+    if(expanded) {
+        [self setLabel: _name];
+        expanded = NO;
     }
 }
 
