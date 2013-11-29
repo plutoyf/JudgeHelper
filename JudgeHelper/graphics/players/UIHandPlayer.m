@@ -8,6 +8,7 @@
 
 #import "UIHandPlayer.h"
 #import "CCEngin.h"
+#import "DeviceSettings.h"
 
 @implementation UIHandPlayer
 
@@ -16,7 +17,10 @@
         if(_role > 0) {
             NSString* handIconFile = _hand==LEFTHAND ? @"lefthand.png" : @"righthand.png";
             
-            handIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed: handIconFile]];
+            UIImage *handImage = [UIImage imageNamed: handIconFile];
+            handIcon = [[UIImageView alloc] initWithImage: handImage];
+            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(handImage.size.width)]];
+            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(handImage.size.height)]];
             
             handIcon.userInteractionEnabled = YES;
             UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHandPlayer:)];
@@ -33,13 +37,18 @@
             [_player.view layoutIfNeeded];
             
             if(_role != Citizen) {
-                UIImageView *roleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:_role]]]];
+                UIImage *roleImage = [UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:_role]]];
+                UIImageView *roleIcon = [[UIImageView alloc] initWithImage:roleImage];
+                
+                [roleIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(roleImage.size.width)]];
+                [roleIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(roleImage.size.height)]];
+                
                 roleIcon.alpha = _status == OUT_GAME ? .2f : 1.f;
                 roleIcon.translatesAutoresizingMaskIntoConstraints = NO;
-                [_player.view addSubview: roleIcon];
+                [handIcon addSubview: roleIcon];
                 
-                [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
-                [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
+                [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
+                [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
 
             }
             
@@ -71,7 +80,12 @@
 }
 
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]]];
+    UIImage *iconImage = [UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+    UIImageView *icon = [[UIImageView alloc] initWithImage: iconImage];
+    
+    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconImage.size.width)]];
+    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconImage.size.height)]];
+    
     icon.alpha = result ? 1.f : .3f;
     icon.translatesAutoresizingMaskIntoConstraints = NO;
     [_actionIcons addObject:icon];
@@ -82,7 +96,7 @@
 -(void) addChild: (UIView*) child {
     [_player.view addSubview:child];
     
-    [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_player.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:20.f*(_actionIcons.count-1)]];
+    [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_player.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(20)*(_actionIcons.count-1)]];
     [_player.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:_hand==LEFTHAND?NSLayoutAttributeTrailing:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_player.view.imageView attribute:_hand==LEFTHAND?NSLayoutAttributeLeading:NSLayoutAttributeTrailing multiplier:1.f constant:0.f]];
 }
 

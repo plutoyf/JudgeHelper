@@ -285,8 +285,6 @@
 		E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3755B17BA390D00E14D7D /* TableZone.m */; };
 		E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8517B682FA00EF0AAB /* left2.png */; };
 		E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D5CF8617B682FA00EF0AAB /* right2.png */; };
-		E0F38F48183F523400529670 /* MainViewController~ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F38F46183F523400529670 /* MainViewController~ipad.m */; };
-		E0F38F49183F523400529670 /* MainViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0F38F47183F523400529670 /* MainViewController~ipad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -774,9 +772,6 @@
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
 		E0D5CF8617B682FA00EF0AAB /* right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = right2.png; path = Resources/right2.png; sourceTree = "<group>"; };
-		E0F38F45183F523400529670 /* MainViewController~ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController~ipad.h"; sourceTree = "<group>"; };
-		E0F38F46183F523400529670 /* MainViewController~ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainViewController~ipad.m"; sourceTree = "<group>"; };
-		E0F38F47183F523400529670 /* MainViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainViewController~ipad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1511,9 +1506,6 @@
 				E0D298A61834E3CD007736FE /* MainViewController.h */,
 				E0D298A71834E3CD007736FE /* MainViewController.m */,
 				E0D298A81834E3CD007736FE /* MainViewController.xib */,
-				E0F38F45183F523400529670 /* MainViewController~ipad.h */,
-				E0F38F46183F523400529670 /* MainViewController~ipad.m */,
-				E0F38F47183F523400529670 /* MainViewController~ipad.xib */,
 				E0163AAD1843D56800A4FEA6 /* GameViewController.h */,
 				E0163AAE1843D56800A4FEA6 /* GameViewController.m */,
 				E0163AAF1843D56800A4FEA6 /* GameViewController.xib */,
@@ -1651,7 +1643,6 @@
 				E059F82817B02E870071829E /* Icon-72-killer-dead.png in Resources */,
 				E059F82917B02E870071829E /* Icon-72-killer.png in Resources */,
 				E059F82A17B02E870071829E /* Icon-72-police-dead.png in Resources */,
-				E0F38F49183F523400529670 /* MainViewController~ipad.xib in Resources */,
 				E059F82B17B02E870071829E /* Icon-72-police.png in Resources */,
 				E059F82C17B02E870071829E /* Icon-72-spy-dead.png in Resources */,
 				E059F82D17B02E870071829E /* Icon-72-spy.png in Resources */,
@@ -1749,7 +1740,6 @@
 				E059F88017B02EC70071829E /* ClippingSprite.m in Sources */,
 				E059F88117B02EC70071829E /* MySprite.m in Sources */,
 				E0163AC218452F5D00A4FEA6 /* UIDoubleHandPlayer.m in Sources */,
-				E0F38F48183F523400529670 /* MainViewController~ipad.m in Sources */,
 				E059F88217B02EC70071829E /* CreatePlayerLayer.m in Sources */,
 				E0163AB61843E66000A4FEA6 /* PlayerView.m in Sources */,
 				E059F88317B02EC70071829E /* GameLayer.m in Sources */,

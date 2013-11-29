@@ -6,13 +6,9 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
-#import "MainViewController~ipad.h"
+#import "MainViewControllerIPad.h"
 
-@interface MainViewController (ipad)
-
-@end
-
-@implementation MainViewController (ipad)
+@implementation MainViewControllerIPad
 
 - (void) initLayoutConstraints {
     

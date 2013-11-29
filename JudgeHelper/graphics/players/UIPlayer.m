@@ -8,6 +8,7 @@
 
 #import "UIPlayer.h"
 #import "CCEngin.h"
+#import "DeviceSettings.h"
 
 @implementation UIPlayer
 
@@ -76,7 +77,12 @@
 }
 
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]]];
+    UIImage *iconImage = [UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
+    UIImageView *icon = [[UIImageView alloc] initWithImage: iconImage];
+    
+    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconImage.size.width)]];
+    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconImage.size.height)]];
+        
     icon.alpha = result ? 1.f : .3f;
     icon.translatesAutoresizingMaskIntoConstraints = NO;
     [_actionIcons addObject:icon];

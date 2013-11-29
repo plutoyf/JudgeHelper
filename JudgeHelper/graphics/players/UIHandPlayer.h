@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 YANG FAN. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "UIPlayer.h"
 
 typedef enum {

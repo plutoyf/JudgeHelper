@@ -66,10 +66,10 @@ NSMutableArray *players;
         pv.translatesAutoresizingMaskIntoConstraints = NO;
         [self.playerView addSubview: pv];
         
-        [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
-        [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
-        [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
-        [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:80.f]];
+        [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+        [pv addConstraint:[NSLayoutConstraint constraintWithItem:pv attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+        [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+        [pv.imageView addConstraint:[NSLayoutConstraint constraintWithItem:pv.imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
         
         [pv layoutIfNeeded];
         
@@ -93,6 +93,9 @@ NSMutableArray *players;
     [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
     [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
     
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    
     undoButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:undoButton];
     
@@ -107,6 +110,9 @@ NSMutableArray *players;
     [redoButton setImage:[UIImage imageNamed:@"redo.png"] forState:UIControlStateNormal];
     [redoButton setImage:[UIImage imageNamed:@"redo-sel.png"] forState:UIControlStateSelected];
     
+    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    
     redoButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:redoButton];
     
@@ -120,6 +126,9 @@ NSMutableArray *players;
             forControlEvents:UIControlEventTouchUpInside];
     [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
     [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
+    
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
     
     quitButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:quitButton];
@@ -331,6 +340,9 @@ NSMutableArray *players;
             forControlEvents:UIControlEventTouchUpInside];
     [restartButton setImage:[UIImage imageNamed:@"restart.png"] forState:UIControlStateNormal];
     [restartButton setImage:[UIImage imageNamed:@"restart-sel.png"] forState:UIControlStateSelected];
+    
+    [restartButton addConstraint:[NSLayoutConstraint constraintWithItem:restartButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [restartButton addConstraint:[NSLayoutConstraint constraintWithItem:restartButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
     
     restartButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:restartButton];
