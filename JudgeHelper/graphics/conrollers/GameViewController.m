@@ -46,10 +46,6 @@ NSMutableArray *players;
     GlobalSettings* global = [GlobalSettings globalSettings];
     NSArray* ids = [global getPlayerIds];
 
-    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    id obj = [userDefaults objectForKey:@"pids"];
-    ids = obj==nil ? [NSMutableArray new] : [NSMutableArray arrayWithArray:obj];
-
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:.7f constant:0.f]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:.7f constant:0.f]];
     
