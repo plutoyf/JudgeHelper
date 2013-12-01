@@ -11,6 +11,7 @@
 #import "UIPlayer.h"
 #import "TableZone.h"
 #import "TableView.h"
+#import "GameStateViewController.h"
 
 @interface GameViewController : UIViewController<CCEnginDisplayDelegate, UIPlayerControleDelegate> {
     BOOL layoutInited;
@@ -25,13 +26,16 @@
     BOOL withBypass;
     
     CCEngin* engin;
+    GameStateViewController *gameStateViewController;
 }
 
 @property (weak, nonatomic) IBOutlet TableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *playerView;
 @property (weak, nonatomic) IBOutlet UILabel *nightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *showStateButton;
 
 - (IBAction)emptyClick:(id)sender;
+- (IBAction)showStateButtonTapped:(id)sender;
 
 @end

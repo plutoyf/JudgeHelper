@@ -11,6 +11,7 @@
 #import "CCEngin.h"
 #import "UIDoubleHandPlayer.h"
 #import "AppDelegate.h"
+#import "GameStateViewController.h"
 
 @interface GameViewController ()
 
@@ -38,6 +39,8 @@ NSMutableArray *players;
     
     engin = [CCEngin getEngin];
     engin.displayDelegate = self;
+    
+    gameStateViewController = [[GameStateViewController alloc] init];
     
     // init players without role
     playersMap = [[NSMutableDictionary alloc] init];
@@ -84,56 +87,8 @@ NSMutableArray *players;
     [self.messageLabel setFont:[UIFont fontWithName:@"System" size:REVERSE(30)]];
     [self.nightLabel setFont:[UIFont fontWithName:@"System" size:REVERSE(30)]];
     
-    
-    UIButton *undoButton = [UIButton new];
-    [undoButton addTarget:self
-                      action:@selector(undoButtonTapped:)
-            forControlEvents:UIControlEventTouchUpInside];
-    [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
-    [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
-    
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
-    
-    undoButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:undoButton];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f]];
-
-    
-    UIButton *redoButton = [UIButton new];
-    [redoButton addTarget:self
-                      action:@selector(redoButtonTapped:)
-            forControlEvents:UIControlEventTouchUpInside];
-    [redoButton setImage:[UIImage imageNamed:@"redo.png"] forState:UIControlStateNormal];
-    [redoButton setImage:[UIImage imageNamed:@"redo-sel.png"] forState:UIControlStateSelected];
-    
-    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
-    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
-    
-    redoButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:redoButton];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:undoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:REVERSE(20)]];
-
-    
-    UIButton *quitButton = [UIButton new];
-    [quitButton addTarget:self
-                      action:@selector(quitButtonTapped:)
-            forControlEvents:UIControlEventTouchUpInside];
-    [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
-    [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
-    
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
-    
-    quitButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:quitButton];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:REVERSE(20)]];
+    [self.showStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.showStateButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
+    [self.showStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.showStateButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
 
 }
 
@@ -385,21 +340,12 @@ NSMutableArray *players;
     [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (IBAction)undoButtonTapped:(id)sender {
-    [engin action: @"UNDO_ACTION"];
-}
-
-- (IBAction)redoButtonTapped:(id)sender {
-    [engin action: @"REDO_ACTION"];
-}
-
-- (IBAction)quitButtonTapped:(id)sender {
-    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
-}
-
-
 - (IBAction)emptyClick:(id)sender {
     [self selectPlayerById: nil];
+}
+
+- (IBAction)showStateButtonTapped:(id)sender {
+    [self.navigationController pushViewController:gameStateViewController animated:YES];
 }
 
 
