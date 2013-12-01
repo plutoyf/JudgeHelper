@@ -20,12 +20,75 @@
     return self;
 }
 
--(void) selectPlayer {
-    [self.delegate selectPlayerById: self.id];
+-(void) selectPlayer: (UITapGestureRecognizer*) sender {
+    if(self.delegate) {
+        [self.delegate selectPlayerById: self.id];
+    }
 }
 
--(void) playerPositionDidChanged {
-    [self.delegate playerPositionChanged: self];
+-(void) setSettled: (BOOL) settled {
+    _settled = settled;
+    shortPressGestureRecognizer.minimumPressDuration = settled?0.15:0;
+}
+
+
+-(void) shortPressMovePlayer: (UILongPressGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:self.view.superview];
+    if(!longPressMoveBegan) {
+        if(sender.state == UIGestureRecognizerStateBegan) {
+            positionBeforeShortPressMove = location;
+            wasSetteledBeforeShortPressMove = _settled;
+            originalPoint = ccpSub(self.view.center, location);
+            [self setReadyToMove: YES];
+        } else if(sender.state == UIGestureRecognizerStateEnded) {
+            [_delegate playerPositionChanged: self];
+            shortPressMoveBegan = NO;
+        } else {
+            //NSLog(@"shortPressMove %f %f", location.x, location.y);
+            shortPressMoveBegan = YES;
+            [_delegate movePlayer: self toPosition:ccpAdd(location, originalPoint)];
+        }
+    }
+}
+
+-(void) longPressMovePlayer: (UILongPressGestureRecognizer*) sender {
+    CGPoint location = [sender locationInView:self.view.superview];
+    CGPoint locationInPlayerSpace = [sender locationInView:self.view];
+    
+    if(wasSetteledBeforeShortPressMove && !shortPressMoveBegan) {
+        if(sender.state == UIGestureRecognizerStateBegan) {
+            //sender.node.position = positionBeforeShortPressMove;
+            _settled = wasSetteledBeforeShortPressMove;
+            longPressMoveBegan = YES;
+            originalPoint = locationInPlayerSpace;
+            [_delegate selectAllPlayersToMove];
+        } else if(longPressMoveBegan) {
+            if(sender.state == UIGestureRecognizerStateEnded) {
+                [_delegate playerPositionChanged: nil];
+                longPressMoveBegan = NO;
+            } else {
+                //NSLog(@"longPressMove %f %f", location.x, location.y);
+                [_delegate movePlayer: self toPosition:location];
+                //[_delegate movePlayer: self toPosition:ccpSub(ccpAdd(location, CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2)), originalPoint)];
+            }
+        }
+    }
+}
+
+-(void) superLongPressMovePlayer: (UILongPressGestureRecognizer*) sender {
+    if(sender.state == UIGestureRecognizerStateBegan) {
+        [_delegate superLongPressPlayer:self];
+    }
+}
+
+-(void) setReadyToMove:(BOOL)readyToMove {
+    _readyToMove = readyToMove;
+    
+    if(readyToMove) {
+        self.view.imageView.alpha = .3f;
+    } else {
+        self.view.imageView.alpha = 1.f;
+    }
 }
 
 -(void) setRole: (Role) role {
@@ -40,7 +103,34 @@
     }
 }
 
-
+-(void) setView: (PlayerView *) view {
+    _view = view;
+    
+    UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
+    [self.view.imageView addGestureRecognizer:tapGestureRecognizer];
+    
+    shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressMovePlayer:)];
+    shortPressGestureRecognizer.minimumPressDuration = 0;
+    shortPressGestureRecognizer.delegate = self;
+    [self.view.imageView addGestureRecognizer:shortPressGestureRecognizer];
+    
+    longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressMovePlayer:)];
+    longPressGestureRecognizer.minimumPressDuration = 1.2;
+    longPressGestureRecognizer.allowableMovement = 20;
+    longPressGestureRecognizer.delegate = self;
+    [self.view.imageView addGestureRecognizer:longPressGestureRecognizer];
+    
+    superLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(superLongPressMovePlayer:)];
+    superLongPressGestureRecognizer.minimumPressDuration = 5;
+    superLongPressGestureRecognizer.allowableMovement = 20;
+    superLongPressGestureRecognizer.delegate = self;
+    [self.view.imageView addGestureRecognizer:superLongPressGestureRecognizer];
+    
+    
+    [tapGestureRecognizer requireGestureRecognizerToFail:shortPressGestureRecognizer];
+    [tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
+    [tapGestureRecognizer requireGestureRecognizerToFail:superLongPressGestureRecognizer];
+}
 
 -(void) setLabel: (NSString*) label {
     self.view.name.text = label;
@@ -67,7 +157,7 @@
 -(void) rollbackStatus {
     [super rollbackStatus];
     
-    if(_roleStack.count == 0 && _initialRole > 0) {
+    if((self.role == 0 || self.role == Citizen) && _initialRole > 0) {
         self.role = _initialRole;
     }
 }
@@ -125,13 +215,18 @@
 -(void) addChild: (UIView*) child {
     [self.view addSubview:child];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:-20.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeLeading multiplier:1.f constant:20.f*(_actionIcons.count-1)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(-20)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:child attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.imageView attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(20)*(_actionIcons.count-1)]];
 }
 
 -(void) removeChild: (UIView*)child {
     [child removeFromSuperview];
 }
 
+
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
 
 @end

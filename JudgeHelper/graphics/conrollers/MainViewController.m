@@ -108,8 +108,6 @@
     GlobalSettings* global = [GlobalSettings globalSettings];
     [global setPlayerIds: selectedPIds];
 
-    //[self.navigationController pushViewController:[GameViewController new] animated:YES];return;
-    
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
         case 0:
@@ -155,6 +153,7 @@
                     director.view.transform = CGAffineTransformIdentity;
                 }
                 
+                [engin initRoles: roleNumbers];
                 //[self.navigationController pushViewController:director animated:YES];
                 [self.navigationController pushViewController:[GameViewController new] animated:YES];
             }

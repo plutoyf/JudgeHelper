@@ -9,23 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BordlessView.h"
 
-@protocol PlayerViewDelegate;
-
 @interface PlayerView : BordlessView {
     CGFloat firstX, firstY;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *name;
-@property (nonatomic, assign) id<PlayerViewDelegate> delegate;
 
 - (IBAction)movePlayer:(id)sender;
 - (IBAction)selectPlayer:(id)sender;
 
-@end
-
-@protocol PlayerViewDelegate
-@required
--(void) selectPlayer;
--(void) playerPositionDidChanged;
 @end

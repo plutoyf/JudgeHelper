@@ -10,10 +10,10 @@
 
 @implementation UIDoubleHandPlayer
 
--(void) selectPlayer {
+-(void) selectPlayer: (UITapGestureRecognizer*) sender {
     [self hideRoleInfo];
     [self showRoleInfo];
-    [super selectPlayer];
+    [super selectPlayer: sender];
 }
 
 -(void) setLeftHandPlayer:(UIHandPlayer *) player {

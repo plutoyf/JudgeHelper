@@ -75,14 +75,18 @@
     return p1;
 }
 
+-(BOOL) is:(float) f around:(float) f0 {
+    return f > f0-1 && f < f0+1;
+}
+
 -(float) getDistanceFrom: (CGPoint) p0 to: (CGPoint) p1 {
     float d = 0;
     int i = 1;
     while(i > 0) {
         i = 0;
-        if(p0.x==x0) {
+        if([self is:p0.x around:x0]) {
             i++;
-            if(p0.x==p1.x) {
+            if([self is:p0.x around:p1.x]) {
                 d += p1.y-p0.y;
                 p0.y = p1.y;
             } else {
@@ -90,9 +94,9 @@
                 p0.y = y1;
             }
         }
-        if(p0.y==y1) {
+        if([self is:p0.y around:y1]) {
             i++;
-            if(p0.y==p1.y) {
+            if([self is:p0.y around:p1.y]) {
                 d += p1.x-p0.x;
                 p0.x = p1.x;
             } else {
@@ -100,9 +104,9 @@
                 p0.x = x1;
             }
         }
-        if(p0.x==x1) {
+        if([self is:p0.x around:x1]) {
             i++;
-            if(p0.x==p1.x) {
+            if([self is:p0.x around:p1.x]) {
                 d += p0.y-p1.y;
                 p0.y = p1.y;
             } else {
@@ -110,9 +114,9 @@
                 p0.y = y0;
             }
         }
-        if(p0.y==y0) {
+        if([self is:p0.y around:y0]) {
             i++;
-            if(p0.y==p1.y) {
+            if([self is:p0.y around:p1.y]) {
                 d += p0.x-p1.x;
                 p0.x = p1.x;
             } else {
@@ -120,16 +124,16 @@
                 p0.x = x0;
             }
         }
-        if(p0.x == p1.x && p0.y == p1.y) {
+        if([self is:p0.x around:p1.x] && [self is:p0.y around:p1.y]) {
             i = 0;
         }
     }
     
-    return (p0.x != p1.x || p0.y != p1.y) ? 0 : d;
+    return (![self is:p0.x around:p1.x] || ![self is:p0.y around:p1.y]) ? 0 : d;
 }
 
 -(CGPoint) getPositionFrom: (CGPoint) p0 to: (CGPoint) p1 {
-    if((p0.x==x0 || p0.x==x1) && (p0.y==y0 || p0.y==y1)) {
+    if(([self is:p0.x around:x0] || [self is:p0.x around:x1]) && ([self is:p0.y around:y0] || [self is:p0.y around:y1])) {
         if(fabsf(p1.x-p0.x)<=fabsf(p1.y-p0.y)) {
             p0.y = p0.y==y1?p0.y-1:p0.y+1;
         } else {
@@ -137,7 +141,7 @@
         }
     }
     
-    if(p0.x==x0 || p0.x==x1) {
+    if([self is:p0.x around:x0] || [self is:p0.x around:x1]) {
         p1.x = p0.x;
         float dy = p1.y - p0.y;
         if(dy > 0) {
@@ -145,7 +149,7 @@
         } else {
             p1.y = dy>y0-p1.y?p1.y:y0;
         }
-    } else if(p0.y==y0 || p0.y==y1) {
+    } else if([self is:p0.y around:y0] || [self is:p0.y around:y1]) {
         p1.y = p0.y;
         float dx = p1.x - p0.x;
         if(dx > 0) {
@@ -159,25 +163,25 @@
 }
 
 -(CGPoint) getPositionFrom: (CGPoint) p withDistance: (float) d {
-    if(p.x != x0 && p.x != x1 && p.y != y0 && p.y !=y1) return p;
+    if(![self is:p.x around:x0] && ![self is:p.x around:x1] && ![self is:p.y around:y0] && ![self is:p.y around:y1]) return p;
     
     while (d>0) {
-        if (p.x==x0) {
+        if ([self is:p.x around:x0]) {
             float delta = y1-p.y<d?y1-p.y:d;
             p.y += delta;
             d -= delta;
         }
-        if (p.y==y1) {
+        if ([self is:p.y around:y1]) {
             float delta = x1-p.x<d?x1-p.x:d;
             p.x += delta;
             d -= delta;
         }
-        if (p.x==x1) {
+        if ([self is:p.x around:x1]) {
             float delta = p.y-y0<d?p.y-y0:d;
             p.y -= delta;
             d -= delta;
         }
-        if (p.y==y0) {
+        if ([self is:p.y around:y0]) {
             float delta = p.x-x0<d?p.x-x0:d;
             p.x -= delta;
             d -= delta;
@@ -185,22 +189,22 @@
     }
     
     while (d<0) {
-        if (p.x==x0) {
+        if ([self is:p.x around:x0]) {
             float delta = y0-p.y>d?y0-p.y:d;
             p.y += delta;
             d -= delta;
         }
-        if (p.y==y1) {
+        if ([self is:p.y around:y1]) {
             float delta = x0-p.x>d?x0-p.x:d;
             p.x += delta;
             d -= delta;
         }
-        if (p.x==x1) {
+        if ([self is:p.x around:x1]) {
             float delta = p.y-y1>d?p.y-y1:d;
             p.y -= delta;
             d -= delta;
         }
-        if (p.y==y0) {
+        if ([self is:p.y around:y0]) {
             float delta = p.x-x1>d?p.x-x1:d;
             p.x -= delta;
             d -= delta;
@@ -210,10 +214,10 @@
 }
 
 -(POSITION) getPlayerPosition: (CGPoint) p {
-    if(p.y == y0) return BOTTEM;
-    if(p.y == y1) return TOP;
-    if(p.x == x0) return LEFT;
-    if(p.x == x1) return RIGHT;
+    if([self is:p.y around:y0]) return BOTTEM;
+    if([self is:p.y around:y1]) return TOP;
+    if([self is:p.x around:x0]) return LEFT;
+    if([self is:p.x around:x1]) return RIGHT;
     return BOTTEM;
 }
 

@@ -16,10 +16,20 @@ typedef enum {
 
 @protocol UIPlayerControleDelegate;
 
-@interface UIPlayer : Player<PlayerViewDelegate> {
+@interface UIPlayer : Player <UIGestureRecognizerDelegate> {
     BOOL _realPositionModeEnable;
     POSITION _position;
     BOOL expanded;
+    
+    BOOL shortPressMoveBegan;
+    BOOL longPressMoveBegan;
+    BOOL wasSetteledBeforeShortPressMove;
+    CGPoint positionBeforeShortPressMove;
+    CGPoint originalPoint;
+    UILongPressGestureRecognizer *shortPressGestureRecognizer;
+    UILongPressGestureRecognizer *longPressGestureRecognizer;
+    UILongPressGestureRecognizer *superLongPressGestureRecognizer;
+    
     Role _initialRole;
     NSMutableArray* _actionIcons;
     NSMutableArray* _actionIconsBackup;
@@ -28,11 +38,14 @@ typedef enum {
 @property (nonatomic, strong) PlayerView* view;
 @property (nonatomic, assign) id<UIPlayerControleDelegate> delegate;
 
+@property (atomic) BOOL settled;
+@property (atomic) BOOL readyToMove;
 @property (atomic) BOOL realPositionModeEnable;
 @property (atomic) POSITION position;
 
 
 -(void) setRole: (Role) role;
+-(void) setView: (PlayerView *) view;
 -(void) addChild: (UIView*) child;
 -(void) removeChild: (UIView*)child;
 
@@ -44,6 +57,8 @@ typedef enum {
 -(void) removeLastActionIcon;
 -(void) backupActionIcons;
 -(void) restoreActionIcons;
+
+-(void) selectPlayer: (UITapGestureRecognizer*) sender;
 
 
 @end

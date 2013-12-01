@@ -231,7 +231,7 @@
     [super rollbackStatus];
     
     if(_roleStack.count == 0 && _initialRole > 0) {
-        self.role = _initialRole;
+        //self.role = _initialRole;
     }
 }
 

@@ -7,26 +7,18 @@
 //
 
 #import "PlayerView.h"
+#import "DeviceSettings.h"
 
 @implementation PlayerView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)init
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
-        // Initialization code
+        [self.name setFont:[UIFont fontWithName:@"System" size:REVERSE(18)]];
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 - (IBAction)movePlayer:(id)sender {
     [self bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
@@ -43,11 +35,6 @@
     
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
         [self setCenter:CGPointMake(translatedPoint.x, translatedPoint.y)];
-        [self.delegate playerPositionDidChanged];
     }
-}
-
-- (IBAction)selectPlayer:(id)sender {
-    [self.delegate selectPlayer];
 }
 @end

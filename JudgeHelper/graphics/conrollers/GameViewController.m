@@ -62,7 +62,6 @@ NSMutableArray *players;
         UIPlayer* p = ([global getGameMode] == DOUBLE_HAND) ? [[UIDoubleHandPlayer alloc] init:id andName: name withRole: Citizen] : [[UIPlayer alloc] init:id andName: name withRole: Citizen];
         p.delegate = self;
         PlayerView *pv = [[[NSBundle mainBundle] loadNibNamed:@"PlayerView" owner:self options:nil] objectAtIndex:0];
-        pv.delegate = p;
         pv.translatesAutoresizingMaskIntoConstraints = NO;
         [self.playerView addSubview: pv];
         
@@ -86,6 +85,10 @@ NSMutableArray *players;
     [engin run];
     
     
+    [self.messageLabel setFont:[UIFont fontWithName:@"System" size:REVERSE(30)]];
+    [self.nightLabel setFont:[UIFont fontWithName:@"System" size:REVERSE(30)]];
+    
+    
     UIButton *undoButton = [UIButton new];
     [undoButton addTarget:self
                       action:@selector(undoButtonTapped:)
@@ -93,8 +96,8 @@ NSMutableArray *players;
     [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
     [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
     
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
     
     undoButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:undoButton];
@@ -110,14 +113,14 @@ NSMutableArray *players;
     [redoButton setImage:[UIImage imageNamed:@"redo.png"] forState:UIControlStateNormal];
     [redoButton setImage:[UIImage imageNamed:@"redo-sel.png"] forState:UIControlStateSelected];
     
-    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
-    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
+    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
     
     redoButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:redoButton];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:undoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:20.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:undoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:REVERSE(20)]];
 
     
     UIButton *quitButton = [UIButton new];
@@ -127,14 +130,14 @@ NSMutableArray *players;
     [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
     [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
     
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(80)]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
     
     quitButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:quitButton];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:20.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:REVERSE(20)]];
 
 }
 
@@ -154,25 +157,52 @@ NSMutableArray *players;
     tableZone = [[TableZone alloc] init:tWidth :tHeight :bWidth :bHeight :pWidth :pHeight];
     
     if(!layoutInited) {
-        int n = 0, i = 0, j = 0;
+        int i = 0, j = 0;
         float m = (tWidth-pWidth)/(pWidth*2);
         
         for(UIPlayer *player in players) {
-            if(i >= m) {
-                i = 0;
-                j++;
+            NSString* positionStr = [[NSUserDefaults standardUserDefaults] stringForKey:[player.id stringByAppendingString:@"-cpos"]];
+            [self setPlayerPosition:player fromString: positionStr];
+            
+            if(player.view.center.x<0 || player.view.center.x>bWidth || player.view.center.y<0 || player.view.center.y>bHeight) {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:[player.id stringByAppendingString:@"-cpos"]];
+                
+                if(i >= m) {
+                    i = 0;
+                    j++;
+                }
+                
+                [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX from:self.playerView.constraints]];
+                [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY from:self.playerView.constraints]];
+                
+                [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:pWidth*2*i+pWidth :bWidth] constant:dx]];
+                [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:pHeight*1.5*j+pHeight :bHeight] constant:dy]];
+                
+                [player.view layoutIfNeeded];
+ 
+                i++;
             }
             
-            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:pWidth*2*i+pWidth :bWidth] constant:dx]];
-            [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:pHeight*1.5*j+pHeight :bHeight] constant:dy]];
+            [self playerPositionChanged:player];
             
-            [player.view layoutIfNeeded];
-            
-            n++;
-            i++;
         }
         layoutInited = YES;
     }
+}
+
+-(void) setPlayerPosition: (UIPlayer *) player fromString: (NSString*) positionStr {
+    float mX = -1, mY = -1;
+    
+    long i = [positionStr rangeOfString: @","].location;
+    if(i != NSNotFound && i>0) {
+        mX = [[positionStr substringToIndex: i] floatValue];
+        mY = [[positionStr substringFromIndex: i+1] floatValue];
+    }
+
+    [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:mX constant:0]];
+    [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:mY constant:0]];
+    
+    [player.view layoutIfNeeded];
 }
 
 - (NSLayoutConstraint*)findConstraintWithItem:(id)view1 attribute:(NSLayoutAttribute)attr1 relatedBy:(NSLayoutRelation)relation toItem:(id)view2 attribute:(NSLayoutAttribute)attr2 from:(NSArray*)contraints {
@@ -201,7 +231,7 @@ NSMutableArray *players;
         UIPlayer* p = [engin.players objectAtIndex:i];
         
         if([p class] == [UIPlayer class] || [p.id isEqualToString:judgeId]) {
-            p.role = [p.id isEqualToString:judgeId]?Judge:Citizen;
+            p.role = [p.id isEqualToString:judgeId]?Judge: Citizen;
             [newPlayers addObject:p];
         } else if([p class] == [UIDoubleHandPlayer class]){
             UIDoubleHandPlayer* dhp = ((UIDoubleHandPlayer*)p);
@@ -408,52 +438,85 @@ NSMutableArray *players;
 }
 
 -(void) selectAllPlayersToMove {
+    for (UIPlayer* player in players) {
+        if(player.settled) {
+            player.readyToMove = YES;
+        }
+    }
+}
+
+-(BOOL) isSinglePlayerToBeMoved {
+    BOOL hasPlayerToBeMoved = NO;
+    for (UIPlayer* player in players) {
+        if(!hasPlayerToBeMoved && player.readyToMove) {
+            hasPlayerToBeMoved = YES;
+        } else if (player.readyToMove) {
+            return NO;
+        }
+    }
+    return hasPlayerToBeMoved;
+}
+
+-(void) moveAllPlayersForDistance: (float) distance {
+    //NSLog(@"Move all players for distance : %f", distance);
+    for (UIPlayer* player in players) {
+        if(player.settled && player.readyToMove) {
+            player.view.center = [tableZone getPositionFrom:player.view.center withDistance: distance];
+        }
+    }
+}
+
+-(void) movePlayer: (UIPlayer*) player toPosition: (CGPoint) point {
+    if(player.settled && ![self isSinglePlayerToBeMoved]) {
+        CGPoint to = [tableZone getPositionFrom:player.view.center to:point];
+        [self moveAllPlayersForDistance: [tableZone getDistanceFrom:player.view.center to: to]];
+    } else {
+        player.view.center = point;
+    }
     
 }
 
 -(void) playerPositionChanged : (UIPlayer*) player {
-    CGPoint point = player.view.frame.origin;
-    point.x += player.view.frame.size.width/2;
-    point.y += player.view.frame.size.height/2;
-    if([tableZone isInside:point]) {
-        point = [tableZone getBestPosition:point];
-        point.x -= player.view.frame.size.width/2;
-        point.y -= player.view.frame.size.height/2;
-        
-        if(point.x != player.view.frame.origin.x || point.y != player.view.frame.origin.y) {
-            [UIView animateWithDuration:0.25 animations:^{
-                CGRect rect = player.view.frame;
-                rect.origin.x = point.x;
-                rect.origin.y = point.y;
-                player.view.frame = rect;
-            }];
+    if(player) {
+        CGPoint point = player.view.center;
+        if([tableZone isInside:point]) {
+            point = [tableZone getBestPosition:point];
+            //NSLog(@"point : %f %f to : %f %f", player.view.center.x, player.view.center.y, point.x, point.y);
+            if(point.x != player.view.center.x || point.y != player.view.center.y) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    player.view.center = point;
+                }];
+            }
+            player.settled = YES;
+        } else {
+            player.settled = NO;
         }
-        //player.settled = YES;
+        player.readyToMove = NO;
+        player.position = [tableZone getPlayerPosition:point];
+        
+        float bWidth = self.playerView.bounds.size.width;
+        float bHeight = self.playerView.bounds.size.height;
+        float mX = [self getMultiplier:player.view.frame.origin.x+player.view.frame.size.width/2 :bWidth];
+        float mY = [self getMultiplier:player.view.frame.origin.y+player.view.frame.size.height/2 :bHeight];
+
+        [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%f,%f", mX, mY] forKey:[player.id stringByAppendingString:@"-cpos"]];
+
+        [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX from:self.playerView.constraints]];
+        [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY from:self.playerView.constraints]];
+        
+        [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:mX constant:0.f]];
+        [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:mY constant:0.f]];
+        
+        [player.view layoutIfNeeded];
+        
+        //NSLog(@"new position : %f %f", player.view.center.x, player.view.center.y);
     } else {
-        //player.settled = NO;
+        for (UIPlayer* p in players) {
+            if(p.settled){
+                [self playerPositionChanged:p];
+            }
+        }
     }
-    //player.readyToMove = NO;
-    //player.position = [tableZone getPlayerPosition:point];
-    [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%f,%f", point.x, point.y] forKey:[player.id stringByAppendingString:@"-pos"]];
-
-    
-    float bWidth = self.playerView.bounds.size.width;
-    float bHeight = self.playerView.bounds.size.height;
-    
-    [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX from:self.playerView.constraints]];
-    [self.playerView removeConstraint:[self findConstraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY from:self.playerView.constraints]];
-    
-    [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:player.view.frame.origin.x+player.view.frame.size.width/2 :bWidth] constant:0.f]];
-    [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:player.view.frame.origin.y+player.view.frame.size.height/2 :bHeight]  constant:0.f]];
-    
-    [player.view layoutIfNeeded];
-}
-
--(void) superLongPressPlayer : (UIPlayer*) player {
-    
-}
--(void) movePlayer: (UIPlayer*) player toPosition: (CGPoint) point {
-    
 }
 
 @end
