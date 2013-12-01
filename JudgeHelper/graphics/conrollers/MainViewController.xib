@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
@@ -57,12 +57,12 @@
                     <rect key="frame" x="0.0" y="40" width="480" height="250"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXt-I8-JrC" userLabel="LeftRoleView">
-                            <rect key="frame" x="-210" y="0.0" width="210" height="250"/>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXt-I8-JrC" userLabel="LeftRoleView">
+                            <rect key="frame" x="70" y="0.0" width="210" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9KC-NB-t00" userLabel="RoleImageView">
-                                    <rect key="frame" x="20" y="20" width="88" height="27"/>
+                                    <rect key="frame" x="20" y="20" width="22" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvZ-96-C77" userLabel="RoleNumberPicker">
@@ -83,8 +83,8 @@
                                 <constraint firstAttribute="width" constant="210" placeholder="YES" id="yjr-xu-Btj"/>
                             </constraints>
                         </view>
-                        <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CwB-oq-UCd" userLabel="LeftPlayerView">
-                            <rect key="frame" x="0.0" y="0.0" width="210" height="250"/>
+                        <view tag="1" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CwB-oq-UCd" userLabel="LeftPlayerView">
+                            <rect key="frame" x="-16" y="0.0" width="210" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vUj-9d-Osg" userLabel="SelectedPlayerCollectionView">
@@ -112,8 +112,8 @@
                                 <constraint firstAttribute="trailing" secondItem="vUj-9d-Osg" secondAttribute="trailing" constant="5" id="xga-Ai-Jxi"/>
                             </constraints>
                         </view>
-                        <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-7w-PgR" userLabel="RightPlayerView">
-                            <rect key="frame" x="210" y="0.0" width="270" height="250"/>
+                        <view tag="1" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-7w-PgR" userLabel="RightPlayerView">
+                            <rect key="frame" x="-7" y="0.0" width="270" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zWH-xl-xqW" userLabel="PlayerTableView">
@@ -135,8 +135,8 @@
                                 <constraint firstItem="zWH-xl-xqW" firstAttribute="top" secondItem="3GM-7w-PgR" secondAttribute="top" constant="10" id="z4Z-9a-Jvw"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2q-g0-dqs" userLabel="RightRoleView">
-                            <rect key="frame" x="480" y="0.0" width="270" height="250"/>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2q-g0-dqs" userLabel="RightRoleView">
+                            <rect key="frame" x="82" y="0.0" width="270" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-Mr-yOn">
@@ -169,18 +169,14 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="c2q-g0-dqs" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="2hw-8N-2DG"/>
-                        <constraint firstItem="pXt-I8-JrC" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="4SM-Iz-1nW"/>
-                        <constraint firstAttribute="trailing" secondItem="3GM-7w-PgR" secondAttribute="trailing" placeholder="YES" id="7t5-uB-Flp"/>
-                        <constraint firstItem="pXt-I8-JrC" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="95l-ZV-cR5"/>
-                        <constraint firstItem="CwB-oq-UCd" firstAttribute="leading" secondItem="ldV-ff-NLa" secondAttribute="leading" placeholder="YES" id="B23-FA-oFh"/>
-                        <constraint firstItem="CwB-oq-UCd" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="FHu-Hc-jJe"/>
-                        <constraint firstAttribute="trailing" secondItem="c2q-g0-dqs" secondAttribute="leading" placeholder="YES" id="KoI-mt-cuO"/>
-                        <constraint firstItem="c2q-g0-dqs" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="LaD-ce-geu"/>
-                        <constraint firstItem="CwB-oq-UCd" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="mcI-v4-9xQ"/>
-                        <constraint firstItem="pXt-I8-JrC" firstAttribute="trailing" secondItem="ldV-ff-NLa" secondAttribute="leading" placeholder="YES" id="tO4-TJ-Dfs"/>
-                        <constraint firstItem="3GM-7w-PgR" firstAttribute="centerY" secondItem="ldV-ff-NLa" secondAttribute="centerY" id="uVZ-k4-HrT"/>
-                        <constraint firstItem="3GM-7w-PgR" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" id="vv1-Rn-OGh"/>
+                        <constraint firstItem="c2q-g0-dqs" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" placeholder="YES" id="2hw-8N-2DG"/>
+                        <constraint firstItem="pXt-I8-JrC" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" placeholder="YES" id="4SM-Iz-1nW"/>
+                        <constraint firstItem="CwB-oq-UCd" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" placeholder="YES" id="FHu-Hc-jJe"/>
+                        <constraint firstAttribute="bottom" secondItem="3GM-7w-PgR" secondAttribute="bottom" id="J5M-8V-rLp"/>
+                        <constraint firstAttribute="bottom" secondItem="c2q-g0-dqs" secondAttribute="bottom" id="kAt-ej-zT5"/>
+                        <constraint firstItem="CwB-oq-UCd" firstAttribute="top" secondItem="ldV-ff-NLa" secondAttribute="top" id="uz2-I0-12C"/>
+                        <constraint firstItem="3GM-7w-PgR" firstAttribute="height" secondItem="ldV-ff-NLa" secondAttribute="height" placeholder="YES" id="vv1-Rn-OGh"/>
+                        <constraint firstItem="pXt-I8-JrC" firstAttribute="top" secondItem="ldV-ff-NLa" secondAttribute="top" id="zwt-T8-30G"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0W6-Wo-Htk" userLabel="TopBarView">
