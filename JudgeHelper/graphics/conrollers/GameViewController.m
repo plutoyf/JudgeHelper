@@ -178,8 +178,9 @@ NSMutableArray *players;
                 [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:[self getMultiplier:pWidth*2*i+pWidth :bWidth] constant:dx]];
                 [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:[self getMultiplier:pHeight*1.5*j+pHeight :bHeight] constant:dy]];
                 
-                [player.view layoutIfNeeded];
- 
+                [self.playerView layoutIfNeeded];
+                //NSLog(@"new position : %f %f", player.view.center.x, player.view.center.y);
+                
                 i++;
             }
             
@@ -202,7 +203,7 @@ NSMutableArray *players;
     [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:mX constant:0]];
     [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:mY constant:0]];
     
-    [player.view layoutIfNeeded];
+    [self.playerView layoutIfNeeded];
 }
 
 - (NSLayoutConstraint*)findConstraintWithItem:(id)view1 attribute:(NSLayoutAttribute)attr1 relatedBy:(NSLayoutRelation)relation toItem:(id)view2 attribute:(NSLayoutAttribute)attr2 from:(NSArray*)contraints {
@@ -496,8 +497,8 @@ NSMutableArray *players;
         
         float bWidth = self.playerView.bounds.size.width;
         float bHeight = self.playerView.bounds.size.height;
-        float mX = [self getMultiplier:player.view.frame.origin.x+player.view.frame.size.width/2 :bWidth];
-        float mY = [self getMultiplier:player.view.frame.origin.y+player.view.frame.size.height/2 :bHeight];
+        float mX = [self getMultiplier:player.view.center.x :bWidth];
+        float mY = [self getMultiplier:player.view.center.y :bHeight];
 
         [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%f,%f", mX, mY] forKey:[player.id stringByAppendingString:@"-cpos"]];
 
@@ -507,8 +508,6 @@ NSMutableArray *players;
         [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterX multiplier:mX constant:0.f]];
         [self.playerView addConstraint:[NSLayoutConstraint constraintWithItem:player.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.playerView attribute:NSLayoutAttributeCenterY multiplier:mY constant:0.f]];
         
-        [player.view layoutIfNeeded];
-        
         //NSLog(@"new position : %f %f", player.view.center.x, player.view.center.y);
     } else {
         for (UIPlayer* p in players) {
@@ -517,6 +516,7 @@ NSMutableArray *players;
             }
         }
     }
+    
 }
 
 @end
