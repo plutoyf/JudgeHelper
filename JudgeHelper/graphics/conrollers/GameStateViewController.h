@@ -7,9 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Role.h"
+#import "Player.h"
+#import "CCEngin.h"
 
-@interface GameStateViewController : UIViewController
+@interface GameStateViewController : UIViewController {
+    CCEngin* engin;
+    NSMutableDictionary* playerLines;
+    NSMutableDictionary* playerVisibleObjects;
+    NSMutableDictionary* playerLifeBoxes;
+    NSMutableArray* pIds;
+    
+    UIView *bodyView;
+}
 
+@property (retain, nonatomic) UIView *bodyView;
+
+@property (weak, nonatomic) IBOutlet UIView *stateView;
+@property (weak, nonatomic) IBOutlet UIView *topBarView;
 @property (weak, nonatomic) IBOutlet UIButton *hideStateButton;
+
+-(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result;
+-(void) revertStatus;
 
 @end

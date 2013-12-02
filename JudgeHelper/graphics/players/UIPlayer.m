@@ -110,7 +110,7 @@
     [self.view.imageView addGestureRecognizer:tapGestureRecognizer];
     
     shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressMovePlayer:)];
-    shortPressGestureRecognizer.minimumPressDuration = 0;
+    shortPressGestureRecognizer.minimumPressDuration = 0.4;
     shortPressGestureRecognizer.delegate = self;
     [self.view.imageView addGestureRecognizer:shortPressGestureRecognizer];
     

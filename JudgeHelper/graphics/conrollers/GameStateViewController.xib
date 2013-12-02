@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameStateViewController">
             <connections>
                 <outlet property="hideStateButton" destination="t4v-pv-GbV" id="VBC-Id-WCl"/>
+                <outlet property="stateView" destination="CTl-8e-Y4n" id="VE5-lP-nZC"/>
+                <outlet property="topBarView" destination="r7v-Ud-lnq" id="NlW-mo-PRB"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -16,15 +18,21 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GameStateInfo shows here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pnK-k4-Xsr">
-                    <rect key="frame" x="179" y="104" width="208" height="22"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CTl-8e-Y4n" userLabel="StateView">
+                    <rect key="frame" x="10" y="50" width="440" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7v-Ud-lnq" userLabel="TopBarView">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="rJE-En-ifN"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4v-pv-GbV" userLabel="HideStateButton">
-                    <rect key="frame" x="0.0" y="140" width="30" height="40"/>
+                    <rect key="frame" x="450" y="140" width="30" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" backgroundImage="right2.png">
@@ -38,8 +46,15 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="CTl-8e-Y4n" secondAttribute="bottom" constant="200" id="3Tk-Oz-ZNS"/>
+                <constraint firstAttribute="trailing" secondItem="t4v-pv-GbV" secondAttribute="trailing" id="3eh-Bh-EGE"/>
+                <constraint firstItem="CTl-8e-Y4n" firstAttribute="top" secondItem="r7v-Ud-lnq" secondAttribute="bottom" constant="10" id="Bb2-UA-EcP"/>
                 <constraint firstAttribute="centerY" secondItem="t4v-pv-GbV" secondAttribute="centerY" id="IeD-MK-vpH"/>
-                <constraint firstItem="t4v-pv-GbV" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="LmC-nJ-7fO"/>
+                <constraint firstItem="r7v-Ud-lnq" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="IlH-FZ-Qnr"/>
+                <constraint firstItem="t4v-pv-GbV" firstAttribute="leading" secondItem="CTl-8e-Y4n" secondAttribute="trailing" id="bsY-rG-BaB"/>
+                <constraint firstItem="CTl-8e-Y4n" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="eP0-mK-x2h"/>
+                <constraint firstAttribute="trailing" secondItem="r7v-Ud-lnq" secondAttribute="trailing" id="ouq-Xq-67Z"/>
+                <constraint firstItem="r7v-Ud-lnq" firstAttribute="top" secondItem="1" secondAttribute="top" id="q8U-ra-uJi"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

@@ -207,16 +207,18 @@ NSMutableArray *players;
     }
     
     [engin setPlayers: newPlayers];
+    
+    self.showStateButton.alpha = 1.f;
 }
 
 
 
 -(void) addPlayersStatusWithActorRole: (Role) role andReceiver: (Player*) receiver  andResult: (BOOL) result{
-    //[gameStateSprite addNewStatusWithActorRole:role andReceiver:receiver andResult:result];
+    [gameStateViewController addNewStatusWithActorRole:role andReceiver:receiver andResult:result];
 }
 
 -(void) rollbackPlayersStatus {
-    //[gameStateSprite revertStatus];
+    [gameStateViewController revertStatus];
 }
 
 -(void) backupActionIcon {
@@ -335,6 +337,7 @@ NSMutableArray *players;
     [self.view layoutIfNeeded];
 
 }
+
 
 - (IBAction)restartButtonTapped:(id)sender {
     [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
