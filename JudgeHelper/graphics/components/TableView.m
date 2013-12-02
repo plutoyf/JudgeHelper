@@ -35,6 +35,8 @@ static size_t const kDashedCount            = (2.0f);
     CGContextSetLineDash(context, kDashedPhase, kDashedLinesLength, kDashedCount) ;
     CGContextAddRect(context, rect);
     CGContextStrokePath(context);
+    
+    NSLog(@"drawing rect-----------");
 }
 
 @end

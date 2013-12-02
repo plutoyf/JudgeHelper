@@ -19,6 +19,7 @@
     NSMutableArray* pIds;
     
     UIView *bodyView;
+    BOOL isInitFinished;
 }
 
 @property (retain, nonatomic) UIView *bodyView;

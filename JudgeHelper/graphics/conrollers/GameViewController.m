@@ -95,6 +95,8 @@ NSMutableArray *players;
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    
+    [self.tableView setNeedsDisplay];
 
     UIPlayer *player = [players firstObject];
     float bWidth = self.playerView.bounds.size.width;

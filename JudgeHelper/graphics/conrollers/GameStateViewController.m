@@ -25,6 +25,7 @@
     if (self) {
         // Custom initialization
         engin = [CCEngin getEngin];
+        isInitFinished = NO;
     }
     return self;
 }
@@ -33,18 +34,17 @@
 {
     [super viewDidLoad];
     
+    [self initTopBarView];
     [self initScrollView];
 }
 
 - (void)initScrollView {
-    UIScrollView *scrollView;
-    NSDictionary *viewsDictionary;
-    
     // Create the scroll view and the image view.
-    scrollView  = [[UIScrollView alloc] init];
-    bodyView = [[UIView alloc] init];
+    UIScrollView *scrollView  = [[UIScrollView alloc] init];
+    scrollView.showsVerticalScrollIndicator = YES;
     
-    [self initPlayersLines];
+    bodyView = [[UIView alloc] init];
+    CGSize bodyViewSize = [self initPlayersLines];
     
     // Add the scroll view to our view.
     [self.stateView addSubview:scrollView];
@@ -57,18 +57,18 @@
     bodyView.translatesAutoresizingMaskIntoConstraints = NO;
     
     // Set the constraints for the scroll view and the image view.
-    viewsDictionary = NSDictionaryOfVariableBindings(scrollView, bodyView);
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(scrollView, bodyView);
     
     [self.stateView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
     
     [self.stateView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
     
-    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bodyView]|" options:0 metrics: 0 views:viewsDictionary]];
-    
-    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bodyView]|" options:0 metrics: 0 views:viewsDictionary]];
+    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[bodyView(width)]|" options:0 metrics:@{@"width":@(bodyViewSize.width)} views:viewsDictionary]];
+    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bodyView(height)]|" options:0 metrics:@{@"height":@(bodyViewSize.height)} views:viewsDictionary]];
+
 }
 
-- (void)initPlayersLines {
+- (CGSize)initPlayersLines {
     GlobalSettings* global = [GlobalSettings globalSettings];
     
     pIds = [NSMutableArray new];
@@ -106,6 +106,10 @@
         i++;
     }
     
+    return CGSizeMake(0, REVERSE(40)*i);
+}
+
+- (void) initTopBarView {
     [self.hideStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.hideStateButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
     [self.hideStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.hideStateButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
     
@@ -168,7 +172,10 @@
 }
 
 -(void) addNewStatusWithActorRole: (Role) role andReceiver: (Player*) receiver andResult: (BOOL) result {
-    [self.view layoutIfNeeded];
+    if(!isInitFinished) {
+        [self.view layoutIfNeeded];
+        isInitFinished = YES;
+    }
     
     for(NSMutableArray* visibleObjects in [playerVisibleObjects allValues]) {
         [visibleObjects addObject:[NSMutableArray new]];
@@ -251,10 +258,12 @@
         if(role == Judge) {
             for(NSString* id in pIds) {
                 UIView *playerLine = [playerLines objectForKey:id];
+                NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:receiver.id] lastObject];
                 UIView *separatorBox = [[UIView alloc] init];
                 separatorBox.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
                 
                 separatorBox.translatesAutoresizingMaskIntoConstraints = NO;
+                [visibleNodes addObject:separatorBox];
                 [playerLine addSubview:separatorBox];
                 
                 [separatorBox addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:1]];
