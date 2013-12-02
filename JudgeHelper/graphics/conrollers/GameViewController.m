@@ -52,8 +52,8 @@ NSMutableArray *players;
     GlobalSettings* global = [GlobalSettings globalSettings];
     NSArray* ids = [global getPlayerIds];
 
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:.7f constant:0.f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:.7f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:.65f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:.65f constant:0.f]];
     
     int n = 0;
     for(NSString* id in ids) {
@@ -79,6 +79,8 @@ NSMutableArray *players;
         p.view.imageView.image = image;
         [players addObject:p];
         [playersMap setObject:p forKey:id];
+        
+        [tapGestureRecognizer requireGestureRecognizerToFail:p.tapGestureRecognizer];
         
         n++;
     }
@@ -345,7 +347,6 @@ NSMutableArray *players;
 
 
 - (void)emptyClick:(id)sender {
-    NSLog(@"*** empty click");
     [self selectPlayerById: nil];
 }
 
@@ -359,8 +360,6 @@ NSMutableArray *players;
 
 
 - (void) selectPlayerById: (NSString*) id {
-    NSLog(@"GameViewController selectPlayerById : %@", id);
-    
     UIPlayer* selPlayer = (UIPlayer*)[playersMap objectForKey:id];
     
     id = (selPlayer.role == Judge) ? (withBypass ? [Engin getRoleName:Game] : nil) : selPlayer.id;

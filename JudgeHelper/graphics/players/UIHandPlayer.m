@@ -19,8 +19,8 @@
             
             UIImage *handImage = [UIImage imageNamed: handIconFile];
             handIcon = [[UIImageView alloc] initWithImage: handImage];
-            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(handImage.size.width)]];
-            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(handImage.size.height)]];
+            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(handImage.size.width, REVERSE(handImage.size.width)*1.25)]];
+            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(handImage.size.width, REVERSE(handImage.size.height)*1.25)]];
             
             handIcon.userInteractionEnabled = YES;
             UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHandPlayer:)];

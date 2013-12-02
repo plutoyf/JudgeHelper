@@ -26,6 +26,7 @@ typedef enum {
     BOOL wasSetteledBeforeShortPressMove;
     CGPoint positionBeforeShortPressMove;
     CGPoint originalPoint;
+    UITapGestureRecognizer *tapGestureRecognizer;
     UILongPressGestureRecognizer *shortPressGestureRecognizer;
     UILongPressGestureRecognizer *longPressGestureRecognizer;
     UILongPressGestureRecognizer *superLongPressGestureRecognizer;
@@ -36,6 +37,7 @@ typedef enum {
 }
 
 @property (nonatomic, strong) PlayerView* view;
+@property (nonatomic, strong, readonly) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, assign) id<UIPlayerControleDelegate> delegate;
 
 @property (atomic) BOOL settled;

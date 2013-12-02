@@ -40,7 +40,7 @@
 
 - (void)initScrollView {
     // Create the scroll view and the image view.
-    UIScrollView *scrollView  = [[UIScrollView alloc] init];
+    scrollView  = [[UIScrollView alloc] init];
     scrollView.showsVerticalScrollIndicator = YES;
     
     bodyView = [[UIView alloc] init];
@@ -63,8 +63,11 @@
     
     [self.stateView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
     
-    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[bodyView(width)]|" options:0 metrics:@{@"width":@(bodyViewSize.width)} views:viewsDictionary]];
-    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bodyView(height)]|" options:0 metrics:@{@"height":@(bodyViewSize.height)} views:viewsDictionary]];
+    bodyViewWidthContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[bodyView(width)]|" options:0 metrics:@{@"width":@(bodyViewSize.width)} views:viewsDictionary];
+    bodyViewHeightContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bodyView(height)]|" options:0 metrics:@{@"height":@(bodyViewSize.height)} views:viewsDictionary];
+    
+    [scrollView addConstraints:bodyViewWidthContraints];
+    [scrollView addConstraints:bodyViewHeightContraints];
 
 }
 
@@ -91,12 +94,13 @@
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
         
         [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0]];
-        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(40)*i]];
+        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(10+40*i)]];
         
         
         UILabel *label = [[UILabel alloc] init];
         label.text = p.name;
         label.font = [UIFont fontWithName:@"Verdana" size:VALUE(16, 12)];
+        label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.translatesAutoresizingMaskIntoConstraints = NO;
         [playerLine addSubview:label];
         
@@ -106,29 +110,28 @@
         i++;
     }
     
-    return CGSizeMake(0, REVERSE(40)*i);
+    return CGSizeMake(0, REVERSE(10+40*i));
 }
 
 - (void) initTopBarView {
     [self.hideStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.hideStateButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
     [self.hideStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.hideStateButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
     
-    
-    UIButton *undoButton = [UIButton new];
-    [undoButton addTarget:self
-                   action:@selector(undoButtonTapped:)
+    UIButton *quitButton = [UIButton new];
+    [quitButton addTarget:self
+                   action:@selector(quitButtonTapped:)
          forControlEvents:UIControlEventTouchUpInside];
-    [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
-    [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
+    [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
+    [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
     
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
     
-    undoButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.topBarView addSubview:undoButton];
+    quitButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.topBarView addSubview:quitButton];
     
-    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
-    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeLeading multiplier:1.f constant:10.f]];
+    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
+    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeLeading multiplier:1.f constant:10.f]];
     
     
     UIButton *redoButton = [UIButton new];
@@ -145,24 +148,23 @@
     [self.topBarView addSubview:redoButton];
     
     [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
-    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:undoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:REVERSE(20)]];
+    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:-10.f]];
     
-    
-    UIButton *quitButton = [UIButton new];
-    [quitButton addTarget:self
-                   action:@selector(quitButtonTapped:)
+    UIButton *undoButton = [UIButton new];
+    [undoButton addTarget:self
+                   action:@selector(undoButtonTapped:)
          forControlEvents:UIControlEventTouchUpInside];
-    [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
-    [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
+    [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
+    [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
     
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
     
-    quitButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.topBarView addSubview:quitButton];
+    undoButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.topBarView addSubview:undoButton];
     
-    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
-    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeTrailing multiplier:1.f constant:REVERSE(20)]];
+    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
+    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(-20)]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -201,6 +203,7 @@
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count)]];
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:0]];
         
+        
         UIView *lifeBox = [[UIView alloc] init];
         UIColor *color = (receiver.life >= 1) ? [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:1] : (receiver.life <= 0) ? [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1] : [UIColor colorWithRed:100.0/255.0 green:100.0/255.0 blue:0.0/255.0 alpha:1];
         
@@ -217,6 +220,9 @@
         
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize)]];
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeBottom multiplier:1.f constant:0]];
+        
+        
+        [self updateScrollViewWidth];
     }
     
     if(!receiver || role == Judge) {
@@ -297,7 +303,28 @@
         for(UIView *lifeBox in lifeBoxes) lifeBox.alpha = (player.status == IN_GAME) ? 1.f : .3f;
     }
     
+    [self updateScrollViewWidth];
+    
     [self.view layoutIfNeeded];
+}
+
+- (void)updateScrollViewWidth {
+    float iconSize = 30;
+    float marginLeft = 140;
+    float width = 0;
+    
+    for(NSString *id in pIds) {
+        NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
+        width = REVERSE(marginLeft+iconSize*lifeBoxes.count) > width ? REVERSE(marginLeft+iconSize*lifeBoxes.count) : width;
+    }
+    
+    [scrollView removeConstraints:bodyViewWidthContraints];
+    bodyViewWidthContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[bodyView(width)]|" options:0 metrics:@{@"width":@(width+20)} views:NSDictionaryOfVariableBindings(bodyView)];
+    [scrollView addConstraints:bodyViewWidthContraints];
+    
+    CGPoint offset = scrollView.contentOffset;
+    offset.x = width+20;
+    [scrollView setContentOffset:offset];
 }
 
 - (IBAction)undoButtonTapped:(id)sender {

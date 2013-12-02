@@ -18,7 +18,11 @@
     NSMutableDictionary* playerLifeBoxes;
     NSMutableArray* pIds;
     
+    UIScrollView *scrollView;
     UIView *bodyView;
+    NSArray *bodyViewWidthContraints;
+    NSArray *bodyViewHeightContraints;
+    
     BOOL isInitFinished;
 }
 

@@ -12,6 +12,8 @@
 
 @implementation UIPlayer
 
+@synthesize tapGestureRecognizer=tapGestureRecognizer;
+
 -(id) init: (NSString*) id andName:(NSString *)name withRole: (Role) role {
     if(self = [super init: id andName: name withRole: role]) {
         _actionIcons = [NSMutableArray new];
@@ -21,7 +23,6 @@
 }
 
 -(void) selectPlayer: (UITapGestureRecognizer*) sender {
-    NSLog(@"******* %d", sender.state);
     if(self.delegate && !self.readyToMove) {
         [self.delegate selectPlayerById: self.id];
     }
@@ -107,7 +108,7 @@
 -(void) setView: (PlayerView *) view {
     _view = view;
     
-    UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectPlayer:)];
     [self.view.imageView addGestureRecognizer:tapGestureRecognizer];
     
     shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressMovePlayer:)];
