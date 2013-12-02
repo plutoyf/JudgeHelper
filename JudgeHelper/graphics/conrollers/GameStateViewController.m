@@ -323,8 +323,8 @@
     [scrollView addConstraints:bodyViewWidthContraints];
     
     CGPoint offset = scrollView.contentOffset;
-    offset.x = width+20;
-    //[scrollView setContentOffset:offset];
+    offset.x = width+20 > scrollView.frame.size.width ? width+20 - scrollView.frame.size.width : 0;
+    [scrollView setContentOffset:offset];
 }
 
 - (IBAction)undoButtonTapped:(id)sender {
