@@ -99,6 +99,27 @@
     }
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    if(!IS_IPAD()) {
+        UIInterfaceOrientation  orientation = [UIDevice currentDevice].orientation;
+        BOOL isPortraitMode = (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown);
+        float percentage = isPortraitMode ? 0.5 : 0.4;
+        
+        [self.bodyView removeConstraint: [self findConstraintWithItem:self.leftRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth from:self.bodyView.constraints]];
+        [self.bodyView removeConstraint: [self findConstraintWithItem:self.leftPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth from:self.bodyView.constraints]];
+        [self.bodyView removeConstraint: [self findConstraintWithItem:self.rightPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth from:self.bodyView.constraints]];
+        [self.bodyView removeConstraint: [self findConstraintWithItem:self.rightRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth from:self.bodyView.constraints]];
+        
+        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:percentage constant:0.f]];
+        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.leftPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:percentage constant:0.f]];
+        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightPlayerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:1-percentage constant:0.f]];
+        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:self.rightRoleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:1-percentage constant:0.f]];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -529,11 +550,10 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     Role r = [Engin getRoleFromString:[roles objectAtIndex:[pickerView selectedRowInComponent:0]]];
-    
     if (component == 0) {
         [self selectRole:r];
     } else {
-        [self setNumber:row forRole:r];
+        [self setNumber:(maxRoleNumber==1 ? staticRoleNumber : row) forRole:r];
     }
 }
 
