@@ -42,6 +42,9 @@ NSMutableArray *players;
     
     gameStateViewController = [[GameStateViewController alloc] init];
     
+    UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(emptyClick:)];
+    [self.playerView addGestureRecognizer:tapGestureRecognizer];
+    
     // init players without role
     playersMap = [[NSMutableDictionary alloc] init];
     players = [[NSMutableArray alloc] init];
@@ -341,12 +344,13 @@ NSMutableArray *players;
 }
 
 
-- (IBAction)restartButtonTapped:(id)sender {
-    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
+- (void)emptyClick:(id)sender {
+    NSLog(@"*** empty click");
+    [self selectPlayerById: nil];
 }
 
-- (IBAction)emptyClick:(id)sender {
-    [self selectPlayerById: nil];
+- (IBAction)restartButtonTapped:(id)sender {
+    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)showStateButtonTapped:(id)sender {
@@ -355,6 +359,8 @@ NSMutableArray *players;
 
 
 - (void) selectPlayerById: (NSString*) id {
+    NSLog(@"GameViewController selectPlayerById : %@", id);
+    
     UIPlayer* selPlayer = (UIPlayer*)[playersMap objectForKey:id];
     
     id = (selPlayer.role == Judge) ? (withBypass ? [Engin getRoleName:Game] : nil) : selPlayer.id;
@@ -464,6 +470,11 @@ NSMutableArray *players;
         }
     }
     
+}
+
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end

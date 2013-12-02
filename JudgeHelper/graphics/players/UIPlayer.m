@@ -21,6 +21,7 @@
 }
 
 -(void) selectPlayer: (UITapGestureRecognizer*) sender {
+    NSLog(@"******* %d", sender.state);
     if(self.delegate && !self.readyToMove) {
         [self.delegate selectPlayerById: self.id];
     }

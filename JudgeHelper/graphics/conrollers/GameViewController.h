@@ -13,7 +13,7 @@
 #import "TableView.h"
 #import "GameStateViewController.h"
 
-@interface GameViewController : UIViewController<CCEnginDisplayDelegate, UIPlayerControleDelegate> {
+@interface GameViewController : UIViewController<CCEnginDisplayDelegate, UIPlayerControleDelegate, UIGestureRecognizerDelegate> {
     BOOL layoutInited;
     TableZone *tableZone;
     UIPlayer* selPlayer;
@@ -35,7 +35,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *showStateButton;
 
-- (IBAction)emptyClick:(id)sender;
 - (IBAction)showStateButtonTapped:(id)sender;
 
 @end

@@ -77,15 +77,7 @@
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outletCollection property="gestureRecognizers" destination="dTY-Mx-Xyd" appends="YES" id="YLC-qO-xFO"/>
-            </connections>
         </view>
-        <tapGestureRecognizer id="dTY-Mx-Xyd">
-            <connections>
-                <action selector="emptyClick:" destination="-1" id="Nss-ps-O3h"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="left2-sel.png" width="30" height="40"/>
