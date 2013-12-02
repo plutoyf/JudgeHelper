@@ -19,14 +19,14 @@
     NSMutableArray* pIds;
     
     UIScrollView *scrollView;
-    UIView *bodyView;
-    NSArray *bodyViewWidthContraints;
-    NSArray *bodyViewHeightContraints;
+    UIView *contentView;
+    UIScrollView *stateScrollView;
+    UIView *stateContentView;
+    NSArray *contentViewHeightContraints;
+    NSArray *stateContentViewWidthContraints;
     
     BOOL isInitFinished;
 }
-
-@property (retain, nonatomic) UIView *bodyView;
 
 @property (weak, nonatomic) IBOutlet UIView *stateView;
 @property (weak, nonatomic) IBOutlet UIView *topBarView;

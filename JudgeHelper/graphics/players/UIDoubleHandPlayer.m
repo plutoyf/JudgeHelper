@@ -58,7 +58,7 @@
 
 -(void) updatePlayerIcon {
     if(_leftHandPlayer.status == OUT_GAME && _rightHandPlayer.status == OUT_GAME) {
-        self.view.alpha = .3f;
+        self.view.alpha = .4f;
     } else if(_leftHandPlayer.status == IN_GAME || _rightHandPlayer.status == IN_GAME) {
         self.view.alpha = 1.f;
     } else {

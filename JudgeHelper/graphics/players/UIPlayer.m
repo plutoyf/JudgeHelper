@@ -87,7 +87,7 @@
     _readyToMove = readyToMove;
     
     if(readyToMove) {
-        self.view.imageView.alpha = .3f;
+        self.view.imageView.alpha = .4f;
     } else {
         self.view.imageView.alpha = 1.f;
     }
@@ -143,7 +143,7 @@
         if(_role == Citizen) {
             [self setLabel: _name];
         } else if(_role > 0) {
-            [self setLabel: [NSString stringWithFormat:@"%@ [%@]", _name, [CCEngin getRoleLabel: _role]]];
+            [self setLabel: [NSString stringWithFormat:@"%@\n[%@]", _name, [CCEngin getRoleLabel: _role]]];
         }
         expanded = YES;
     }
@@ -165,7 +165,7 @@
 }
 
 -(void) updatePlayerIcon {
-    self.view.alpha = _status == OUT_GAME ? .3f : 1.f;
+    self.view.alpha = _status == OUT_GAME ? .4f : 1.f;
 }
 
 -(void) addActionIcon: (Role) role withResult:(BOOL)result {
@@ -175,7 +175,7 @@
     [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconImage.size.width)]];
     [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconImage.size.height)]];
         
-    icon.alpha = result ? 1.f : .3f;
+    icon.alpha = result ? 1.f : .4f;
     icon.translatesAutoresizingMaskIntoConstraints = NO;
     [_actionIcons addObject:icon];
     [self addChild:icon];

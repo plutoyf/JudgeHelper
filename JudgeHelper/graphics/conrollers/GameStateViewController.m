@@ -17,8 +17,6 @@
 
 @implementation GameStateViewController
 
-@synthesize bodyView=bodyView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,36 +37,40 @@
 }
 
 - (void)initScrollView {
-    // Create the scroll view and the image view.
-    scrollView  = [[UIScrollView alloc] init];
-    scrollView.showsVerticalScrollIndicator = YES;
+    scrollView = [[UIScrollView alloc] init];
+    contentView = [[UIView alloc] init];
+    stateScrollView = [[UIScrollView alloc] init];
+    stateContentView = [[UIView alloc] init];
     
-    bodyView = [[UIView alloc] init];
-    CGSize bodyViewSize = [self initPlayersLines];
-    
-    // Add the scroll view to our view.
     [self.stateView addSubview:scrollView];
+    [scrollView addSubview:contentView];
+    [contentView addSubview:stateScrollView];
+    [stateScrollView addSubview:stateContentView];
     
-    // Add the body view to the scroll view.
-    [scrollView addSubview:bodyView];
+    CGSize contentViewSize = [self initPlayersLines];
     
-    // Set the translatesAutoresizingMaskIntoConstraints to NO so that the views autoresizing mask is not translated into auto layout constraints.
-    scrollView.translatesAutoresizingMaskIntoConstraints  = NO;
-    bodyView.translatesAutoresizingMaskIntoConstraints = NO;
+    scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    stateScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    stateContentView.translatesAutoresizingMaskIntoConstraints = NO;
     
     // Set the constraints for the scroll view and the image view.
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(scrollView, bodyView);
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(scrollView, contentView, stateScrollView, stateContentView);
     
     [self.stateView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
-    
     [self.stateView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
     
-    bodyViewWidthContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[bodyView(width)]|" options:0 metrics:@{@"width":@(bodyViewSize.width)} views:viewsDictionary];
-    bodyViewHeightContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bodyView(height)]|" options:0 metrics:@{@"height":@(bodyViewSize.height)} views:viewsDictionary];
+    contentViewHeightContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView(height)]|" options:0 metrics:@{@"height":@(contentViewSize.height)} views:viewsDictionary];
+    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView(==scrollView)]|" options:0 metrics:0 views:viewsDictionary]];
+    [scrollView addConstraints:contentViewHeightContraints];
     
-    [scrollView addConstraints:bodyViewWidthContraints];
-    [scrollView addConstraints:bodyViewHeightContraints];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(marginLeft)-[stateScrollView]|" options:0 metrics:@{@"marginLeft":@(REVERSE(140))} views:viewsDictionary]];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stateScrollView]|" options:0 metrics: 0 views:viewsDictionary]];
 
+    stateContentViewWidthContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stateContentView(width)]|" options:0 metrics:@{@"width":@(contentViewSize.width)} views:viewsDictionary];
+    [stateScrollView addConstraints:stateContentViewWidthContraints];
+    [stateScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stateContentView(stateScrollView)]|" options:0 metrics:0 views:viewsDictionary]];
+    
 }
 
 - (CGSize)initPlayersLines {
@@ -88,13 +90,13 @@
         UIView* playerLine = [UIView new];
         playerLine.translatesAutoresizingMaskIntoConstraints = NO;
         [playerLines setObject:playerLine forKey:p.id];
-        [self.bodyView addSubview:playerLine];
+        [stateContentView addSubview:playerLine];
         
-        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeWidth multiplier:1.f constant:0]];
+        [stateContentView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:stateContentView attribute:NSLayoutAttributeWidth multiplier:1.f constant:0]];
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
         
-        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0]];
-        [self.bodyView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.bodyView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(10+40*i)]];
+        [stateContentView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:stateContentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0]];
+        [stateContentView addConstraint:[NSLayoutConstraint constraintWithItem:playerLine attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:stateContentView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(10+40*i)]];
         
         
         UILabel *label = [[UILabel alloc] init];
@@ -102,10 +104,11 @@
         label.font = [UIFont fontWithName:@"Verdana" size:VALUE(16, 12)];
         label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.translatesAutoresizingMaskIntoConstraints = NO;
-        [playerLine addSubview:label];
+        [contentView addSubview:label];
         
-        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:10.f]];
-        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
+        [label addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(140)]];
+        [contentView addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:10.f]];
+        [contentView addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(10+40*i)]];
         
         i++;
     }
@@ -184,7 +187,6 @@
     }
     
     int iconSize = 30;
-    int marginLeft = 140;
     int lifeBoxHeight = 6;
     
     if(receiver) {
@@ -195,12 +197,12 @@
         UIImage *iconImage = [UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
         UIImageView *icon = [[UIImageView alloc] initWithImage:iconImage];
         
-        if(!result) icon.alpha = .3f;
+        if(!result) icon.alpha = .4f;
         icon.translatesAutoresizingMaskIntoConstraints = NO;
         [visibleNodes addObject:icon];
         [playerLine addSubview:icon];
         
-        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count)]];
+        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count)]];
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:0]];
         
         
@@ -209,7 +211,7 @@
         
         lifeBox.backgroundColor = color;
         lifeBox.translatesAutoresizingMaskIntoConstraints = NO;
-        lifeBox.alpha = (receiver.status == IN_GAME) ? 1.f : .3f;
+        lifeBox.alpha = (receiver.status == IN_GAME) ? 1.f : .4f;
         
         [visibleNodes addObject:lifeBox];
         [lifeBoxes addObject:lifeBox];
@@ -218,7 +220,7 @@
         [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)+2]];
         [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
         
-        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize)]];
+        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count-iconSize)]];
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeBottom multiplier:1.f constant:0]];
         
         
@@ -253,12 +255,12 @@
                     [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)+2]];
                     [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
                     
-                    [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize)]];
+                    [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count-iconSize)]];
                     [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeBottom multiplier:1.f constant:0]];
                 }
             }
             
-            for(UIView *lifeBox in lifeBoxes) lifeBox.alpha = (player.status == IN_GAME) ? 1.f : .3f;
+            for(UIView *lifeBox in lifeBoxes) lifeBox.alpha = (player.status == IN_GAME) ? 1.f : .4f;
         }
         
         if(role == Judge) {
@@ -275,7 +277,7 @@
                 [separatorBox addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:1]];
                 [separatorBox addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:playerLine.frame.size.height+2]];
                 
-                [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*maxCount-iconSize)]];
+                [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*maxCount-iconSize)]];
                 [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
             }
         }
@@ -300,7 +302,7 @@
         
         [[playerVisibleObjects objectForKey:id] removeLastObject];
         
-        for(UIView *lifeBox in lifeBoxes) lifeBox.alpha = (player.status == IN_GAME) ? 1.f : .3f;
+        for(UIView *lifeBox in lifeBoxes) lifeBox.alpha = (player.status == IN_GAME) ? 1.f : .4f;
     }
     
     [self updateScrollViewWidth];
@@ -310,21 +312,20 @@
 
 - (void)updateScrollViewWidth {
     float iconSize = 30;
-    float marginLeft = 140;
     float width = 0;
     
     for(NSString *id in pIds) {
         NSMutableArray* lifeBoxes = [playerLifeBoxes objectForKey:id];
-        width = REVERSE(marginLeft+iconSize*lifeBoxes.count) > width ? REVERSE(marginLeft+iconSize*lifeBoxes.count) : width;
+        width = REVERSE(iconSize*lifeBoxes.count) > width ? REVERSE(iconSize*lifeBoxes.count) : width;
     }
     
-    [scrollView removeConstraints:bodyViewWidthContraints];
-    bodyViewWidthContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[bodyView(width)]|" options:0 metrics:@{@"width":@(width+20)} views:NSDictionaryOfVariableBindings(bodyView)];
-    [scrollView addConstraints:bodyViewWidthContraints];
+    [stateScrollView removeConstraints:stateContentViewWidthContraints];
+    stateContentViewWidthContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[stateContentView(width)]|" options:0 metrics:@{@"width":@(width+20)} views:NSDictionaryOfVariableBindings(stateContentView)];
+    [stateScrollView addConstraints:stateContentViewWidthContraints];
     
-    CGPoint offset = scrollView.contentOffset;
-    offset.x = width+20 > scrollView.frame.size.width ? width+20 - scrollView.frame.size.width : 0;
-    [scrollView setContentOffset:offset];
+    CGPoint offset = stateScrollView.contentOffset;
+    offset.x = width+20 > stateScrollView.frame.size.width ? width+20 - stateScrollView.frame.size.width : 0;
+    [stateScrollView setContentOffset:offset];
 }
 
 - (IBAction)undoButtonTapped:(id)sender {

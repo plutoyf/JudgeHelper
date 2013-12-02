@@ -11,15 +11,6 @@
 
 @implementation PlayerView
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self.name setFont:[UIFont fontWithName:@"System" size:REVERSE(18)]];
-    }
-    return self;
-}
-
 - (IBAction)movePlayer:(id)sender {
     [self bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
     CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self];
