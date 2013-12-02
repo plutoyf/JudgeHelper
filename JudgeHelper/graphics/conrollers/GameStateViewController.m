@@ -215,7 +215,7 @@
         [lifeBoxes addObject:lifeBox];
         [playerLine addSubview:lifeBox];
         
-        [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)]];
+        [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)+2]];
         [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
         
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize)]];
@@ -250,7 +250,7 @@
                     [lifeBoxes addObject:lifeBox];
                     [playerLine addSubview:lifeBox];
 
-                    [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)]];
+                    [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)+2]];
                     [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
                     
                     [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*lifeBoxes.count-iconSize)]];
@@ -273,7 +273,7 @@
                 [playerLine addSubview:separatorBox];
                 
                 [separatorBox addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:1]];
-                [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeHeight multiplier:1.f constant:0.f]];
+                [separatorBox addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:playerLine.frame.size.height+2]];
                 
                 [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(marginLeft+iconSize*maxCount-iconSize)]];
                 [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:separatorBox attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
@@ -324,7 +324,7 @@
     
     CGPoint offset = scrollView.contentOffset;
     offset.x = width+20;
-    [scrollView setContentOffset:offset];
+    //[scrollView setContentOffset:offset];
 }
 
 - (IBAction)undoButtonTapped:(id)sender {

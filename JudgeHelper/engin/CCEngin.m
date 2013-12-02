@@ -274,6 +274,7 @@ static CCEngin *engin = nil;
                 NSLog(@"%ld - %@", night, [self getRoleLabel:roleInAction]);
                 
                 [self recordPlayersStatus];
+                roleInAction = nil;
                 
                 //8. do clearence after one night
                 for(Player* p in currentPlayers) {
@@ -319,7 +320,7 @@ static CCEngin *engin = nil;
             [self debugPlayers];
             [self.displayDelegate showMessage: [NSString stringWithFormat:@"今夜%@%@", deadNames, @"死亡"]];
             state++;
-            break;
+            if(!speedMode) break;
         case 8:
             NSLog(@"case 8");
             [self debugCurrentNightInfo: night];
@@ -374,7 +375,7 @@ static CCEngin *engin = nil;
                 [self.displayDelegate updatePlayerIcons];
                 [self.displayDelegate showMessage: [NSString stringWithFormat:@"投票结果：%@死亡", deadNames]];
                 state++;
-                break;
+                if(!speedMode) break;
             } else {
                 break;
             }
