@@ -27,6 +27,8 @@
 		E01E17A3180590B3007CD3A4 /* Icon-72-assassin.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179D180590B3007CD3A4 /* Icon-72-assassin.png */; };
 		E01E17A4180590B3007CD3A4 /* Icon-72-undercover-dead.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */; };
 		E01E17A5180590B3007CD3A4 /* Icon-72-undercover.png in Resources */ = {isa = PBXBuildFile; fileRef = E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */; };
+		E01F2939184D4BF10048C549 /* GameRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E01F2937184D4BF10048C549 /* GameRuleViewController.m */; };
+		E01F293A184D4BF10048C549 /* GameRuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E01F2938184D4BF10048C549 /* GameRuleViewController.xib */; };
 		E024D6B117CFA2BB0032EE61 /* quit.png in Resources */ = {isa = PBXBuildFile; fileRef = E024D6B017CFA2BB0032EE61 /* quit.png */; };
 		E02AC33817D4FA8600923C8E /* btn_off2_red-40-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33717D4FA8600923C8E /* btn_off2_red-40-sel.png */; };
 		E02AC33A17D4FAE700923C8E /* btn_on2_green-40-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E02AC33917D4FAE700923C8E /* btn_on2_green-40-sel.png */; };
@@ -331,6 +333,9 @@
 		E01E179D180590B3007CD3A4 /* Icon-72-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin.png"; path = "Resources/Icon-72-assassin.png"; sourceTree = "<group>"; };
 		E01E179E180590B3007CD3A4 /* Icon-72-undercover-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-undercover-dead.png"; path = "Resources/Icon-72-undercover-dead.png"; sourceTree = "<group>"; };
 		E01E179F180590B3007CD3A4 /* Icon-72-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-undercover.png"; path = "Resources/Icon-72-undercover.png"; sourceTree = "<group>"; };
+		E01F2936184D4BF10048C549 /* GameRuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRuleViewController.h; sourceTree = "<group>"; };
+		E01F2937184D4BF10048C549 /* GameRuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRuleViewController.m; sourceTree = "<group>"; };
+		E01F2938184D4BF10048C549 /* GameRuleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameRuleViewController.xib; sourceTree = "<group>"; };
 		E024D6B017CFA2BB0032EE61 /* quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = quit.png; path = Resources/quit.png; sourceTree = "<group>"; };
 		E02AC33717D4FA8600923C8E /* btn_off2_red-40-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_off2_red-40-sel.png"; path = "Resources/btn_off2_red-40-sel.png"; sourceTree = "<group>"; };
 		E02AC33917D4FAE700923C8E /* btn_on2_green-40-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_on2_green-40-sel.png"; path = "Resources/btn_on2_green-40-sel.png"; sourceTree = "<group>"; };
@@ -1517,6 +1522,9 @@
 				E0163AC6184B432600A4FEA6 /* GameStateViewController.h */,
 				E0163AC7184B432600A4FEA6 /* GameStateViewController.m */,
 				E0163AC8184B432600A4FEA6 /* GameStateViewController.xib */,
+				E01F2936184D4BF10048C549 /* GameRuleViewController.h */,
+				E01F2937184D4BF10048C549 /* GameRuleViewController.m */,
+				E01F2938184D4BF10048C549 /* GameRuleViewController.xib */,
 			);
 			name = controllers;
 			path = conrollers;
@@ -1672,6 +1680,7 @@
 				E059F83917B02E870071829E /* undo.png in Resources */,
 				E06068B717B1145600F3E4CB /* delete_mini.png in Resources */,
 				E06068B817B1145600F3E4CB /* delete.png in Resources */,
+				E01F293A184D4BF10048C549 /* GameRuleViewController.xib in Resources */,
 				E0D5CF8717B682FA00EF0AAB /* left2.png in Resources */,
 				E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */,
 				E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */,
@@ -1731,6 +1740,7 @@
 				E059F83D17B02EA00071829E /* CCNode+SFGestureRecognizers.m in Sources */,
 				E0163AC9184B432600A4FEA6 /* GameStateViewController.m in Sources */,
 				E059F84317B02EB20071829E /* GlobalSettings.m in Sources */,
+				E01F2939184D4BF10048C549 /* GameRuleViewController.m in Sources */,
 				E059F85B17B02EBD0071829E /* CCEngin.m in Sources */,
 				E0163ABF18452EC300A4FEA6 /* UIHandPlayer.m in Sources */,
 				E059F85C17B02EBD0071829E /* Condition.m in Sources */,

@@ -20,6 +20,17 @@
     }
 }
 
+DisplayMode displayMode = UIKIT;
+-(void) setDisplayMode: (DisplayMode) mode {
+    if(mode == UIKIT || mode == COCOS2D) {
+        displayMode = mode;
+    }
+}
+
+-(DisplayMode) getDisplayMode {
+    return displayMode;
+}
+
 GameMode gameMode = DOUBLE_HAND;
 -(void) setGameMode: (GameMode) mode {
     if(mode == NORMAL || mode == DOUBLE_HAND) {

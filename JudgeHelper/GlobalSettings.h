@@ -12,9 +12,15 @@ typedef enum {
     NORMAL = 0, DOUBLE_HAND = 1
 } GameMode;
 
+typedef enum {
+    UIKIT = 0, COCOS2D = 1
+} DisplayMode;
+
 @interface GlobalSettings : NSObject
 
 +(GlobalSettings *)globalSettings;
+-(void) setDisplayMode: (DisplayMode) displayMode;
+-(DisplayMode) getDisplayMode;
 -(void) setGameMode: (GameMode) gameMode;
 -(GameMode) getGameMode;
 -(void) setPlayerIds: (NSArray*) ids;

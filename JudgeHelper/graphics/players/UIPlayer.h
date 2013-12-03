@@ -69,6 +69,7 @@ typedef enum {
 @required
 -(void) selectPlayerById: (NSString*) id;
 -(void) selectAllPlayersToMove;
+-(void) cancelAllPlayersToMove;
 -(void) playerPositionChanged : (UIPlayer*) player;
 -(void) superLongPressPlayer : (UIPlayer*) player;
 -(void) movePlayer: (UIPlayer*) player toPosition: (CGPoint) point;

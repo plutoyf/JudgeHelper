@@ -12,6 +12,7 @@
 #import "UIDoubleHandPlayer.h"
 #import "AppDelegate.h"
 #import "GameStateViewController.h"
+#import "GameRuleViewController.h"
 
 @interface GameViewController ()
 
@@ -398,6 +399,15 @@ NSMutableArray *players;
     }
 }
 
+-(void) cancelAllPlayersToMove{
+    for (UIPlayer* player in players) {
+        if(player.settled) {
+            player.readyToMove = NO;
+        }
+    }
+}
+
+
 -(BOOL) isSinglePlayerToBeMoved {
     BOOL hasPlayerToBeMoved = NO;
     for (UIPlayer* player in players) {
@@ -469,6 +479,13 @@ NSMutableArray *players;
         }
     }
     
+}
+
+-(void) superLongPressPlayer : (UIPlayer*) player {
+    if(player.role == Judge) {
+        [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController pushViewController:[GameRuleViewController new] animated:YES];
+
+    }
 }
 
 

@@ -337,6 +337,10 @@
 }
 
 - (IBAction)quitButtonTapped:(id)sender {
+    if ([[GlobalSettings globalSettings] getDisplayMode] == COCOS2D) {
+        //[((AppController*)[[UIApplication sharedApplication] delegate]).navigationController pushViewController:[CCDirector sharedDirector] animated:YES];
+    }
+    
     [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
 }
 

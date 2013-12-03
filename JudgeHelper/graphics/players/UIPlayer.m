@@ -42,11 +42,11 @@
             wasSetteledBeforeShortPressMove = _settled;
             originalPoint = ccpSub(self.view.center, location);
             [self setReadyToMove: YES];
-        } else if(sender.state == UIGestureRecognizerStateEnded) {
+        } else if(sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
             [_delegate playerPositionChanged: self];
             shortPressMoveBegan = NO;
-        } else {
-            //NSLog(@"shortPressMove %f %f", location.x, location.y);
+        } else if(sender.state == UIGestureRecognizerStateChanged) {
+            //NSLog(@"shortPressMove %f %f %d", location.x, location.y, sender.state);
             shortPressMoveBegan = YES;
             [_delegate movePlayer: self toPosition:ccpAdd(location, originalPoint)];
         }
@@ -65,13 +65,12 @@
             originalPoint = locationInPlayerSpace;
             [_delegate selectAllPlayersToMove];
         } else if(longPressMoveBegan) {
-            if(sender.state == UIGestureRecognizerStateEnded) {
+            if(sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
                 [_delegate playerPositionChanged: nil];
                 longPressMoveBegan = NO;
-            } else {
+            } else if(sender.state == UIGestureRecognizerStateChanged) {
                 //NSLog(@"longPressMove %f %f", location.x, location.y);
                 [_delegate movePlayer: self toPosition:location];
-                //[_delegate movePlayer: self toPosition:ccpSub(ccpAdd(location, CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2)), originalPoint)];
             }
         }
     }
@@ -79,6 +78,8 @@
 
 -(void) superLongPressMovePlayer: (UILongPressGestureRecognizer*) sender {
     if(sender.state == UIGestureRecognizerStateBegan) {
+        longPressMoveBegan = NO;
+        [_delegate cancelAllPlayersToMove];
         [_delegate superLongPressPlayer:self];
     }
 }
@@ -112,7 +113,7 @@
     [self.view.imageView addGestureRecognizer:tapGestureRecognizer];
     
     shortPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortPressMovePlayer:)];
-    shortPressGestureRecognizer.minimumPressDuration = 0.4;
+    shortPressGestureRecognizer.minimumPressDuration = 0;
     shortPressGestureRecognizer.delegate = self;
     [self.view.imageView addGestureRecognizer:shortPressGestureRecognizer];
     

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameRuleViewController">
+            <connections>
+                <outlet property="cocos2dModeSwitch" destination="fBd-A0-tlk" id="bpC-vS-m10"/>
+                <outlet property="ruleEditBottomSpaceConstraint" destination="NSw-c1-6e2" id="I15-SH-han"/>
+                <outlet property="ruleEditView" destination="MDf-mk-2p9" id="Lyz-TT-MRQ"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eb4-Xg-nKC" userLabel="TopBarView">
+                    <rect key="frame" x="0.0" y="0.0" width="568" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kde-O1-O0P">
+                            <rect key="frame" x="20" y="5" width="34" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Save">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="-1" eventType="touchUpInside" id="OAN-eg-858"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZA6-L1-tX2">
+                            <rect key="frame" x="74" y="5" width="48" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="xJu-aR-bP4"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yu5-1H-BZP">
+                            <rect key="frame" x="142" y="5" width="53" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Restore">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="restoreButtonTapped:" destination="-1" eventType="touchUpInside" id="czH-vm-1L0"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cocos2d Mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCs-U6-QLP">
+                            <rect key="frame" x="360" y="10" width="119" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fBd-A0-tlk" userLabel="Switch - Cocos2dMode">
+                            <rect key="frame" x="499" y="4" width="51" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="cocos2dModeSwitchChanged:" destination="-1" eventType="valueChanged" id="4pL-L2-oRz"/>
+                            </connections>
+                        </switch>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="ZA6-L1-tX2" firstAttribute="leading" secondItem="Kde-O1-O0P" secondAttribute="trailing" constant="20" id="8PI-qA-H85"/>
+                        <constraint firstItem="Kde-O1-O0P" firstAttribute="leading" secondItem="eb4-Xg-nKC" secondAttribute="leading" constant="20" id="C1h-ED-22d"/>
+                        <constraint firstItem="fBd-A0-tlk" firstAttribute="leading" secondItem="FCs-U6-QLP" secondAttribute="trailing" constant="20" id="K8u-ag-7Nm"/>
+                        <constraint firstAttribute="centerY" secondItem="fBd-A0-tlk" secondAttribute="centerY" constant="0.5" id="OW2-ad-2pQ"/>
+                        <constraint firstItem="Yu5-1H-BZP" firstAttribute="leading" secondItem="ZA6-L1-tX2" secondAttribute="trailing" constant="20" id="QdB-xs-00K"/>
+                        <constraint firstAttribute="centerY" secondItem="Kde-O1-O0P" secondAttribute="centerY" id="RFK-cU-qN0"/>
+                        <constraint firstAttribute="centerY" secondItem="Yu5-1H-BZP" secondAttribute="centerY" id="RIR-H0-O7d"/>
+                        <constraint firstAttribute="trailing" secondItem="fBd-A0-tlk" secondAttribute="trailing" constant="20" id="ciY-fJ-8ie"/>
+                        <constraint firstAttribute="centerY" secondItem="FCs-U6-QLP" secondAttribute="centerY" constant="-0.5" id="eZZ-kc-Yyf"/>
+                        <constraint firstAttribute="centerY" secondItem="ZA6-L1-tX2" secondAttribute="centerY" id="jcp-KC-lBC"/>
+                        <constraint firstAttribute="height" constant="40" id="l6d-0e-yQn"/>
+                    </constraints>
+                </view>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDf-mk-2p9" userLabel="RuleEditView">
+                    <rect key="frame" x="0.0" y="40" width="568" height="270"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="eb4-Xg-nKC" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="0zU-vY-kGU"/>
+                <constraint firstItem="eb4-Xg-nKC" firstAttribute="top" secondItem="1" secondAttribute="top" id="7ea-hC-nkx"/>
+                <constraint firstItem="MDf-mk-2p9" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Fit-rh-zbi"/>
+                <constraint firstAttribute="bottom" secondItem="MDf-mk-2p9" secondAttribute="bottom" constant="10" id="NSw-c1-6e2"/>
+                <constraint firstAttribute="trailing" secondItem="eb4-Xg-nKC" secondAttribute="trailing" id="Tg5-mx-cM3"/>
+                <constraint firstAttribute="trailing" secondItem="MDf-mk-2p9" secondAttribute="trailing" id="bAU-my-ugz"/>
+                <constraint firstItem="MDf-mk-2p9" firstAttribute="top" secondItem="eb4-Xg-nKC" secondAttribute="bottom" id="ic9-5Z-cT4"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>
