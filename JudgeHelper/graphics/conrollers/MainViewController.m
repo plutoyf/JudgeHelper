@@ -73,7 +73,7 @@
         self.doubleHandModeSwitch.alpha = 1.f;
         
         self.view.tag = 3;
-        [self.nextButton setTitle:@"开始" forState:UIControlStateNormal];
+        [self.nextButton setTitle:@"开  始" forState:UIControlStateNormal];
     } else {
         UIInterfaceOrientation  orientation = [UIDevice currentDevice].orientation;
         BOOL isPortraitMode = (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown);
@@ -144,7 +144,7 @@
             } else {
                 isReadyToStart = [self isRedyToStart];
                 self.view.tag = isReadyToStart ? 2 : 1;
-                [self.nextButton setTitle:isReadyToStart ? @"开始" : @"下一步" forState:UIControlStateNormal];
+                [self.nextButton setTitle:isReadyToStart ? @"开  始" : @"下一步" forState:UIControlStateNormal];
                 self.createPlayerButton.alpha = 0.0f;
                 self.doubleHandModeLabel.alpha = 1.0f;
                 self.doubleHandModeSwitch.alpha = 1.0f;
@@ -154,7 +154,7 @@
             break;
         case 1:
             self.view.tag = 2;
-            [self.nextButton setTitle:@"开始" forState:UIControlStateNormal];
+            [self.nextButton setTitle:@"开  始" forState:UIControlStateNormal];
             [self matchPlayerNumber];
             [self animateViewWithLeftPart:YES andRightPart:NO];
             break;

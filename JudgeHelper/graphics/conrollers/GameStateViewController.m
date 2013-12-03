@@ -127,8 +127,8 @@
     [quitButton setImage:[UIImage imageNamed:@"quit.png"] forState:UIControlStateNormal];
     [quitButton setImage:[UIImage imageNamed:@"quit-sel.png"] forState:UIControlStateSelected];
     
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
-    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:34]];
+    [quitButton addConstraint:[NSLayoutConstraint constraintWithItem:quitButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:34]];
     
     quitButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.topBarView addSubview:quitButton];
@@ -144,8 +144,8 @@
     [redoButton setImage:[UIImage imageNamed:@"redo.png"] forState:UIControlStateNormal];
     [redoButton setImage:[UIImage imageNamed:@"redo-sel.png"] forState:UIControlStateSelected];
     
-    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
-    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:34]];
+    [redoButton addConstraint:[NSLayoutConstraint constraintWithItem:redoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:34]];
     
     redoButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.topBarView addSubview:redoButton];
@@ -160,14 +160,14 @@
     [undoButton setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
     [undoButton setImage:[UIImage imageNamed:@"undo-sel.png"] forState:UIControlStateSelected];
     
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
-    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:34]];
+    [undoButton addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:34]];
     
     undoButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.topBarView addSubview:undoButton];
     
     [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.topBarView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0.f]];
-    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(-20)]];
+    [self.topBarView addConstraint:[NSLayoutConstraint constraintWithItem:undoButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:redoButton attribute:NSLayoutAttributeLeading multiplier:1.f constant:-20]];
 }
 
 - (void)didReceiveMemoryWarning
