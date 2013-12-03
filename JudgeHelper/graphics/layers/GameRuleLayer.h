@@ -17,5 +17,6 @@
     UIButton *saveButton;
     UIButton *cancelButton;
     UIButton *restoreButton;
+    UIButton *displayWithUIKitButton;
 }
 @end

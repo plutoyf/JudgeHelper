@@ -35,15 +35,8 @@
 {
     [super viewDidLoad];
     
-    ((AppController*)[[UIApplication sharedApplication] delegate]).navigationController = self.navigationController;
-    
     selectedPIds = [NSMutableArray new];
     [self initPlayerIds];
-    
-    //bouchon
-    for(int i = 0; i<6; i++) {
-        [selectedPIds addObject:[pids objectAtIndex:i]];
-    }
     
     [self initRoles];
     [self selectRole:Judge];

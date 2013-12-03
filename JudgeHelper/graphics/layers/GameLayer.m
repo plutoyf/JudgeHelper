@@ -399,13 +399,13 @@ BOOL showDebugMessageEnable = NO;
 -(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app viewController] dismissModalViewControllerAnimated:YES];
+	[[app rootViewController] dismissModalViewControllerAnimated:YES];
 }
 
 -(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app viewController] dismissModalViewControllerAnimated:YES];
+	[[app rootViewController] dismissModalViewControllerAnimated:YES];
 }
 
 @end

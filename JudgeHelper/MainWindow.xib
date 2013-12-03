@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <customObject id="5oS-DR-Dl2" customClass="AppController">
             <connections>
+                <outlet property="navigationController" destination="mDt-j8-8dF" id="bjW-GM-N0p"/>
                 <outlet property="window" destination="TgT-08-afY" id="PPx-pM-a1R"/>
             </connections>
         </customObject>
@@ -35,16 +36,6 @@
             <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Srx-dg-NXq">
                 <autoresizingMask key="autoresizingMask"/>
             </navigationBar>
-            <viewControllers>
-                <viewController autoresizesArchivedViewToFullSize="NO" id="JJc-WX-ca1" userLabel="Main View Controller - Root View Controller" customClass="MainViewController">
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Z7M-MU-xu8"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <nil key="simulatedDestinationMetrics"/>
-                </viewController>
-            </viewControllers>
             <connections>
                 <outlet property="delegate" destination="5oS-DR-Dl2" id="16A-YO-w5a"/>
             </connections>

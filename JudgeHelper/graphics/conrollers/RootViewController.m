@@ -61,7 +61,7 @@
     [director didMoveToParentViewController:self];
      
     // Run whatever scene we'd like to run here.
-    [director runWithScene:[IntroLayer scene]];
+    [director runWithScene:[SelectPlayerLayer scene]];
 }
 
 - (void)viewDidUnload

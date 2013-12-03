@@ -9,6 +9,7 @@
 #import "GameRuleLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "RuleResolver.h"
+#import "GlobalSettings.h"
 #import "iAdSingleton.h"
 
 @implementation GameRuleLayer
@@ -51,6 +52,12 @@ NSString *const RESULT_RULES_HEADER = @"==RESULT RULES==";
         [restoreButton setTitle: @"Restore" forState: UIControlStateNormal];
         [restoreButton addTarget:self action:@selector(restore:) forControlEvents:UIControlEventTouchUpInside];
         [[[CCDirector sharedDirector] openGLView] addSubview:restoreButton];
+        
+        displayWithUIKitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [displayWithUIKitButton setFrame: CGRectMake(VALUE(330, 195), REVERSE_Y(310), VALUE(240, 140), REVERSE_Y(30))];
+        [displayWithUIKitButton setTitle: @"Display With UIKit" forState: UIControlStateNormal];
+        [displayWithUIKitButton addTarget:self action:@selector(displayWithUIKit:) forControlEvents:UIControlEventTouchUpInside];
+        [[[CCDirector sharedDirector] openGLView] addSubview:displayWithUIKitButton];
 
     }
     
@@ -85,6 +92,7 @@ NSString *const RESULT_RULES_HEADER = @"==RESULT RULES==";
     [saveButton removeFromSuperview];
     [cancelButton removeFromSuperview];
     [restoreButton removeFromSuperview];
+    [displayWithUIKitButton removeFromSuperview];
 }
 
 -(void) restore:(id) sender {
@@ -131,6 +139,14 @@ NSString *const RESULT_RULES_HEADER = @"==RESULT RULES==";
     rulesString = [[rulesString stringByAppendingString: resultRulesString] stringByAppendingString: @"\n"];
     
     rulesTextView.text = rulesString;
+}
+
+- (void) displayWithUIKit:(id) sender {
+    GlobalSettings *globalSettings = [GlobalSettings globalSettings];
+    [globalSettings setDisplayMode: UIKIT];
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithInt:[globalSettings getDisplayMode]] forKey:@"displayMode"];
+    [userDefaults synchronize];
 }
 
 @end

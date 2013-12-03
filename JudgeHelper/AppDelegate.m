@@ -12,10 +12,12 @@
 #import "iAdSingleton.h"
 #import "IntroLayer.h"
 #import "SelectPlayerLayer.h"
+#import "RootViewController.h"
+#import "MainViewController.h"
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, director=director_;
+@synthesize window=window_, director=director_;
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
     return UIInterfaceOrientationMaskAll;
@@ -55,7 +57,7 @@
     if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-        [director runWithScene: [GameLayer scene]];
+        [director runWithScene: [SelectPlayerLayer scene]];
 	}
     
     UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -125,8 +127,12 @@
     
     //[self createIAd];
     
-    // set the Navigation Controller as the root view controller
-    //[self.window setRootViewController:self.navigationController];
+    GlobalSettings *globalSettings = [GlobalSettings globalSettings];
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [globalSettings setDisplayMode: [((NSNumber *)[userDefaults objectForKey:@"displayMode"]) intValue]];
+    
+    self.rootViewController = [globalSettings getDisplayMode] == COCOS2D ? director_ : [MainViewController new];
+    [self.navigationController setViewControllers:@[self.rootViewController] animated:NO];
     
     // make main window visible
     [self.window makeKeyAndVisible];
@@ -136,7 +142,7 @@
 
 -(void) createIAd {
     [[iAdSingleton sharedInstance]createAdView];
-    [viewController_.view addSubview: [iAdSingleton sharedInstance].bannerView];
+    [self.rootViewController.view addSubview: [iAdSingleton sharedInstance].bannerView];
 }
 
 -(void) resumeIAd {

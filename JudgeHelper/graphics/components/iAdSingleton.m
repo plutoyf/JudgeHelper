@@ -48,7 +48,7 @@
         // offscreen to ensure that the user won't see the banner until its ready.
         // We'll be informed when we have an ad to show because -bannerViewDidLoadAd: will be called.
         frame.size = [ADBannerView sizeFromBannerContentSizeIdentifier:contentSize];
-        frame.origin = CGPointMake(0.0f, CGRectGetMaxY(app.viewController.view.bounds));
+        frame.origin = CGPointMake(0.0f, CGRectGetMaxY(app.rootViewController.view.bounds));
         
         // Now to create and configure the banner view
         self.bannerView = [[ADBannerView alloc] initWithFrame:frame];
@@ -126,7 +126,7 @@
 {
     _adBannerViewIsVisible = true;
     AppController * myDelegate = (((AppController*) [UIApplication sharedApplication].delegate));
-    [myDelegate.viewController.view addSubview:self.bannerView];
+    [myDelegate.rootViewController.view addSubview:self.bannerView];
     
     if (self.bannerView)
     {

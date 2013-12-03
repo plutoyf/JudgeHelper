@@ -170,7 +170,7 @@
         r.origin = [[CCDirector sharedDirector] convertToGL:r.origin];
         [_popover presentPopoverFromRect:r inView:[[CCDirector sharedDirector] openGLView] permittedArrowDirections:UIPopoverArrowDirectionUp animated:NO];
     } else {
-        UIViewController *rootViewController = (UIViewController*)[(AppController*)[[UIApplication sharedApplication] delegate] viewController];
+        UIViewController *rootViewController = (UIViewController*)[(AppController*)[[UIApplication sharedApplication] delegate] rootViewController];
         [rootViewController presentModalViewController:_picker animated:NO];
     }
 }

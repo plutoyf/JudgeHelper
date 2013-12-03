@@ -148,6 +148,9 @@ NSString *const CONST_RESULT_RULES_HEADER = @"==RESULT RULES==";
 - (IBAction)cocos2dModeSwitchChanged:(id)sender {
     GlobalSettings *globalSettings = [GlobalSettings globalSettings];
     [globalSettings setDisplayMode: self.cocos2dModeSwitch.on ? COCOS2D : UIKIT];
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithInt:[globalSettings getDisplayMode]] forKey:@"displayMode"];
+    [userDefaults synchronize];
 }
 
 @end

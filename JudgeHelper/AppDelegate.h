@@ -18,9 +18,9 @@
 }
 
 @property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (weak, nonatomic) IBOutlet UINavigationController *navigationController;
 
-@property (nonatomic, strong) UINavigationController *navigationController;
-@property (readonly) RootViewController *viewController;
+@property (nonatomic, strong) UIViewController *rootViewController;
 @property (unsafe_unretained, readonly) CCDirectorIOS *director;
 
 @end

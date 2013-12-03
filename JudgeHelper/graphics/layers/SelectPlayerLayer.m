@@ -211,10 +211,6 @@
     
 }
 
-- (void) toPreviousScreen : (id) sender {
-    [((AppController*)[[UIApplication sharedApplication] delegate]).navigationController popToRootViewControllerAnimated:YES];
-}
-
 - (void) toNextScreen : (id) sender {
     // init players
     NSArray* playerIds = [self getSelectedPlayerIds];
@@ -291,13 +287,6 @@
         titleLabel.position = ccp( titleLabel.boundingBox.size.width/2+REVERSE_X(20) , size.height-REVERSE_Y(40) );
         [self addChild: titleLabel];
         
-        
-        CCMenuItem *previousMenuItem = [CCMenuItemImage itemFromNormalImage:@"previous.png" selectedImage:@"previous-sel.png" target:self selector:@selector(toPreviousScreen:)];
-        [previousMenuItem setScaleX: IMG_WIDTH/previousMenuItem.contentSize.width];
-        [previousMenuItem setScaleY: IMG_HEIGHT/previousMenuItem.contentSize.height];
-        previousMenu = [CCMenu menuWithItems:previousMenuItem, nil];
-        previousMenu.position = ccp(size.width-REVERSE_X(280), REVERSE_Y(80));
-        [self addChild:previousMenu];
         
         CCMenuItem *addPlayerMenuItem = [CCMenuItemImage itemFromNormalImage:@"add.png" selectedImage:@"add-sel.png" target:self selector:@selector(addPlayerButtonTapped:)];
         [addPlayerMenuItem setScaleX: IMG_WIDTH/addPlayerMenuItem.contentSize.width];
@@ -526,12 +515,12 @@ NSMutableArray* pids;
 -(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app viewController] dismissModalViewControllerAnimated:YES];
+	[[app rootViewController] dismissModalViewControllerAnimated:YES];
 }
 
 -(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app viewController] dismissModalViewControllerAnimated:YES];
+	[[app rootViewController] dismissModalViewControllerAnimated:YES];
 }
 @end
