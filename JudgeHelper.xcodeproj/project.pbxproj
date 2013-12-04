@@ -82,7 +82,6 @@
 		E059F4BE17B02BB50071829E /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E059F4BD17B02BB50071829E /* iTunesArtwork */; };
 		E059F63617B02BC20071829E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F63517B02BC20071829E /* main.m */; };
 		E059F63917B02BC30071829E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F63817B02BC30071829E /* AppDelegate.m */; };
-		E059F63F17B02BC30071829E /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F63E17B02BC30071829E /* IntroLayer.m */; };
 		E059F64A17B02D860071829E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E059F49E17B02BB40071829E /* Foundation.framework */; };
 		E059F64F17B02D860071829E /* cocos2d_library.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E059F64E17B02D860071829E /* cocos2d_library.h */; };
 		E059F65117B02D860071829E /* cocos2d_library.m in Sources */ = {isa = PBXBuildFile; fileRef = E059F65017B02D860071829E /* cocos2d_library.m */; };
@@ -281,8 +280,6 @@
 		E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A5B4E617BED294007F97BD /* GameRuleLayer.m */; };
 		E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A5B4E817BED77E007F97BD /* rightUp.png */; };
 		E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D2989E1834CD6B007736FE /* MainWindow.xib */; };
-		E0D298A41834D050007736FE /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A21834D050007736FE /* RootViewController.m */; };
-		E0D298A51834D050007736FE /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A31834D050007736FE /* RootViewController.xib */; };
 		E0D298A91834E3CD007736FE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A71834E3CD007736FE /* MainViewController.m */; };
 		E0D298AA1834E3CD007736FE /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A81834E3CD007736FE /* MainViewController.xib */; };
 		E0D298AD18350F44007736FE /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298AC18350F44007736FE /* PlayerTableViewCell.m */; };
@@ -395,8 +392,6 @@
 		E059F63517B02BC20071829E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E059F63717B02BC20071829E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E059F63817B02BC30071829E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E059F63D17B02BC30071829E /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
-		E059F63E17B02BC30071829E /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		E059F64917B02D860071829E /* libcocos2d-library.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-library.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E059F64D17B02D860071829E /* cocos2d-library-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cocos2d-library-Prefix.pch"; sourceTree = "<group>"; };
 		E059F64E17B02D860071829E /* cocos2d_library.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cocos2d_library.h; sourceTree = "<group>"; };
@@ -770,9 +765,6 @@
 		E0A5B4E617BED294007F97BD /* GameRuleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRuleLayer.m; sourceTree = "<group>"; };
 		E0A5B4E817BED77E007F97BD /* rightUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightUp.png; path = Resources/rightUp.png; sourceTree = "<group>"; };
 		E0D2989E1834CD6B007736FE /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		E0D298A11834D050007736FE /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		E0D298A21834D050007736FE /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		E0D298A31834D050007736FE /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		E0D298A61834E3CD007736FE /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E0D298A71834E3CD007736FE /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E0D298A81834E3CD007736FE /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -873,8 +865,6 @@
 				E059F63717B02BC20071829E /* AppDelegate.h */,
 				E059F63817B02BC30071829E /* AppDelegate.m */,
 				E0D2989E1834CD6B007736FE /* MainWindow.xib */,
-				E059F63D17B02BC30071829E /* IntroLayer.h */,
-				E059F63E17B02BC30071829E /* IntroLayer.m */,
 				E059F4A717B02BB40071829E /* Resources */,
 				E059F63317B02BC20071829E /* Supporting Files */,
 			);
@@ -1510,9 +1500,6 @@
 		E0D298A01834D00C007736FE /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E0D298A11834D050007736FE /* RootViewController.h */,
-				E0D298A21834D050007736FE /* RootViewController.m */,
-				E0D298A31834D050007736FE /* RootViewController.xib */,
 				E0D298A61834E3CD007736FE /* MainViewController.h */,
 				E0D298A71834E3CD007736FE /* MainViewController.m */,
 				E0D298A81834E3CD007736FE /* MainViewController.xib */,
@@ -1698,7 +1685,6 @@
 				E02AC33D17D4FB8800923C8E /* down-sel.png in Resources */,
 				E02AC33E17D4FB8800923C8E /* up-sel.png in Resources */,
 				E02AC34117D4FF5800923C8E /* add-sel.png in Resources */,
-				E0D298A51834D050007736FE /* RootViewController.xib in Resources */,
 				E05A3E6D1836F847008FDE75 /* RoleCollectionViewCell.xib in Resources */,
 				E01E17A2180590B3007CD3A4 /* Icon-72-assassin-dead.png in Resources */,
 				E02AC34217D4FF5800923C8E /* next-sel.png in Resources */,
@@ -1736,7 +1722,6 @@
 				E059F63617B02BC20071829E /* main.m in Sources */,
 				E086489D1832519300D872D7 /* iAdSingleton.m in Sources */,
 				E059F63917B02BC30071829E /* AppDelegate.m in Sources */,
-				E059F63F17B02BC30071829E /* IntroLayer.m in Sources */,
 				E059F83D17B02EA00071829E /* CCNode+SFGestureRecognizers.m in Sources */,
 				E0163AC9184B432600A4FEA6 /* GameStateViewController.m in Sources */,
 				E059F84317B02EB20071829E /* GlobalSettings.m in Sources */,
@@ -1774,7 +1759,6 @@
 				E06068A817B0F63F00F3E4CB /* UIImage+Alpha.m in Sources */,
 				E0163ABC1843EB8800A4FEA6 /* UIPlayer.m in Sources */,
 				E06068A917B0F63F00F3E4CB /* UIImage+Resize.m in Sources */,
-				E0D298A41834D050007736FE /* RootViewController.m in Sources */,
 				E08E64931847AA74006A461B /* BordlessView.m in Sources */,
 				E06068AA17B0F63F00F3E4CB /* UIImage+RoundedCorner.m in Sources */,
 				E0D3755C17BA390D00E14D7D /* TableZone.m in Sources */,

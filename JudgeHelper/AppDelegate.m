@@ -10,9 +10,7 @@
 
 #import "AppDelegate.h"
 #import "iAdSingleton.h"
-#import "IntroLayer.h"
 #import "SelectPlayerLayer.h"
-#import "RootViewController.h"
 #import "MainViewController.h"
 
 @implementation AppController
