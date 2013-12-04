@@ -806,14 +806,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E03455CA17FEE8CE00010B4C /* macros */ = {
-			isa = PBXGroup;
-			children = (
-				E03455CC17FEE99E00010B4C /* DeviceSettings.h */,
-			);
-			name = macros;
-			sourceTree = "<group>";
-		};
 		E059F48617B02BB40071829E = {
 			isa = PBXGroup;
 			children = (
@@ -853,18 +845,18 @@
 		E059F4A617B02BB40071829E /* JudgeHelper */ = {
 			isa = PBXGroup;
 			children = (
-				E03455CA17FEE8CE00010B4C /* macros */,
 				E059F86517B02EC70071829E /* graphics */,
 				E059F84417B02EBD0071829E /* engin */,
+				E059F63717B02BC20071829E /* AppDelegate.h */,
+				E059F63817B02BC30071829E /* AppDelegate.m */,
+				E0D2989E1834CD6B007736FE /* MainWindow.xib */,
+				E03455CC17FEE99E00010B4C /* DeviceSettings.h */,
 				E059F83E17B02EB20071829E /* Constants.h */,
 				E059F84017B02EB20071829E /* GlobalSettings.h */,
 				E059F84117B02EB20071829E /* GlobalSettings.m */,
 				E06068A117B0F63F00F3E4CB /* UIImage+ */,
 				E059F83A17B02EA00071829E /* CCNode+SFGestureRecognizers */,
 				E059F65617B02DDA0071829E /* libs */,
-				E059F63717B02BC20071829E /* AppDelegate.h */,
-				E059F63817B02BC30071829E /* AppDelegate.m */,
-				E0D2989E1834CD6B007736FE /* MainWindow.xib */,
 				E059F4A717B02BB40071829E /* Resources */,
 				E059F63317B02BC20071829E /* Supporting Files */,
 			);
