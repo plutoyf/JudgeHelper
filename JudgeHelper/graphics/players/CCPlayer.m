@@ -119,7 +119,7 @@
 }
 
 -(void) selectPlayer: (UITapGestureRecognizer*) sender {
-    if(self.delegate && !self.readyToMove) {
+    if(self.delegate) {
         [self.delegate selectPlayerById: self.id];
     }
 }
