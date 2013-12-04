@@ -23,7 +23,7 @@
 }
 
 -(void) selectPlayer: (UITapGestureRecognizer*) sender {
-    if(self.delegate && !self.readyToMove) {
+    if(self.delegate) {
         [self.delegate selectPlayerById: self.id];
     }
 }
@@ -44,7 +44,13 @@
             [self setReadyToMove: YES];
         } else if(sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
             [_delegate playerPositionChanged: self];
-            shortPressMoveBegan = NO;
+            if(shortPressMoveBegan) {
+                shortPressMoveBegan = NO;
+            } else {
+                if(sender.state == UIGestureRecognizerStateEnded) {
+                    [self selectPlayer:nil];
+                }
+            }
         } else if(sender.state == UIGestureRecognizerStateChanged) {
             //NSLog(@"shortPressMove %f %f %d", location.x, location.y, sender.state);
             shortPressMoveBegan = YES;
