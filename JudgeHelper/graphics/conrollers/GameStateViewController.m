@@ -88,7 +88,6 @@
         [playerLifeBoxes setObject:[NSMutableArray new] forKey:p.id];
         
         UIView* playerLine = [UIView new];
-        if(i%2 == 0) playerLine.backgroundColor = [UIColor whiteColor];
         playerLine.translatesAutoresizingMaskIntoConstraints = NO;
         [playerLines setObject:playerLine forKey:p.id];
         [stateContentView addSubview:playerLine];
@@ -260,7 +259,7 @@
                     [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
                     
                     [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count-iconSize)]];
-                    [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(iconSize)+2]];
+                    [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(iconSize)]];
                 }
             }
             
