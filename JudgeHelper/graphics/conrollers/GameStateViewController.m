@@ -291,7 +291,6 @@
 }
 
 -(void) revertStatus {
-    NSLog(@"start reverting");
     for(NSString *id in pIds) {
         UIView *playerLine = [playerLines objectForKey:id];
         NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:id] lastObject];
@@ -312,7 +311,6 @@
     [self updateScrollViewWidth];
     
     [self.view layoutIfNeeded];
-    NSLog(@"end reverting");
 }
 
 - (void)updateScrollViewWidth {
