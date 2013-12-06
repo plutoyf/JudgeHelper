@@ -186,8 +186,8 @@
         [visibleObjects addObject:[NSMutableArray new]];
     }
     
-    int iconSize = VALUE(20, 24);
-    int lifeBoxHeight = 6;
+    float iconSize = VALUE(20, 24);
+    float lifeBoxHeight = 6;
     
     if(receiver) {
         UIView *playerLine = [playerLines objectForKey:receiver.id];
@@ -291,6 +291,7 @@
 }
 
 -(void) revertStatus {
+    NSLog(@"start reverting");
     for(NSString *id in pIds) {
         UIView *playerLine = [playerLines objectForKey:id];
         NSMutableArray* visibleNodes  = [[playerVisibleObjects objectForKey:id] lastObject];
@@ -311,10 +312,11 @@
     [self updateScrollViewWidth];
     
     [self.view layoutIfNeeded];
+    NSLog(@"end reverting");
 }
 
 - (void)updateScrollViewWidth {
-    float iconSize = 30;
+    float iconSize = VALUE(20, 24);
     float width = 0;
     
     for(NSString *id in pIds) {
