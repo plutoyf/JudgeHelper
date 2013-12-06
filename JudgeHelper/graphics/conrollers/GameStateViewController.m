@@ -88,6 +88,7 @@
         [playerLifeBoxes setObject:[NSMutableArray new] forKey:p.id];
         
         UIView* playerLine = [UIView new];
+        if(i%2 == 0) playerLine.backgroundColor = [UIColor whiteColor];
         playerLine.translatesAutoresizingMaskIntoConstraints = NO;
         [playerLines setObject:playerLine forKey:p.id];
         [stateContentView addSubview:playerLine];
@@ -106,7 +107,7 @@
         label.translatesAutoresizingMaskIntoConstraints = NO;
         [contentView addSubview:label];
         
-        [label addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(140)]];
+        [label addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(120)]];
         [contentView addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:10.f]];
         [contentView addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(10+40*i)]];
         
@@ -186,7 +187,7 @@
         [visibleObjects addObject:[NSMutableArray new]];
     }
     
-    int iconSize = 30;
+    int iconSize = VALUE(20, 24);
     int lifeBoxHeight = 6;
     
     if(receiver) {
@@ -201,6 +202,9 @@
         icon.translatesAutoresizingMaskIntoConstraints = NO;
         [visibleNodes addObject:icon];
         [playerLine addSubview:icon];
+        
+        [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)]];
+        [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(iconSize)]];
         
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count)]];
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:0]];
@@ -221,7 +225,7 @@
         [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
         
         [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count-iconSize)]];
-        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeBottom multiplier:1.f constant:0]];
+        [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(iconSize)]];
         
         
         [self updateScrollViewWidth];
@@ -256,7 +260,7 @@
                     [lifeBox addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(lifeBoxHeight)]];
                     
                     [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeLeading multiplier:1.f constant:REVERSE(iconSize*lifeBoxes.count-iconSize)]];
-                    [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeBottom multiplier:1.f constant:0]];
+                    [playerLine addConstraint:[NSLayoutConstraint constraintWithItem:lifeBox attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:playerLine attribute:NSLayoutAttributeTop multiplier:1.f constant:REVERSE(iconSize)+2]];
                 }
             }
             
