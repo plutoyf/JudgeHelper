@@ -133,39 +133,25 @@
 }
 
 - (IBAction)nextButtonTapped:(id)sender {
-    GlobalSettings* global = [GlobalSettings globalSettings];
-    [global setPlayerIds: selectedPIds];
-
+    [self matchPlayerNumber];
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
         case 0:
-            if (selectedPIds.count < 3) {
-                self.statusLabel.text = @"请至少选择3名玩家";
-            } else {
-                isReadyToStart = [self isRedyToStart];
-                self.view.tag = isReadyToStart ? 2 : 1;
-                [self.nextButton setTitle:isReadyToStart ? @"开  始" : @"下一步" forState:UIControlStateNormal];
-                self.createPlayerButton.alpha = 0.0f;
-                self.doubleHandModeLabel.alpha = 1.0f;
-                self.doubleHandModeSwitch.alpha = 1.0f;
-                [self matchPlayerNumber];
-                [self animateViewWithLeftPart:!isReadyToStart andRightPart:YES];
-            }
+            isReadyToStart = [self isRedyToStart];
+            self.view.tag = isReadyToStart ? 2 : 1;
+            [self.nextButton setTitle:isReadyToStart ? @"开  始" : @"下一步" forState:UIControlStateNormal];
+            self.createPlayerButton.alpha = 0.0f;
+            self.doubleHandModeLabel.alpha = 1.0f;
+            self.doubleHandModeSwitch.alpha = 1.0f;
+            [self animateViewWithLeftPart:!isReadyToStart andRightPart:YES];
             break;
         case 1:
             self.view.tag = 2;
             [self.nextButton setTitle:@"开  始" forState:UIControlStateNormal];
-            [self matchPlayerNumber];
             [self animateViewWithLeftPart:YES andRightPart:NO];
             break;
-        case 3:
-            if (selectedPIds.count < 3) {
-                self.statusLabel.text = @"请至少选择3名玩家";
-                break;
-            } else {
-                [self matchPlayerNumber];
-            }
         case 2:
+        case 3:
             if ([self isRedyToStart]) {
                 CCDirector *director = [CCDirector sharedDirector];
                 if(director.runningScene != nil) {
@@ -182,7 +168,6 @@
                 }
                 
                 [engin initRoles: roleNumbers];
-                //[self.navigationController pushViewController:director animated:YES];
                 [self.navigationController pushViewController:[GameViewController new] animated:YES];
             }
             break;
@@ -382,6 +367,9 @@
             }
         }];
     }
+    
+    [[GlobalSettings globalSettings] setPlayerIds: selectedPIds];
+    [self matchPlayerNumber:!IS_IPAD()];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -443,6 +431,9 @@
         [selectedPIds removeObjectAtIndex:i];
         [self.playerCollectionView deleteItemsAtIndexPaths:indexPaths];
     }
+    
+    [[GlobalSettings globalSettings] setPlayerIds: selectedPIds];
+    [self matchPlayerNumber:!IS_IPAD()];
 }
 
 
@@ -612,14 +603,24 @@
 }
 
 -(void) matchPlayerNumber {
-    int delta = [self getPlayerNumberDelta];
-    
-    if(delta < 0) {
-        self.statusLabel.text = [NSString stringWithFormat:@"角色数目过少, 请再添加%d个角色", -delta];
-    } else if (delta > 0) {
-        self.statusLabel.text = [NSString stringWithFormat:@"角色数目过多, 请再减少%d个角色", delta];
+    [self matchPlayerNumber:NO];
+}
+
+-(void) matchPlayerNumber:(BOOL) playerOnly{
+    if (selectedPIds.count < 3) {
+        self.statusLabel.text = @"请至少选择3名玩家";
+    } else  if(playerOnly) {
+        self.statusLabel.text = @"";
     } else {
-        self.statusLabel.text = @"可以开始游戏";
+        int delta = [self getPlayerNumberDelta];
+        
+        if(delta < 0) {
+            self.statusLabel.text = [NSString stringWithFormat:@"角色数目过少, 请再添加%d个角色", -delta];
+        } else if (delta > 0) {
+            self.statusLabel.text = [NSString stringWithFormat:@"角色数目过多, 请再减少%d个角色", delta];
+        } else {
+            self.statusLabel.text = @"可以开始游戏";
+        }
     }
 }
 
