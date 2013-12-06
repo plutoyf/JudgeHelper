@@ -19,8 +19,8 @@
             
             UIImage *handImage = [UIImage imageNamed: handIconFile];
             handIcon = [[UIImageView alloc] initWithImage: handImage];
-            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(handImage.size.width, REVERSE(handImage.size.width)*1.25)]];
-            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(handImage.size.width, REVERSE(handImage.size.height)*1.25)]];
+            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(handImage.size.width, REVERSE(handImage.size.width*1.25))]];
+            [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:handIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(handImage.size.width, REVERSE(handImage.size.height*1.25))]];
             
             handIcon.userInteractionEnabled = YES;
             UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectHandPlayer:)];
@@ -40,15 +40,15 @@
                 UIImage *roleImage = [UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:_role]]];
                 UIImageView *roleIcon = [[UIImageView alloc] initWithImage:roleImage];
                 
-                [roleIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(26)]];
-                [roleIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(26)]];
+                [roleIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(20, REVERSE(26))]];
+                [roleIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(20, REVERSE(26))]];
                 
                 roleIcon.alpha = _status == OUT_GAME ? .4f : 1.f;
                 roleIcon.translatesAutoresizingMaskIntoConstraints = NO;
                 [handIcon addSubview: roleIcon];
                 
-                [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterX multiplier:1.f constant:(_hand==LEFTHAND?-1:1)*REVERSE(4)]];
-                [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterY multiplier:1.f constant:REVERSE(8)]];
+                [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterX multiplier:1.f constant:(_hand==LEFTHAND?-1:1)*VALUE(2, REVERSE(4))]];
+                [handIcon addConstraint:[NSLayoutConstraint constraintWithItem:roleIcon attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:handIcon attribute:NSLayoutAttributeCenterY multiplier:1.f constant:VALUE(6, REVERSE(8))]];
 
             }
             
@@ -83,8 +83,8 @@
     UIImage *iconImage = [UIImage imageNamed: [NSString stringWithFormat:@"Icon-20-%@.png", [CCEngin getRoleCode:role]]];
     UIImageView *icon = [[UIImageView alloc] initWithImage: iconImage];
     
-    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(26)]];
-    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(26)]];
+    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(20, REVERSE(26))]];
+    [icon addConstraint:[NSLayoutConstraint constraintWithItem:icon attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:VALUE(20, REVERSE(26))]];
     
     icon.alpha = result ? 1.f : .4f;
     icon.translatesAutoresizingMaskIntoConstraints = NO;
