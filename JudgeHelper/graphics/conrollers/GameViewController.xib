@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameViewController">
@@ -10,7 +10,7 @@
                 <outlet property="messageLabel" destination="6Ea-u2-ds5" id="DqJ-nh-cQQ"/>
                 <outlet property="nightLabel" destination="cP5-jT-77a" id="FIZ-71-EGA"/>
                 <outlet property="playerView" destination="uAw-ug-khW" id="9db-em-Xxa"/>
-                <outlet property="showStateButton" destination="4rh-MN-WQd" id="bx5-By-Uaq"/>
+                <outlet property="showStateButton" destination="4rh-MN-WQd" id="SzM-rD-gBU"/>
                 <outlet property="tableView" destination="qlt-eN-Cfq" id="eaV-Gr-pqL"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -52,7 +52,7 @@
                     <state key="normal" image="left2.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="selected" backgroundImage="left2-sel.png"/>
+                    <state key="selected" image="left2-sel.png"/>
                     <connections>
                         <action selector="showStateButtonTapped:" destination="-1" eventType="touchUpInside" id="HNh-vf-Qih"/>
                     </connections>

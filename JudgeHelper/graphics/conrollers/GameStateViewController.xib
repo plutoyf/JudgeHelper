@@ -31,14 +31,14 @@
                         <constraint firstAttribute="height" constant="40" id="rJE-En-ifN"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4v-pv-GbV" userLabel="HideStateButton">
-                    <rect key="frame" x="450" y="140" width="30" height="40"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4v-pv-GbV" userLabel="HideStateButton">
+                    <rect key="frame" x="450" y="145" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" backgroundImage="right2.png">
+                    <state key="normal" image="right2.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="selected" backgroundImage="right2-sel.png"/>
+                    <state key="selected" image="right2-sel.png"/>
                     <connections>
                         <action selector="hideStateButtonTapped:" destination="-1" eventType="touchUpInside" id="XNb-Y4-vjZ"/>
                     </connections>
