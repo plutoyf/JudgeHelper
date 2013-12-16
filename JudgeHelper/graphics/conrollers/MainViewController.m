@@ -48,6 +48,7 @@
     
     [self.playerCollectionView registerNib:[UINib nibWithNibName:@"PlayerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"playerCollectionViewCell"];
     [self.roleCollectionView registerNib:[UINib nibWithNibName:@"RoleCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"roleCollectionViewCell"];
+    
 }
 
 - (void) initLayoutConstraints {
@@ -133,10 +134,11 @@
 }
 
 - (IBAction)nextButtonTapped:(id)sender {
-    [self matchPlayerNumber];
+    [self matchPlayerNumber:(self.view.tag==0)&&!IS_IPAD()];
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
         case 0:
+            if (pids.count < 3) break;
             isReadyToStart = [self isRedyToStart];
             self.view.tag = isReadyToStart ? 2 : 1;
             [self.nextButton setTitle:isReadyToStart ? @"开  始" : @"下一步" forState:UIControlStateNormal];
@@ -529,6 +531,12 @@
     return component == 0 ? roles.count : maxRoleNumber;
 }
 
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    float col1WidthMin = 40;
+    float col1Width = pickerView.bounds.size.width*0.3 < col1WidthMin ? col1WidthMin : pickerView.bounds.size.width*0.3;
+    if (component == 1) return col1Width;
+    return pickerView.bounds.size.width-col1Width-20;
+}
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component == 0) {
@@ -546,16 +554,6 @@
     } else {
         [self setNumber:(maxRoleNumber==1 ? staticRoleNumber : row) forRole:r];
     }
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
-    switch (component){
-        case 0:
-            return 100.0f;
-        case 1:
-            return 50.0f;
-    }
-    return 0;
 }
 
 - (void) selectRole:(Role) r {
@@ -607,7 +605,9 @@
 }
 
 -(void) matchPlayerNumber:(BOOL) playerOnly{
-    if (selectedPIds.count < 3) {
+    if (pids.count <= 0) {
+        self.statusLabel.text = @"请先创建玩家";
+    } else if (selectedPIds.count < 3) {
         self.statusLabel.text = @"请至少选择3名玩家";
     } else  if(playerOnly) {
         self.statusLabel.text = @"";

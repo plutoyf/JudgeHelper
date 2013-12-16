@@ -254,7 +254,6 @@
         userNameTextField.borderStyle = UITextBorderStyleRoundedRect ;
         userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo ;
         userNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        userNameTextField.font = [UIFont fontWithName:@"Verdana" size:VALUE(16, 12)];
         userNameTextField.font = [UIFont systemFontOfSize:VALUE(16, 12)];
         userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing ;
         userNameTextField.adjustsFontSizeToFitWidth = YES;

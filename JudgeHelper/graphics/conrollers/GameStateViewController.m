@@ -101,8 +101,9 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.text = p.name;
-        label.font = [UIFont fontWithName:@"Verdana" size:VALUE(16, 12)];
+        label.font = [UIFont systemFontOfSize:VALUE(16, 12)];
         label.lineBreakMode = NSLineBreakByTruncatingTail;
+        label.backgroundColor = [UIColor clearColor];
         label.translatesAutoresizingMaskIntoConstraints = NO;
         [contentView addSubview:label];
         

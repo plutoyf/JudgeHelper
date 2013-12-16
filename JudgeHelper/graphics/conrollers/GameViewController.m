@@ -89,9 +89,8 @@ NSMutableArray *players;
     
     [engin run];
     
-    
-    [self.messageLabel setFont:[UIFont fontWithName:@"System" size:REVERSE(30)]];
-    [self.nightLabel setFont:[UIFont fontWithName:@"System" size:REVERSE(30)]];
+    self.messageLabel.font = [UIFont systemFontOfSize:REVERSE(30)];
+    self.nightLabel.font = [UIFont systemFontOfSize:REVERSE(30)];
     
     [self.showStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.showStateButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(40)]];
     [self.showStateButton addConstraint:[NSLayoutConstraint constraintWithItem:self.showStateButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:nil multiplier:1.f constant:REVERSE(50)]];

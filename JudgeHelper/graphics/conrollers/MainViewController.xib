@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
@@ -44,7 +44,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="4UU-gk-Uzf"/>
                         <constraint firstAttribute="centerY" secondItem="BQ6-q1-Cbv" secondAttribute="centerY" id="5ZK-7U-cNM"/>
@@ -58,11 +58,11 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXt-I8-JrC" userLabel="LeftRoleView">
-                            <rect key="frame" x="70" y="0.0" width="210" height="250"/>
+                            <rect key="frame" x="91" y="0.0" width="210" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9KC-NB-t00" userLabel="RoleImageView">
-                                    <rect key="frame" x="20" y="20" width="22" height="32"/>
+                                    <rect key="frame" x="20" y="20" width="63" height="28"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvZ-96-C77" userLabel="RoleNumberPicker">
@@ -77,14 +77,15 @@
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="uvZ-96-C77" secondAttribute="bottom" constant="10" id="A54-CG-CsL"/>
                                 <constraint firstItem="uvZ-96-C77" firstAttribute="leading" secondItem="pXt-I8-JrC" secondAttribute="leading" constant="10" id="Tcw-I8-N5v"/>
-                                <constraint firstItem="9KC-NB-t00" firstAttribute="top" secondItem="pXt-I8-JrC" secondAttribute="top" constant="20" id="Vyt-cQ-3EI"/>
+                                <constraint firstItem="9KC-NB-t00" firstAttribute="top" relation="lessThanOrEqual" secondItem="pXt-I8-JrC" secondAttribute="top" constant="20" id="Vyt-cQ-3EI"/>
+                                <constraint firstItem="uvZ-96-C77" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9KC-NB-t00" secondAttribute="bottom" id="fpT-Hg-1oU"/>
                                 <constraint firstAttribute="trailing" secondItem="uvZ-96-C77" secondAttribute="trailing" constant="5" id="lzd-3R-sjB"/>
                                 <constraint firstItem="9KC-NB-t00" firstAttribute="leading" secondItem="pXt-I8-JrC" secondAttribute="leading" constant="20" id="s5l-9O-rc1"/>
                                 <constraint firstAttribute="width" constant="210" placeholder="YES" id="yjr-xu-Btj"/>
                             </constraints>
                         </view>
                         <view tag="1" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CwB-oq-UCd" userLabel="LeftPlayerView">
-                            <rect key="frame" x="-16" y="0.0" width="210" height="250"/>
+                            <rect key="frame" x="96" y="0.0" width="210" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vUj-9d-Osg" userLabel="SelectedPlayerCollectionView">
@@ -113,7 +114,7 @@
                             </constraints>
                         </view>
                         <view tag="1" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3GM-7w-PgR" userLabel="RightPlayerView">
-                            <rect key="frame" x="-7" y="0.0" width="270" height="250"/>
+                            <rect key="frame" x="58" y="0.0" width="270" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zWH-xl-xqW" userLabel="PlayerTableView">
@@ -136,7 +137,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2q-g0-dqs" userLabel="RightRoleView">
-                            <rect key="frame" x="82" y="0.0" width="270" height="250"/>
+                            <rect key="frame" x="-17" y="0.0" width="270" height="250"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-Mr-yOn">
@@ -184,7 +185,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rF1-zP-arN" userLabel="CreatePlayerButton">
-                            <rect key="frame" x="5" y="-2" width="30" height="44"/>
+                            <rect key="frame" x="5" y="4" width="30" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="26"/>
                             <state key="normal" title="+">
@@ -195,7 +196,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jXj-ih-Ygz" userLabel="NextButton">
-                            <rect key="frame" x="425" y="5" width="45" height="30"/>
+                            <rect key="frame" x="425" y="4" width="45" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="下一步">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -204,27 +205,31 @@
                                 <action selector="nextButtonTapped:" destination="-1" eventType="touchUpInside" id="aKM-xH-VIu"/>
                             </connections>
                         </button>
-                        <switch opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="T4P-It-KYb" userLabel="DoubleHandModeSwitch">
-                            <rect key="frame" x="80" y="5" width="51" height="31"/>
+                        <switch opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="T4P-It-KYb" userLabel="DoubleHandModeSwitch">
+                            <rect key="frame" x="80" y="4" width="51" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <connections>
                                 <action selector="doubleHandModeSwitchChanged:" destination="-1" eventType="valueChanged" id="Ei4-pq-JST"/>
                             </connections>
                         </switch>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="双手模式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8s-QI-acd" userLabel="DoubleHandModeLabel">
-                            <rect key="frame" x="10" y="11" width="60" height="18"/>
+                            <rect key="frame" x="10" y="4" width="60" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="rF1-zP-arN" firstAttribute="top" secondItem="0W6-Wo-Htk" secondAttribute="top" constant="4" id="55h-Bm-eTx"/>
                         <constraint firstItem="T4P-It-KYb" firstAttribute="leading" secondItem="U8s-QI-acd" secondAttribute="trailing" constant="10" id="H9B-8m-PS4"/>
                         <constraint firstAttribute="trailing" secondItem="jXj-ih-Ygz" secondAttribute="trailing" constant="10" id="JTy-Py-Nna"/>
+                        <constraint firstItem="rF1-zP-arN" firstAttribute="height" secondItem="U8s-QI-acd" secondAttribute="height" id="Opy-Hc-pTF"/>
                         <constraint firstAttribute="centerY" secondItem="T4P-It-KYb" secondAttribute="centerY" id="gtd-Ds-enF"/>
                         <constraint firstItem="rF1-zP-arN" firstAttribute="centerY" secondItem="0W6-Wo-Htk" secondAttribute="centerY" id="ini-3e-Srz"/>
+                        <constraint firstItem="rF1-zP-arN" firstAttribute="height" secondItem="jXj-ih-Ygz" secondAttribute="height" id="jZT-Zl-cRE"/>
                         <constraint firstAttribute="height" constant="40" id="osk-jH-HiV"/>
+                        <constraint firstAttribute="bottom" secondItem="rF1-zP-arN" secondAttribute="bottom" constant="4" id="pKy-ZX-Hfd"/>
                         <constraint firstAttribute="centerY" secondItem="U8s-QI-acd" secondAttribute="centerY" id="rA4-Tq-dmU"/>
                         <constraint firstItem="jXj-ih-Ygz" firstAttribute="centerY" secondItem="0W6-Wo-Htk" secondAttribute="centerY" id="uu4-aR-cjf"/>
                         <constraint firstItem="U8s-QI-acd" firstAttribute="leading" secondItem="0W6-Wo-Htk" secondAttribute="leading" constant="10" id="xgf-nC-Da7"/>
