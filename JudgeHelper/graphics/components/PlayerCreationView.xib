@@ -43,7 +43,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfO-QF-RlX" userLabel="CreateButton">
-                    <rect key="frame" x="350" y="56" width="30" height="34"/>
+                    <rect key="frame" x="310" y="56" width="50" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="创建">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,8 +53,11 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ddg-fk-ZNr" userLabel="CancelButton">
-                    <rect key="frame" x="430" y="56" width="30" height="34"/>
+                    <rect key="frame" x="410" y="56" width="50" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="PlA-OA-RaE"/>
+                    </constraints>
                     <state key="normal" title="取消">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -68,18 +71,19 @@
             <constraints>
                 <constraint firstItem="ogw-w6-jP5" firstAttribute="centerY" secondItem="GYB-Pm-orU" secondAttribute="centerY" id="47N-qS-qg0"/>
                 <constraint firstItem="ogw-w6-jP5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="1" id="52I-8J-Xph"/>
-                <constraint firstItem="tfO-QF-RlX" firstAttribute="height" secondItem="Ddg-fk-ZNr" secondAttribute="height" id="DiX-Jk-hlL"/>
                 <constraint firstItem="ogw-w6-jP5" firstAttribute="centerX" secondItem="GYB-Pm-orU" secondAttribute="centerX" id="FXj-5M-Pfr"/>
                 <constraint firstItem="3xo-0o-p14" firstAttribute="centerY" secondItem="hO2-at-mAN" secondAttribute="centerY" id="Gh7-pf-FGp"/>
+                <constraint firstItem="Ddg-fk-ZNr" firstAttribute="centerY" secondItem="tfO-QF-RlX" secondAttribute="centerY" id="JSd-Uo-v9Z"/>
                 <constraint firstItem="3xo-0o-p14" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="Kef-ej-7sn"/>
+                <constraint firstItem="Ddg-fk-ZNr" firstAttribute="width" secondItem="tfO-QF-RlX" secondAttribute="width" id="N4V-VP-CZh"/>
                 <constraint firstItem="3xo-0o-p14" firstAttribute="leading" secondItem="ogw-w6-jP5" secondAttribute="trailing" constant="20" id="SvP-09-Wup"/>
                 <constraint firstItem="hO2-at-mAN" firstAttribute="trailing" secondItem="Ddg-fk-ZNr" secondAttribute="trailing" id="XLr-SB-fWP"/>
-                <constraint firstItem="Ddg-fk-ZNr" firstAttribute="centerY" secondItem="tfO-QF-RlX" secondAttribute="centerY" id="XmW-vs-3Ia"/>
+                <constraint firstItem="Ddg-fk-ZNr" firstAttribute="height" secondItem="tfO-QF-RlX" secondAttribute="height" id="gD6-zo-z8p"/>
                 <constraint firstItem="hO2-at-mAN" firstAttribute="leading" secondItem="3xo-0o-p14" secondAttribute="trailing" constant="15" id="kaM-9x-IPr"/>
                 <constraint firstItem="Ddg-fk-ZNr" firstAttribute="top" secondItem="hO2-at-mAN" secondAttribute="bottom" constant="10" id="o9q-ng-v76"/>
+                <constraint firstItem="Ddg-fk-ZNr" firstAttribute="leading" secondItem="tfO-QF-RlX" secondAttribute="trailing" constant="50" id="ugS-av-0te"/>
                 <constraint firstAttribute="bottom" secondItem="Ddg-fk-ZNr" secondAttribute="bottom" constant="10" id="uqk-ZS-Bib"/>
                 <constraint firstAttribute="trailing" secondItem="hO2-at-mAN" secondAttribute="trailing" constant="20" id="wsd-iV-Ut8"/>
-                <constraint firstItem="Ddg-fk-ZNr" firstAttribute="leading" secondItem="tfO-QF-RlX" secondAttribute="trailing" constant="50" id="xff-pu-tX4"/>
                 <constraint firstItem="ogw-w6-jP5" firstAttribute="top" secondItem="1" secondAttribute="top" constant="1" id="zUh-OV-rWh"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
