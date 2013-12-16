@@ -138,7 +138,7 @@
     BOOL isReadyToStart = NO;
     switch (self.view.tag) {
         case 0:
-            if (pids.count < 3) break;
+            if (pids.count <= 0 || selectedPIds.count < 3) break;
             isReadyToStart = [self isRedyToStart];
             self.view.tag = isReadyToStart ? 2 : 1;
             [self.nextButton setTitle:isReadyToStart ? @"开  始" : @"下一步" forState:UIControlStateNormal];
