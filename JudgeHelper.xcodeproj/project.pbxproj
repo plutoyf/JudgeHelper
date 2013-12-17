@@ -10,7 +10,6 @@
 		E011584717D0D037007B3BDD /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = E011584517D0D037007B3BDD /* down.png */; };
 		E011584817D0D037007B3BDD /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = E011584617D0D037007B3BDD /* up.png */; };
 		E015665C183A47C100447B55 /* PlayerCreationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E015665B183A47C100447B55 /* PlayerCreationView.m */; };
-		E015665E183A47E000447B55 /* PlayerCreationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E015665D183A47E000447B55 /* PlayerCreationView.xib */; };
 		E0163AB01843D56800A4FEA6 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163AAE1843D56800A4FEA6 /* GameViewController.m */; };
 		E0163AB11843D56800A4FEA6 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0163AAF1843D56800A4FEA6 /* GameViewController.xib */; };
 		E0163AB61843E66000A4FEA6 /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0163AB51843E66000A4FEA6 /* PlayerView.m */; };
@@ -279,6 +278,7 @@
 		E08E64931847AA74006A461B /* BordlessView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08E64921847AA74006A461B /* BordlessView.m */; };
 		E0A5B4E717BED294007F97BD /* GameRuleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A5B4E617BED294007F97BD /* GameRuleLayer.m */; };
 		E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A5B4E817BED77E007F97BD /* rightUp.png */; };
+		E0A7E17318604EC400D490BA /* PlayerCreationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A7E17518604EC400D490BA /* PlayerCreationView.xib */; };
 		E0D2989F1834CD6B007736FE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D2989E1834CD6B007736FE /* MainWindow.xib */; };
 		E0D298A91834E3CD007736FE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D298A71834E3CD007736FE /* MainViewController.m */; };
 		E0D298AA1834E3CD007736FE /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0D298A81834E3CD007736FE /* MainViewController.xib */; };
@@ -306,7 +306,6 @@
 		E011584617D0D037007B3BDD /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = up.png; path = Resources/up.png; sourceTree = "<group>"; };
 		E015665A183A47C100447B55 /* PlayerCreationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerCreationView.h; sourceTree = "<group>"; };
 		E015665B183A47C100447B55 /* PlayerCreationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerCreationView.m; sourceTree = "<group>"; };
-		E015665D183A47E000447B55 /* PlayerCreationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerCreationView.xib; sourceTree = "<group>"; };
 		E0163AAD1843D56800A4FEA6 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		E0163AAE1843D56800A4FEA6 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		E0163AAF1843D56800A4FEA6 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -324,6 +323,7 @@
 		E0163AC6184B432600A4FEA6 /* GameStateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStateViewController.h; sourceTree = "<group>"; };
 		E0163AC7184B432600A4FEA6 /* GameStateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStateViewController.m; sourceTree = "<group>"; };
 		E0163AC8184B432600A4FEA6 /* GameStateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameStateViewController.xib; sourceTree = "<group>"; };
+		E017DDAF18604F5C00E0C5AF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PlayerCreationView.strings; sourceTree = "<group>"; };
 		E01E179A180590B3007CD3A4 /* Icon-20-assassin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-assassin.png"; path = "Resources/Icon-20-assassin.png"; sourceTree = "<group>"; };
 		E01E179B180590B3007CD3A4 /* Icon-20-undercover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-20-undercover.png"; path = "Resources/Icon-20-undercover.png"; sourceTree = "<group>"; };
 		E01E179C180590B3007CD3A4 /* Icon-72-assassin-dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72-assassin-dead.png"; path = "Resources/Icon-72-assassin-dead.png"; sourceTree = "<group>"; };
@@ -764,6 +764,7 @@
 		E0A5B4E517BED294007F97BD /* GameRuleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRuleLayer.h; sourceTree = "<group>"; };
 		E0A5B4E617BED294007F97BD /* GameRuleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRuleLayer.m; sourceTree = "<group>"; };
 		E0A5B4E817BED77E007F97BD /* rightUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightUp.png; path = Resources/rightUp.png; sourceTree = "<group>"; };
+		E0A7E17418604EC400D490BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PlayerCreationView.xib; sourceTree = "<group>"; };
 		E0D2989E1834CD6B007736FE /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		E0D298A61834E3CD007736FE /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E0D298A71834E3CD007736FE /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -1426,7 +1427,7 @@
 				E05A3E6C1836F847008FDE75 /* RoleCollectionViewCell.xib */,
 				E015665A183A47C100447B55 /* PlayerCreationView.h */,
 				E015665B183A47C100447B55 /* PlayerCreationView.m */,
-				E015665D183A47E000447B55 /* PlayerCreationView.xib */,
+				E0A7E17518604EC400D490BA /* PlayerCreationView.xib */,
 				E0163AB41843E66000A4FEA6 /* PlayerView.h */,
 				E0163AB51843E66000A4FEA6 /* PlayerView.m */,
 				E0163AB71843E67600A4FEA6 /* PlayerView.xib */,
@@ -1664,7 +1665,7 @@
 				E0D5CF8817B682FA00EF0AAB /* right2.png in Resources */,
 				E0A5B4E917BED77E007F97BD /* rightUp.png in Resources */,
 				E024D6B117CFA2BB0032EE61 /* quit.png in Resources */,
-				E015665E183A47E000447B55 /* PlayerCreationView.xib in Resources */,
+				E0A7E17318604EC400D490BA /* PlayerCreationView.xib in Resources */,
 				E011584717D0D037007B3BDD /* down.png in Resources */,
 				E011584817D0D037007B3BDD /* up.png in Resources */,
 				E051E21417D4F16F00D6E131 /* Default-Landscape@2x~ipad.png in Resources */,
@@ -1875,6 +1876,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E0A7E17518604EC400D490BA /* PlayerCreationView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E0A7E17418604EC400D490BA /* Base */,
+				E017DDAF18604F5C00E0C5AF /* en */,
+			);
+			name = PlayerCreationView.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E059F64017B02BC30071829E /* Debug */ = {
