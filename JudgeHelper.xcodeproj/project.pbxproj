@@ -775,6 +775,9 @@
 		E0D3755B17BA390D00E14D7D /* TableZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableZone.m; sourceTree = "<group>"; };
 		E0D5CF8517B682FA00EF0AAB /* left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = left2.png; path = Resources/left2.png; sourceTree = "<group>"; };
 		E0D5CF8617B682FA00EF0AAB /* right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = right2.png; path = Resources/right2.png; sourceTree = "<group>"; };
+		E0DEA7F518618AA4002F0391 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/PlayerCreationView.strings; sourceTree = "<group>"; };
+		E0DEA7F618618AA9002F0391 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/PlayerCreationView.strings"; sourceTree = "<group>"; };
+		E0DEA7F718618AB4002F0391 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/PlayerCreationView.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1883,6 +1886,9 @@
 			children = (
 				E0A7E17418604EC400D490BA /* Base */,
 				E017DDAF18604F5C00E0C5AF /* en */,
+				E0DEA7F518618AA4002F0391 /* fr */,
+				E0DEA7F618618AA9002F0391 /* zh-Hans */,
+				E0DEA7F718618AB4002F0391 /* zh-Hant */,
 			);
 			name = PlayerCreationView.xib;
 			sourceTree = "<group>";

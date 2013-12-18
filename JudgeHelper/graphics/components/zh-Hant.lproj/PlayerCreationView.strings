@@ -1,0 +1,12 @@
+
+/* Class = "IBUILabel"; text = "用户名 :"; ObjectID = "3xo-0o-p14"; */
+"3xo-0o-p14.text" = "用户名 :";
+
+/* Class = "IBUIButton"; normalTitle = "取消"; ObjectID = "Ddg-fk-ZNr"; */
+"Ddg-fk-ZNr.normalTitle" = "取消";
+
+/* Class = "IBUILabel"; text = "添加头像"; ObjectID = "GYB-Pm-orU"; */
+"GYB-Pm-orU.text" = "添加头像";
+
+/* Class = "IBUIButton"; normalTitle = "创建"; ObjectID = "tfO-QF-RlX"; */
+"tfO-QF-RlX.normalTitle" = "创建";
